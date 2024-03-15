@@ -1,22 +1,8 @@
-
-
 // [[Rcpp::export]]
-void testIterative()
-{
-  std::vector<size_t> x(1000000, 1);
-  for(size_t i = 0; i < x.size(); ++i) {
-    x[i] = 2 * x[i];
-  }
-}
-
-
-
-
-// [[Rcpp::export]]
-void testThreadPoolParallelFor()
+void testThreadPoolParallelForNumericVector()
 {
   ThreadPool pool; // tworzy pulę wątków
-  std::vector<size_t> x(1000000, 1); // wektor danych
+  NumericVector x(1000000000, 1.0); // wektor danych typu NumericVector
   
   
   auto dummy = [&](size_t i) -> void {
@@ -27,10 +13,3 @@ void testThreadPoolParallelFor()
   pool.parallelFor(0, x.size(), dummy); // wykonanie operacji równolegle
   pool.join(); // oczekiwanie na zakończenie wszystkich wątków
 }
-
-
-
-
-// mierzymy czas
-system.time(testIterative())
-system.time(testThreadPoolParallelFor())
