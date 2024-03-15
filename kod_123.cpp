@@ -1,15 +1,19 @@
 // [[Rcpp::export]]
-void testThreadPoolParallelForNumericVector()
+void testThreadPoolFactorial()
 {
-  ThreadPool pool; // tworzy pulę wątków
-  NumericVector x(1000000000, 1.0); // wektor danych typu NumericVector
+  ThreadPool pool;
+  const size_t size = 20;
+  std::vector<unsigned long long> results(size);
   
   
-  auto dummy = [&](size_t i) -> void {
-    x[i] = 2 * x[i]; // operacja na elemencie wektora
+  auto factorialOperation = [&](size_t i) -> void {
+    results[i] = factorial(i + 10); 
   };
   
   
-  pool.parallelFor(0, x.size(), dummy); // wykonanie operacji równolegle
-  pool.join(); // oczekiwanie na zakończenie wszystkich wątków
-}
+  for (size_t i = 0; i < size; ++i) {
+    pool.push(factorialOperation, i);
+  }
+  
+  
+  pool.join(); 
