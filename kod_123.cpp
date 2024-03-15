@@ -1,7 +1,36 @@
-for (auto& threadData : threadDataVec) {
-  lat_sub.insert(lat_sub.end(), std::make_move_iterator(threadData.lat_sub.begin()), std::make_move_iterator(threadData.lat_sub.end()));
-  lon_sub.insert(lon_sub.end(), std::make_move_iterator(threadData.lon_sub.begin()), std::make_move_iterator(threadData.lon_sub.end()));
-  insu_sub.insert(insu_sub.end(), std::make_move_iterator(threadData.insu_sub.begin()), std::make_move_iterator(threadData.insu_sub.end()));
-  reas_sub.insert(reas_sub.end(), std::make_move_iterator(threadData.reas_sub.begin()), std::make_move_iterator(threadData.reas_sub.end()));
-  premium_sub.insert(premium_sub.end(), std::make_move_iterator(threadData.premium_sub.begin()), std::make_move_iterator(threadData.premium_sub.end()));
+
+
+// [[Rcpp::export]]
+void testIterative()
+{
+  std::vector<size_t> x(1000000, 1);
+  for(size_t i = 0; i < x.size(); ++i) {
+    x[i] = 2 * x[i];
+  }
 }
+
+
+
+
+// [[Rcpp::export]]
+void testThreadPoolParallelFor()
+{
+  ThreadPool pool; // tworzy pulę wątków
+  std::vector<size_t> x(1000000, 1); // wektor danych
+  
+  
+  auto dummy = [&](size_t i) -> void {
+    x[i] = 2 * x[i]; // operacja na elemencie wektora
+  };
+  
+  
+  pool.parallelFor(0, x.size(), dummy); // wykonanie operacji równolegle
+  pool.join(); // oczekiwanie na zakończenie wszystkich wątków
+}
+
+
+
+
+// mierzymy czas
+system.time(testIterative())
+system.time(testThreadPoolParallelFor())
