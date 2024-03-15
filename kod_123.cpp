@@ -1,19 +1,13 @@
+
+
 // [[Rcpp::export]]
-void testThreadPoolFactorial()
+void testIterativeFactorial()
 {
-  ThreadPool pool;
-  const size_t size = 20;
+  const size_t size = 20; 
   std::vector<unsigned long long> results(size);
   
   
-  auto factorialOperation = [&](size_t i) -> void {
-    results[i] = factorial(i + 10); 
-  };
-  
-  
   for (size_t i = 0; i < size; ++i) {
-    pool.push(factorialOperation, i);
+    results[i] = factorial(i + 10);
   }
-  
-  
-  pool.join(); 
+}
