@@ -1,105 +1,116 @@
-#include <iostream>
-#include <vector>
-#include <chrono>
 
 
-#include <iostream>
-#include <vector>
-#include <chrono>
-#include <iostream>
-#include <vector>
-#include <chrono>
-#include <random>
+auto start = std::chrono::high_resolution_clock::now();
 
 
-class FlatVector {
-private:
-  std::vector<double> data;
-  size_t sizeX, sizeY, sizeZ;
+struct Data {
+  double lat_sub;
+  double lon_sub;
+  double insu_sub;
+  double reas_sub;
+  double premium_sub;
+}
+
+
+struct ThreadRange {
+  int start;
+  int end;
   
   
-public:
-  FlatVector(size_t x, size_t y, size_t z) : sizeX(x), sizeY(y), sizeZ(z), data(x * y * z) {}
-  
-  
-  double& operator()(size_t x, size_t y, size_t z) {
-    return data[x * sizeY * sizeZ + y * sizeZ + z];
-  }
 };
 
 
-int main() {
-  std::vector<std::vector<std::vector<double>>> vect; 
-  vect.resize(100); 
+template<typename T, size_t Size>
+class CustomVect {
+public:
+  std::vector<ThreadRange> ranges ;
+  mutable std::mutex mutex;
+  CustomVect() : size(0) {}
   
   
-  auto start = std::chrono::high_resolution_clock::now();
+  void push_back(const T& value)  noexcept {
+    data[size++] = value;
+  }
   
   
-  for (int i = 0; i < 100; ++i) {
-    vect[i].resize(100); 
-    for (int j = 0; j < 100; ++j) {
-      
-      
-      for (int k = 0; k < 100000; ++k) {
-        vect[i][j].emplace_back(i * j * k); 
-      }
+  void push_ranges(const ThreadRange& value) noexcept {
+    std::lock_guard<std::mutex> lock(mutex);
+    ranges.push_back(value);
+    std::sort(ranges.begin(), ranges.end(), [](const ThreadRange& a, const ThreadRange& b) {
+      return a.start < b.start;
+    });
+  }
+  
+  
+  void printRanges() const {
+    std::lock_guard<std::mutex> lock(mutex);
+    for (const auto& range : ranges) {
+      std::cout << "Start: " << range.start << ", End: " << range.end << std::endl;
     }
   }
+  T& operator[](size_t index) {
+    
+    
+    return data[index];
+  }
   
   
-  auto stop = std::chrono::high_resolution_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-  std::cout << "Time taken by Triple Vector: " 
-            << duration.count() << " microseconds" << std::endl;
+  size_t getSize() const {
+    return size;
+  }
   
   
-  FlatVector vectt(100, 100, 100000);
-  start = std::chrono::high_resolution_clock::now();
+private:
+  size_t size;
   
   
-  for (int i = 0; i < 100; ++i) {
-    for (int j = 0; j < 100; ++j) {
-      for (int k = 0; k < 100000; ++k) {
-        vectt(i, j, k) = i * j * k;
+  T data[Size];
+};
+
+
+
+
+
+
+CustomVect<Data, 400000> vect;
+
+
+for(int i = 0; i < liczba_watkow; ++i) {
+  int start = i * rozmiar_danych_do_przetworzenia_przez_watek;
+  int koniec = std::min(start + rozmiar_danych_do_przetworzenia_przez_watek, n);
+  
+  
+  
+  
+  pool.push([&](int start, int koniec, int threadIndex) {
+    for(int j = start; j < koniec; ++j) {
+      bool logical_value = !((exposure_longitude[j] > east_lon) || (exposure_longitude[j] < west_lon) || (exposure_latitude[j] < south_lat) || (exposure_latitude[j] > north_lat));
+      if(logical_value) {
+        
+        
+        vect[i] = ({exposure_latitude[j],exposure_longitude[j], exposure_insurance[j], exposure_reassurance[j] , exposure_sum_value[j]});//(i);
+        
+        
       }
     }
-  }
-  stop = std::chrono::high_resolution_clock::now();
-  duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-  std::cout << "Time taken by Flat Vector:   " 
-            << duration.count() << " microseconds" << std::endl;
-  
-  
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  std::uniform_int_distribution<> dis(0, 99);
-  std::uniform_int_distribution<> dis_k(0, 99999);
-  
-  
-  
-  
-  
-  start = std::chrono::high_resolution_clock::now();
-  for (int n = 0; n < 10000; ++n) { 
-    int i = dis(gen), j = dis(gen), k = dis_k(gen);
-    auto val = vect[i][j][k]; 
-  }
-  stop = std::chrono::high_resolution_clock::now();
-  auto durationVect = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-  
-  
-  start = std::chrono::high_resolution_clock::now();
-  for (int n = 0; n < 10000; ++n) { 
-    int i = dis(gen), j = dis(gen), k = dis_k(gen);
-    auto val = vectt(i, j, k); 
-  }
-  stop = std::chrono::high_resolution_clock::now();
-  auto durationFlatVect = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-  
-  
-  std::cout << "Random access time for Triple Vector: " << durationVect.count() << " microseconds" << std::endl;
-  std::cout << "Random access time for Flat Vector:   " << durationFlatVect.count() << " microseconds" << std::endl;
-  
-  
+    
+    
+    vect.push_ranges({30000*threadIndex, 30000*threadIndex+koniec});
+    
+    
+    
+    
+  }, start, koniec, i);
 }
+
+
+
+
+pool.wait();
+
+
+
+
+auto end = std::chrono::high_resolution_clock::now();
+std::chrono::duration<double> elapsed = end - start;
+Rcpp::Rcout << "ThreadPool time: " << elapsed.count() << " s\n";
