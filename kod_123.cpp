@@ -1,5 +1,3 @@
-
-
 auto start = std::chrono::high_resolution_clock::now();
 
 
@@ -58,8 +56,6 @@ public:
   size_t getSize() const {
     return size;
   }
-  
-  
 private:
   size_t size;
   
@@ -114,3 +110,5 @@ pool.wait();
 auto end = std::chrono::high_resolution_clock::now();
 std::chrono::duration<double> elapsed = end - start;
 Rcpp::Rcout << "ThreadPool time: " << elapsed.count() << " s\n";
+
+
