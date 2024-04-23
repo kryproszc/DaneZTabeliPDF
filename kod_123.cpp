@@ -1,85 +1,171 @@
-exponsure_longitude<-list()
-  exponsure_latitude<-list()
-  exponsure_sum_value<-list()
-  exponsure_insurance<-list()
-  exponsure_reassurance<-list()
-  for(woj in 1:17){
-    exponsure_longitude[[woj]]<-list()
-    exponsure_latitude[[woj]]<-list()
-    exponsure_sum_value[[woj]]<-list()
-    exponsure_insurance[[woj]]<-list()
-    exponsure_reassurance[[woj]]<-list()
-    for(month in 1:12){
-      n_num<-runif(1,100000,2000000)
-      exponsure_latitude[[woj]][[month]]<-runif(n_num,49.0,54.50)
-      exponsure_longitude[[woj]][[month]]<-runif(n_num,16.07,24.09)
-      exponsure_sum_value[[woj]][[month]]<-runif(n_num,2000,500000)
-      exponsure_insurance[[woj]][[month]]<-round(runif(n_num,0,3),0)
-      exponsure_reassurance[[woj]][[month]]<-round(runif(n_num,0,3),0)
+#include <wx/wx.h>
+#include <wx/filedlg.h>
+#include <wx/splitter.h>
+
+class MyApp : public wxApp {
+public:
+  virtual bool OnInit() override;
+};
+
+class MyFrame : public wxFrame {
+public:
+  MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
+  
+private:
+  void OnStartButtonClicked(wxCommandEvent& event);
+  void OnIncludeAllButtonClicked(wxCommandEvent& event);
+  void OnBrowseButtonClicked(wxCommandEvent& event);
+  void OnLoadDataButtonClicked(wxCommandEvent& event); 
+  
+  wxTextCtrl* pathTextCtrl;
+  wxComboBox* insurerComboBox;
+  wxCheckBox* renewalCheckBox;
+  wxTextCtrl* simulationsTextCtrl;
+  wxTextCtrl* minSizeTextCtrl;
+  wxTextCtrl* disasterDamageTextCtrl;
+  wxButton* startButton;
+  wxTextCtrl* outputTextCtrl; 
+  
+  wxDECLARE_EVENT_TABLE();
+};
+
+enum {
+  ID_BUTTON_START = 10001,
+  ID_BUTTON_INCLUDE_ALL = 10002,
+  ID_BUTTON_BROWSE = 10003,
+  ID_BUTTON_LOAD_DATA = 10004 
+};
+
+wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
+  EVT_BUTTON(ID_BUTTON_START, MyFrame::OnStartButtonClicked)
+  EVT_BUTTON(ID_BUTTON_INCLUDE_ALL, MyFrame::OnIncludeAllButtonClicked)
+  EVT_BUTTON(ID_BUTTON_BROWSE, MyFrame::OnBrowseButtonClicked)
+  EVT_BUTTON(ID_BUTTON_LOAD_DATA, MyFrame::OnLoadDataButtonClicked) 
+  wxEND_EVENT_TABLE()
+  
+  wxIMPLEMENT_APP(MyApp);
+
+bool MyApp::OnInit() {
+  MyFrame* frame = new MyFrame("Proste GUI w wxWidgets", wxDefaultPosition, wxSize(1200, 1000));
+  frame->Show(true);
+  return true;
+}
+
+MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
+  : wxFrame(nullptr, wxID_ANY, title, pos, size) {
+  auto* splitter = new wxSplitterWindow(this, wxID_ANY);
+  wxPanel* leftPanel = new wxPanel(splitter, wxID_ANY);
+  wxPanel* rightPanel = new wxPanel(splitter, wxID_ANY);
+  
+  wxBoxSizer* vbox = new wxBoxSizer(wxVERTICAL);
+  leftPanel->SetSizer(vbox); 
+  
+  vbox->Add(new wxStaticText(leftPanel, wxID_ANY, wxT("Podaj úcieŅkÍ z danymi:")), 0, wxLEFT | wxTOP, 10);
+  pathTextCtrl = new wxTextCtrl(leftPanel, wxID_ANY);
+  vbox->Add(pathTextCtrl, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
+  wxButton* browseButton = new wxButton(leftPanel, ID_BUTTON_BROWSE, wxT("PrzeglĻdaj..."));
+  vbox->Add(browseButton, 0, wxLEFT | wxTOP, 10);
+  
+  vbox->Add(new wxStaticText(leftPanel, wxID_ANY, wxT("Wybierz ubezpieczyciela:")), 0, wxLEFT | wxTOP, 10);
+  insurerComboBox = new wxComboBox(leftPanel, wxID_ANY);
+  insurerComboBox->Append("Ubezpieczyciel A");
+  insurerComboBox->Append("Ubezpieczyciel B");
+  vbox->Add(insurerComboBox, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
+  
+  wxButton* includeAllButton = new wxButton(leftPanel, ID_BUTTON_INCLUDE_ALL, wxT("UwzglÍdnij wszystkich"));
+  vbox->Add(includeAllButton, 0, wxLEFT | wxTOP, 10);
+  
+  renewalCheckBox = new wxCheckBox(leftPanel, wxID_ANY, wxT("Odnowienia"));
+  vbox->Add(renewalCheckBox, 0, wxLEFT | wxTOP, 10);
+  
+  wxButton* loadDataButton = new wxButton(leftPanel, ID_BUTTON_LOAD_DATA, wxT("Wczytaj dane"));
+  vbox->Add(loadDataButton, 0, wxLEFT | wxTOP, 10);
+  
+  vbox->Add(new wxStaticText(leftPanel, wxID_ANY, wxT("Iloúś symulacji:")), 0, wxLEFT | wxTOP, 10);
+  simulationsTextCtrl = new wxTextCtrl(leftPanel, wxID_ANY);
+  vbox->Add(simulationsTextCtrl, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
+  
+  vbox->Add(new wxStaticText(leftPanel, wxID_ANY, wxT("Wielkoúś minimalna:")), 0, wxLEFT | wxTOP, 10);
+  minSizeTextCtrl = new wxTextCtrl(leftPanel, wxID_ANY);
+  vbox->Add(minSizeTextCtrl, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
+  
+  vbox->Add(new wxStaticText(leftPanel, wxID_ANY, wxT("Wielkoúś szkody katastrofy:")), 0, wxLEFT | wxTOP, 10);
+  disasterDamageTextCtrl = new wxTextCtrl(leftPanel, wxID_ANY);
+  vbox->Add(disasterDamageTextCtrl, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
+  
+  startButton = new wxButton(leftPanel, ID_BUTTON_START, wxT("Start obliczeŮ"));
+  vbox->Add(startButton, 0, wxLEFT | wxTOP, 10);
+  
+  
+  
+  outputTextCtrl = new wxTextCtrl(rightPanel, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY);
+  wxBoxSizer* vboxRight = new wxBoxSizer(wxVERTICAL);
+  vboxRight->Add(outputTextCtrl, 1, wxEXPAND | wxALL, 5);
+  rightPanel->SetSizer(vboxRight); 
+  
+  splitter->SplitVertically(leftPanel, rightPanel, 350); 
+  splitter->SetSashGravity(0.5); 
+  splitter->SetMinimumPaneSize(20); 
+}
+
+void MyFrame::OnStartButtonClicked(wxCommandEvent& event) {
+  
+  wxString info;
+  info << wxT("ĆcieŅka z danymi: ") << pathTextCtrl->GetValue() << wxT("\n")
+       << wxT("Ubezpieczyciel: ") << insurerComboBox->GetValue() << wxT("\n")
+       << wxT("Odnowienia: ") << (renewalCheckBox->IsChecked() ? wxT("Tak") : wxT("Nie")) << wxT("\n")
+       << wxT("Iloúś symulacji: ") << simulationsTextCtrl->GetValue() << wxT("\n")
+       << wxT("Minimalna wielkoúś: ") << minSizeTextCtrl->GetValue() << wxT("\n")
+       << wxT("Wielkoúś szkody katastrofy: ") << disasterDamageTextCtrl->GetValue();
+  
+  
+  wxMessageDialog dialog(nullptr, info, wxT("Potwierdzenie danych"), wxYES_NO | wxICON_QUESTION);
+  if (dialog.ShowModal() == wxID_YES) {
+    
+    
+    int totalSteps = 100; 
+    
+    for (int step = 1; step <= totalSteps; step++) {
       
-    }
-  }
-  
-  len<-c()
-    i = 0
-  for(woj in 1:17){
-    for(month in 1:12){
-      i=i+1
-      len[i]<-length(exponsure_latitude[[woj]][[month]])
-    }}
-  
-#prawdopodobienstwa wybuchow pozarow
-  list_list_wyb<-c()
-    for(woj in 1:17){
-      list_list_wyb[[woj]]<-runif(12,5.44e-05,9.44e-05)
+      wxMilliSleep(50); 
+      
+      
+      double percentageDone = (double(step) / totalSteps) * 100;
+      outputTextCtrl->SetValue(wxString::Format("Wykonano %.0f%% obliczeŮ.\n", percentageDone));
+      
+      wxYield(); 
     }
     
-#wielkosc pozaru
-    wielkosc_pozaru<-c()
-      for(i in 1:2){
-        wielkosc_pozaru[[i]]<-runif(5000,0,1)
-      }
-      
-#pawdopoodbienstwo rozprzestrzenienia
-      fire_spread_prob_vec<-list()
-        
-        fire_spread_prob_vec[[1]]<-runif(9,0.009,0.2)
-        fire_spread_prob_vec[[2]]<-runif(9,0.01,0.2)
-        fire_spread_prob_vec[[3]]<-runif(9,0.01,0.15)
-        fire_spread_prob_vec[[4]]<-runif(9,0.08,0.4)
-        
-        conditional_mean_trend_parameters<-c(0.14,0.44)
-        conditional_Cov<-c(1.25,2.29)
-        
-        
-#reasekuracja
-        fakultatywna_input_num<-c()
-          fakultatywna_input_num[[1]]<-c(0,1,2,3)
-          fakultatywna_input_num[[2]]<-c(0,1,2,3)
-          fakultatywna_input_num[[3]]<-c(0,1,2,3)
-          fakultatywna_input_num[[4]]<-c(0,1,2,3)
-          
-          fakultatywna_input_val<-list()
-          for( i in 1:4){
-            fakultatywna_input_val[[i]]<-list()
-            for(j in 1:4){
-              fakultatywna_input_val[[i]][[j]]<-c(0.2,10000000)
-              fakultatywna_input_val[[i]][[j]]<-c(0.4,10000000)
-              fakultatywna_input_val[[i]][[j]]<-c(0.2,10000000)
-              fakultatywna_input_val[[i]][[j]]<-c(0.8,10000000)
-            }
-          }
-          
-          obligatoryjna_input_risk<-list()
-            obligatoryjna_input_risk[[1]]<-c(2500000,10000000,1,1)
-            obligatoryjna_input_risk[[2]]<-c(2500000,10000000,1,1)
-            obligatoryjna_input_risk[[3]]<-c(2500000,10000000,1,1)
-            obligatoryjna_input_risk[[4]]<-c(2500000,10000000,1,1)
-            
-            obligatoryjna_input_event<-list()
-            obligatoryjna_input_event[[1]]<-c(25000000,100000000,1,1)
-            obligatoryjna_input_event[[2]]<-c(25000000,100000000,1,1)
-            obligatoryjna_input_event[[3]]<-c(25000000,100000000,1,1)
-            obligatoryjna_input_event[[4]]<-c(25000000,100000000,1,1)
-            obligatoryjna_input_event
-            
+    
+    outputTextCtrl->AppendText("Obliczenia zakoŮczone.\n");
+  }
+  else {
+    
+  }
+}
+
+void MyFrame::OnIncludeAllButtonClicked(wxCommandEvent& event) {
+  insurerComboBox->SetValue("Wybierz wszystkich"); 
+}
+
+void MyFrame::OnBrowseButtonClicked(wxCommandEvent& event) {
+  wxFileDialog openFileDialog(this, _("Wybierz plik"), "", "",
+                              "Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+  if (openFileDialog.ShowModal() == wxID_CANCEL)
+    return;     
+  
+  
+  pathTextCtrl->SetValue(openFileDialog.GetPath());
+}
+
+void MyFrame::OnLoadDataButtonClicked(wxCommandEvent& event) {
+  wxFileDialog openFileDialog(this, _("Wybierz plik z danymi"), "", "",
+                              "Pliki danych (*.dat)|*.dat|Wszystkie pliki (*.*)|*.*", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+  if (openFileDialog.ShowModal() == wxID_CANCEL) {
+    return; 
+  }
+  
+  
+  wxString filePath = openFileDialog.GetPath();
+  outputTextCtrl->AppendText(wxString::Format("Wczytano plik: %s\n", filePath));
+}
