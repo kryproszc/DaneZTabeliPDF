@@ -1,44 +1,61 @@
-# app.R
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <random>
+#include <ctime>
 
-library(shiny)
+using namespace std;
 
-ui <- fluidPage(
-  titlePanel("Miejsca zerowe funkcji kwadratowej"),
-  
-  sidebarLayout(
-    sidebarPanel(
-      numericInput("a", "Podaj współczynnik a:", value = 1),
-      numericInput("b", "Podaj współczynnik b:", value = 0),
-      numericInput("c", "Podaj współczynnik c:", value = 0),
-      actionButton("calculate", "Oblicz miejsca zerowe")
-    ),
-    mainPanel(
-      verbatimTextOutput("result")
-    )
-  )
-)
+int main() {
+    // Zagnieżdżony wektor pozaryRozprzestrzeniony zagnieżdżony z 5 innymi wektorami
+    vector<vector<double>> pozaryRozprzestrzeniony = {
+        {1.0, 2.0, 3.0, 4.0, 5.0},
+        {6.0, 7.0, 8.0, 9.0, 10.0},
+        {11.0, 12.0, 13.0, 14.0, 15.0},
+        {16.0, 17.0, 18.0, 19.0, 20.0},
+        {21.0, 22.0, 23.0, 24.0, 25.0}
+    };
 
-server <- function(input, output) {
-  observeEvent(input$calculate, {
-    a <- input$a
-    b <- input$b
-    c <- input$c
-    
-    delta <- b^2 - 4*a*c
-    if (delta < 0) {
-      result <- "Funkcja nie ma miejsc zerowych."
-    } else if (delta == 0) {
-      result <- paste("Miejsce zerowe funkcji:", -b / (2*a))
-    } else {
-      root1 <- (-b + sqrt(delta)) / (2*a)
-      root2 <- (-b - sqrt(delta)) / (2*a)
-      result <- paste("Miejsca zerowe funkcji:", root1, root2)
+    // Inicjalizacja generatora liczb losowych
+    mt19937 gen(static_cast<unsigned>(time(0)));
+    uniform_real_distribution<double> dis(0.0, 100.0);
+
+    // Wektory do przechowywania wyników
+    vector<vector<double>> pozaryRozprzestrzeniony_out;
+    vector<double> val_brutto_vector;
+
+    // Iterujemy 100 razy
+    for (int i = 0; i < 100; ++i) {
+        // Wyznacz losową liczbę val_brutto
+        double val_brutto = dis(gen);
+
+        if (i < 50) {
+            // W pierwszych 50 iteracjach dodajemy wartości do wektorów
+            pozaryRozprzestrzeniony_out.push_back(pozaryRozprzestrzeniony);
+            val_brutto_vector.push_back(val_brutto);
+        } else {
+            // W pozostałych iteracjach sprawdzamy, czy val_brutto jest większe od któregoś z elementów w val_brutto_vector
+            auto min_val_iter = min_element(val_brutto_vector.begin(), val_brutto_vector.end());
+            if (val_brutto > *min_val_iter) {
+                // Jeśli val_brutto jest większe, usuwamy najmniejszą wartość z val_brutto_vector
+                val_brutto_vector.erase(min_val_iter);
+                // Znajdujemy indeks najmniejszej wartości i wstawiamy nowy wektor pozaryRozprzestrzeniony
+                auto min_idx = distance(val_brutto_vector.begin(), min_val_iter);
+                pozaryRozprzestrzeniony_out[min_idx] = pozaryRozprzestrzeniony;
+                // Dodajemy nowe val_brutto do val_brutto_vector
+                val_brutto_vector.push_back(val_brutto);
+            }
+        }
     }
-    
-    output$result <- renderText({
-      result
-    })
-  })
-}
 
-shinyApp(ui = ui, server = server)
+    // Wyświetlenie wyników
+    cout << "Wektor pozaryRozprzestrzeniony_out:" << endl;
+    for (const auto& row : pozaryRozprzestrzeniony_out) {
+        for (const auto& val : row) {
+            cout << val << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
