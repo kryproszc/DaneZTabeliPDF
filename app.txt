@@ -1,54 +1,58 @@
-#include <QApplication>
-#include <QLabel>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <cmath>
+import os
+import csv
+import concurrent.futures
+from geopy.geocoders import Nominatim
 
-int main(int argc, char *argv[]) {
-    QApplication app(argc, argv);
+# Funkcja do geokodowania adresu
+def geocode_address(address):
+    geolocator = Nominatim(user_agent="geocoding_app")
+    location = geolocator.geocode(address)
+    if location:
+        return location.latitude, location.longitude
+    else:
+        return None, None
 
-    // Tworzenie okna głównego
-    QWidget window;
-    window.setWindowTitle("Kalkulator miejsc zerowych");
-    
-    // Tworzenie widgetów
-    QLabel label("Podaj współczynniki a, b i c:");
-    QLineEdit aLineEdit, bLineEdit, cLineEdit;
-    QPushButton calculateButton("Oblicz");
-    QLabel resultLabel;
+# Funkcja do przetwarzania pojedynczego pliku CSV
+def process_csv_file(input_file, output_folder):
+    filename = os.path.basename(input_file)
+    output_file = os.path.join(output_folder, filename)
 
-    // Utworzenie layoutu
-    QVBoxLayout layout(&window);
-    layout.addWidget(&label);
-    layout.addWidget(&aLineEdit);
-    layout.addWidget(&bLineEdit);
-    layout.addWidget(&cLineEdit);
-    layout.addWidget(&calculateButton);
-    layout.addWidget(&resultLabel);
+    with open(input_file, 'r', encoding='utf-8') as csv_input:
+        csv_reader = csv.DictReader(csv_input)
+        fieldnames = csv_reader.fieldnames + ['Latitude', 'Longitude']
 
-    // Połączenie sygnału kliknięcia przycisku z funkcją obliczającą
-    QObject::connect(&calculateButton, &QPushButton::clicked, [&]() {
-        // Pobranie współczynników z pól tekstowych
-        float a = aLineEdit.text().toFloat();
-        float b = bLineEdit.text().toFloat();
-        float c = cLineEdit.text().toFloat();
+        with open(output_file, 'w', newline='', encoding='utf-8') as csv_output:
+            csv_writer = csv.DictWriter(csv_output, fieldnames=fieldnames)
+            csv_writer.writeheader()
 
-        // Obliczenie miejsc zerowych
-        float delta = b * b - 4 * a * c;
-        if (delta > 0) {
-            float x1 = (-b + std::sqrt(delta)) / (2 * a);
-            float x2 = (-b - std::sqrt(delta)) / (2 * a);
-            resultLabel.setText(QString("Miejsca zerowe funkcji: x1 = %1, x2 = %2").arg(x1).arg(x2));
-        } else if (delta == 0) {
-            float x = -b / (2 * a);
-            resultLabel.setText(QString("Funkcja ma jedno podwójne miejsce zerowe: x = %1").arg(x));
-        } else {
-            resultLabel.setText("Funkcja nie ma miejsc zerowych");
-        }
-    });
+            # Obliczanie połowy dostępnych wątków
+            max_threads = int(concurrent.futures.thread._threads_queues._maxsize / 2)
 
-    window.show();
+            # Geokodowanie adresów równolegle z połową wątków
+            with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
+                future_to_row = {executor.submit(geocode_address, row['Address']): row for row in csv_reader}
+                for future in concurrent.futures.as_completed(future_to_row):
+                    row = future_to_row[future]
+                    latitude, longitude = future.result()
+                    row['Latitude'] = latitude
+                    row['Longitude'] = longitude
+                    csv_writer.writerow(row)
 
-    return app.exec();
-}
+# Główna funkcja
+def main():
+    input_folder = 'Przed_Geokodowaniem'
+    output_folder = 'Po_Geokodowaniu'
+
+    # Upewnienie się, że folder wyjściowy istnieje
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    # Przetwarzanie każdego pliku CSV w folderze wejściowym
+    for filename in os.listdir(input_folder):
+        if filename.endswith('.csv'):
+            input_file = os.path.join(input_folder, filename)
+            process_csv_file(input_file, output_folder)
+            print(f'Przetworzono plik: {filename}')
+
+if __name__ == "__main__":
+    main()
