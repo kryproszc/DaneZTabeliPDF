@@ -1,51 +1,44 @@
-import os
-import pandas as pd
-import concurrent.futures
-from geopy.geocoders import Nominatim
+# app.R
 
-# Funkcja do geokodowania adresu
-def geocode_address(address):
-    geolocator = Nominatim(user_agent="geocoding_app")
-    location = geolocator.geocode(address)
-    if location:
-        return location.latitude, location.longitude
-    else:
-        return None, None
+library(shiny)
 
-# Funkcja do geokodowania dataframe
-def geocode_dataframe(df):
-    df['Latitude'], df['Longitude'] = zip(*df['Adres'].apply(geocode_address))
-    return df
+ui <- fluidPage(
+  titlePanel("Miejsca zerowe funkcji kwadratowej"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      numericInput("a", "Podaj współczynnik a:", value = 1),
+      numericInput("b", "Podaj współczynnik b:", value = 0),
+      numericInput("c", "Podaj współczynnik c:", value = 0),
+      actionButton("calculate", "Oblicz miejsca zerowe")
+    ),
+    mainPanel(
+      verbatimTextOutput("result")
+    )
+  )
+)
 
-# Główna funkcja
-def main():
-    input_folder = 'Przed_Geokodowaniem'
-    output_folder = 'Po_Geokodowaniu'
+server <- function(input, output) {
+  observeEvent(input$calculate, {
+    a <- input$a
+    b <- input$b
+    c <- input$c
+    
+    delta <- b^2 - 4*a*c
+    if (delta < 0) {
+      result <- "Funkcja nie ma miejsc zerowych."
+    } else if (delta == 0) {
+      result <- paste("Miejsce zerowe funkcji:", -b / (2*a))
+    } else {
+      root1 <- (-b + sqrt(delta)) / (2*a)
+      root2 <- (-b - sqrt(delta)) / (2*a)
+      result <- paste("Miejsca zerowe funkcji:", root1, root2)
+    }
+    
+    output$result <- renderText({
+      result
+    })
+  })
+}
 
-    # Upewnienie się, że folder wyjściowy istnieje
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
-
-    # Przetwarzanie każdego pliku CSV w folderze wejściowym
-    for filename in os.listdir(input_folder):
-        if filename.endswith('.csv'):
-            input_file = os.path.join(input_folder, filename)
-            output_file = os.path.join(output_folder, filename)
-
-            # Wczytanie danych do dataframe
-            df = pd.read_csv(input_file)
-
-            # Obliczenie połowy dostępnych wątków
-            max_threads = int(concurrent.futures.thread._threads_queues._maxsize / 2)
-
-            # Geokodowanie adresów równolegle z połową wątków
-            with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
-                dfs = executor.map(geocode_dataframe, [df])
-
-            # Zapis danych do pliku CSV
-            for df in dfs:
-                df.to_csv(output_file, index=False)
-                print(f'Przetworzono plik: {filename}')
-
-if __name__ == "__main__":
-    main()
+shinyApp(ui = ui, server = server)
