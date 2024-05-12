@@ -1,5 +1,5 @@
 import os
-import csv
+import pandas as pd
 import concurrent.futures
 from geopy.geocoders import Nominatim
 
@@ -12,31 +12,10 @@ def geocode_address(address):
     else:
         return None, None
 
-# Funkcja do przetwarzania pojedynczego pliku CSV
-def process_csv_file(input_file, output_folder):
-    filename = os.path.basename(input_file)
-    output_file = os.path.join(output_folder, filename)
-
-    with open(input_file, 'r', encoding='utf-8') as csv_input:
-        csv_reader = csv.DictReader(csv_input)
-        fieldnames = csv_reader.fieldnames + ['Latitude', 'Longitude']
-
-        with open(output_file, 'w', newline='', encoding='utf-8') as csv_output:
-            csv_writer = csv.DictWriter(csv_output, fieldnames=fieldnames)
-            csv_writer.writeheader()
-
-            # Obliczanie połowy dostępnych wątków
-            max_threads = int(concurrent.futures.thread._threads_queues._maxsize / 2)
-
-            # Geokodowanie adresów równolegle z połową wątków
-            with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
-                future_to_row = {executor.submit(geocode_address, row['Address']): row for row in csv_reader}
-                for future in concurrent.futures.as_completed(future_to_row):
-                    row = future_to_row[future]
-                    latitude, longitude = future.result()
-                    row['Latitude'] = latitude
-                    row['Longitude'] = longitude
-                    csv_writer.writerow(row)
+# Funkcja do geokodowania dataframe
+def geocode_dataframe(df):
+    df['Latitude'], df['Longitude'] = zip(*df['Adres'].apply(geocode_address))
+    return df
 
 # Główna funkcja
 def main():
@@ -51,8 +30,22 @@ def main():
     for filename in os.listdir(input_folder):
         if filename.endswith('.csv'):
             input_file = os.path.join(input_folder, filename)
-            process_csv_file(input_file, output_folder)
-            print(f'Przetworzono plik: {filename}')
+            output_file = os.path.join(output_folder, filename)
+
+            # Wczytanie danych do dataframe
+            df = pd.read_csv(input_file)
+
+            # Obliczenie połowy dostępnych wątków
+            max_threads = int(concurrent.futures.thread._threads_queues._maxsize / 2)
+
+            # Geokodowanie adresów równolegle z połową wątków
+            with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
+                dfs = executor.map(geocode_dataframe, [df])
+
+            # Zapis danych do pliku CSV
+            for df in dfs:
+                df.to_csv(output_file, index=False)
+                print(f'Przetworzono plik: {filename}')
 
 if __name__ == "__main__":
     main()
