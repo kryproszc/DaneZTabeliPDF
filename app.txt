@@ -5,9 +5,9 @@ library(plotly)
 library(readr)
 
 # Funkcja do wczytywania i analizy danych
-wczytaj_dane <- function(plik, kolumna) {
+wczytaj_dane <- function(folder, plik, kolumna) {
   # Wczytanie danych z wybranego pliku CSV
-  dane <- read_csv(plik)
+  dane <- read_csv(file.path(folder, plik))
   
   # Wybór kolumny do analizy
   kolumna_analiza <- switch(kolumna,
@@ -41,7 +41,8 @@ ui <- fluidPage(
   titlePanel("Analiza danych CSV"),
   sidebarLayout(
     sidebarPanel(
-      fileInput("plik", "Wybierz plik CSV"),
+      fileInput("folder", "Wybierz folder z plikami CSV"),
+      selectInput("plik", "Nazwy plików", choices = NULL),
       selectInput("kolumna", "Rodzaj analizy", choices = c("Brutto", "Brutto_kat", "Netto", "Netto_kat"))
     ),
     mainPanel(
@@ -56,35 +57,40 @@ ui <- fluidPage(
 
 # Definicja serwera aplikacji Shiny
 server <- function(input, output) {
+  # Funkcja wywoływana po wybraniu folderu
+  observeEvent(input$folder, {
+    folder <- input$folder$datapath
+    
+    # Wczytanie nazw plików CSV z folderu
+    pliki <- list.files(path = folder, pattern = "\\.csv$", full.names = TRUE)
+    nazwy_plikow <- tools::file_path_sans_ext(basename(pliki))
+    updateSelectInput(session, "plik", choices = nazwy_plikow)
+  })
+  
   # Funkcja wywoływana po wybraniu pliku i kolumny
   dane_wykresy <- reactive({
-    req(input$plik)
-    wczytaj_dane(input$plik$datapath, input$kolumna)
+    if (!is.null(input$plik) & !is.null(input$kolumna)) {
+      wczytaj_dane(input$folder, paste0(input$plik, ".csv"), input$kolumna)
+    }
   })
   
   # Wyświetlenie tabeli kwantyli
   output$tabela_kwantyli <- renderTable({
-    if (is.null(input$plik)) {
-      return("Wczytaj dane")
-    } else {
+    if (!is.null(dane_wykresy())) {
       dane_wykresy()$tabela_kwantyli
     }
   })
   
   # Wyświetlenie wykresu kwantyli
   output$wykres_kwantyli <- renderPlotly({
-    if (is.null(input$plik)) {
-      return(NULL)
-    } else {
+    if (!is.null(dane_wykresy())) {
       dane_wykresy()$wykres_kwantyli
     }
   })
   
   # Wyświetlenie histogramu
   output$histogram <- renderPlotly({
-    if (is.null(input$plik)) {
-      return("Wczytaj dane")
-    } else {
+    if (!is.null(dane_wykresy())) {
       dane_wykresy()$histogram
     }
   })
