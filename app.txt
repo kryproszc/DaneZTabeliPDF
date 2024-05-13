@@ -1,324 +1,100 @@
-#include "csvstream.hpp"
-#include <iostream>
-#include <string>
-#include <map>
-#include <chrono>
-#include <vector>
-#include <filesystem>
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(readr)
 
-namespace fs = std::filesystem;
-
-const std::string FOLDER_REAS = "csv\\Reasekuracja\\";
-const std::string FOLDER_UBEZP = "csv\\Ubezpieczyciele\\";
-std::vector<std::vector<long double>> list_list_wyb(17);
-
-void processPrPozaru(const std::string& filename)
-{
-    csvstream csvin(fs::current_path().string() + "\\" +filename);
-
-    std::map<std::string, std::string> row;
-
-    try
-    {
-        while (csvin >> row)
-        {
-            list_list_wyb[0].emplace_back(std::stod(row["1"]));
-            list_list_wyb[1].emplace_back(std::stod(row["2"]));
-            list_list_wyb[2].emplace_back(std::stod(row["3"]));
-            list_list_wyb[3].emplace_back(std::stod(row["4"]));
-            list_list_wyb[4].emplace_back(std::stod(row["5"]));
-            list_list_wyb[5].emplace_back(std::stod(row["6"]));
-            list_list_wyb[6].emplace_back(std::stod(row["7"]));
-            list_list_wyb[7].emplace_back(std::stod(row["8"]));
-            list_list_wyb[8].emplace_back(std::stod(row["9"]));
-            list_list_wyb[9].emplace_back(std::stod(row["10"]));
-            list_list_wyb[10].emplace_back(std::stod(row["11"]));
-            list_list_wyb[11].emplace_back(std::stod(row["12"]));
-            list_list_wyb[12].emplace_back(std::stod(row["13"]));
-            list_list_wyb[13].emplace_back(std::stod(row["14"]));
-            list_list_wyb[14].emplace_back(std::stod(row["15"]));
-            list_list_wyb[15].emplace_back(std::stod(row["16"]));
-            list_list_wyb[16].emplace_back(std::stod(row["17"]));
-        }
-
-        std::cout << list_list_wyb[0][0] << std::endl;
-    }
-    catch (const std::invalid_argument& e)
-    {
-        std::cerr << "Error: Invalid argument for stoi or stod conversion 2." << std::endl;
-    }
+# Funkcja do wczytywania i analizy danych
+wczytaj_dane <- function(folder, plik, kolumna) {
+  # Wczytanie danych z wybranego pliku CSV
+  dane <- read_csv(file.path(folder, plik))
+  
+  # Wybór kolumny do analizy
+  kolumna_analiza <- switch(kolumna,
+                             "Brutto" = Brutto,
+                             "Brutto_kat" = Brutto_kat,
+                             "Netto" = Netto,
+                             "Netto_kat" = Netto_kat)
+  
+  # Obliczenie kwantyli
+  kwantyle <- quantile(dane[[kolumna_analiza]])
+  
+  # Tabela z kwantylami
+  tabela_kwantyli <- data.frame(Kwantyl = names(kwantyle), Wartosc = as.numeric(kwantyle))
+  
+  # Wykres kwantyli
+  wykres_kwantyli <- ggplot(data = tabela_kwantyli, aes(x = Kwantyl, y = Wartosc)) +
+    geom_point() +
+    labs(title = "Wykres kwantyli", x = "Kwantyl", y = "Wartość kwantyla")
+  
+  # Histogram
+  histogram <- ggplot(data = dane, aes(x = !!sym(kolumna_analiza))) +
+    geom_histogram(binwidth = 50, fill = "skyblue", color = "black") +
+    labs(title = "Histogram", x = kolumna, y = "Liczba obserwacji")
+  
+  # Zwrócenie listy zawierającej wykresy i tabelę
+  return(list(tabela_kwantyli = tabela_kwantyli, wykres_kwantyli = wykres_kwantyli, histogram = histogram))
 }
 
-std::vector<std::vector<long double>> fire_spread_prob_vec(4);
-std::vector<long double> conditional_mean_trend_parameters(2);
-std::vector<long double> conditional_Cov(2);
+# Definicja interfejsu aplikacji Shiny
+ui <- fluidPage(
+  titlePanel("Analiza danych CSV"),
+  sidebarLayout(
+    sidebarPanel(
+      fileInput("folder", "Wybierz folder z plikami CSV"),
+      selectInput("plik", "Nazwy plików", choices = NULL),
+      selectInput("kolumna", "Rodzaj analizy", choices = c("Brutto", "Brutto_kat", "Netto", "Netto_kat"))
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Tabela kwantyli", tableOutput("tabela_kwantyli")),
+        tabPanel("Wykres kwantyli", plotlyOutput("wykres_kwantyli")),
+        tabPanel("Histogram", plotlyOutput("histogram"))
+      )
+    )
+  )
+)
 
-void processPrRozprzestrzenienia(const std::string& filename)
-{
-    csvstream csvin(fs::current_path().string() + "\\" +filename);
-
-    std::map<std::string, std::string> row;
-
-    try
-    {
-        int cnt = 0;
-        while (csvin >> row)
-        {
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["0"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(0,25]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(25,50]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(50,75]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(75,100]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(100,125]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(125,150]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(150,175]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(175,200]"]));
-
-            if (cnt == 0)
-            {
-                conditional_mean_trend_parameters[0] = (std::stod(row["a1"]));
-                conditional_mean_trend_parameters[1] = (std::stod(row["b1"]));
-
-                conditional_Cov[0] = (std::stod(row["a2"]));
-                conditional_Cov[1] = (std::stod(row["b2"]));
-            }
-            cnt++;
-        }
-
-        std::cout << conditional_mean_trend_parameters[0] << std::endl;
-
-        // for (const auto &inner_vec : fire_spread_prob_vec) {
-        // for (const auto &value : inner_vec) {
-        //     std::cout << value << " ";
-        // }
-        // std::cout << std::endl;
+# Definicja serwera aplikacji Shiny
+server <- function(input, output) {
+  # Funkcja wywoływana po wybraniu folderu
+  observeEvent(input$folder, {
+    folder <- input$folder$datapath
+    
+    # Wczytanie nazw plików CSV z folderu
+    pliki <- list.files(path = folder, pattern = "\\.csv$", full.names = TRUE)
+    nazwy_plikow <- tools::file_path_sans_ext(basename(pliki))
+    updateSelectInput(session, "plik", choices = nazwy_plikow)
+  })
+  
+  # Funkcja wywoływana po wybraniu pliku i kolumny
+  dane_wykresy <- reactive({
+    if (!is.null(input$plik) & !is.null(input$kolumna)) {
+      wczytaj_dane(input$folder, paste0(input$plik, ".csv"), input$kolumna)
     }
-
-    catch (const std::invalid_argument& e)
-    {
-        std::cerr << "Error: Invalid argument for stoi or stod conversion 2." << std::endl;
+  })
+  
+  # Wyświetlenie tabeli kwantyli
+  output$tabela_kwantyli <- renderTable({
+    if (!is.null(dane_wykresy())) {
+      dane_wykresy()$tabela_kwantyli
     }
+  })
+  
+  # Wyświetlenie wykresu kwantyli
+  output$wykres_kwantyli <- renderPlotly({
+    if (!is.null(dane_wykresy())) {
+      dane_wykresy()$wykres_kwantyli
+    }
+  })
+  
+  # Wyświetlenie histogramu
+  output$histogram <- renderPlotly({
+    if (!is.null(dane_wykresy())) {
+      dane_wykresy()$histogram
+    }
+  })
 }
 
-std::vector<std::vector<double>> wielkosc_pozaru(2);
-void processPrWielkoscPozaru(const std::string& filename)
-{
-
-    csvstream csvin(fs::current_path().string() + "\\" +filename);
-
-    std::map<std::string, std::string> row;
-
-    while (csvin >> row)
-    {
-        wielkosc_pozaru[0].emplace_back(std::stod(row["Rozmiar"]));
-        wielkosc_pozaru[1].emplace_back(std::stod(row["Prawdopodobienstwo"]));
-    }
-
-    std::cout << wielkosc_pozaru[0][0] << std::endl;
-}
-
-int liczba_ubezp = 2;
-std::vector<std::vector<double>> obligatoryjna_input_risk;
-std::vector<std::vector<double>> obligatoryjna_input_event;
-
-void processOblig(const std::vector<std::string>& filename)
-{
-
-    for (int i = 0; i < filename.size(); i++)
-    {
-        obligatoryjna_input_risk.push_back(std::vector<double>());
-        obligatoryjna_input_event.push_back(std::vector<double>());
-
-        for (int j = 0; j < 4; j++)
-        {
-            obligatoryjna_input_risk[i].push_back(0);
-            obligatoryjna_input_event[i].push_back(0);
-        }
-    }
-
-    for (int i = 0; i < filename.size(); i++)
-    {
-        csvstream csvin(fs::current_path().string() + "\\" +FOLDER_REAS + filename[i] + ".csv");
-
-        std::map<std::string, std::string> row;
-
-        int cnt = 0;
-        while (csvin >> row)
-        {
-            if (cnt == 0)
-            {
-                obligatoryjna_input_risk[i][3] = std::stod(row["Udzial (ryzyko)"]);
-            }
-            else
-            {
-                obligatoryjna_input_risk[i][2] = std::stod(row["Udzial (ryzyko)"]);
-            }
-            obligatoryjna_input_risk[i][0] = std::stod(row["Od (ryzyko)"]);
-            obligatoryjna_input_risk[i][1] = std::stod(row["Do (ryzyko)"]);
-            cnt++;
-            if (cnt == 2)
-                break;
-        }
-    }
-    std::cout << obligatoryjna_input_risk[0][0] << std::endl;
-}
-
-const int numRegions = 17;
-
-std::vector<std::vector<std::vector<long double>>> exponsure_longitude(numRegions);
-std::vector<std::vector<std::vector<long double>>> exponsure_latitude(numRegions);
-std::vector<std::vector<std::vector<int>>> exponsure_insurance(numRegions);
-std::vector<std::vector<std::vector<int>>> exponsure_reassurance(numRegions);
-std::vector<std::vector<std::vector<double>>> exponsure_sum_value(numRegions);
-
-int extractMonth(const std::string& date)
-{
-    std::istringstream dateStream(date);
-    std::string segment;
-    std::getline(dateStream, segment, '.');
-    std::getline(dateStream, segment, '.');
-    return std::stoi(segment);
-}
-
-void processRow(const std::string& startDate, const std::string& endDate, int region, double latitude, double longitude, int reassurance, double sumValue, int insurance)
-{
-    int startMonth = extractMonth(startDate) - 1;
-    int endMonth = extractMonth(endDate) - 1;
-
-    for (int month = startMonth; month <= endMonth; ++month)
-    {
-        exponsure_latitude[region][month].push_back(latitude);
-        exponsure_longitude[region][month].push_back(longitude);
-        exponsure_insurance[region][month].push_back(insurance);
-        exponsure_reassurance[region][month].push_back(reassurance);
-        exponsure_sum_value[region][month].push_back(sumValue);
-    }
-}
-
-void processBudynki(const std::vector<std::string>& filename)
-{
-
-    for (int i = 0; i < filename.size(); i++)
-    {
-        csvstream csvin(fs::current_path().string() + "\\" +FOLDER_UBEZP + filename[i] + ".csv");
-
-        std::map<std::string, std::string> row;
-
-        int id_ubezp = 0;
-        try
-        {
-            while (csvin >> row)
-            {
-                std::cout << std::stod(row["Szerokosc"]) << std::endl;
-                processRow(
-                    row["DataPoczatku"],
-                    row["DataKonca"],
-                    std::stoi(row["WojUjednolicone"]),
-                    std::stod(row["Szerokosc"]),
-                    std::stod(row["Dlugosc"]),
-                    std::stoi(row["ReasekuracjaF"]),
-                    std::stod(row["SumaUbezpieczenia"]),
-                    id_ubezp);
-            }
-        }
-        catch (const std::invalid_argument& e)
-        {
-            std::cerr << "Error: Invalid argument for stoi or stod conversion 1." << std::endl;
-        }
-    }
-}
-
-std::vector<std::vector<double>> fakultatywna_input_num;
-std::vector<std::vector<std::vector<double>>> fakultatywna_input_val;
-
-void print3DVector(const std::vector<std::vector<std::vector<double>>>& vec)
-{
-    for (const auto& matrix : vec)
-    {
-        for (const auto& row : matrix)
-        {
-            for (double element : row)
-            {
-                std::cout << element << " ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << "----" << std::endl;
-    }
-}
-
-void processReas(const std::vector<std::string>& filename)
-{
-
-    fakultatywna_input_num.resize(filename.size());
-    for (int i = 0; i < filename.size(); i++)
-    {
-        csvstream csvin(fs::current_path().string() + "\\" +FOLDER_REAS + filename[i] + ".csv");
-
-        std::map<std::string, std::string> row;
-
-        std::vector<std::vector<double>> first_outer_vector;
-
-        while (csvin >> row)
-        {
-            if ((row["ZachowekKwota"]) == "")
-            {
-                // [ numer ubezpieczyla = nazwa pliku ubezp zmapowana na numer ]
-                // powiedzmy pierwszy plik = pierwszy ubezpieczyciel // moze tu long double?
-                fakultatywna_input_num[i].push_back(std::stoi(row["Lp"]));
-                first_outer_vector.push_back({ std::stod(row["ZachowekProcent"]), std::stod(row["Pojemnosc"]) });
-            }
-            else
-            {
-                first_outer_vector.push_back({ std::stod(row["ZachowekKwota"]), std::stod(row["Pojemnosc"]) });
-            }
-        }
-
-        fakultatywna_input_val.push_back(first_outer_vector);
-    }
-
-    print3DVector(fakultatywna_input_val);
-}
-
-int main()
-{
-    std::setlocale(LC_ALL, "nb_NO.UTF-8");
-
-    for (int woj = 0; woj < 17; ++woj)
-    {
-        exponsure_longitude[woj].resize(12);
-        exponsure_latitude[woj].resize(12);
-        exponsure_insurance[woj].resize(12);
-        exponsure_reassurance[woj].resize(12);
-        exponsure_sum_value[woj].resize(12);
-    }
-
-    std::string line;
-    std::vector<std::string> fileNames;
-
-    std::cout << "Wprowadz nazwy plikow po spacji: ";
-    std::getline(std::cin, line);
-
-    std::istringstream iss(line);
-    std::string fileName;
-    while (iss >> fileName)
-    {
-        fileNames.push_back(fileName);
-    }
-
-    std::cout << "Indeksy przydzielone plikom:\n";
-    for (int i = 0; i < fileNames.size(); ++i)
-    {
-        std::cout << "Indeks " << i << ": " << fileNames[i] << std::endl;
-    }
-
-    processReas(fileNames);
-    processOblig(fileNames);
-    processBudynki(fileNames);
-
-    processPrPozaru("csv/Pr_pozaru.csv");
-    processPrRozprzestrzenienia("csv/pr_rozprzestrzenienia.csv");
-    processPrWielkoscPozaru("csv/pr_wielkosc_pozaru.csv");
-
-    return 0;
-}
+# Uruchomienie aplikacji Shiny
+shinyApp(ui = ui, server = server)
