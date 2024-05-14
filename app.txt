@@ -1,15 +1,18 @@
-df_miesiac <- data.frame(
-  miesiac_num = 1:12,
-  miesiac_string = c("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec",
-                     "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień")
+library(ggplot2)
+library(sf)
+poland <- map_data("world", region = "poland")
+df <- data.frame(
+  szerkosc = c(52.23, 51.75, 53.48, 54.37, 52.82),
+  dlugosc = c(21.01, 19.46, 20.72, 18.63, 20.00),
+  wartosc_ubezpieczenia = c(10000, 20000, 30000, 40000, 50000)
 )
+df_sf <- st_as_sf(df, coords = c("dlugosc", "szerkosc"), crs = 4326)
 
-df_pozary_rozprzestrzenione <- data.frame(
-  Miesiac = sample(1:12, 20, replace = TRUE) # Losowe wartości od 1 do 12
-)
+# Połączenie z danymi geograficznymi Polski
+df_with_poland <- st_intersection(df_sf, st_as_sf(poland))
 
-# Mapowanie liczb na miesiące
-df_pozary_rozprzestrzenione$Miesiac <- df_miesiac$miesiac_string[df_pozary_rozprzestrzenione$Miesiac]
-
-# Wyświetlenie danych
-print(df_pozary_rozprzestrzenione)
+ggplot(df_with_poland) +
+  geom_sf(aes(fill = wartosc_ubezpieczenia), color = "black") +
+  scale_fill_gradient(low = "blue", high = "red") +
+  labs(title = "Mapa Polski z intensywnością kolorów na podstawie wartości ubezpieczenia",
+       fill = "Wartość ubezpieczenia")
