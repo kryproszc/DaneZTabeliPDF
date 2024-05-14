@@ -1,17 +1,26 @@
-library(ggplot2)
+library(leaflet)
 
 # Przykładowe dane
 data <- data.frame(
-  szer_geogr = c(52.23, 51.75, 53.48, 54.37, 52.82),
-  dlug_geogr = c(21.01, 19.46, 20.72, 18.63, 20.00),
-  wart_ubezp = c(10000, 20000, 30000, 40000, 50000)
+  szerkosc = c(52.23, 51.75, 53.48, 54.37, 52.82),
+  dlugosc = c(21.01, 19.46, 20.72, 18.63, 20.00),
+  wartosc_ubezpieczenia = c(10000, 20000, 30000, 40000, 50000)
 )
 
-# Tworzenie mapy z wykorzystaniem ggplot2
-ggplot(data, aes(x = szer_geogr, y = dlug_geogr, fill = wart_ubezp)) +
-  geom_point(shape = 21, size = 5) +
-  scale_fill_gradient(low = "blue", high = "red") +
-  labs(title = "Mapa zaznaczająca wielkość wartości ubezpieczenia", 
-       x = "Szerokość geograficzna", 
-       y = "Długość geograficzna",
-       fill = "Wartość ubezpieczenia")
+# Tworzenie mapy z wykorzystaniem leaflet
+m <- leaflet(data) %>%
+  addTiles() %>%
+  addCircleMarkers(
+    lng = ~dlugosc,
+    lat = ~szerkosc,
+    color = ~colorQuantile("YlOrRd", wartosc_ubezpieczenia)(wartosc_ubezpieczenia),
+    radius = 10, # Stały rozmiar punktów
+    fillOpacity = 0.8,
+    popup = ~paste("Wartość ubezpieczenia:", wartosc_ubezpieczenia)
+  ) %>%
+  addLegend("bottomright", pal = colorQuantile("YlOrRd", data$wartosc_ubezpieczenia),
+            values = data$wartosc_ubezpieczenia,
+            title = "Wartość ubezpieczenia",
+            opacity = 1)
+
+m  # Wyświetlenie mapy
