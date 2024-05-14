@@ -1,117 +1,17 @@
-#include <iostream>
-#include <filesystem>
-#include <vector>
-#include <string>
+library(ggplot2)
 
-namespace fs = std::filesystem;
+# Przykładowe dane
+data <- data.frame(
+  szer_geogr = c(52.23, 51.75, 53.48, 54.37, 52.82),
+  dlug_geogr = c(21.01, 19.46, 20.72, 18.63, 20.00),
+  wart_ubezp = c(10000, 20000, 30000, 40000, 50000)
+)
 
-void displayCSVFiles(const std::string& folderPath) {
-    std::cout << "Pliki CSV w folderze " << folderPath << ":\n";
-    for (const auto& entry : fs::directory_iterator(folderPath)) {
-        if (entry.path().extension() == ".csv") {
-            std::cout << entry.path().filename() << '\n';
-        }
-    }
-}
-
-void getInsuranceCompanies(std::vector<std::string>& companies) {
-    std::string input;
-    std::cout << "Wypisz ubezpieczycieli (każdy ubezpieczyciel jest stringiem): ";
-    std::getline(std::cin >> std::ws, input);
-
-    // Rozdzielanie inputu na poszczególne ubezpieczycieli
-    std::string delimiter = ",";
-    size_t pos = 0;
-    while ((pos = input.find(delimiter)) != std::string::npos) {
-        companies.push_back(input.substr(0, pos));
-        input.erase(0, pos + delimiter.length());
-    }
-    companies.push_back(input); // Dodanie ostatniego elementu
-}
-
-void clearConsole() {
-    // Czyszczenie konsoli w zależności od systemu operacyjnego
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear");
-#endif
-}
-
-void inputAndDataProcessing() {
-    std::string folderPath;
-
-    std::cout << "Podaj adres do folderu: ";
-    std::cin >> folderPath;
-
-    displayCSVFiles(folderPath);
-
-    int year;
-    std::cout << "Wybierz rok analizy: ";
-    std::cin >> year;
-
-    std::vector<std::string> insuranceCompanies;
-    getInsuranceCompanies(insuranceCompanies);
-
-    clearConsole(); // Czyszczenie konsoli
-
-    std::string renewalsChoice;
-    std::cout << "Czy losować odnowienia (tak/nie): ";
-    std::cin >> renewalsChoice;
-
-    std::string choice;
-    std::cout << "Czy rozpocząć pobieranie danych (tak/nie): ";
-    std::cin >> choice;
-
-    if (choice == "tak" || choice == "Tak") {
-        std::cout << "Przechodzimy do kolejnej funkcji.\n";
-    } else {
-        std::cout << "Zakończono program.\n";
-        return;
-    }
-
-    // Tutaj możesz przekazać dane do drugiej funkcji lub wykonać odpowiednie operacje na danych
-}
-
-void simulation(int numSimulations, int catastrophicDamageLimit, int minDamageLevel) {
-    // Tutaj przeprowadź symulację na podstawie przekazanych danych
-    std::cout << "Przechodzimy do symulacji...\n";
-}
-
-int main() {
-    std::string choice;
-    do {
-        inputAndDataProcessing();
-
-        std::cout << "Czy kontynuować z symulacją (tak/nie): ";
-        std::cin >> choice;
-
-        if (choice == "tak" || choice == "Tak") {
-            int numSimulations;
-            std::cout << "Podaj ilość symulacji: ";
-            std::cin >> numSimulations;
-
-            int catastrophicDamageLimit;
-            std::cout << "Wskaż limit szkody katastroficznej: ";
-            std::cin >> catastrophicDamageLimit;
-
-            int minDamageLevel;
-            std::cout << "Wskaż poziom minimalnej szkody: ";
-            std::cin >> minDamageLevel;
-
-            std::string executeChoice;
-            std::cout << "Wykonaj obliczenia (tak/nie): ";
-            std::cin >> executeChoice;
-
-            if (executeChoice == "tak" || executeChoice == "Tak") {
-                simulation(numSimulations, catastrophicDamageLimit, minDamageLevel);
-            } else {
-                std::cout << "Zakończono program.\n";
-            }
-        } else {
-            std::cout << "Zakończono program.\n";
-        }
-    } while (choice == "tak" || choice == "Tak");
-
-    return 0;
-}
+# Tworzenie mapy z wykorzystaniem ggplot2
+ggplot(data, aes(x = szer_geogr, y = dlug_geogr, fill = wart_ubezp)) +
+  geom_point(shape = 21, size = 5) +
+  scale_fill_gradient(low = "blue", high = "red") +
+  labs(title = "Mapa zaznaczająca wielkość wartości ubezpieczenia", 
+       x = "Szerokość geograficzna", 
+       y = "Długość geograficzna",
+       fill = "Wartość ubezpieczenia")
