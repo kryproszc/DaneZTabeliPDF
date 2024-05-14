@@ -1,27 +1,379 @@
-library(ggplot2)
+#include "csvstream.hpp"
+#include <iostream>
+#include <string>
+#include <map>
+#include <chrono>
+#include <vector>
 
-# Przykładowe dane
-df <- data.frame(
-  kolumna = rnorm(1000) # Przyjmijmy, że interesuje nas kolumna z rozkładem normalnym
-)
+const std::string FOLDER_REAS = "csv/Reasekuracja/";
+const std::string FOLDER_UBEZP = "csv/Ubezpieczyciele/";
+std::vector<std::vector<long double>> list_list_wyb(17);
 
-# Wybierz nazwę kolumny
-nazwa_kolumny <- "kolumna"
+void processPrPozaru(const std::string &filename)
+{
+    csvstream csvin(filename);
 
-# Określ kwantyle
-wybrane_kwantyle <- c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 0.995)
-kwantyle <- quantile(df[[nazwa_kolumny]], probs = wybrane_kwantyle)
+    std::map<std::string, std::string> row;
 
-# Stwórz dataframe z wartościami kwantyli
-df_kwantyle <- data.frame(
-  kwantyl = wybrane_kwantyle,
-  wartosc = kwantyle
-)
+    try
+    {
+        while (csvin >> row)
+        {
+            list_list_wyb[0].emplace_back(std::stod(row["1"]));
+            list_list_wyb[1].emplace_back(std::stod(row["2"]));
+            list_list_wyb[2].emplace_back(std::stod(row["3"]));
+            list_list_wyb[3].emplace_back(std::stod(row["4"]));
+            list_list_wyb[4].emplace_back(std::stod(row["5"]));
+            list_list_wyb[5].emplace_back(std::stod(row["6"]));
+            list_list_wyb[6].emplace_back(std::stod(row["7"]));
+            list_list_wyb[7].emplace_back(std::stod(row["8"]));
+            list_list_wyb[8].emplace_back(std::stod(row["9"]));
+            list_list_wyb[9].emplace_back(std::stod(row["10"]));
+            list_list_wyb[10].emplace_back(std::stod(row["11"]));
+            list_list_wyb[11].emplace_back(std::stod(row["12"]));
+            list_list_wyb[12].emplace_back(std::stod(row["13"]));
+            list_list_wyb[13].emplace_back(std::stod(row["14"]));
+            list_list_wyb[14].emplace_back(std::stod(row["15"]));
+            list_list_wyb[15].emplace_back(std::stod(row["16"]));
+            list_list_wyb[16].emplace_back(std::stod(row["17"]));
+        }
 
-# Stwórz wykres
-ggplot(df_kwantyle, aes(x = kwantyl, y = wartosc)) +
-  geom_point() +
-  geom_line() +
-  labs(title = paste("Wykres kwantyli dla kolumny", nazwa_kolumny),
-       x = "Kwantyl",
-       y = "Wartość kwantyla")
+        // std::cout << list_list_wyb[0][0] << std::endl;
+    }
+    catch (const std::invalid_argument &e)
+    {
+        std::cerr << "Error: Invalid argument for stoi or stod conversion 2." << std::endl;
+    }
+}
+
+std::vector<std::vector<long double>> fire_spread_prob_vec(4);
+std::vector<long double> conditional_mean_trend_parameters(2);
+std::vector<long double> conditional_Cov(2);
+
+void processPrRozprzestrzenienia(const std::string &filename)
+{
+    csvstream csvin(filename);
+
+    std::map<std::string, std::string> row;
+
+    try
+    {
+        int cnt = 0;
+        while (csvin >> row)
+        {
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["0"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(0,25]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(25,50]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(50,75]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(75,100]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(100,125]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(125,150]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(150,175]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(175,200]"]));
+
+            if (cnt == 0)
+            {
+                conditional_mean_trend_parameters[0] = (std::stod(row["a1"]));
+                conditional_mean_trend_parameters[1] = (std::stod(row["b1"]));
+
+                conditional_Cov[0] = (std::stod(row["a2"]));
+                conditional_Cov[1] = (std::stod(row["b2"]));
+            }
+            cnt++;
+        }
+
+        // std::cout << conditional_mean_trend_parameters[0] << std::endl;
+
+        // for (const auto &inner_vec : fire_spread_prob_vec) {
+        // for (const auto &value : inner_vec) {
+        //     std::cout << value << " ";
+        // }
+        // std::cout << std::endl;
+    }
+
+    catch (const std::invalid_argument &e)
+    {
+        std::cerr << "Error: Invalid argument for stoi or stod conversion 2." << std::endl;
+    }
+}
+
+std::vector<std::vector<double>> wielkosc_pozaru(2);
+void processPrWielkoscPozaru(const std::string &filename)
+{
+
+    csvstream csvin(filename);
+
+    std::map<std::string, std::string> row;
+
+    while (csvin >> row)
+    {
+        wielkosc_pozaru[0].emplace_back(std::stod(row["Rozmiar"]));
+        wielkosc_pozaru[1].emplace_back(std::stod(row["Prawdopodobienstwo"]));
+    }
+
+    // std::cout << wielkosc_pozaru[0][0] << std::endl;
+}
+
+int liczba_ubezp = 2;
+std::vector<std::vector<double>> obligatoryjna_input_risk;
+std::vector<std::vector<double>> obligatoryjna_input_event;
+
+void processOblig(const std::vector<std::string> &filename)
+{
+
+    for (int i = 0; i < filename.size(); i++)
+    {
+        obligatoryjna_input_risk.push_back(std::vector<double>());
+        obligatoryjna_input_event.push_back(std::vector<double>());
+
+        for (int j = 0; j < 4; j++)
+        {
+            obligatoryjna_input_risk[i].push_back(0);
+            obligatoryjna_input_event[i].push_back(0);
+        }
+    }
+
+    for (int i = 0; i < filename.size(); i++)
+    {
+        csvstream csvin(FOLDER_REAS + filename[i] + ".csv");
+
+        std::map<std::string, std::string> row;
+
+        int cnt = 0;
+        while (csvin >> row)
+        {
+            if (cnt == 0)
+            {
+                obligatoryjna_input_risk[i][3] = std::stod(row["Udzial (ryzyko)"]);
+                obligatoryjna_input_event[i][3] = std::stod(row["Udzial (zdarzenie)"]);
+            }
+            else
+            {
+                obligatoryjna_input_risk[i][2] = std::stod(row["Udzial (ryzyko)"]);
+                obligatoryjna_input_event[i][2] = std::stod(row["Udzial (zdarzenie)"]);
+            }
+            obligatoryjna_input_risk[i][0] = std::stod(row["Od (ryzyko)"]);
+            obligatoryjna_input_risk[i][1] = std::stod(row["Do (ryzyko)"]);
+
+            obligatoryjna_input_event[i][0] = std::stod(row["Od (zdarzenie)"]);
+            obligatoryjna_input_event[i][1] = std::stod(row["Do (zdarzenie)"]);
+            cnt++;
+            if (cnt == 2)
+                break;
+        }
+    }
+    // std::cout << obligatoryjna_input_risk[0][0] << std::endl;
+    // std::cout << obligatoryjna_input_event[0][0] << std::endl;
+}
+
+const int numRegions = 17;
+
+std::vector<std::vector<std::vector<long double>>> exponsure_longitude(numRegions);
+std::vector<std::vector<std::vector<long double>>> exponsure_latitude(numRegions);
+std::vector<std::vector<std::vector<int>>> exponsure_insurance(numRegions);
+std::vector<std::vector<std::vector<int>>> exponsure_reassurance(numRegions);
+std::vector<std::vector<std::vector<double>>> exponsure_sum_value(numRegions);
+
+int extractMonth(const std::string &date)
+{
+    std::istringstream dateStream(date);
+    std::string segment;
+    std::getline(dateStream, segment, '.');
+    std::getline(dateStream, segment, '.');
+    return std::stoi(segment);
+}
+
+void processRow(const std::string &startDate, const std::string &endDate, int region, double latitude, double longitude, int reassurance, double sumValue, int insurance)
+{
+    int startMonth = extractMonth(startDate) - 1;
+    int endMonth = extractMonth(endDate) - 1;
+
+    for (int month = startMonth; month <= endMonth; ++month)
+    {
+        exponsure_latitude[region][month].push_back(latitude);
+        exponsure_longitude[region][month].push_back(longitude);
+        exponsure_insurance[region][month].push_back(insurance);
+        exponsure_reassurance[region][month].push_back(reassurance);
+        exponsure_sum_value[region][month].push_back(sumValue);
+    }
+}
+
+bool is_date_in_year(const std::string &date_str, int year)
+{
+    int date_year = std::stoi(date_str.substr(6, 4));
+    return date_year == year;
+}
+
+void get_dates_within_year(std::string &date_str_a, std::string &date_str_b, int year)
+{
+    std::string start_of_year = "01.01." + std::to_string(year);
+    std::string end_of_year = "31.12." + std::to_string(year);
+
+    bool date_a_in_year = is_date_in_year(date_str_a, year);
+    bool date_b_in_year = is_date_in_year(date_str_b, year);
+
+    if (date_a_in_year && date_b_in_year)
+    {
+        return;
+    }
+    else if (date_a_in_year)
+    {
+        date_str_b = end_of_year;
+        return;
+    }
+    else if (date_b_in_year)
+    {
+        date_str_a = start_of_year;
+        return;
+    }
+    else
+    {
+        date_str_a = start_of_year;
+        date_str_b = end_of_year;
+        return;
+    }
+}
+
+void processBudynki(const std::vector<std::string> &filename, std::string year)
+{
+
+    for (int i = 0; i < filename.size(); i++)
+    {
+        csvstream csvin(FOLDER_UBEZP + filename[i] + ".csv");
+
+        std::map<std::string, std::string> row;
+
+        int id_ubezp = 0;
+        try
+        {
+            while (csvin >> row)
+            {
+                // std::cout << std::stod(row["Szerokosc"]) << std::endl;
+
+                std::string dataPoczatku = row["DataPoczatku"];
+                std::string dataKonca = row["DataKonca"];
+                int reasekuracjaf = 9999;
+                try
+                {
+                    reasekuracjaf = std::stoi(row["ReasekuracjaF"]);
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    reasekuracjaf = 9999;
+                }
+                get_dates_within_year(dataPoczatku, dataKonca, std::stoi(year));
+                processRow(
+                    dataPoczatku,
+                    dataKonca,
+                    std::stoi(row["WojUjednolicone"]),
+                    std::stod(row["Szerokosc"]),
+                    std::stod(row["Dlugosc"]),
+                    reasekuracjaf,
+                    std::stod(row["SumaUbezpieczenia"]),
+                    id_ubezp);
+            }
+        }
+        catch (const std::invalid_argument &e)
+        {
+            std::cerr << "Error: Invalid argument for stoi or stod conversion 1." << std::endl;
+        }
+    }
+}
+
+std::vector<std::vector<double>> fakultatywna_input_num;
+std::vector<std::vector<std::vector<double>>> fakultatywna_input_val;
+
+void print3DVector(const std::vector<std::vector<std::vector<double>>> &vec)
+{
+    for (const auto &matrix : vec)
+    {
+        for (const auto &row : matrix)
+        {
+            for (double element : row)
+            {
+                std::cout << element << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "----" << std::endl;
+    }
+}
+
+void processReas(const std::vector<std::string> &filename)
+{
+
+    fakultatywna_input_num.resize(filename.size());
+    for (int i = 0; i < filename.size(); i++)
+    {
+        csvstream csvin(FOLDER_REAS + filename[i] + ".csv");
+
+        std::map<std::string, std::string> row;
+
+        std::vector<std::vector<double>> first_outer_vector;
+
+        while (csvin >> row)
+        {
+            if ((row["ZachowekKwota"]) == "")
+            {
+                // [ numer ubezpieczyla = nazwa pliku ubezp zmapowana na numer ]
+                // powiedzmy pierwszy plik = pierwszy ubezpieczyciel // moze tu long double?
+                fakultatywna_input_num[i].push_back(std::stoi(row["Lp"]));
+                first_outer_vector.push_back({std::stod(row["ZachowekProcent"]), std::stod(row["Pojemnosc"])});
+            }
+            else
+            {
+                first_outer_vector.push_back({std::stod(row["ZachowekKwota"]), std::stod(row["Pojemnosc"])});
+            }
+        }
+
+        fakultatywna_input_val.push_back(first_outer_vector);
+    }
+
+    print3DVector(fakultatywna_input_val);
+}
+
+int main()
+{
+    std::setlocale(LC_ALL, "nb_NO.UTF-8");
+
+    for (int woj = 0; woj < 17; ++woj)
+    {
+        exponsure_longitude[woj].resize(12);
+        exponsure_latitude[woj].resize(12);
+        exponsure_insurance[woj].resize(12);
+        exponsure_reassurance[woj].resize(12);
+        exponsure_sum_value[woj].resize(12);
+    }
+
+    std::string line;
+    std::vector<std::string> fileNames;
+    std::string year;
+    std::cout << "Podaj rok, ktory ma byc brany pod uwage: ";
+    std::getline(std::cin, year);
+
+    std::cout << "Wprowadz nazwy plikow po spacji: ";
+    std::getline(std::cin, line);
+
+    std::istringstream iss(line);
+    std::string fileName;
+    while (iss >> fileName)
+    {
+        fileNames.push_back(fileName);
+    }
+
+    std::cout << "Indeksy przydzielone plikom:\n";
+    for (int i = 0; i < fileNames.size(); ++i)
+    {
+        std::cout << "Indeks " << i << ": " << fileNames[i] << std::endl;
+    }
+
+    // processReas(fileNames);
+    // processOblig(fileNames);
+    processBudynki(fileNames, year);
+
+    // processPrPozaru("csv/Pr_pozaru.csv");
+    // processPrRozprzestrzenienia("csv/pr_rozprzestrzenienia.csv");
+    // processPrWielkoscPozaru("csv/pr_wielkosc_pozaru.csv");
+
+    return 0;
+}
