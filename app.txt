@@ -1,26 +1,15 @@
-library(leaflet)
-
-# Przykładowe dane
-data <- data.frame(
-  szerkosc = c(52.23, 51.75, 53.48, 54.37, 52.82),
-  dlugosc = c(21.01, 19.46, 20.72, 18.63, 20.00),
-  wartosc_ubezpieczenia = c(10000, 20000, 30000, 40000, 50000)
+df_miesiac <- data.frame(
+  miesiac_num = 1:12,
+  miesiac_string = c("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec",
+                     "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień")
 )
 
-# Tworzenie mapy z wykorzystaniem leaflet
-m <- leaflet(data) %>%
-  addTiles() %>%
-  addCircleMarkers(
-    lng = ~dlugosc,
-    lat = ~szerkosc,
-    color = ~colorQuantile("YlOrRd", wartosc_ubezpieczenia)(wartosc_ubezpieczenia),
-    radius = 10, # Stały rozmiar punktów
-    fillOpacity = 0.8,
-    popup = ~paste("Wartość ubezpieczenia:", wartosc_ubezpieczenia)
-  ) %>%
-  addLegend("bottomright", pal = colorQuantile("YlOrRd", data$wartosc_ubezpieczenia),
-            values = data$wartosc_ubezpieczenia,
-            title = "Wartość ubezpieczenia",
-            opacity = 1)
+df_pozary_rozprzestrzenione <- data.frame(
+  Miesiac = sample(1:12, 20, replace = TRUE) # Losowe wartości od 1 do 12
+)
 
-m  # Wyświetlenie mapy
+# Mapowanie liczb na miesiące
+df_pozary_rozprzestrzenione$Miesiac <- df_miesiac$miesiac_string[df_pozary_rozprzestrzenione$Miesiac]
+
+# Wyświetlenie danych
+print(df_pozary_rozprzestrzenione)
