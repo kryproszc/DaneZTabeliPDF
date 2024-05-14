@@ -1,29 +1,38 @@
-library(raster)
-library(ggplot2)
-poland <- getData("GADM", country = "POL", level = 0)
-poland_grid <- rasterToPoints(poland)
-poland_df <- as.data.frame(poland_grid)
-names(poland_df) <- c("dlugosc", "szerkosc")
-# Przykładowe dane
-df <- data.frame(
-  szerkosc = c(52.23, 51.75, 53.48, 54.37, 52.82),
-  dlugosc = c(21.01, 19.46, 20.72, 18.63, 20.00),
-  wartosc_ubezpieczenia = c(10000, 20000, 30000, 40000, 50000)
+library(shiny)
+library(DT)  # Pakiet do wyświetlania interaktywnych tabel
+
+ui <- fluidPage(
+  titlePanel("Wczytywanie danych CSV"),
+  sidebarLayout(
+    sidebarPanel(
+      fileInput("file", "Wybierz plik CSV", accept = ".csv")
+    ),
+    mainPanel(
+      textOutput("message"),
+      DTOutput("table")
+    )
+  )
 )
 
-# Połączenie danych geograficznych z danymi wartości ubezpieczenia
-poland_df$wartosc_ubezpieczenia <- NA
-for (i in 1:nrow(df)) {
-  dist <- sqrt((poland_df$dlugosc - df$dlugosc[i])^2 + (poland_df$szerkosc - df$szerkosc[i])^2)
-  nearest_row <- which.min(dist)
-  poland_df$wartosc_ubezpieczenia[nearest_row] <- df$wartosc_ubezpieczenia[i]
+server <- function(input, output, session) {
+  
+  data <- reactive({
+    req(input$file)
+    df <- read.csv(input$file$datapath)
+    return(df)
+  })
+  
+  output$message <- renderText({
+    if (is.null(input$file)) {
+      return("Czekam na dane...")
+    } else {
+      return(NULL)
+    }
+  })
+  
+  output$table <- renderDT({
+    data()
+  })
 }
-ggplot(poland_df, aes(x = dlugosc, y = szerkosc)) +
-  geom_tile(aes(fill = wartosc_ubezpieczenia)) +
-  scale_fill_gradient(low = "blue", high = "red") +
-  geom_path(data = poland, aes(x = long, y = lat, group = group), color = "black") +
-  labs(title = "Mapa Polski z intensywnością kolorów na podstawie wartości ubezpieczenia",
-       x = "Długość geograficzna",
-       y = "Szerokość geograficzna",
-       fill = "Wartość ubezpieczenia") +
-  theme_minimal()
+
+shinyApp(ui, server)
