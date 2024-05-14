@@ -1,38 +1,27 @@
-library(shiny)
-library(DT)  # Pakiet do wyświetlania interaktywnych tabel
+library(ggplot2)
 
-ui <- fluidPage(
-  titlePanel("Wczytywanie danych CSV"),
-  sidebarLayout(
-    sidebarPanel(
-      fileInput("file", "Wybierz plik CSV", accept = ".csv")
-    ),
-    mainPanel(
-      textOutput("message"),
-      DTOutput("table")
-    )
-  )
+# Przykładowe dane
+df <- data.frame(
+  kolumna = rnorm(1000) # Przyjmijmy, że interesuje nas kolumna z rozkładem normalnym
 )
 
-server <- function(input, output, session) {
-  
-  data <- reactive({
-    req(input$file)
-    df <- read.csv(input$file$datapath)
-    return(df)
-  })
-  
-  output$message <- renderText({
-    if (is.null(input$file)) {
-      return("Czekam na dane...")
-    } else {
-      return(NULL)
-    }
-  })
-  
-  output$table <- renderDT({
-    data()
-  })
-}
+# Wybierz nazwę kolumny
+nazwa_kolumny <- "kolumna"
 
-shinyApp(ui, server)
+# Określ kwantyle
+wybrane_kwantyle <- c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 0.995)
+kwantyle <- quantile(df[[nazwa_kolumny]], probs = wybrane_kwantyle)
+
+# Stwórz dataframe z wartościami kwantyli
+df_kwantyle <- data.frame(
+  kwantyl = wybrane_kwantyle,
+  wartosc = kwantyle
+)
+
+# Stwórz wykres
+ggplot(df_kwantyle, aes(x = kwantyl, y = wartosc)) +
+  geom_point() +
+  geom_line() +
+  labs(title = paste("Wykres kwantyli dla kolumny", nazwa_kolumny),
+       x = "Kwantyl",
+       y = "Wartość kwantyla")
