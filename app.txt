@@ -1,77 +1,47 @@
 #include <iostream>
-#include <fstream>
-#include <vector>
 #include <string>
-#include <ctime>
-#include <iomanip>
-#include <direct.h>
-
 using namespace std;
 
-// Funkcja do tworzenia nazwy pliku CSV
-string generujNazwePliku(int index) {
-    return to_string(index) + ".csv";
-}
-
-// Funkcja do zapisywania danych do pliku CSV
-void zapiszDoCSV(const string& sciezka, int index, const vector<vector<double>>& output_brutto_final,
-                 const vector<vector<double>>& output_brutto_kat_final,
-                 const vector<vector<double>>& output_netto_final,
-                 const vector<vector<double>>& output_netto_kat_final) {
-    ofstream plik(sciezka + "/" + generujNazwePliku(index));
-    if (!plik) {
-        cerr << "Nie można otworzyć pliku do zapisu." << endl;
-        return;
-    }
-
-    plik << "Brutto,Brutto_Katastroficzny,Netto,Netto_Katastroficzny" << endl;
-    for (size_t i = 0; i < output_brutto_final[index].size(); ++i) {
-        plik << fixed << setprecision(2) << output_brutto_final[index][i] << ","
-             << output_brutto_kat_final[index][i] << ","
-             << output_netto_final[index][i] << ","
-             << output_netto_kat_final[index][i] << endl;
-    }
-
-    plik.close();
-}
-
 int main() {
-    // Podana ścieżka do katalogu
-    string sciezka = "podana/sciezka";
+    cout << "Witaj w programie Ryzyko Pożaru!" << endl;
 
-    // Tworzenie folderu Wyniki z datą i godziną
-    time_t czas_teraz;
-    struct tm czas;
-    time(&czas_teraz);
-    localtime_s(&czas, &czas_teraz);
-    char data_czas[80];
-    strftime(data_czas, 80, "%Y-%m-%d %H-%M-%S", &czas);
-    string nazwa_katalogu = sciezka + "/Wyniki " + string(data_czas);
-    if (_mkdir(nazwa_katalogu.c_str()) != 0) {
-        cerr << "Nie można utworzyć folderu Wyniki." << endl;
-        return 1;
-    }
+    // Pobieranie danych od użytkownika
+    string sciezka_folderu;
+    int rok_analizy;
+    string analizowani_ubezpieczyciele;
+    string losuj_odnowienia;
+    double wartosc_szkody_katastroficznej;
+    double wartosc_minimalna_szkody;
+    string sciezka_zapisu_danych;
 
-    // Tworzenie folderu Symulacje
-    string sciezka_symulacje = nazwa_katalogu + "/Symulacje";
-    if (_mkdir(sciezka_symulacje.c_str()) != 0) {
-        cerr << "Nie można utworzyć folderu Symulacje." << endl;
-        return 1;
-    }
+    cout << "Podaj ścieżkę do folderu: ";
+    getline(cin, sciezka_folderu);
 
-    // Przykładowe wektory
-    vector<vector<double>> output_brutto_final = {{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}};
-    vector<vector<double>> output_brutto_kat_final = {{10.0, 11.0, 12.0}, {13.0, 14.0, 15.0}, {16.0, 17.0, 18.0}};
-    vector<vector<double>> output_netto_final = {{19.0, 20.0, 21.0}, {22.0, 23.0, 24.0}, {25.0, 26.0, 27.0}};
-    vector<vector<double>> output_netto_kat_final = {{28.0, 29.0, 30.0}, {31.0, 32.0, 33.0}, {34.0, 35.0, 36.0}};
+    cout << "Podaj rok analizy: ";
+    cin >> rok_analizy;
 
-    // Zapisywanie danych do plików CSV
-    int k = output_brutto_final.size();
-    for (int i = 0; i < k; ++i) {
-        zapiszDoCSV(sciezka_symulacje, i, output_brutto_final, output_brutto_kat_final, output_netto_final, output_netto_kat_final);
-    }
+    cin.ignore(); // Ignorowanie znaku nowej linii
 
-    cout << "Dane zapisane do plików CSV w folderze Symulacje." << endl;
+    cout << "Podaj ubezpieczycieli do analizy: ";
+    getline(cin, analizowani_ubezpieczyciele);
+
+    cout << "Czy chcesz losować odnowienia? (tak/nie): ";
+    getline(cin, losuj_odnowienia);
+
+    cout << "Podaj wartość szkody katastroficznej: ";
+    cin >> wartosc_szkody_katastroficznej;
+
+    cout << "Podaj minimalną wartość szkody: ";
+    cin >> wartosc_minimalna_szkody;
+
+    cin.ignore(); // Ignorowanie znaku nowej linii
+
+    cout << "Podaj ścieżkę zapisu danych: ";
+    getline(cin, sciezka_zapisu_danych);
+
+    // Tutaj można przetwarzać lub zapisywać dane...
+
+    cout << "Dane zostały pomyślnie zapisane." << endl;
 
     return 0;
 }
