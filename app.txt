@@ -4,6 +4,7 @@
 #include <string>
 #include <ctime>
 #include <iomanip>
+#include <direct.h>
 
 using namespace std;
 
@@ -39,19 +40,21 @@ int main() {
     string sciezka = "podana/sciezka";
 
     // Tworzenie folderu Wyniki z datą i godziną
-    time_t czas_teraz = time(nullptr);
-    struct tm* czas = localtime(&czas_teraz);
+    time_t czas_teraz;
+    struct tm czas;
+    time(&czas_teraz);
+    localtime_s(&czas, &czas_teraz);
     char data_czas[80];
-    strftime(data_czas, 80, "%Y-%m-%d %H-%M-%S", czas);
+    strftime(data_czas, 80, "%Y-%m-%d %H-%M-%S", &czas);
     string nazwa_katalogu = sciezka + "/Wyniki " + string(data_czas);
-    if (mkdir(nazwa_katalogu.c_str()) != 0) {
+    if (_mkdir(nazwa_katalogu.c_str()) != 0) {
         cerr << "Nie można utworzyć folderu Wyniki." << endl;
         return 1;
     }
 
     // Tworzenie folderu Symulacje
     string sciezka_symulacje = nazwa_katalogu + "/Symulacje";
-    if (mkdir(sciezka_symulacje.c_str()) != 0) {
+    if (_mkdir(sciezka_symulacje.c_str()) != 0) {
         cerr << "Nie można utworzyć folderu Symulacje." << endl;
         return 1;
     }
