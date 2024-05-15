@@ -1,6 +1,2 @@
-#include <boost/random/beta_distribution.hpp> 
-
-std::random_device rd;
-std::mt19937 gen(rd());
-boost::random::beta_distribution<> dist(alpha[j], beta[j]);
-simulated_probability[j] = dist(gen);
+g++ -Isrc -Iinclude -g -std=c++23 -DTIME -DDATATEST -O3 -Wno-deprecated  -c testowacX.cpp -o testowacX.o
+g++ -Isrc -Iinclude -g -std=c++23 -DTIME -DDATATEST -O3 -Wno-deprecated  -o program.exe testowacX.o -Llib -llibboost_random-mt -llibboost_regex-mt -llibboost_serialization-mt -llibboost_stacktrace_noop-mt -llibboost_stacktrace_windbg-mt -llibboost_stacktrace_windbg_cached-mt -llibboost_system-mt
