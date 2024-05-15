@@ -1,0 +1,100 @@
+    g_num_mutex.lock();
+    for (int kk = 0; kk < ilosc_ubezpieczycieli; kk++)
+    {
+        sum_vec_out = accumulate(out_sum_vec_out[kk].begin(), out_sum_vec_out[kk].end(), 0.0);
+        sim_brutto_final.clearVector(kk);
+
+        out_brutto_final.addDataVec(kk, sum_vec_out); // 4 dodaje * ilosc symulacji bo nie czyszcze tego wektora jak innych!!!
+        sum_vec_kat_out = accumulate(sim_brutto_kat_final_out[kk].begin(),
+                                     sim_brutto_kat_final_out[kk].end(), 0.0);
+        sim_brutto_kat_final.clearVector(kk);
+
+        // to
+        out_brutto_kat_final.addDataVec(kk, sum_vec_kat_out);
+        sum_netto_out = accumulate(sim_netto_final_out[kk].begin(), sim_netto_final_out[kk].end(), 0.0);
+        sim_netto_final.clearVector(kk);
+        out_netto_final.addDataVec(kk, sum_netto_out);
+        sum_netto_kat_out = accumulate(sim_netto_kat_final_out[kk].begin(),
+                                       sim_netto_kat_final_out[kk].end(), 0.0);
+        sim_netto_kat_final.clearVector(kk);
+
+        // to
+        out_netto_kat_final.addDataVec(kk, sum_netto_kat_out);
+
+        // #podmieniamy na podstawie sum_vec_out
+        // buildPierwotny_brutto_vec = []
+        // buildRozprzestrzeniony_brutto_vec = []
+        // sum_vec_out_vec = []
+
+        // podmieniamy na podstawie sum_vec_kat_out
+        // buildPierwotny_brutto_kat_vec = []
+        // buildRozprzestrzeniony_brutto_kat_vec = []
+        // sum_vec__kat_out_vec = []
+
+        // #podmieniamy na podstawie sum_netto_kat_out
+        // buildPierwotny_netto_kat_vec = []
+        // buildRozprzestrzeniony_netto_kat_vec = []
+        // sum_vec_netto_kat_out_vec = []
+
+        // #podmieniamy na podstawie sum_netto_out
+        // buildPierwotny_netto_vec = []
+        // buildRozprzestrzeniony_netto_vec = []
+        // sum_vec_netto_out_vec = []
+
+        if (ubezpieczyciele[kk].buildPierwotny_brutto_kat_vec.size() > 50)
+        {
+            // znajdowanie najmniejszej wartości i indeksów w odpowiednich wektorach
+            auto min_sum_vec_out = std::min_element(ubezpieczyciele[kk].sum_vec_out_vec.begin(), ubezpieczyciele[kk].sum_vec_out_vec.end());
+            int index_min_sum_vec_out = std::distance(ubezpieczyciele[kk].sum_vec_out_vec.begin(), min_sum_vec_out);
+
+            auto min_sum_vec_kat_out = std::min_element(ubezpieczyciele[kk].sum_vec_kat_out_vec.begin(), ubezpieczyciele[kk].sum_vec_kat_out_vec.end());
+            int index_min_sum_vec_kat_out = std::distance(ubezpieczyciele[kk].sum_vec_kat_out_vec.begin(), min_sum_vec_kat_out);
+
+            auto min_sum_vec_netto_kat_out = std::min_element(ubezpieczyciele[kk].sum_vec_netto_kat_out_vec.begin(), ubezpieczyciele[kk].sum_vec_netto_kat_out_vec.end());
+            int index_min_sum_vec_netto_kat_out = std::distance(ubezpieczyciele[kk].sum_vec_netto_kat_out_vec.begin(), min_sum_vec_netto_kat_out);
+
+            auto min_sum_vec_netto_out = std::min_element(ubezpieczyciele[kk].sum_vec_netto_out_vec.begin(), ubezpieczyciele[kk].sum_vec_netto_out_vec.end());
+            int index_min_sum_vec_netto_out = std::distance(ubezpieczyciele[kk].sum_vec_netto_out_vec.begin(), min_sum_vec_netto_out);
+
+            if (*min_sum_vec_out < sum_vec_out)
+            {
+                ubezpieczyciele[kk].buildPierwotny_brutto_vec[index_min_sum_vec_out] = buildPierwotny;
+                ubezpieczyciele[kk].buildRozprzestrzeniony_brutto_vec[index_min_sum_vec_out] = buildRozprzestrzeniony;
+            }
+
+            if (*min_sum_vec_kat_out < sum_vec_kat_out)
+            {
+                ubezpieczyciele[kk].buildPierwotny_brutto_kat_vec[index_min_sum_vec_kat_out] = buildPierwotny;
+                ubezpieczyciele[kk].buildRozprzestrzeniony_brutto_kat_vec[index_min_sum_vec_kat_out] = buildRozprzestrzeniony;
+            }
+
+            if (*min_sum_vec_netto_kat_out < sum_netto_kat_out)
+            {
+                ubezpieczyciele[kk].buildPierwotny_netto_kat_vec[index_min_sum_vec_netto_kat_out] = buildPierwotny;
+                ubezpieczyciele[kk].buildRozprzestrzeniony_netto_kat_vec[index_min_sum_vec_netto_kat_out] = buildRozprzestrzeniony;
+            }
+
+            if (*min_sum_vec_netto_out < sum_netto_out)
+            {
+                ubezpieczyciele[kk].buildPierwotny_brutto_kat_vec[index_min_sum_vec_netto_out] = buildPierwotny;
+                ubezpieczyciele[kk].buildRozprzestrzeniony_brutto_kat_vec[index_min_sum_vec_netto_out] = buildRozprzestrzeniony;
+            }
+        }
+        else
+        {
+            ubezpieczyciele[kk].buildPierwotny_brutto_kat_vec.push_back(buildPierwotny);
+            ubezpieczyciele[kk].buildPierwotny_brutto_vec.push_back(buildPierwotny);
+            ubezpieczyciele[kk].buildRozprzestrzeniony_brutto_kat_vec.push_back(buildRozprzestrzeniony);
+            ubezpieczyciele[kk].buildRozprzestrzeniony_brutto_vec.push_back(buildRozprzestrzeniony);
+            ubezpieczyciele[kk].sum_vec_kat_out_vec.push_back(sum_vec_kat_out);
+            ubezpieczyciele[kk].sum_vec_out_vec.push_back(sum_vec_out);
+            ubezpieczyciele[kk].buildPierwotny_netto_kat_vec.push_back(buildPierwotny);
+            ubezpieczyciele[kk].buildPierwotny_netto_vec.push_back(buildPierwotny);
+            ubezpieczyciele[kk].buildRozprzestrzeniony_netto_kat_vec.push_back(buildRozprzestrzeniony);
+            ubezpieczyciele[kk].buildRozprzestrzeniony_netto_vec.push_back(buildRozprzestrzeniony);
+            ubezpieczyciele[kk].sum_vec_netto_kat_out_vec.push_back(sum_netto_kat_out);
+            ubezpieczyciele[kk].sum_vec_netto_out_vec.push_back(sum_netto_out);
+        }
+    }
+
+    g_num_mutex.unlock();
