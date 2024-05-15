@@ -1,0 +1,24 @@
+struct Ubezpieczyciel
+{
+    // Vectors
+    std::vector<VectorPozarPierwotny> buildPierwotny_brutto_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_brutto_vec;
+    std::vector<double> sum_vec_out_vec;
+
+    // Vectors  sum_vec_kat_out
+    std::vector<VectorPozarPierwotny> buildPierwotny_brutto_kat_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_brutto_kat_vec;
+    std::vector<double> sum_vec_kat_out_vec;
+
+    // Vectors sum_netto_out
+    std::vector<VectorPozarPierwotny> buildPierwotny_netto_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_netto_vec;
+    std::vector<double> sum_vec_netto_out_vec;
+
+    // Vectors sum_netto_kat_out
+    std::vector<VectorPozarPierwotny> buildPierwotny_netto_kat_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_netto_kat_vec;
+    std::vector<double> sum_vec_netto_kat_out_vec;
+};
+
+std::vector<Ubezpieczyciel> ubezpieczyciele;
