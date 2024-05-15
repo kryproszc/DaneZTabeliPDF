@@ -1,47 +1,87 @@
-#include <iostream>
-#include <string>
-using namespace std;
+class ThreadPool
+{
+public:
+    ThreadPool(unsigned int n = std::thread::hardware_concurrency());
 
-int main() {
-    cout << "Witaj w programie Ryzyko Pożaru!" << endl;
+    template<class F> void enqueue(F&& f);
+    void waitFinished();
+    ~ThreadPool();
 
-    // Pobieranie danych od użytkownika
-    string sciezka_folderu;
-    int rok_analizy;
-    string analizowani_ubezpieczyciele;
-    string losuj_odnowienia;
-    double wartosc_szkody_katastroficznej;
-    double wartosc_minimalna_szkody;
-    string sciezka_zapisu_danych;
+    unsigned int getProcessed() const { return processed;  }
 
-    cout << "Podaj ścieżkę do folderu: ";
-    getline(cin, sciezka_folderu);
+private:
+    std::vector< std::thread > workers;
+    std::deque< std::function<void()> > tasks;
+    std::mutex queue_mutex;
+    std::condition_variable cv_task;
+    std::condition_variable cv_finished;
+    std::atomic_uint busy, processed;
+    bool stop;
 
-    cout << "Podaj rok analizy: ";
-    cin >> rok_analizy;
+    void thread_proc();
+};
 
-    cin.ignore(); // Ignorowanie znaku nowej linii
+ThreadPool::ThreadPool(unsigned int n)
+    : busy(ATOMIC_VAR_INIT(0U))
+    , processed(ATOMIC_VAR_INIT(0U))
+    , stop()
+{
+    for (unsigned int i=0; i<n; ++i)
+        workers.emplace_back(std::bind(&ThreadPool::thread_proc, this));
+}
 
-    cout << "Podaj ubezpieczycieli do analizy: ";
-    getline(cin, analizowani_ubezpieczyciele);
+ThreadPool::~ThreadPool()
+{
 
-    cout << "Czy chcesz losować odnowienia? (tak/nie): ";
-    getline(cin, losuj_odnowienia);
+    std::unique_lock<std::mutex> lock(queue_mutex);
+    stop = true;
+    cv_task.notify_all();
+    lock.unlock();
 
-    cout << "Podaj wartość szkody katastroficznej: ";
-    cin >> wartosc_szkody_katastroficznej;
+    for (auto& t : workers)
+        t.join();
+}
 
-    cout << "Podaj minimalną wartość szkody: ";
-    cin >> wartosc_minimalna_szkody;
+void ThreadPool::thread_proc()
+{
+    while (true)
+    {
+        std::unique_lock<std::mutex> lock(queue_mutex);
+        cv_task.wait(lock, [this](){ return stop || !tasks.empty(); });
+        if (!tasks.empty())
+        {
 
-    cin.ignore(); // Ignorowanie znaku nowej linii
+            ++busy;
 
-    cout << "Podaj ścieżkę zapisu danych: ";
-    getline(cin, sciezka_zapisu_danych);
+            auto fn = tasks.front();
+            tasks.pop_front();
 
-    // Tutaj można przetwarzać lub zapisywać dane...
+            lock.unlock();
 
-    cout << "Dane zostały pomyślnie zapisane." << endl;
+            fn();
 
-    return 0;
+            lock.lock();
+            ++processed;
+            --busy;
+            cv_finished.notify_one();
+        }
+        else if (stop)
+        {
+            break;
+        }
+    }
+}
+
+template<class F>
+void ThreadPool::enqueue(F&& f)
+{
+    std::unique_lock<std::mutex> lock(queue_mutex);
+    tasks.emplace_back(std::forward<F>(f));
+    cv_task.notify_one();
+}
+
+void ThreadPool::waitFinished()
+{
+    std::unique_lock<std::mutex> lock(queue_mutex);
+    cv_finished.wait(lock, [this](){ return tasks.empty() && (busy == 0); });
 }
