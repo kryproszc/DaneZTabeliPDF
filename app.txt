@@ -1,24 +1,9 @@
-struct Ubezpieczyciel
-{
-    // Vectors
-    std::vector<VectorPozarPierwotny> buildPierwotny_brutto_vec;
-    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_brutto_vec;
-    std::vector<double> sum_vec_out_vec;
+    std::mutex num_mutex;
 
-    // Vectors  sum_vec_kat_out
-    std::vector<VectorPozarPierwotny> buildPierwotny_brutto_kat_vec;
-    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_brutto_kat_vec;
-    std::vector<double> sum_vec_kat_out_vec;
+    for (int sim_num = 0; sim_num < sim; sim_num++)
+    {
+        pool.enqueue([sim, kat_val, ilosc_ubezpieczycieli, &num_mutex]()
+                     { simulateExponsure(sim, kat_val, ilosc_ubezpieczycieli, num_mutex); });
+    }
 
-    // Vectors sum_netto_out
-    std::vector<VectorPozarPierwotny> buildPierwotny_netto_vec;
-    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_netto_vec;
-    std::vector<double> sum_vec_netto_out_vec;
-
-    // Vectors sum_netto_kat_out
-    std::vector<VectorPozarPierwotny> buildPierwotny_netto_kat_vec;
-    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_netto_kat_vec;
-    std::vector<double> sum_vec_netto_kat_out_vec;
-};
-
-std::vector<Ubezpieczyciel> ubezpieczyciele;
+void simulateExponsure(int sim, double kat_val, int ilosc_ubezpieczycieli, std::mutex& g_num_mutex)
