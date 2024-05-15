@@ -1,47 +1,24 @@
-void processBudynki(const std::vector<std::string> &filename, std::string year)
+struct Ubezpieczyciel
 {
+    // Vectors
+    std::vector<VectorPozarPierwotny> buildPierwotny_brutto_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_brutto_vec;
+    std::vector<double> sum_vec_out_vec;
 
-    for (int i = 0; i < filename.size(); i++)
-    {
-        csvstream csvin(FOLDER_UBEZP + filename[i] + ".csv");
+    // Vectors  sum_vec_kat_out
+    std::vector<VectorPozarPierwotny> buildPierwotny_brutto_kat_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_brutto_kat_vec;
+    std::vector<double> sum_vec_kat_out_vec;
 
-        std::map<std::string, std::string> row;
+    // Vectors sum_netto_out
+    std::vector<VectorPozarPierwotny> buildPierwotny_netto_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_netto_vec;
+    std::vector<double> sum_vec_netto_out_vec;
 
-        int id_ubezp = 0;
+    // Vectors sum_netto_kat_out
+    std::vector<VectorPozarPierwotny> buildPierwotny_netto_kat_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_netto_kat_vec;
+    std::vector<double> sum_vec_netto_kat_out_vec;
+};
 
-        while (csvin >> row)
-        {
-            // std::cout << std::stod(row["Szerokosc"]) << std::endl;
-
-            std::string dataPoczatku = row["DataPoczatku"];
-            std::string dataKonca = row["DataKonca"];
-
-            int reasekuracjaf = 9999;
-            if (row["ReasekuracjaF"] == "")
-            {
-                reasekuracjaf = 9999;
-            }
-            else
-            {
-                try
-                {
-                    reasekuracjaf = std::stoi(row["ReasekuracjaF"]);
-                }
-                catch (const std::invalid_argument &e)
-                {
-                    reasekuracjaf = 9999;
-                }
-            }
-            get_dates_within_year(dataPoczatku, dataKonca, std::stoi(year));
-            processRow(
-                dataPoczatku,
-                dataKonca,
-                std::stoi(row["WojUjednolicone"]),
-                std::stod(row["Szerokosc"]),
-                std::stod(row["Dlugosc"]),
-                reasekuracjaf,
-                std::stod(row["SumaUbezpieczenia"]),
-                id_ubezp);
-        }
-    }
-}
+std::vector<Ubezpieczyciel> ubezpieczyciele;
