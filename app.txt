@@ -1,8 +1,15 @@
- for (int sim_num = 0; sim_num < sim; sim_num++)
-    {
-     
-        pool.detach_task([sim, kat_val, ilosc_ubezpieczycieli, sim_num]()
-                     { simulateExponsure(sim, kat_val, ilosc_ubezpieczycieli); 
-                     std::cout << "koniec symulacji " << sim_num << std::endl;
-                     });
-    }
+    auto startf = std::chrono::high_resolution_clock::now();
+
+    processReas(fileNames);
+    processOblig(fileNames);
+    processBudynki(fileNames, year);
+
+    processPrPozaru("csv/Pr_pozaru.csv");
+    processPrRozprzestrzenienia("csv/pr_rozprzestrzenienia.csv");
+    processPrWielkoscPozaru("csv/pr_wielkosc_pozaru.csv");
+
+    auto stopf = std::chrono::high_resolution_clock::now();
+
+    auto durationf = std::chrono::duration_cast<std::chrono::milliseconds>(stopf - startf);
+
+    std::cout << "Function read took " << durationf.count() << " milliseconds to execute." << std::endl;
