@@ -1,31 +1,46 @@
-void writeCSV(std::ofstream &file) const
-{
-    file << "Kol1, Kol2, Kol3,...\n";  // dopasuj nagłówek do rzeczywistej liczby kolumn
+# Definiowanie kompilatora
+CXX=g++
 
-    int rows = build_fire_rozprzestrzeniony.size();
-    if (rows == 0) return;
+# Opcje kompilacji, dodaj katalog src i include do ścieżek wyszukiwania plików nagłówkowych
+CXXFLAGS=-Isrc -Iinclude -g -std=c++23 -DTIME -DDATATEST -O3 -Wno-deprecated 
 
- 
-    int max_cols = 0;
-    for (const auto& row : build_fire_rozprzestrzeniony) {
-        if (row.size() > max_cols)
-            max_cols = row.size();
-    }
- 
-    for (int col = 0; col < max_cols; ++col)
-    {
- 
-        for (int row = 0; row < rows; ++row)
-        {
-            if (col < build_fire_rozprzestrzeniony[row].size()) {
-                file << build_fire_rozprzestrzeniony[row][col];
-            } else {
-                file << "";  
-            }
+# Lokalizacja bibliotek do linkowania (.dll.a) i katalogu DLL dla czasu wykonania
+LIB_DIR=lib
+DLL_DIR=dll
 
-            if (row < rows - 1)
-                file << ",";
-        }
-        file << "\n";
-    }
-}
+# Dodajemy ścieżki do bibliotek i flagi linkera
+LDFLAGS=-Llib $(foreach lib,$(wildcard lib/*.dll.a),-l$(notdir $(basename $(lib:.dll.a=))))
+
+# Nazwa pliku wykonywalnego
+TARGET=program.exe
+
+# Plik źródłowy
+SRC=testowac.cpp
+
+# Obiekty
+OBJS=$(SRC:.cpp=.o)
+
+# Reguła domyślna
+all: clean $(TARGET) run
+
+# Tworzenie pliku wykonywalnego
+$(TARGET): $(OBJS)
+    $(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS) 
+# -lglfw3
+# If you use GCC try add ws2_32.lib in this way : -lws2_32 –
+
+#Yes, when you're using MinGW (Minimalist GNU for Windows), it typically includes support for linking against standard system libraries, including opengl32.lib, which is the OpenGL library for Windows. This means you can compile and link OpenGL applications by including -lopengl32 in your command line arguments for the linker when you're compiling your code.
+# Zasada dla plików .o
+%.o: %.cpp
+    $(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Uruchamianie programu
+run:
+    @echo "Adding DLL directory to PATH temporarily for this session."
+    @PATH=$(DLL_DIR);$(PWD);$(PATH) && $(TARGET)
+
+# # Czyszczenie projektu
+clean:
+    del /Q $(TARGET) $(OBJS)
+
+.PHONY: all clean run
