@@ -1,0 +1,51 @@
+void saveToCSV(const Ubezpieczyciel& insurer, std::string index)
+{
+    std::ofstream file((index) + "_pozar" + ".csv");
+
+    auto saveSection = [&](const std::vector<VectorPozarPierwotny>& vec, const std::string& sectionName) {
+        file << sectionName << "\n";
+        file << "Insurer,Longitude,Latitude,Woj,Mies,SumValue,IndexTable,WielkoscPozarKwota,ReasFire\n";
+        for (const auto& pozar : vec)
+        {
+            const auto& data = pozar.returnPozarPierwotny();
+            for (size_t i = 0; i < data[0].size(); ++i)
+            {
+                file << data[0][i] << "," << data[1][i] << "," << data[2][i] << "," << data[3][i] << ","
+                     << data[4][i] << "," << data[5][i] << "," << data[6][i] << "," << data[7][i] << "," << data[8][i] << "\n";
+            }
+        }
+    };
+
+    auto saveRozprzestrzenionySection = [&](const std::vector<VectorPozarRozprzestrzeniony>& vec, const std::string& sectionName) {
+        file << sectionName << "\n";
+        file << "Insurer,BuildingNumber,Woj,Mies,IndexTable,Longitude,Latitude,SumValue,WielkoscPozarKwota,ReasFire,JAKAS KOLUMNA??\n";
+        for (const auto& pozar : vec)
+        {
+            const auto& data = pozar.returnPozarRozprzestrzeniony();
+            for (size_t i = 0; i < data[0].size(); ++i)
+            {
+                for (size_t j = 0; j < data.size(); ++j)
+                {
+                    file << data[j][i];
+                    if (j < data.size() - 1)
+                        file << ",";
+                }
+                file << "\n";
+            }
+        }
+    };
+
+    saveSection(insurer.buildPierwotny_brutto_vec, "Pierwotny Brutto");
+    saveRozprzestrzenionySection(insurer.buildRozprzestrzeniony_brutto_vec, "Rozprzestrzeniony Brutto");
+
+    saveSection(insurer.buildPierwotny_brutto_kat_vec, "Pierwotny Brutto Katastrofa");
+    saveRozprzestrzenionySection(insurer.buildRozprzestrzeniony_brutto_kat_vec, "Rozprzestrzeniony Brutto Katastrofa");
+
+    saveSection(insurer.buildPierwotny_netto_vec, "Pierwotny Netto");
+    saveRozprzestrzenionySection(insurer.buildRozprzestrzeniony_netto_vec, "Rozprzestrzeniony Netto");
+
+    saveSection(insurer.buildPierwotny_netto_kat_vec, "Pierwotny Netto Katastrofa");
+    saveRozprzestrzenionySection(insurer.buildRozprzestrzeniony_netto_kat_vec, "Rozprzestrzeniony Netto Katastrofa");
+
+    file.close();
+}
