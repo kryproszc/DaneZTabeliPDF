@@ -1,40 +1,14 @@
-void writeCSV(std::ofstream &file) const
+void create_custom_directory(const fs::path &path)
+{
+    if (!fs::exists(path))
     {
-
-        file << "Insurer,Longitude,Latitude,Region,Month,SumValue,IndexTable,FireSize,ReasonFire\n";
-
-        int rows = build_fire.size();
-        int cols = build_fire[0].size();
-        for (int col = 0; col < cols; ++col)
+        if (fs::create_directories(path))
         {
-            for (int row = 0; row < rows; ++row)
-            {
-                file << build_fire[row][col];
-                if (row < rows - 1)
-                    file << ",";
-            }
-            file << "\n";
+            std::cout << "Utworzono folder: " << path << std::endl;
+        }
+        else
+        {
+            std::cout << "Błąd: " << path << std::endl;
         }
     }
-
-
-
-   void writeCSV(std::ofstream &file) const
-    {
-        file << "Kol1, Kol2, Kol3,...\n";  // dopasuj to
-
-        int rows = build_fire_rozprzestrzeniony.size();
-        if (rows == 0) return;
-
-        int cols = build_fire_rozprzestrzeniony[0].size();
-        for (int col = 0; col < cols; ++col)
-        {
-            for (int row = 0; row < rows; ++row)
-            {
-                file << build_fire_rozprzestrzeniony[row][col];
-                if (row < rows - 1)
-                    file << ",";
-            }
-            file << "\n";
-        }
-    }
+}
