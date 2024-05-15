@@ -1,4 +1,8 @@
-pool.detach_task([sim, kat_val, ilosc_ubezpieczycieli]()
-                     { simulateExponsure(sim, kat_val, ilosc_ubezpieczycieli); });
-
-  pool.wait();
+ for (int sim_num = 0; sim_num < sim; sim_num++)
+    {
+     
+        pool.detach_task([sim, kat_val, ilosc_ubezpieczycieli, sim_num]()
+                     { simulateExponsure(sim, kat_val, ilosc_ubezpieczycieli); 
+                     std::cout << "koniec symulacji " << sim_num << std::endl;
+                     });
+    }
