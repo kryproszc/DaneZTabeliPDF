@@ -1,15 +1,47 @@
-    auto startf = std::chrono::high_resolution_clock::now();
+void processBudynki(const std::vector<std::string> &filename, std::string year)
+{
 
-    processReas(fileNames);
-    processOblig(fileNames);
-    processBudynki(fileNames, year);
+    for (int i = 0; i < filename.size(); i++)
+    {
+        csvstream csvin(FOLDER_UBEZP + filename[i] + ".csv");
 
-    processPrPozaru("csv/Pr_pozaru.csv");
-    processPrRozprzestrzenienia("csv/pr_rozprzestrzenienia.csv");
-    processPrWielkoscPozaru("csv/pr_wielkosc_pozaru.csv");
+        std::map<std::string, std::string> row;
 
-    auto stopf = std::chrono::high_resolution_clock::now();
+        int id_ubezp = 0;
 
-    auto durationf = std::chrono::duration_cast<std::chrono::milliseconds>(stopf - startf);
+        while (csvin >> row)
+        {
+            // std::cout << std::stod(row["Szerokosc"]) << std::endl;
 
-    std::cout << "Function read took " << durationf.count() << " milliseconds to execute." << std::endl;
+            std::string dataPoczatku = row["DataPoczatku"];
+            std::string dataKonca = row["DataKonca"];
+
+            int reasekuracjaf = 9999;
+            if (row["ReasekuracjaF"] == "")
+            {
+                reasekuracjaf = 9999;
+            }
+            else
+            {
+                try
+                {
+                    reasekuracjaf = std::stoi(row["ReasekuracjaF"]);
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    reasekuracjaf = 9999;
+                }
+            }
+            get_dates_within_year(dataPoczatku, dataKonca, std::stoi(year));
+            processRow(
+                dataPoczatku,
+                dataKonca,
+                std::stoi(row["WojUjednolicone"]),
+                std::stod(row["Szerokosc"]),
+                std::stod(row["Dlugosc"]),
+                reasekuracjaf,
+                std::stod(row["SumaUbezpieczenia"]),
+                id_ubezp);
+        }
+    }
+}
