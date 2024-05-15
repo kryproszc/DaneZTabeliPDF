@@ -1,0 +1,140 @@
+#include <filesystem>
+
+namespace fs = std::filesystem;
+
+void create_directory(const fs::path &path)
+{
+    if (!fs::exists(path))
+    {
+        if (fs::create_directories(path))
+        {
+            std::cout << "Utworzono folder : " << path << std::endl;
+        }
+        else
+        {
+            std::cout << "Blad tworzenia folderu : " << path << std::endl;
+        }
+    }
+}
+
+void create_csv_files(const fs::path &folder_path, const std::string &prefix, int values, bool czyPierwotny)
+{
+    Ubezpieczyciel u = ubezpieczyciele[values];
+
+    if (czyPierwotny == true)
+    {
+        if (prefix == "Brutto")
+        {
+            for (int i = 0; i < u.sum_vec_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildPierwotny_brutto_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Brutto_Kat")
+        {
+            for (int i = 0; i < u.sum_vec_kat_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_kat_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildPierwotny_brutto_kat_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Netto")
+        {
+            for (int i = 0; i < u.sum_vec_netto_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_netto_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildPierwotny_netto_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Netto_kat")
+        {
+            for (int i = 0; i < u.sum_vec_netto_kat_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_netto_kat_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildPierwotny_netto_kat_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+    } else {
+        if (prefix == "Brutto")
+        {
+            for (int i = 0; i < u.sum_vec_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildRozprzestrzeniony_brutto_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Brutto_Kat")
+        {
+            for (int i = 0; i < u.sum_vec_kat_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_kat_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildRozprzestrzeniony_brutto_kat_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Netto")
+        {
+            for (int i = 0; i < u.sum_vec_netto_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_netto_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildRozprzestrzeniony_netto_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Netto_kat")
+        {
+            for (int i = 0; i < u.sum_vec_netto_kat_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_netto_kat_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildRozprzestrzeniony_netto_kat_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+    }
+}
