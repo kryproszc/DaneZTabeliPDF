@@ -1,0 +1,65 @@
+```cpp
+  for (int insurerIndex = 0; insurerIndex < ubezpieczyciele.size(); ++insurerIndex)
+    {
+        std::string insurer = fileNames[insurerIndex];
+
+        fs::path base_path = fs::current_path() / "Pierwotne" / insurer;
+        std::vector<std::string> subfolders = {"Brutto", "Brutto_Kat", "Netto", "Netto_kat"};
+
+        {
+            fs::path full_path = base_path / subfolders[0];
+            create_custom_directory(full_path);
+            create_csv_files(full_path, subfolders[0], insurerIndex, true);
+        }
+
+        {
+            fs::path full_path = base_path / subfolders[1];
+            create_custom_directory(full_path);
+            create_csv_files(full_path, subfolders[1], insurerIndex, true);
+        }
+
+        {
+            fs::path full_path = base_path / subfolders[2];
+            create_custom_directory(full_path);
+            create_csv_files(full_path, subfolders[2], insurerIndex, true);
+        }
+
+        {
+            fs::path full_path = base_path / subfolders[3];
+            create_custom_directory(full_path);
+            create_csv_files(full_path, subfolders[3], insurerIndex, true);
+        }
+    }
+
+    for (int insurerIndex = 0; insurerIndex < ubezpieczyciele.size(); ++insurerIndex)
+    {
+        std::string insurer = fileNames[insurerIndex];
+
+        fs::path base_path = fs::current_path() / "Rozprzestrzenione" / insurer;
+        std::vector<std::string> subfolders = {"Brutto", "Brutto_Kat", "Netto", "Netto_kat"};
+
+        {
+            fs::path full_path = base_path / subfolders[0];
+            create_custom_directory(full_path);
+            create_csv_files(full_path, subfolders[0], insurerIndex, false);
+        }
+
+        {
+            fs::path full_path = base_path / subfolders[1];
+            create_custom_directory(full_path);
+            create_csv_files(full_path, subfolders[1], insurerIndex, false);
+        }
+
+        {
+            fs::path full_path = base_path / subfolders[2];
+            create_custom_directory(full_path);
+            create_csv_files(full_path, subfolders[2], insurerIndex, false);
+        }
+
+        {
+            fs::path full_path = base_path / subfolders[3];
+            create_custom_directory(full_path);
+            create_csv_files(full_path, subfolders[3], insurerIndex, false);
+        }
+    }
+```
