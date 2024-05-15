@@ -1,0 +1,81 @@
+  std::cout << "exponsure_longitude size: " << exponsure_longitude.size() << std::endl;
+    for (size_t i = 0; i < exponsure_longitude.size(); ++i) {
+        std::cout << "exponsure_longitude[" << i << "] size: " << exponsure_longitude[i].size() << std::endl;
+        for (size_t j = 0; j < exponsure_longitude[i].size(); ++j) {
+            std::cout << "exponsure_longitude[" << i << "][" << j << "] size: " << exponsure_longitude[i][j].size() << std::endl;
+        }
+    }
+
+    std::cout << "exponsure_latitude size: " << exponsure_latitude.size() << std::endl;
+    for (size_t i = 0; i < exponsure_latitude.size(); ++i) {
+        std::cout << "exponsure_latitude[" << i << "] size: " << exponsure_latitude[i].size() << std::endl;
+        for (size_t j = 0; j < exponsure_latitude[i].size(); ++j) {
+            std::cout << "exponsure_latitude[" << i << "][" << j << "] size: " << exponsure_latitude[i][j].size() << std::endl;
+        }
+    }
+
+    std::cout << "list_list_wyb size: " << list_list_wyb.size() << std::endl;
+    for (size_t i = 0; i < list_list_wyb.size(); ++i) {
+        std::cout << "list_list_wyb[" << i << "] size: " << list_list_wyb[i].size() << std::endl;
+    }
+
+    std::cout << "fire_spread_prob_vec size: " << fire_spread_prob_vec.size() << std::endl;
+    for (size_t i = 0; i < fire_spread_prob_vec.size(); ++i) {
+        std::cout << "fire_spread_prob_vec[" << i << "] size: " << fire_spread_prob_vec[i].size() << std::endl;
+    }
+
+    std::cout << "conditional_mean_trend_parameters size: " << conditional_mean_trend_parameters.size() << std::endl;
+
+    std::cout << "conditional_Cov size: " << conditional_Cov.size() << std::endl;
+
+    std::cout << "exponsure_insurance size: " << exponsure_insurance.size() << std::endl;
+    for (size_t i = 0; i < exponsure_insurance.size(); ++i) {
+        std::cout << "exponsure_insurance[" << i << "] size: " << exponsure_insurance[i].size() << std::endl;
+        for (size_t j = 0; j < exponsure_insurance[i].size(); ++j) {
+            std::cout << "exponsure_insurance[" << i << "][" << j << "] size: " << exponsure_insurance[i][j].size() << std::endl;
+        }
+    }
+
+    std::cout << "exponsure_reassurance size: " << exponsure_reassurance.size() << std::endl;
+    for (size_t i = 0; i < exponsure_reassurance.size(); ++i) {
+        std::cout << "exponsure_reassurance[" << i << "] size: " << exponsure_reassurance[i].size() << std::endl;
+        for (size_t j = 0; j < exponsure_reassurance[i].size(); ++j) {
+            std::cout << "exponsure_reassurance[" << i << "][" << j << "] size: " << exponsure_reassurance[i][j].size() << std::endl;
+        }
+    }
+
+    std::cout << "exponsure_sum_value size: " << exponsure_sum_value.size() << std::endl;
+    for (size_t i = 0; i < exponsure_sum_value.size(); ++i) {
+        std::cout << "exponsure_sum_value[" << i << "] size: " << exponsure_sum_value[i].size() << std::endl;
+        for (size_t j = 0; j < exponsure_sum_value[i].size(); ++j) {
+            std::cout << "exponsure_sum_value[" << i << "][" << j << "] size: " << exponsure_sum_value[i][j].size() << std::endl;
+        }
+    }
+
+    std::cout << "wielkosc_pozaru size: " << wielkosc_pozaru.size() << std::endl;
+    for (size_t i = 0; i < wielkosc_pozaru.size(); ++i) {
+        std::cout << "wielkosc_pozaru[" << i << "] size: " << wielkosc_pozaru[i].size() << std::endl;
+    }
+
+    std::cout << "fakultatywna_input_num size: " << fakultatywna_input_num.size() << std::endl;
+    for (size_t i = 0; i < fakultatywna_input_num.size(); ++i) {
+        std::cout << "fakultatywna_input_num[" << i << "] size: " << fakultatywna_input_num[i].size() << std::endl;
+    }
+
+    std::cout << "fakultatywna_input_val size: " << fakultatywna_input_val.size() << std::endl;
+    for (size_t i = 0; i < fakultatywna_input_val.size(); ++i) {
+        std::cout << "fakultatywna_input_val[" << i << "] size: " << fakultatywna_input_val[i].size() << std::endl;
+        for (size_t j = 0; j < fakultatywna_input_val[i].size(); ++j) {
+            std::cout << "fakultatywna_input_val[" << i << "][" << j << "] size: " << fakultatywna_input_val[i][j].size() << std::endl;
+        }
+    }
+
+    std::cout << "obligatoryjna_input_risk size: " << obligatoryjna_input_risk.size() << std::endl;
+    for (size_t i = 0; i < obligatoryjna_input_risk.size(); ++i) {
+        std::cout << "obligatoryjna_input_risk[" << i << "] size: " << obligatoryjna_input_risk[i].size() << std::endl;
+    }
+
+    std::cout << "obligatoryjna_input_event size: " << obligatoryjna_input_event.size() << std::endl;
+    for (size_t i = 0; i < obligatoryjna_input_event.size(); ++i) {
+        std::cout << "obligatoryjna_input_event[" << i << "] size: " << obligatoryjna_input_event[i].size() << std::endl;
+    }
