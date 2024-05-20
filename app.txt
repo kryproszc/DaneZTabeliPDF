@@ -1,2 +1,21 @@
-g++ -Isrc -Iinclude -g -std=c++23 -DTIME -DDATATEST -O3 -Wno-deprecated  -c testowacX.cpp -o testowacX.o
-g++ -Isrc -Iinclude -g -std=c++23 -DTIME -DDATATEST -O3 -Wno-deprecated  -o program.exe testowacX.o -Llib -llibboost_random-mt -llibboost_regex-mt -llibboost_serialization-mt -llibboost_stacktrace_noop-mt -llibboost_stacktrace_windbg-mt -llibboost_stacktrace_windbg_cached-mt -llibboost_system-mt
+import requests
+
+# adres do geokodowania
+adres = "1600 Pennsylvania Ave NW, Washington, DC"
+
+# tworzenie żądania do Nominatim API
+url = f"https://nominatim.openstreetmap.org/search?format=json&q={adres}"
+
+# wysłanie żądania
+response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
+
+# przetwarzanie odpowiedzi
+if response.status_code == 200:
+    wyniki = response.json()
+    if wyniki:
+        lokalizacja = wyniki[0]
+        print("Współrzędne:", lokalizacja['lat'], lokalizacja['lon'])
+    else:
+        print("Brak wyników dla podanego adresu.")
+else:
+    print("Nie udało się przetworzyć żądania.")
