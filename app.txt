@@ -1,3 +1,76 @@
+void processBudynki(const ......
+ dataPoczatku = row["DataPoczatku"];
+                std::string dataKonca = row["DataKonca"];
+                int reasekuracjaf = 9999;
+                try
+                {
+                    reasekuracjaf = std::stoi(row["ReasekuracjaF"]);
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    reasekuracjaf = 9999;
+                }
+                if (odnowienia == 1)
+                {
+                    std::string StartlastFour = dataPoczatku.substr(dataPoczatku.length() - 4);
+                    std::string EndlastFour = dataKonca.substr(dataKonca.length() - 4);
+    
+                    // konwersja na int
+                    int StartYearnum = std::stoi(StartlastFour);
+                    int EndYearnum = std::stoi(EndlastFour);
+
+                    std::vector<std::vector<long double>> odnowienia_vec_data = read_odnowienia(filename[i]);
+                    int policy_end_year_cop = calc_odnowienia(EndYearnum, odnowienia_vec_data, std::stoi(row["Odnowienia"]), std::stod(row["SumaUbezpieczenia"]));
+                    dataKonca = dataKonca.replace(dataKonca.length() - 4, 4, std::to_string(policy_end_year_cop)); // zastąpienie ostatnich 4 znaków
+
+                }
+
+                get_dates_within_year(dataPoczatku, dataKonca, std::stoi(year));
+                processRow(
+                    dataPoczatku,
+                    dataKonca,
+                    std::stoi(row["WojUjednolicone"]),
+                    std::stod(row["Szerokosc"]),
+                    std::stod(row["Dlugosc"]),
+                    reasekuracjaf,
+                    std::stod(row["SumaUbezpieczenia"]),
+                    id_ubezp);
+            }
+        }
+        catch (const std::invalid_argument &e)
+        {
+            std::cerr << "Error: Invalid argument for stoi or stod conversion 1." << std::endl;
+        }
+    }
+}
+
+
+
+int calc_odnowienia(int polic_end_year,
+                    std::vector<std::vector<long double>> odnowienia_vec_data,
+                    int odnowienia_exponsure,
+                    double sum_ub)
+{
+    int ind_pom = 0;
+    int policy_end_year_cop;
+
+    long double prob_unif = randZeroToOne(0, 1);
+    long double find_prob_odn = find_prob_odnowienie(odnowienia_vec_data,
+                                                     odnowienia_exponsure,
+                                                     sum_ub);
+    if (prob_unif <= find_prob_odn)
+    {
+        ind_pom += 1;
+        policy_end_year_cop = polic_end_year + 1;
+    }
+    else
+    {
+        policy_end_year_cop = polic_end_year;
+    }
+    return (policy_end_year_cop);
+}
+
+
 long double find_prob_odnowienie(std::vector<std::vector<long double>> odnowienia_vec_data,
                                  long double odnowienia_exp_val,
                                  long double sum_ub_val)
@@ -19,43 +92,14 @@ long double find_prob_odnowienie(std::vector<std::vector<long double>> odnowieni
     return (vec_pra[ind]);
 }
 
-std::vector<int> calc_odnowienia(std::vector<int> polic_end_year,
-                                 std::vector<std::vector<long double>> odnowienia_vec_data,
-                                 std::vector<double> odnowienia_exponsure,
-                                 std::vector<double> sum_ub)
-{
-    int len_sub = sum_ub.size();
-    int ind_pom = 0;
-    std::vector<int> policy_end_year_cop(len_sub);
-    for (int i = 0; i < len_sub; i++)
-    {
-        long double prob_unif = randZeroToOne(1, 0, 1);
-        long double find_prob_odn = find_prob_odnowienie(odnowienia_vec_data,
-                                                         odnowienia_exponsure[i],
-                                                         sum_ub[i]);
-        if (prob_unif <= find_prob_odn)
-        {
-            ind_pom += 1;
-            policy_end_year_cop[i] = polic_end_year[i] + 1;
-        }
-        else
-        {
-            policy_end_year_cop[i] = polic_end_year[i];
-        }
-    }
-    return (policy_end_year_cop);
-}
 
-
-
-int odnowienia = 0;
-const std::string FOLDER_UBEZP = "csv/Odnowienia/";
+const std::string FOLDER_ODNOWIENIA = "csv/Odnowienia/";
 
 std::vector<std::vector<long double>> read_odnowienia(const std::string filename)
 {
     std::vector<std::vector<double>> odnowienia_vect;
-  
-    csvstream csvin(FOLDER_UBEZP + filename + ".csv");
+
+    csvstream csvin(FOLDER_ODNOWIENIA + filename + ".csv");
 
     std::map<std::string, std::string> row;
     std::vector<double> pom_SU_dol_vec;
@@ -77,11 +121,11 @@ std::vector<std::vector<long double>> read_odnowienia(const std::string filename
     odnowienia_vect.push_back(pom_pr_odn_vec);
 }
 
-w main
 
-    char odpowiedz;
 
-  // pytanie do użytkownika
+   char odpowiedz;
+
+    // pytanie do użytkownika
     std::cout << "Czy mają wystąpić odnowienia (t/n): ";
     std::cin >> odpowiedz;
 
@@ -100,15 +144,3 @@ w main
         std::cout << "Nieprawidłowa odpowiedź. Wprowadź 't' lub 'n'.\n";
         return;
     }
-
-nad processBudynki
-               if (odnowienia == 1)
-                {
-                    std::vector<std::vector<long double>> odnowienia_vec_data = read_odnowienia(filename[i]);
-                    // std::vector<int> policy_end_year_cop = calc_odnowienia(end_month_year[1], odnowienia_vec_data, odnowienia, exposure_sum_premium);
-                    // start_end_month = calc_month_without_year(start_month_year[0], end_month_year[0], start_month_year[1], policy_end_year_cop, 2022);
-                }
-                else
-                {
-                    // start_end_month = calc_month_without_year(start_month_year[0], end_month_year[0], start_month_year[1], end_month_year[1], 2022);
-                }
