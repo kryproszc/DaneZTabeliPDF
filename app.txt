@@ -1,4 +1,114 @@
-std::random_device rd;
-std::mt19937 gen(rd());
-boost::random::beta_distribution<> dist(alpha[j], beta[j]);
-simulated_probability[j] = dist(gen);
+long double find_prob_odnowienie(std::vector<std::vector<long double>> odnowienia_vec_data,
+                                 long double odnowienia_exp_val,
+                                 long double sum_ub_val)
+{
+    std::vector<long double> SU_dolna = odnowienia_vec_data[0];
+    std::vector<long double> SU_gorna = odnowienia_vec_data[1];
+    std::vector<long double> vec_odn = odnowienia_vec_data[2];
+    std::vector<long double> vec_pra = odnowienia_vec_data[3];
+    int ind = 0;
+    int len_sub = SU_dolna.size();
+    for (int i = 0; i < len_sub; i++)
+    {
+        if ((vec_odn[i] == odnowienia_exp_val) && (SU_dolna[i] <= sum_ub_val) && (SU_gorna[i] > sum_ub_val))
+        {
+            ind = i;
+            break;
+        }
+    }
+    return (vec_pra[ind]);
+}
+
+std::vector<int> calc_odnowienia(std::vector<int> polic_end_year,
+                                 std::vector<std::vector<long double>> odnowienia_vec_data,
+                                 std::vector<double> odnowienia_exponsure,
+                                 std::vector<double> sum_ub)
+{
+    int len_sub = sum_ub.size();
+    int ind_pom = 0;
+    std::vector<int> policy_end_year_cop(len_sub);
+    for (int i = 0; i < len_sub; i++)
+    {
+        long double prob_unif = randZeroToOne(1, 0, 1);
+        long double find_prob_odn = find_prob_odnowienie(odnowienia_vec_data,
+                                                         odnowienia_exponsure[i],
+                                                         sum_ub[i]);
+        if (prob_unif <= find_prob_odn)
+        {
+            ind_pom += 1;
+            policy_end_year_cop[i] = polic_end_year[i] + 1;
+        }
+        else
+        {
+            policy_end_year_cop[i] = polic_end_year[i];
+        }
+    }
+    return (policy_end_year_cop);
+}
+
+
+
+int odnowienia = 0;
+const std::string FOLDER_UBEZP = "csv/Odnowienia/";
+
+std::vector<std::vector<long double>> read_odnowienia(const std::string filename)
+{
+    std::vector<std::vector<double>> odnowienia_vect;
+  
+    csvstream csvin(FOLDER_UBEZP + filename + ".csv");
+
+    std::map<std::string, std::string> row;
+    std::vector<double> pom_SU_dol_vec;
+    std::vector<double> pom_SU_gor_vec;
+    std::vector<double> pom_odn_vec;
+    std::vector<double> pom_pr_odn_vec;
+
+    while (csvin >> row)
+    {
+        pom_SU_dol_vec.push_back(std::stod(row["SU_dolnaGranica"]));
+        pom_SU_gor_vec.push_back(std::stod(row["SU_gornaGranica"]));
+        pom_odn_vec.push_back(std::stod(row["Odnowienie"]));
+        pom_pr_odn_vec.push_back(std::stod(row["PrawdopodobienstwoOdnowienia"]));
+    }
+
+    odnowienia_vect.push_back(pom_SU_dol_vec);
+    odnowienia_vect.push_back(pom_SU_gor_vec);
+    odnowienia_vect.push_back(pom_odn_vec);
+    odnowienia_vect.push_back(pom_pr_odn_vec);
+}
+
+w main
+
+    char odpowiedz;
+
+  // pytanie do użytkownika
+    std::cout << "Czy mają wystąpić odnowienia (t/n): ";
+    std::cin >> odpowiedz;
+
+    if (odpowiedz == 't' || odpowiedz == 'T')
+    {
+        std::cout << "Zaznaczono opcję odnowień.\n";
+        odnowienia = 1;
+    }
+    else if (odpowiedz == 'n' || odpowiedz == 'N')
+    {
+        std::cout << "Nie zaznaczono opcji odnowień.\n";
+        odnowienia = 0;
+    }
+    else
+    {
+        std::cout << "Nieprawidłowa odpowiedź. Wprowadź 't' lub 'n'.\n";
+        return;
+    }
+
+nad processBudynki
+               if (odnowienia == 1)
+                {
+                    std::vector<std::vector<long double>> odnowienia_vec_data = read_odnowienia(filename[i]);
+                    // std::vector<int> policy_end_year_cop = calc_odnowienia(end_month_year[1], odnowienia_vec_data, odnowienia, exposure_sum_premium);
+                    // start_end_month = calc_month_without_year(start_month_year[0], end_month_year[0], start_month_year[1], policy_end_year_cop, 2022);
+                }
+                else
+                {
+                    // start_end_month = calc_month_without_year(start_month_year[0], end_month_year[0], start_month_year[1], end_month_year[1], 2022);
+                }
