@@ -1,36 +1,4 @@
-import os
-import pandas as pd
-
-def combine_specific_csv_files(folder_path, file_names, output_file):
-    # Lista do przechowywania danych z wybranych plików CSV
-    all_data = []
-
-    # Iteracja przez podane nazwy plików
-    for file_name in file_names:
-        file_path = os.path.join(folder_path, file_name)
-        if os.path.exists(file_path) and file_name.endswith(".csv"):
-            # Wczytanie danych z pliku CSV i dodanie ich do listy
-            data = pd.read_csv(file_path)
-            all_data.append(data)
-        else:
-            print(f"Plik {file_name} nie istnieje w folderze lub nie jest plikiem CSV.")
-
-    if all_data:
-        # Połączenie wszystkich danych w jeden DataFrame
-        combined_data = pd.concat(all_data, ignore_index=True)
-
-        # Zapisanie połączonych danych do jednego pliku CSV
-        combined_data.to_csv(output_file, index=False)
-        print(f"Połączone dane zapisano do pliku {output_file}.")
-    else:
-        print("Nie znaleziono żadnych danych do połączenia.")
-
-# Ścieżka do folderu z plikami CSV
-folder_path = "path/to/your/csv/folder"
-# Lista nazw plików CSV do połączenia
-file_names = ["file1.csv", "file2.csv", "file3.csv"]
-# Nazwa wyjściowego pliku CSV
-output_file = "combined_data.csv"
-
-# Wywołanie funkcji łączącej wskazane pliki CSV
-combine_specific_csv_files(folder_path, file_names, output_file)
+std::random_device rd;
+std::mt19937 gen(rd());
+boost::random::beta_distribution<> dist(alpha[j], beta[j]);
+simulated_probability[j] = dist(gen);
