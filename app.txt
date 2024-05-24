@@ -1,146 +1,172 @@
-void processBudynki(const ......
- dataPoczatku = row["DataPoczatku"];
-                std::string dataKonca = row["DataKonca"];
-                int reasekuracjaf = 9999;
-                try
-                {
-                    reasekuracjaf = std::stoi(row["ReasekuracjaF"]);
-                }
-                catch (const std::invalid_argument &e)
-                {
-                    reasekuracjaf = 9999;
-                }
-                if (odnowienia == 1)
-                {
-                    std::string StartlastFour = dataPoczatku.substr(dataPoczatku.length() - 4);
-                    std::string EndlastFour = dataKonca.substr(dataKonca.length() - 4);
-    
-                    // konwersja na int
-                    int StartYearnum = std::stoi(StartlastFour);
-                    int EndYearnum = std::stoi(EndlastFour);
+Grid2D& getQuadTree(std::vector<Grid2D>& quadtreeVector, int woj, int month)
+{
+    int index = woj * 12 + month;
+    return quadtreeVector[index];
+}
 
-                    std::vector<std::vector<long double>> odnowienia_vec_data = read_odnowienia(filename[i]);
-                    int policy_end_year_cop = calc_odnowienia(EndYearnum, odnowienia_vec_data, std::stoi(row["Odnowienia"]), std::stod(row["SumaUbezpieczenia"]));
-                    dataKonca = dataKonca.replace(dataKonca.length() - 4, 4, std::to_string(policy_end_year_cop)); // zastąpienie ostatnich 4 znaków
 
+struct Point
+{
+    long double x, y;
+    int insu;
+    int reas;
+    double premium;
+
+    Point(long double x, long double y, int insu, int reas, double premium)
+    {
+        this->x = x;
+        this->y = y;
+        this->insu = insu;
+        this->reas = reas;
+        this->premium = premium;
+    }
+};
+
+struct Rect
+{
+    double x1, y1, x2, y2;
+
+    double width() const { return std::abs(x2 - x1); }
+    double height() const { return std::abs(y2 - y1); }
+
+    bool contains(const Point& p) const
+    {
+        return (p.x >= std::min(x1, x2) && p.x <= std::max(x1, x2) &&
+            p.y >= std::min(y1, y2) && p.y <= std::max(y1, y2));
+    }
+
+    bool intersects(const Rect& range) const
+    {
+        return !(range.x1 > std::max(x1, x2) || range.x2 < std::min(x1, x2) ||
+            range.y1 > std::max(y1, y2) || range.y2 < std::min(y1, y2));
+    }
+    bool contains(const Rect& other) const
+    {
+        return (std::min(x1, x2) <= std::min(other.x1, other.x2) &&
+            std::max(x1, x2) >= std::max(other.x1, other.x2) &&
+            std::min(y1, y2) <= std::min(other.y1, other.y2) &&
+            std::max(y1, y2) >= std::max(other.y1, other.y2));
+    }
+};
+
+class Grid2D
+{
+private:
+    int rows, cols;
+    Rect bounds;
+    std::vector<Point*> grid; 
+
+public:
+    Grid2D(int rows, int cols, Rect bounds) : rows(rows), cols(cols), bounds(bounds)
+    {
+        grid.resize(rows * cols);  
+    }
+    bool insert(const Point& p)
+    {
+        if (!bounds.contains(p))
+            return false;
+        int col = static_cast<int>((p.x - bounds.x1) / ((bounds.x2 - bounds.x1) / cols));
+        int row = static_cast<int>((p.y - bounds.y1) / ((bounds.y2 - bounds.y1) / rows));
+        int index = row * cols + col;
+        if (index >= 0 && index < rows * cols)
+        {
+            grid[index] = new Point(p); 
+            return true;
+        }
+        return false;
+    }
+    void getPointsInRange(const Rect& range, std::vector<long double>& lat_sub,
+        std::vector<long double>& lon_sub,
+        std::vector<int>& insu_sub,
+        std::vector<int>& reas_sub,
+        std::vector<double>& premium_sub) const
+    {
+        int startCol = std::max(0, int((range.x1 - bounds.x1) / ((bounds.x2 - bounds.x1) / cols)));
+        int endCol = std::min(cols - 1, int((range.x2 - bounds.x1) / ((bounds.x2 - bounds.x1) / cols)));
+        int startRow = std::max(0, int((range.y1 - bounds.y1) / ((bounds.y2 - bounds.y1) / rows)));
+        int endRow = std::min(rows - 1, int((range.y2 - bounds.y1) / ((bounds.y2 - bounds.y1) / rows)));
+        for (int row = startRow; row <= endRow; ++row)
+        {
+            for (int col = startCol; col <= endCol; ++col)
+            {
+                int index = row * cols + col;
+                if (grid[index] != nullptr && range.contains(*grid[index]))
+                {
+                    lat_sub.push_back(grid[index]->x);
+                    lon_sub.push_back(grid[index]->y);
+                    insu_sub.push_back(grid[index]->insu);
+                    reas_sub.push_back(grid[index]->reas);
+                    premium_sub.push_back(grid[index]->premium);
                 }
-
-                get_dates_within_year(dataPoczatku, dataKonca, std::stoi(year));
-                processRow(
-                    dataPoczatku,
-                    dataKonca,
-                    std::stoi(row["WojUjednolicone"]),
-                    std::stod(row["Szerokosc"]),
-                    std::stod(row["Dlugosc"]),
-                    reasekuracjaf,
-                    std::stod(row["SumaUbezpieczenia"]),
-                    id_ubezp);
             }
         }
-        catch (const std::invalid_argument &e)
+    }
+
+std::vector<Point> query(const Rect& range)
+    {
+        std::vector<Point> result;
+        int startCol = std::max(0, int((range.x1 - bounds.x1) / ((bounds.x2 - bounds.x1) / cols)));
+        int endCol = std::min(cols - 1, int((range.x2 - bounds.x1) / ((bounds.x2 - bounds.x1) / cols)));
+        int startRow = std::max(0, int((range.y1 - bounds.y1) / ((bounds.y2 - bounds.y1) / rows)));
+        int endRow = std::min(rows - 1, int((range.y2 - bounds.y1) / ((bounds.y2 - bounds.y1) / rows)));
+        for (int row = startRow; row <= endRow; ++row)
         {
-            std::cerr << "Error: Invalid argument for stoi or stod conversion 1." << std::endl;
+            for (int col = startCol; col <= endCol; ++col)
+            {
+                int index = row * cols + col;
+                if (grid[index] != nullptr && range.contains(*grid[index]))
+                {
+                    result.push_back(*grid[index]);
+                }
+            }
+        }
+        return result;
+    }
+
+    ~Grid2D()
+    {
+        for (auto& p : grid)
+        {
+            delete p;  
         }
     }
-}
+};
 
+Rect boundary = { 49.0, 16.07, 54.5, 24.09 };
+std::vector<Grid2D> quadtree(17 * 12, Grid2D(100, 100, boundary));
 
-
-int calc_odnowienia(int polic_end_year,
-                    std::vector<std::vector<long double>> odnowienia_vec_data,
-                    int odnowienia_exponsure,
-                    double sum_ub)
+void processRow(const std::string &startDate, const std::string &endDate, int region, double latitude, double longitude, int reassurance, double sumValue, int insurance)
 {
-    int ind_pom = 0;
-    int policy_end_year_cop;
+    int startMonth = extractMonth(startDate) - 1;
+    int endMonth = extractMonth(endDate) - 1;
 
-    long double prob_unif = randZeroToOne(0, 1);
-    long double find_prob_odn = find_prob_odnowienie(odnowienia_vec_data,
-                                                     odnowienia_exponsure,
-                                                     sum_ub);
-    if (prob_unif <= find_prob_odn)
+    for (int month = startMonth; month <= endMonth; ++month)
     {
-        ind_pom += 1;
-        policy_end_year_cop = polic_end_year + 1;
+
+        getQuadTree(quadtree, region, month).insert({ latitude,longitude, insurance, reassurance, sumValue });
+
+        exponsure_latitude[region][month].push_back(latitude);
+        exponsure_longitude[region][month].push_back(longitude);
+        exponsure_insurance[region][month].push_back(insurance);
+        exponsure_reassurance[region][month].push_back(reassurance);
+        exponsure_sum_value[region][month].push_back(sumValue);
     }
-    else
-    {
-        policy_end_year_cop = polic_end_year;
-    }
-    return (policy_end_year_cop);
 }
 
+  Rect searchArea = {  lat_center - radius, lon_center - radius, lat_center + radius, lon_center + radius };
 
-long double find_prob_odnowienie(std::vector<std::vector<long double>> odnowienia_vec_data,
-                                 long double odnowienia_exp_val,
-                                 long double sum_ub_val)
-{
-    std::vector<long double> SU_dolna = odnowienia_vec_data[0];
-    std::vector<long double> SU_gorna = odnowienia_vec_data[1];
-    std::vector<long double> vec_odn = odnowienia_vec_data[2];
-    std::vector<long double> vec_pra = odnowienia_vec_data[3];
-    int ind = 0;
-    int len_sub = SU_dolna.size();
-    for (int i = 0; i < len_sub; i++)
-    {
-        if ((vec_odn[i] == odnowienia_exp_val) && (SU_dolna[i] <= sum_ub_val) && (SU_gorna[i] > sum_ub_val))
-        {
-            ind = i;
-            break;
-        }
-    }
-    return (vec_pra[ind]);
-}
+    getQuadTree(quadtree, woj, mies).getPointsInRange(searchArea, lat_sub, lon_sub, insu_sub, reas_sub, premium_sub);
 
 
-const std::string FOLDER_ODNOWIENIA = "csv/Odnowienia/";
-
-std::vector<std::vector<long double>> read_odnowienia(const std::string filename)
-{
-    std::vector<std::vector<double>> odnowienia_vect;
-
-    csvstream csvin(FOLDER_ODNOWIENIA + filename + ".csv");
-
-    std::map<std::string, std::string> row;
-    std::vector<double> pom_SU_dol_vec;
-    std::vector<double> pom_SU_gor_vec;
-    std::vector<double> pom_odn_vec;
-    std::vector<double> pom_pr_odn_vec;
-
-    while (csvin >> row)
-    {
-        pom_SU_dol_vec.push_back(std::stod(row["SU_dolnaGranica"]));
-        pom_SU_gor_vec.push_back(std::stod(row["SU_gornaGranica"]));
-        pom_odn_vec.push_back(std::stod(row["Odnowienie"]));
-        pom_pr_odn_vec.push_back(std::stod(row["PrawdopodobienstwoOdnowienia"]));
-    }
-
-    odnowienia_vect.push_back(pom_SU_dol_vec);
-    odnowienia_vect.push_back(pom_SU_gor_vec);
-    odnowienia_vect.push_back(pom_odn_vec);
-    odnowienia_vect.push_back(pom_pr_odn_vec);
-}
-
-
-
-   char odpowiedz;
-
-    // pytanie do użytkownika
-    std::cout << "Czy mają wystąpić odnowienia (t/n): ";
-    std::cin >> odpowiedz;
-
-    if (odpowiedz == 't' || odpowiedz == 'T')
-    {
-        std::cout << "Zaznaczono opcję odnowień.\n";
-        odnowienia = 1;
-    }
-    else if (odpowiedz == 'n' || odpowiedz == 'N')
-    {
-        std::cout << "Nie zaznaczono opcji odnowień.\n";
-        odnowienia = 0;
-    }
-    else
-    {
-        std::cout << "Nieprawidłowa odpowiedź. Wprowadź 't' lub 'n'.\n";
-        return;
-    }
+    // for (int i = 0; i < n; i++)
+    // {
+    //     logical_value = !((exponsure_longitude[woj][mies][i] > east_lon) || (exponsure_longitude[woj][mies][i] < west_lon) || (exponsure_latitude[woj][mies][i] < south_lat) || (exponsure_latitude[woj][mies][i] > north_lat));
+    //     if (logical_value)
+    //     {
+    //         lat_sub.push_back(exponsure_latitude[woj][mies][i]);
+    //         lon_sub.push_back(exponsure_longitude[woj][mies][i]);
+    //         insu_sub.push_back(exponsure_insurance[woj][mies][i]);
+    //         reas_sub.push_back(exponsure_reassurance[woj][mies][i]);
+    //         premium_sub.push_back(exponsure_sum_value[woj][mies][i]);
+    //     }
+    // }
