@@ -4,19 +4,12 @@ void prepareData(int nr_sim, int woj, int mies)
 
     if (exposure_number > 0)
     {
-        Results results;
-
         int binom_fire = randBin(exposure_number, list_list_wyb[woj][mies]);
-
-        results.binom_fire = binom_fire;
 
         if (binom_fire > 0)
         {
-            // std::vector<int> fire_sources_list(binom_fire);
-            // std::vector<int> pom_index_fire(exposure_number);
-            // std::iota(std::begin(pom_index_fire), std::end(pom_index_fire), 0);
-            // fire_sources_list = sample_vec(pom_index_fire, binom_fire);
-            // results.fire_sources_list = fire_sources_list;
+            auto& results = vector_data[nr_sim][woj][mies];  // bezpośrednie odniesienie do odpowiedniego miejsca w vector_data
+            results.binom_fire = binom_fire;
 
             std::vector<int> pom_index_fire(exposure_number);
             std::iota(std::begin(pom_index_fire), std::end(pom_index_fire), 0);
@@ -24,15 +17,9 @@ void prepareData(int nr_sim, int woj, int mies)
 
             for (int nr_budynku : results.fire_sources_list)
             {
-                std::vector<std::vector<double>> out_data(11);
-                out_data = haversine_loop_cpp_vec(200, nr_budynku, woj, mies);
-                results.spread_results.emplace_back((out_data));
-
-                results.spread_results.emplace_back(haversine_loop_cpp_vec(200, nr_budynku, woj, mies));
-
+                auto out_data = haversine_loop_cpp_vec(200, nr_budynku, woj, mies);
+                results.spread_results.emplace_back(std::move(out_data));
             }
-
-            vector_data[nr_sim][woj][mies] = std::move(results);
         }
     }
 
