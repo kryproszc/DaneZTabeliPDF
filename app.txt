@@ -1,172 +1,127 @@
-Grid2D& getQuadTree(std::vector<Grid2D>& quadtreeVector, int woj, int month)
-{
-    int index = woj * 12 + month;
-    return quadtreeVector[index];
-}
+    vector_data = std::vector<std::vector<std::vector<Results>>>(
+        sim,
+        std::vector<std::vector<Results>>(
+            17,                      // liczba woj
+            std::vector<Results>(12) // liczba miesiecy
+            ));
 
-
-struct Point
-{
-    long double x, y;
-    int insu;
-    int reas;
-    double premium;
-
-    Point(long double x, long double y, int insu, int reas, double premium)
+    for (int sim_num = 0; sim_num < sim; sim_num++)
     {
-        this->x = x;
-        this->y = y;
-        this->insu = insu;
-        this->reas = reas;
-        this->premium = premium;
-    }
-};
-
-struct Rect
-{
-    double x1, y1, x2, y2;
-
-    double width() const { return std::abs(x2 - x1); }
-    double height() const { return std::abs(y2 - y1); }
-
-    bool contains(const Point& p) const
-    {
-        return (p.x >= std::min(x1, x2) && p.x <= std::max(x1, x2) &&
-            p.y >= std::min(y1, y2) && p.y <= std::max(y1, y2));
-    }
-
-    bool intersects(const Rect& range) const
-    {
-        return !(range.x1 > std::max(x1, x2) || range.x2 < std::min(x1, x2) ||
-            range.y1 > std::max(y1, y2) || range.y2 < std::min(y1, y2));
-    }
-    bool contains(const Rect& other) const
-    {
-        return (std::min(x1, x2) <= std::min(other.x1, other.x2) &&
-            std::max(x1, x2) >= std::max(other.x1, other.x2) &&
-            std::min(y1, y2) <= std::min(other.y1, other.y2) &&
-            std::max(y1, y2) >= std::max(other.y1, other.y2));
-    }
-};
-
-class Grid2D
-{
-private:
-    int rows, cols;
-    Rect bounds;
-    std::vector<Point*> grid; 
-
-public:
-    Grid2D(int rows, int cols, Rect bounds) : rows(rows), cols(cols), bounds(bounds)
-    {
-        grid.resize(rows * cols);  
-    }
-    bool insert(const Point& p)
-    {
-        if (!bounds.contains(p))
-            return false;
-        int col = static_cast<int>((p.x - bounds.x1) / ((bounds.x2 - bounds.x1) / cols));
-        int row = static_cast<int>((p.y - bounds.y1) / ((bounds.y2 - bounds.y1) / rows));
-        int index = row * cols + col;
-        if (index >= 0 && index < rows * cols)
+        for (size_t woj = 0; woj < 17; woj++)
         {
-            grid[index] = new Point(p); 
-            return true;
-        }
-        return false;
-    }
-    void getPointsInRange(const Rect& range, std::vector<long double>& lat_sub,
-        std::vector<long double>& lon_sub,
-        std::vector<int>& insu_sub,
-        std::vector<int>& reas_sub,
-        std::vector<double>& premium_sub) const
-    {
-        int startCol = std::max(0, int((range.x1 - bounds.x1) / ((bounds.x2 - bounds.x1) / cols)));
-        int endCol = std::min(cols - 1, int((range.x2 - bounds.x1) / ((bounds.x2 - bounds.x1) / cols)));
-        int startRow = std::max(0, int((range.y1 - bounds.y1) / ((bounds.y2 - bounds.y1) / rows)));
-        int endRow = std::min(rows - 1, int((range.y2 - bounds.y1) / ((bounds.y2 - bounds.y1) / rows)));
-        for (int row = startRow; row <= endRow; ++row)
-        {
-            for (int col = startCol; col <= endCol; ++col)
+            for (int mies = 0; mies < 12; mies++)
             {
-                int index = row * cols + col;
-                if (grid[index] != nullptr && range.contains(*grid[index]))
-                {
-                    lat_sub.push_back(grid[index]->x);
-                    lon_sub.push_back(grid[index]->y);
-                    insu_sub.push_back(grid[index]->insu);
-                    reas_sub.push_back(grid[index]->reas);
-                    premium_sub.push_back(grid[index]->premium);
-                }
+                pool.enqueue([sim_num ,woj, mies]()
+                             { prepareData(sim_num, woj, mies); });
             }
         }
     }
+    pool.waitFinished();
 
-std::vector<Point> query(const Rect& range)
+    for (int sim_num = 0; sim_num < sim; sim_num++)
     {
-        std::vector<Point> result;
-        int startCol = std::max(0, int((range.x1 - bounds.x1) / ((bounds.x2 - bounds.x1) / cols)));
-        int endCol = std::min(cols - 1, int((range.x2 - bounds.x1) / ((bounds.x2 - bounds.x1) / cols)));
-        int startRow = std::max(0, int((range.y1 - bounds.y1) / ((bounds.y2 - bounds.y1) / rows)));
-        int endRow = std::min(rows - 1, int((range.y2 - bounds.y1) / ((bounds.y2 - bounds.y1) / rows)));
-        for (int row = startRow; row <= endRow; ++row)
-        {
-            for (int col = startCol; col <= endCol; ++col)
-            {
-                int index = row * cols + col;
-                if (grid[index] != nullptr && range.contains(*grid[index]))
-                {
-                    result.push_back(*grid[index]);
-                }
-            }
-        }
-        return result;
+        pool.enqueue([sim_num, kat_val, ilosc_ubezpieczycieli]()
+                     { simulateExponsure(sim_num, kat_val, ilosc_ubezpieczycieli); });
     }
 
-    ~Grid2D()
-    {
-        for (auto& p : grid)
-        {
-            delete p;  
-        }
-    }
+    // nie zapomnij o tym
+    pool.waitFinished();
+
+
+struct Results
+{
+    int binom_fire;
+    std::vector<int> fire_sources_list;
+    std::vector<std::vector<std::vector<double>>> spread_results;
 };
 
-Rect boundary = { 49.0, 16.07, 54.5, 24.09 };
-std::vector<Grid2D> quadtree(17 * 12, Grid2D(100, 100, boundary));
+int sim = 0;
 
-void processRow(const std::string &startDate, const std::string &endDate, int region, double latitude, double longitude, int reassurance, double sumValue, int insurance)
+std::vector<std::vector<std::vector<Results>>> vector_data;
+
+void prepareData(int nr_sim, int woj, int mies)
 {
-    int startMonth = extractMonth(startDate) - 1;
-    int endMonth = extractMonth(endDate) - 1;
+    int exposure_number = exponsure_longitude[woj][mies].size();
 
-    for (int month = startMonth; month <= endMonth; ++month)
+    if (exposure_number > 0)
     {
+        Results results;
 
-        getQuadTree(quadtree, region, month).insert({ latitude,longitude, insurance, reassurance, sumValue });
+        int binom_fire = randBin(exposure_number, list_list_wyb[woj][mies]);
 
-        exponsure_latitude[region][month].push_back(latitude);
-        exponsure_longitude[region][month].push_back(longitude);
-        exponsure_insurance[region][month].push_back(insurance);
-        exponsure_reassurance[region][month].push_back(reassurance);
-        exponsure_sum_value[region][month].push_back(sumValue);
+        results.binom_fire = binom_fire;
+
+        if (binom_fire > 0)
+        {
+            std::vector<int> fire_sources_list(binom_fire);
+
+            std::vector<int> pom_index_fire(exposure_number);
+            std::iota(std::begin(pom_index_fire), std::end(pom_index_fire), 0);
+
+            fire_sources_list = sample_vec(pom_index_fire, binom_fire);
+            results.fire_sources_list = fire_sources_list;
+
+            for (int nr_budynku : fire_sources_list)
+            {
+                std::vector<std::vector<double>> out_data(11);
+                out_data = haversine_loop_cpp_vec(200, nr_budynku, woj, mies);
+
+                results.spread_results.emplace_back((out_data));
+            }
+
+            vector_data[nr_sim][woj][mies] = std::move(results);
+        }
     }
 }
 
-  Rect searchArea = {  lat_center - radius, lon_center - radius, lat_center + radius, lon_center + radius };
 
-    getQuadTree(quadtree, woj, mies).getPointsInRange(searchArea, lat_sub, lon_sub, insu_sub, reas_sub, premium_sub);
+void simulateExponsure(int sim, double kat_val, int ilosc_ubezpieczycieli)
+{
+    int exposure_number;
+    int binom_fire;
+    double wielkosc_pozar_procent;
+    double wielkosc_pozar_kwota;
+    double reas_fire;
+    int insurancer;
+    double reas_fire_kat;
+    int len_spread;
+    double sum_vec_out;
+    double sum_vec_kat_out;
+    double sum_netto_out;
+    double sum_netto_kat_out;
+
+    VectorSim sim_brutto_final;
+    VectorSim sim_brutto_kat_final;
+    VectorSim sim_netto_final;
+    VectorSim sim_netto_kat_final;
+    VectorPozarPierwotny buildPierwotny;
+    VectorPozarRozprzestrzeniony buildRozprzestrzeniony;
+
+    for (size_t woj = 0; woj < 17; woj++)
+    {
+        for (int mies = 0; mies < 12; mies++)
+        {
+            int index_table = 0;
+            exposure_number = exponsure_longitude[woj][mies].size();
+            if (exposure_number > 0)
+            {
+
+                auto ress = vector_data[sim][woj][mies];  
+
+                binom_fire = ress.binom_fire;
+
+                if (binom_fire > 0)
+                {
+                    std::vector<int> fire_sources_list = ress.fire_sources_list;
+
+                    for (size_t itx = 0; itx < fire_sources_list.size(); itx++)
+                    {
+                        auto nr_budynku = fire_sources_list[itx];
+
+                        std::vector<std::vector<double>> spread_one_building(11);
+                        spread_one_building = ress.spread_results[itx];
+
+                        wielkosc_pozar_procent = percentage_of_loss(wielkosc_pozaru);
+                        wielkosc_pozar_kwota = wielkosc_pozar_procent * exponsure_sum_value[woj][mies][nr_budynku];
 
 
-    // for (int i = 0; i < n; i++)
-    // {
-    //     logical_value = !((exponsure_longitude[woj][mies][i] > east_lon) || (exponsure_longitude[woj][mies][i] < west_lon) || (exponsure_latitude[woj][mies][i] < south_lat) || (exponsure_latitude[woj][mies][i] > north_lat));
-    //     if (logical_value)
-    //     {
-    //         lat_sub.push_back(exponsure_latitude[woj][mies][i]);
-    //         lon_sub.push_back(exponsure_longitude[woj][mies][i]);
-    //         insu_sub.push_back(exponsure_insurance[woj][mies][i]);
-    //         reas_sub.push_back(exponsure_reassurance[woj][mies][i]);
-    //         premium_sub.push_back(exponsure_sum_value[woj][mies][i]);
-    //     }
-    // }
