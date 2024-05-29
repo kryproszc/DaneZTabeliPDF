@@ -26,8 +26,10 @@ void prepareData(int nr_sim, int woj, int mies)
             {
                 std::vector<std::vector<double>> out_data(11);
                 out_data = haversine_loop_cpp_vec(200, nr_budynku, woj, mies);
-
                 results.spread_results.emplace_back((out_data));
+
+                results.spread_results.emplace_back(haversine_loop_cpp_vec(200, nr_budynku, woj, mies));
+
             }
 
             vector_data[nr_sim][woj][mies] = std::move(results);
