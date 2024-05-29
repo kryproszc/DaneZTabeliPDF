@@ -1,44 +1,3 @@
-    vector_data = std::vector<std::vector<std::vector<Results>>>(
-        sim,
-        std::vector<std::vector<Results>>(
-            17,                      // liczba woj
-            std::vector<Results>(12) // liczba miesiecy
-            ));
-
-    for (int sim_num = 0; sim_num < sim; sim_num++)
-    {
-        for (size_t woj = 0; woj < 17; woj++)
-        {
-            for (int mies = 0; mies < 12; mies++)
-            {
-                pool.enqueue([sim_num ,woj, mies]()
-                             { prepareData(sim_num, woj, mies); });
-            }
-        }
-    }
-    pool.waitFinished();
-
-    for (int sim_num = 0; sim_num < sim; sim_num++)
-    {
-        pool.enqueue([sim_num, kat_val, ilosc_ubezpieczycieli]()
-                     { simulateExponsure(sim_num, kat_val, ilosc_ubezpieczycieli); });
-    }
-
-    // nie zapomnij o tym
-    pool.waitFinished();
-
-
-struct Results
-{
-    int binom_fire;
-    std::vector<int> fire_sources_list;
-    std::vector<std::vector<std::vector<double>>> spread_results;
-};
-
-int sim = 0;
-
-std::vector<std::vector<std::vector<Results>>> vector_data;
-
 void prepareData(int nr_sim, int woj, int mies)
 {
     int exposure_number = exponsure_longitude[woj][mies].size();
@@ -53,15 +12,17 @@ void prepareData(int nr_sim, int woj, int mies)
 
         if (binom_fire > 0)
         {
-            std::vector<int> fire_sources_list(binom_fire);
+            // std::vector<int> fire_sources_list(binom_fire);
+            // std::vector<int> pom_index_fire(exposure_number);
+            // std::iota(std::begin(pom_index_fire), std::end(pom_index_fire), 0);
+            // fire_sources_list = sample_vec(pom_index_fire, binom_fire);
+            // results.fire_sources_list = fire_sources_list;
 
             std::vector<int> pom_index_fire(exposure_number);
             std::iota(std::begin(pom_index_fire), std::end(pom_index_fire), 0);
+            results.fire_sources_list = sample_vec(pom_index_fire, binom_fire);
 
-            fire_sources_list = sample_vec(pom_index_fire, binom_fire);
-            results.fire_sources_list = fire_sources_list;
-
-            for (int nr_budynku : fire_sources_list)
+            for (int nr_budynku : results.fire_sources_list)
             {
                 std::vector<std::vector<double>> out_data(11);
                 out_data = haversine_loop_cpp_vec(200, nr_budynku, woj, mies);
@@ -72,56 +33,6 @@ void prepareData(int nr_sim, int woj, int mies)
             vector_data[nr_sim][woj][mies] = std::move(results);
         }
     }
+
+    std::cout << "Zakonczone dla " << nr_sim << " " << woj << " " << mies << std::endl;
 }
-
-
-void simulateExponsure(int sim, double kat_val, int ilosc_ubezpieczycieli)
-{
-    int exposure_number;
-    int binom_fire;
-    double wielkosc_pozar_procent;
-    double wielkosc_pozar_kwota;
-    double reas_fire;
-    int insurancer;
-    double reas_fire_kat;
-    int len_spread;
-    double sum_vec_out;
-    double sum_vec_kat_out;
-    double sum_netto_out;
-    double sum_netto_kat_out;
-
-    VectorSim sim_brutto_final;
-    VectorSim sim_brutto_kat_final;
-    VectorSim sim_netto_final;
-    VectorSim sim_netto_kat_final;
-    VectorPozarPierwotny buildPierwotny;
-    VectorPozarRozprzestrzeniony buildRozprzestrzeniony;
-
-    for (size_t woj = 0; woj < 17; woj++)
-    {
-        for (int mies = 0; mies < 12; mies++)
-        {
-            int index_table = 0;
-            exposure_number = exponsure_longitude[woj][mies].size();
-            if (exposure_number > 0)
-            {
-
-                auto ress = vector_data[sim][woj][mies];  
-
-                binom_fire = ress.binom_fire;
-
-                if (binom_fire > 0)
-                {
-                    std::vector<int> fire_sources_list = ress.fire_sources_list;
-
-                    for (size_t itx = 0; itx < fire_sources_list.size(); itx++)
-                    {
-                        auto nr_budynku = fire_sources_list[itx];
-
-                        std::vector<std::vector<double>> spread_one_building(11);
-                        spread_one_building = ress.spread_results[itx];
-
-                        wielkosc_pozar_procent = percentage_of_loss(wielkosc_pozaru);
-                        wielkosc_pozar_kwota = wielkosc_pozar_procent * exponsure_sum_value[woj][mies][nr_budynku];
-
-
