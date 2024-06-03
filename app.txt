@@ -1,45 +1,64 @@
+import math
+
+class PCG32:
+    def __init__(self, seed=None):
+        self.state = seed if seed is not None else 0x853c49e6748fea9b
+        self.inc = 0xda3e39cb94b95bdb
+
+    def random(self):
+        oldstate = self.state
+        self.state = oldstate * 6364136223846793005 + (self.inc | 1)
+        xorshifted = (((oldstate >> 18) ^ oldstate) >> 27) & 0xFFFFFFFF
+        rot = (oldstate >> 59) & 0xFFFFFFFF
+        return (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) & 0xFFFFFFFF
+
+    def random_float(self):
+        return self.random() / 0xFFFFFFFF
+
+    def normal(self, mean, sigma, size=1):
+        return [mean + sigma * math.sqrt(-2.0 * math.log(self.random_float())) * math.cos(2.0 * math.pi * self.random_float()) for _ in range(size)]
+
+    def lognormal(self, mean, sigma, size=1):
+        normal_values = self.normal(mean, sigma, size)
+        return [math.exp(val) for val in normal_values]
+
+    def chisquare(self, df, size=1):
+        return [sum((self.normal(0, 1)[0]) ** 2 for _ in range(df)) for _ in range(size)]
+
+from pcg32 import PCG32
+
+
 import numpy as np
-import pandas as pd
-from multiprocessing import Pool
+from pcg32 import PCG32
 
-def process_row(args):
-    row, mu, sigma, mm, data_paid_copy, Ultimate_Param_ReservingRisk = args
-    m_i, sigma_i = mu.iloc[row, :], sigma.iloc[row, :]
-    for j in range(len(m_i)):
-        max_ind_row = np.max([0, mm - j - 1])
-        for i in range(max_ind_row, mm):
-            VAR_i_j = (sigma_i[j]) / (data_paid_copy.iloc[i, j])
-            lmean_i_j = np.log((m_i[j]) ** 2 / (np.sqrt((m_i[j]) ** 2 + VAR_i_j)))
-            lstdev_i_j = np.log(1 + ((VAR_i_j) / ((m_i[j]) ** 2)))
-            CL_i_j = np.random.lognormal(lmean_i_j, lstdev_i_j, size=1)
-            data_paid_copy.iloc[i, j + 1] = data_paid_copy.iloc[i, j] * CL_i_j[0]
+def main():
+    mean = 0
+    sigma = 1
+    size = 100000
+    df = 200
 
-    Ultimate = data_paid_copy.iloc[:, data_paid_copy.columns[-1] - 1].to_list()
-    BE = np.sum(Ultimate) - np.sum(Ultimate_Param_ReservingRisk)
-    return BE
+    pcg32 = PCG32(seed=42)
 
-def stochastic_triangle_forward_test_szybki(self, data_paid, sigma_j, dev, sd, sim, Ultimate_Param_ReservingRisk):
-    mm, nn = data_paid.shape[0], data_paid.shape[1]
-    dimension = [mm, nn, sim, len(dev)]
-    Total_BE = []
+    # Generowanie liczb z rozkładu normalnego
+    normal_samples = pcg32.normal(mean, sigma, size)
+    normal_mean = np.mean(normal_samples)
+    normal_quantile = np.quantile(normal_samples, 0.95)
+    print(f"Mean for normal distribution (PCG32): {normal_mean}")
+    print(f"95th percentile for normal distribution (PCG32): {normal_quantile}")
 
-    mu, sigma = self.random_stochastic_parameters(sigma_j, dev, sd, dimension)
-    data_paid_copy = data_paid.copy()
-    data_paid_copy_reRe = data_paid.copy()
-    data_paid_copy_reRe[mm + 1] = np.nan
+    # Generowanie liczb z rozkładu lognormalnego
+    lognormal_samples = pcg32.lognormal(mean, sigma, size)
+    lognormal_mean = np.mean(lognormal_samples)
+    lognormal_quantile = np.quantile(lognormal_samples, 0.95)
+    print(f"Mean for lognormal distribution (PCG32): {lognormal_mean}")
+    print(f"95th percentile for lognormal distribution (PCG32): {lognormal_quantile}")
 
-    if len(dev) > mm:
-        for k in range(mm + 1, len(dev) + 2):
-            data_paid_copy[k] = np.nan
+    # Generowanie liczb z rozkładu chi-kwadrat
+    chisquare_samples = pcg32.chisquare(df, size)
+    chisquare_mean = np.mean(chisquare_samples)
+    chisquare_quantile = np.quantile(chisquare_samples, 0.95)
+    print(f"Mean for chi-square distribution (PCG32): {chisquare_mean}")
+    print(f"95th percentile for chi-square distribution (PCG32): {chisquare_quantile}")
 
-    # Przygotowanie argumentów do funkcji równoległej
-    args = [(row, mu, sigma, mm, data_paid_copy.copy(), Ultimate_Param_ReservingRisk) for row in range(0, sim)]
-    
-    # Określenie liczby rdzeni do użycia
-    num_cores_to_use = 4  # na przykład 4 rdzenie
-
-    # Użycie Pool do równoległego przetwarzania
-    with Pool(processes=num_cores_to_use) as pool:
-        Total_BE = pool.map(process_row, args)
-
-    return Total_BE
+if __name__ == "__main__":
+    main()
