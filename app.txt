@@ -59,5 +59,11 @@ def stochastic_triangle_forward_test_szybki(data_paid, sigma_j, dev, sd, sim, Ul
     return Total_BE
 
 # Przykładowe użycie
-# data_paid, sigma_j, dev, sd, sim, Ultimate_Param_ReservingRisk = ...
+# data_paid = pd.DataFrame(...)  # Wprowadź swoje dane
+# sigma_j = np.array(...)  # Wprowadź swoje dane
+# dev = np.array(...)  # Wprowadź swoje dane
+# sd = np.array(...)  # Wprowadź swoje dane
+# sim = 1000  # Liczba symulacji
+# Ultimate_Param_ReservingRisk = np.array(...)  # Wprowadź swoje dane
+
 # result = stochastic_triangle_forward_test_szybki(data_paid, sigma_j, dev, sd, sim, Ultimate_Param_ReservingRisk)
