@@ -1,6 +1,7 @@
-def generate_chi_squared(df, n_samples):
-    chi_samples = np.zeros(n_samples)
-    for _ in range(df):
-        normal_samples = generate_normal(0, 1, n_samples)
-        chi_samples += normal_samples ** 2
-    return chi_samples
+def generate_normal(mu, sigma, size):
+    u1 = generate_uniform(size // 2)
+    u2 = generate_uniform(size // 2)
+    z0 = np.sqrt(-2.0 * np.log(u1)) * np.cos(2 * np.pi * u2)
+    z1 = np.sqrt(-2.0 * np.log(u1)) * np.sin(2 * np.pi * u2)
+    z = np.concatenate((z0, z1))
+    return mu + sigma * z
