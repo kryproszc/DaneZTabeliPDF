@@ -18,26 +18,12 @@ def process_row(args):
     BE = np.sum(Ultimate) - np.sum(Ultimate_Param_ReservingRisk)
     return BE
 
-def random_stochastic_parameters(sigma_j, dev, sd, dimension):
-    stochastic_sigma = pd.DataFrame(data=0, columns=np.arange(0, dimension[3], 1),
-                                    index=np.arange(0, dimension[2], 1))
-    mu_j = pd.DataFrame(data=0, columns=np.arange(0, dimension[3], 1), 
-                        index=np.arange(0, dimension[2], 1))
-    for j in range(0, dimension[3]):
-        np.random.seed(10)
-        st_swobody = np.max([1, dimension[0] - j - 2])
-        chi = np.random.chisquare(st_swobody, size=dimension[2])
-        stochastic_sigma.iloc[:, j] = (chi * sigma_j[j]) / st_swobody
-        np.random.seed(10)
-        mu_j.iloc[:, j] = np.random.normal(dev[j], sd[j], size=dimension[2])
-    return [mu_j, stochastic_sigma]
-
-def stochastic_triangle_forward_test_szybki(data_paid, sigma_j, dev, sd, sim, Ultimate_Param_ReservingRisk):
+def stochastic_triangle_forward_test_szybki(self, data_paid, sigma_j, dev, sd, sim, Ultimate_Param_ReservingRisk):
     mm, nn = data_paid.shape[0], data_paid.shape[1]
     dimension = [mm, nn, sim, len(dev)]
     Total_BE = []
 
-    mu, sigma = random_stochastic_parameters(sigma_j, dev, sd, dimension)
+    mu, sigma = self.random_stochastic_parameters(sigma_j, dev, sd, dimension)
     data_paid_copy = data_paid.copy()
     data_paid_copy_reRe = data_paid.copy()
     data_paid_copy_reRe[mm + 1] = np.nan
@@ -48,7 +34,7 @@ def stochastic_triangle_forward_test_szybki(data_paid, sigma_j, dev, sd, sim, Ul
 
     # Przygotowanie argumentów do funkcji równoległej
     args = [(row, mu, sigma, mm, data_paid_copy.copy(), Ultimate_Param_ReservingRisk) for row in range(0, sim)]
-
+    
     # Określenie liczby rdzeni do użycia
     num_cores_to_use = 4  # na przykład 4 rdzenie
 
@@ -57,13 +43,3 @@ def stochastic_triangle_forward_test_szybki(data_paid, sigma_j, dev, sd, sim, Ul
         Total_BE = pool.map(process_row, args)
 
     return Total_BE
-
-# Przykładowe użycie
-# data_paid = pd.DataFrame(...)  # Wprowadź swoje dane
-# sigma_j = np.array(...)  # Wprowadź swoje dane
-# dev = np.array(...)  # Wprowadź swoje dane
-# sd = np.array(...)  # Wprowadź swoje dane
-# sim = 1000  # Liczba symulacji
-# Ultimate_Param_ReservingRisk = np.array(...)  # Wprowadź swoje dane
-
-# result = stochastic_triangle_forward_test_szybki(data_paid, sigma_j, dev, sd, sim, Ultimate_Param_ReservingRisk)
