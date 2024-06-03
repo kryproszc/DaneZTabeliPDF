@@ -28,7 +28,8 @@ def generate_normal(mu, sigma, size):
     u1 = rng.random(size)
     u2 = rng.random(size)
     z0 = np.sqrt(-2.0 * np.log(u1)) * np.cos(2 * np.pi * u2)
-    return z0 * sigma + mu
+    z1 = np.sqrt(-2.0 * np.log(u1)) * np.sin(2 * np.pi * u2)
+    return np.concatenate((z0, z1))[:size] * sigma + mu
 
 def generate_chi_squared(df, size):
     return np.sum([generate_normal(0, 1, size) ** 2 for _ in range(df)], axis=0)
