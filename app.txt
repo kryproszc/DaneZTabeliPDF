@@ -1,3 +1,6 @@
 def generate_chi_squared(df, size):
-    normal_samples = np.array([generate_normal(0, 1, size) for _ in range(df)])
-    return np.sum(normal_samples**2, axis=0)
+    chi_samples = np.zeros(size)
+    for _ in range(df):
+        normal_samples = generate_normal(size)
+        chi_samples += normal_samples ** 2
+    return chi_samples
