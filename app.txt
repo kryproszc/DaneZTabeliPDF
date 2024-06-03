@@ -15,9 +15,9 @@ class PCG_XSH_RR:
 
     def random(self, size=None):
         if size is None:
-            return self.pcg32_random() / 0xFFFFFFFF
+            return (self.pcg32_random() / 0xFFFFFFFF) + np.finfo(float).eps
         else:
-            return np.array([self.pcg32_random() / 0xFFFFFFFF for _ in range(size)])
+            return np.array([(self.pcg32_random() / 0xFFFFFFFF) + np.finfo(float).eps for _ in range(size)])
 
 # Inicjalizacja generatora PCG-XSH-RR
 seed = 42  # Możesz ustawić swój seed
