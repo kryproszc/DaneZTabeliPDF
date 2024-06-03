@@ -1,7 +1,45 @@
-def generate_normal(mu, sigma, size):
-    u1 = generate_uniform(size // 2)
-    u2 = generate_uniform(size // 2)
-    z0 = np.sqrt(-2.0 * np.log(u1)) * np.cos(2 * np.pi * u2)
-    z1 = np.sqrt(-2.0 * np.log(u1)) * np.sin(2 * np.pi * u2)
-    z = np.concatenate((z0, z1))
-    return mu + sigma * z
+import numpy as np
+import pandas as pd
+from multiprocessing import Pool
+
+def process_row(args):
+    row, mu, sigma, mm, data_paid_copy, Ultimate_Param_ReservingRisk = args
+    m_i, sigma_i = mu.iloc[row, :], sigma.iloc[row, :]
+    for j in range(len(m_i)):
+        max_ind_row = np.max([0, mm - j - 1])
+        for i in range(max_ind_row, mm):
+            VAR_i_j = (sigma_i[j]) / (data_paid_copy.iloc[i, j])
+            lmean_i_j = np.log((m_i[j]) ** 2 / (np.sqrt((m_i[j]) ** 2 + VAR_i_j)))
+            lstdev_i_j = np.log(1 + ((VAR_i_j) / ((m_i[j]) ** 2)))
+            CL_i_j = np.random.lognormal(lmean_i_j, lstdev_i_j, size=1)
+            data_paid_copy.iloc[i, j + 1] = data_paid_copy.iloc[i, j] * CL_i_j[0]
+
+    Ultimate = data_paid_copy.iloc[:, data_paid_copy.columns[-1] - 1].to_list()
+    BE = np.sum(Ultimate) - np.sum(Ultimate_Param_ReservingRisk)
+    return BE
+
+def stochastic_triangle_forward_test_szybki(self, data_paid, sigma_j, dev, sd, sim, Ultimate_Param_ReservingRisk):
+    mm, nn = data_paid.shape[0], data_paid.shape[1]
+    dimension = [mm, nn, sim, len(dev)]
+    Total_BE = []
+
+    mu, sigma = self.random_stochastic_parameters(sigma_j, dev, sd, dimension)
+    data_paid_copy = data_paid.copy()
+    data_paid_copy_reRe = data_paid.copy()
+    data_paid_copy_reRe[mm + 1] = np.nan
+
+    if len(dev) > mm:
+        for k in range(mm + 1, len(dev) + 2):
+            data_paid_copy[k] = np.nan
+
+    # Przygotowanie argumentów do funkcji równoległej
+    args = [(row, mu, sigma, mm, data_paid_copy.copy(), Ultimate_Param_ReservingRisk) for row in range(0, sim)]
+    
+    # Określenie liczby rdzeni do użycia
+    num_cores_to_use = 4  # na przykład 4 rdzenie
+
+    # Użycie Pool do równoległego przetwarzania
+    with Pool(processes=num_cores_to_use) as pool:
+        Total_BE = pool.map(process_row, args)
+
+    return Total_BE
