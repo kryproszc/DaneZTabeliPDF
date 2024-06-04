@@ -1,3 +1,17 @@
-0xda3e39cb94b95bdb
-
-0x9e3779b97f4a7c15
+    def normal(self, mean=0.0, std_dev=1.0, size=1):
+        samples = []
+        while len(samples) < size:
+            while True:
+                u1 = 2 * self.pcg.random() - 1
+                u2 = 2 * self.pcg.random() - 1
+                s = u1**2 + u2**2
+                if s >= 1 or s == 0:
+                    continue
+                break
+            multiplier = np.sqrt(-2 * np.log(s) / s)
+            z0 = u1 * multiplier
+            z1 = u2 * multiplier
+            samples.append(mean + z0 * std_dev)
+            if len(samples) < size:
+                samples.append(mean + z1 * std_dev)
+        return np.array(samples[:size])
