@@ -14,12 +14,12 @@ class PCG32:
         return (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) & 0xFFFFFFFF
 
     def random_float(self, size=1):
-        return np.array([self.random() / 0xFFFFFFFF for _ in range(size)])
+        return np.array([self.random() / 0xFFFFFFFF for _ in range(size)], dtype=np.float32)
 
     def normal(self, mean, sigma, size=1):
         u1 = self.random_float(size)
-        u1 = np.where(u1 == 0, np.nextafter(0, 1), u1)  # Zapewnij, że u1 nigdy nie będzie dokładnie równe 0
         u2 = self.random_float(size)
+        u1 = np.where(u1 == 0, np.nextafter(0, 1), u1)  # Zapewnij, że u1 nigdy nie będzie dokładnie równe 0
         z0 = np.sqrt(-2.0 * np.log(u1)) * np.cos(2.0 * np.pi * u2)
         return mean + z0 * sigma
 
