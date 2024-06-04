@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 class PCG_XSH_RR:
     def __init__(self, seed=42, increment=54):
@@ -15,12 +16,12 @@ class PCG_XSH_RR:
         return (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) & ((1 << 32) - 1)
 
     def random(self):
-        return self.pcg32() / float(1 << 32)
+        return (self.pcg32() + 1) / float(1 << 32)  # Ensuring u1 is never 0
 
 def generate_normal_pcg32(mean=0.0, std_dev=1.0, size=1, seed=42):
     pcg = PCG_XSH_RR(seed=seed)
     samples = []
-    for _ in range(size):
+    while len(samples) < size:
         # Using Box-Muller transform to generate normal distribution
         u1 = pcg.random()
         u2 = pcg.random()
@@ -35,4 +36,6 @@ def generate_normal_pcg32(mean=0.0, std_dev=1.0, size=1, seed=42):
 
 # Generate 10 random numbers from a normal distribution
 normal_samples = generate_normal_pcg32(size=10)
-normal_samples
+normal_samples_df = pd.DataFrame(normal_samples, columns=["Generated Normal Samples"])
+import ace_tools as tools; tools.display_dataframe_to_user("Generated Normal Samples", normal_samples_df)
+normal_samples_df
