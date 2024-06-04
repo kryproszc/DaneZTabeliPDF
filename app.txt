@@ -1,10 +1,9 @@
-import math
 import numpy as np
 
 class PCG32:
-    def __init__(self, seed=None):
-        self.state = seed if seed is not None else 0x853c49e6748fea9b
-        self.inc = 0xda3e39cb94b95bdb
+    def __init__(self, state=0x4d595df4d0f33173, inc=0x14057b7ef767814f):
+        self.state = state
+        self.inc = inc
 
     def random(self):
         oldstate = self.state
