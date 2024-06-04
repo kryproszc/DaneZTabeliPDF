@@ -13,10 +13,12 @@ class PCG32:
         self.state = oldstate * 6364136223846793005 + (self.inc | 1)
         xorshifted = (((oldstate >> 18) ^ oldstate) >> 27) & 0xFFFFFFFF
         rot = oldstate >> 59
-        return (xorshifted >> rot) | (xorshifted << ((-rot) & 31))
+        return ((xorshifted >> rot) | (xorshifted << ((-rot) & 31))) & 0xFFFFFFFF
 
     def random_float(self, size=1):
-        return [self.random() / (1 << 32) for _ in range(size)]
+        max_int32 = 4294967295  # 2^32 - 1
+        epsilon = np.finfo(float).eps
+        return [(self.random() / max_int32) * (1 - 2 * epsilon) + epsilon for _ in range(size)]
 
     def normal(self, mean, sigma, size=1):
         results = []
@@ -24,8 +26,6 @@ class PCG32:
             u1 = self.random_float(size)
             u2 = self.random_float(size)
             for i in range(size):
-                if u1[i] == 0:
-                    u1[i] = np.nextafter(0, 1)  # Ensure u1 is not zero
                 z0 = np.sqrt(-2.0 * np.log(u1[i])) * np.cos(2.0 * np.pi * u2[i])
                 results.append(mean + z0 * sigma)
                 if len(results) == size:
