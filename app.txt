@@ -1,9 +1,12 @@
 import numpy as np
 
 class PCG32:
-    def __init__(self, state=0x4d595df4d0f33173, inc=0x14057b7ef767814f):
-        self.state = state
-        self.inc = inc
+    def __init__(self, seed=None):
+        if seed is not None:
+            self.state = seed
+        else:
+            self.state = 0x4d595df4d0f33173
+        self.inc = 0xda3e39cb94b95bdb
 
     def random(self):
         oldstate = self.state
@@ -16,25 +19,17 @@ class PCG32:
         return [self.random() / (1 << 32) for _ in range(size)]
 
     def normal(self, mean, sigma, size=1):
-        NV_MAGICCONST = 4 * np.exp(-0.5) / np.sqrt(2.0)
         results = []
-        required_samples = size
-
         while len(results) < size:
-            u1 = self.random_float(required_samples)
-            u2 = [1.0 - x for x in self.random_float(required_samples)]
-            
-            for i in range(required_samples):
-                if u2[i] == 0:
-                    continue
-                z = NV_MAGICCONST * (u1[i] - 0.5) / u2[i]
-                zz = z * z / 4.0
-                if zz <= -np.log(u2[i]):
-                    results.append(mean + z * sigma)
-                    if len(results) == size:
-                        break
-            required_samples = size - len(results)
-        
+            u1 = self.random_float(size)
+            u2 = self.random_float(size)
+            for i in range(size):
+                if u1[i] == 0:
+                    u1[i] = np.nextafter(0, 1)  # Ensure u1 is not zero
+                z0 = np.sqrt(-2.0 * np.log(u1[i])) * np.cos(2.0 * np.pi * u2[i])
+                results.append(mean + z0 * sigma)
+                if len(results) == size:
+                    break
         return results
 
     def lognormal(self, mean, sigma, size=1):
