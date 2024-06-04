@@ -35,3 +35,6 @@ def generate_normal_pcg32(mean=0.0, std_dev=1.0, size=1, seed=42):
         if len(samples) < size:
             samples.append(mean + z1 * std_dev)
     return np.array(samples[:size])
+
+# Generate 10 random numbers from a normal distribution
+normal_samples = generate_normal_pcg32(size=10)
