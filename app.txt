@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 class PCG32:
     def __init__(self, seed=None):
@@ -12,53 +13,20 @@ class PCG32:
         rot = (oldstate >> 59) & 0xFFFFFFFF
         return (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) & 0xFFFFFFFF
 
-    def random_float(self):
-        return self.random() / 0xFFFFFFFF
+    def random_float(self, size=1):
+        return np.array([self.random() / 0xFFFFFFFF for _ in range(size)])
 
     def normal(self, mean, sigma, size=1):
-        return [mean + sigma * math.sqrt(-2.0 * math.log(self.random_float())) * math.cos(2.0 * math.pi * self.random_float()) for _ in range(size)]
+        u1 = self.random_float(size)
+        u2 = self.random_float(size)
+        z0 = np.sqrt(-2.0 * np.log(u1)) * np.cos(2.0 * np.pi * u2)
+        return mean + z0 * sigma
 
     def lognormal(self, mean, sigma, size=1):
         normal_values = self.normal(mean, sigma, size)
-        return [math.exp(val) for val in normal_values]
+        return np.exp(normal_values)
 
     def chisquare(self, df, size=1):
-        return [sum((self.normal(0, 1)[0]) ** 2 for _ in range(df)) for _ in range(size)]
-
-from pcg32 import PCG32
-
-
-import numpy as np
-from pcg32 import PCG32
-
-def main():
-    mean = 0
-    sigma = 1
-    size = 100000
-    df = 200
-
-    pcg32 = PCG32(seed=42)
-
-    # Generowanie liczb z rozkładu normalnego
-    normal_samples = pcg32.normal(mean, sigma, size)
-    normal_mean = np.mean(normal_samples)
-    normal_quantile = np.quantile(normal_samples, 0.95)
-    print(f"Mean for normal distribution (PCG32): {normal_mean}")
-    print(f"95th percentile for normal distribution (PCG32): {normal_quantile}")
-
-    # Generowanie liczb z rozkładu lognormalnego
-    lognormal_samples = pcg32.lognormal(mean, sigma, size)
-    lognormal_mean = np.mean(lognormal_samples)
-    lognormal_quantile = np.quantile(lognormal_samples, 0.95)
-    print(f"Mean for lognormal distribution (PCG32): {lognormal_mean}")
-    print(f"95th percentile for lognormal distribution (PCG32): {lognormal_quantile}")
-
-    # Generowanie liczb z rozkładu chi-kwadrat
-    chisquare_samples = pcg32.chisquare(df, size)
-    chisquare_mean = np.mean(chisquare_samples)
-    chisquare_quantile = np.quantile(chisquare_samples, 0.95)
-    print(f"Mean for chi-square distribution (PCG32): {chisquare_mean}")
-    print(f"95th percentile for chi-square distribution (PCG32): {chisquare_quantile}")
-
-if __name__ == "__main__":
-    main()
+        normal_samples = self.normal(0, 1, size * df)
+        normal_samples = normal_samples.reshape(size, df)
+        return np.sum(normal_samples ** 2, axis=1)
