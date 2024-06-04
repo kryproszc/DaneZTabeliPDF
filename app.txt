@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 
 class PCG_XSH_RR:
     def __init__(self, seed=42, increment=54):
@@ -18,23 +17,56 @@ class PCG_XSH_RR:
     def random(self):
         return self.pcg32() / float(1 << 32)
 
-def generate_normal_pcg32(mean=0.0, std_dev=1.0, size=1, seed=42):
-    pcg = PCG_XSH_RR(seed=seed)
-    samples = []
-    while len(samples) < size:
-        # Using Box-Muller transform to generate normal distribution
-        u1 = pcg.random()
-        u2 = pcg.random()
-        if u1 <= 0.0:
-            continue  # Skip to avoid log(0) or log(negative)
-        r = np.sqrt(-2 * np.log(u1))
-        theta = 2 * np.pi * u2
-        z0 = r * np.cos(theta)
-        z1 = r * np.sin(theta)
-        samples.append(mean + z0 * std_dev)
-        if len(samples) < size:
-            samples.append(mean + z1 * std_dev)
-    return np.array(samples[:size])
+class RandomDistributions:
+    def __init__(self, seed=42):
+        self.pcg = PCG_XSH_RR(seed=seed)
 
-# Generate 10 random numbers from a normal distribution
-normal_samples = generate_normal_pcg32(size=10)
+    def normal(self, mean=0.0, std_dev=1.0, size=1):
+        samples = []
+        while len(samples) < size:
+            u1 = self.pcg.random()
+            u2 = self.pcg.random()
+            if u1 <= 0.0:
+                continue  # Skip to avoid log(0) or log(negative)
+            r = np.sqrt(-2 * np.log(u1))
+            theta = 2 * np.pi * u2
+            z0 = r * np.cos(theta)
+            z1 = r * np.sin(theta)
+            samples.append(mean + z0 * std_dev)
+            if len(samples) < size:
+                samples.append(mean + z1 * std_dev)
+        return np.array(samples[:size])
+
+    def log_normal(self, mean=0.0, std_dev=1.0, size=1):
+        normal_samples = self.normal(mean, std_dev, size)
+        return np.exp(normal_samples)
+
+    def chi_squared(self, df, size=1):
+        samples = []
+        for _ in range(size):
+            normal_samples = self.normal(size=df)
+            chi_sq_value = np.sum(normal_samples**2)
+            samples.append(chi_sq_value)
+        return np.array(samples)
+
+# Example usage:
+random_gen = RandomDistributions(seed=42)
+
+# Generate 10 normal distributed samples
+normal_samples = random_gen.normal(size=10)
+
+# Generate 10 log-normal distributed samples
+log_normal_samples = random_gen.log_normal(size=10)
+
+# Generate 10 chi-squared distributed samples with 3 degrees of freedom
+chi_squared_samples = random_gen.chi_squared(df=3, size=10)
+
+import pandas as pd
+samples_df = pd.DataFrame({
+    "Normal": normal_samples,
+    "Log Normal": log_normal_samples,
+    "Chi Squared": chi_squared_samples
+})
+
+import ace_tools as tools; tools.display_dataframe_to_user("Generated Samples", samples_df)
+samples_df
