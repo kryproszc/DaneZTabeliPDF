@@ -17,8 +17,7 @@ class PCG32:
 
     def random_float(self, size=1):
         max_int32 = 4294967295  # 2^32 - 1
-        epsilon = np.finfo(float).eps
-        return [(self.random() / max_int32) * (1 - 2 * epsilon) + epsilon for _ in range(size)]
+        return [self.random() / max_int32 for _ in range(size)]
 
     def normal(self, mean, sigma, size=1):
         results = []
@@ -26,6 +25,7 @@ class PCG32:
             u1 = self.random_float(size)
             u2 = self.random_float(size)
             for i in range(size):
+                u1[i] = max(u1[i], np.nextafter(0, 1))  # Ensure u1 is within (0,1)
                 z0 = np.sqrt(-2.0 * np.log(u1[i])) * np.cos(2.0 * np.pi * u2[i])
                 results.append(mean + z0 * sigma)
                 if len(results) == size:
