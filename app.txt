@@ -1,3 +1,5 @@
+import numpy as np
+
 class PCG32:
     def __init__(self, state=0x4d595df4d0f33173, inc=0x14057b7ef767814f):
         self.state = state
@@ -15,19 +17,23 @@ class PCG32:
 
     def normal(self, mean, sigma, size=1):
         NV_MAGICCONST = 4 * np.exp(-0.5) / np.sqrt(2.0)
-        random = self.random_float
         results = []
-        
+        required_samples = size
+
         while len(results) < size:
-            u1 = random()
-            u2 = [1.0 - x for x in random()]
-            for i in range(size - len(results)):
+            u1 = self.random_float(required_samples)
+            u2 = [1.0 - x for x in self.random_float(required_samples)]
+            
+            for i in range(required_samples):
+                if u2[i] == 0:
+                    continue
                 z = NV_MAGICCONST * (u1[i] - 0.5) / u2[i]
                 zz = z * z / 4.0
                 if zz <= -np.log(u2[i]):
                     results.append(mean + z * sigma)
                     if len(results) == size:
                         break
+            required_samples = size - len(results)
         
         return results
 
