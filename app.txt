@@ -18,8 +18,9 @@ class PCG32:
 
     def normal(self, mean, sigma, size=1):
         u1 = self.random_float(size)
-        u1 = np.clip(u1, np.finfo(float).eps, 1 - np.finfo(float).eps)  # Zapewnij, że u1 nigdy nie będzie 0 ani 1
         u2 = self.random_float(size)
+        epsilon = np.finfo(float).eps
+        u1 = np.clip(u1, epsilon, 1 - epsilon)  # Zapewnij, że u1 nigdy nie będzie dokładnie 0 ani 1
         z0 = np.sqrt(-2.0 * np.log(u1)) * np.cos(2.0 * np.pi * u2)
         return mean + z0 * sigma
 
