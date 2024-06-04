@@ -16,14 +16,19 @@ class PCG32:
         return np.array([self.random() / (1 << 32) for _ in range(size)], dtype=np.float32)
 
     def normal(self, mean, sigma, size=1):
-        u1 = self.random_float(size)
-        u2 = self.random_float(size)
+        NV_MAGICCONST = 4 * np.exp(-0.5) / np.sqrt(2.0)
+        random = self.random_float
+        results = []
         
-        # Ponowne losowanie, jeśli u1 jest zerem
-        u1[u1 == 0] = self.random_float(np.sum(u1 == 0))
+        while len(results) < size:
+            u1 = random()
+            u2 = 1.0 - random()
+            z = NV_MAGICCONST * (u1 - 0.5) / u2
+            zz = z * z / 4.0
+            if zz <= -np.log(u2):
+                results.append(mean + z * sigma)
         
-        z0 = np.sqrt(-2.0 * np.log(u1)) * np.cos(2.0 * np.pi * u2)
-        return mean + z0 * sigma
+        return np.array(results, dtype=np.float32)
 
     def lognormal(self, mean, sigma, size=1):
         normal_values = self.normal(mean, sigma, size)
