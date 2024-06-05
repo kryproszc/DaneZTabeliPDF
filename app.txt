@@ -29,28 +29,26 @@ class RandomDistributionsZiggurat:
         self.w = [0.0] * self.n
         self.f = [0.0] * self.n
         self.kn = [0] * self.n
-        self.wn = [0.0] * self.n
-        self.fn = [0.0] * self.n
 
         m1 = 2147483648.0
         dn = self.R
         tn = self.R
         q = 9.91256303526217e-3
-        
+
         self.kn[0] = int((dn / q) * m1)
         self.kn[1] = 0
 
-        self.wn[0] = q / m1
-        self.wn[255] = dn / m1
+        self.w[0] = q / m1
+        self.w[255] = dn / m1
 
-        self.fn[0] = 1.0
-        self.fn[255] = np.exp(-0.5 * dn * dn)
+        self.f[0] = 1.0
+        self.f[255] = np.exp(-0.5 * dn * dn)
 
         for i in range(1, 255):
-            dn = np.sqrt(-2.0 * np.log(self.fn[i-1]))
+            dn = np.sqrt(-2.0 * np.log(self.f[i-1]))
             self.kn[i] = int((dn / self.R) * m1)
-            self.wn[i] = dn / m1
-            self.fn[i] = np.exp(-0.5 * dn * dn)
+            self.w[i] = dn / m1
+            self.f[i] = np.exp(-0.5 * dn * dn)
 
     def normal(self, mean=0.0, std_dev=1.0, size=1):
         samples = []
@@ -58,8 +56,8 @@ class RandomDistributionsZiggurat:
             u = self.pcg.random()
             i = int(u * 256)
             sign = 1 if (u * 256 - i) < 0.5 else -1
-            x = self.pcg.pcg32() * self.wn[i]
-            if abs(x) < self.fn[i]:
+            x = self.pcg.pcg32() * self.w[i]
+            if abs(x) < self.f[i]:
                 samples.append(mean + sign * x * std_dev)
             else:
                 while True:
@@ -77,5 +75,4 @@ samples_df = pd.DataFrame({
     "Ziggurat": normal_samples_ziggurat
 })
 
-import ace_tools as tools; tools.display_dataframe_to_user("Generated Ziggurat Normal Samples", samples_df)
 samples_df
