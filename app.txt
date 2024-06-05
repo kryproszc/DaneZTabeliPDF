@@ -1,4 +1,29 @@
- def setup_ziggurat(self):
+import numpy as np
+import pandas as pd
+
+class PCG_XSH_RR:
+    def __init__(self, seed=42, increment=0xda3e39cb94b95bdb):
+        self.state = seed
+        self.increment = increment | 1  # Ensure the increment is odd
+
+    def pcg32(self):
+        oldstate = self.state
+        # Advance internal state using linear congruential formula
+        self.state = (oldstate * 6364136223846793005 + self.increment) & ((1 << 64) - 1)
+        # Calculate output function (XSH RR), uses old state for max ILP
+        xorshifted = ((oldstate >> 18) ^ oldstate) >> 27
+        rot = oldstate >> 59
+        return (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) & ((1 << 32) - 1)
+
+    def random(self):
+        return self.pcg32() / float(1 << 32)
+
+class RandomDistributionsZiggurat:
+    def __init__(self, seed=42, increment=0xda3e39cb94b95bdb):
+        self.pcg = PCG_XSH_RR(seed=seed, increment=increment)
+        self.setup_ziggurat()
+
+    def setup_ziggurat(self):
         self.R = 3.442620  # Right tail boundary for the normal distribution
         self.n = 256
         self.w = [0.0] * self.n
@@ -21,12 +46,11 @@
         self.fn[0] = 1.0
         self.fn[255] = np.exp(-0.5 * dn * dn)
 
-        for i in range(254, 0, -1):
-            dn = np.sqrt(-2.0 * np.log(q / dn + np.exp(-0.5 * dn * dn)))
-            self.kn[i + 1] = int((dn / tn) * m1)
-            tn = dn
-            self.fn[i] = np.exp(-0.5 * dn * dn)
+        for i in range(1, 255):
+            dn = np.sqrt(-2.0 * np.log(self.fn[i-1]))
+            self.kn[i] = int((dn / self.R) * m1)
             self.wn[i] = dn / m1
+            self.fn[i] = np.exp(-0.5 * dn * dn)
 
     def normal(self, mean=0.0, std_dev=1.0, size=1):
         samples = []
@@ -44,3 +68,14 @@
                         break
                 samples.append(mean + sign * (self.kn[i] / 2147483648.0) * std_dev)
         return np.array(samples[:size])
+
+# Example usage:
+random_gen_ziggurat = RandomDistributionsZiggurat(seed=42, increment=0xda3e39cb94b95bdb)
+normal_samples_ziggurat = random_gen_ziggurat.normal(mean=0.0, std_dev=1.0, size=10)
+
+samples_df = pd.DataFrame({
+    "Ziggurat": normal_samples_ziggurat
+})
+
+import ace_tools as tools; tools.display_dataframe_to_user("Generated Ziggurat Normal Samples", samples_df)
+samples_df
