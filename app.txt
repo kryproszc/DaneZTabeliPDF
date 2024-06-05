@@ -47,6 +47,8 @@ class RandomDistributionsZiggurat:
 
         for i in range(1, self.n - 1):
             dn = np.sqrt(-2.0 * np.log(vn / dn + np.exp(-0.5 * dn * dn)))
+            if not np.isfinite(dn) or dn <= 0:
+                dn = self.R
             self.kn[i + 1] = int((dn / tn) * m1)
             tn = dn
             self.fn[i] = np.exp(-0.5 * dn * dn)
