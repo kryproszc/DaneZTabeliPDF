@@ -1,86 +1,15 @@
-import numpy as np
-import pandas as pd
-
-class PCG_XSH_RR:
-    def __init__(self, seed=42, increment=0xda3e39cb94b95bdb):
-        self.state = seed
-        self.increment = increment | 1  # Ensure the increment is odd
-
-    def pcg32(self):
-        oldstate = self.state
-        # Advance internal state using linear congruential formula
-        self.state = (oldstate * 6364136223846793005 + self.increment) & ((1 << 64) - 1)
-        # Calculate output function (XSH RR), uses old state for max ILP
-        xorshifted = ((oldstate >> 18) ^ oldstate) >> 27
-        rot = oldstate >> 59
-        return (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) & ((1 << 32) - 1)
-
-    def random(self):
-        return self.pcg32() / float(1 << 32)
-
-class RandomDistributionsZiggurat:
-    def __init__(self, seed=42, increment=0xda3e39cb94b95bdb):
-        self.pcg = PCG_XSH_RR(seed=seed, increment=increment)
-        self.setup_ziggurat()
-
-    def setup_ziggurat(self):
-        self.R = 3.442619855899
-        self.n = 256
-        self.kn = [0] * self.n
-        self.fn = [0.0] * self.n
-        self.wn = [0.0] * self.n
-
-        m1 = 2147483648.0
-        dn = self.R
-        tn = self.R
-        vn = 9.91256303526217e-3
-
-        self.kn[0] = int((dn / vn) * m1)
-        self.kn[1] = 0
-
-        self.wn[0] = vn / m1
-        self.wn[self.n - 1] = dn / m1
-
-        self.fn[0] = 1.0
-        self.fn[self.n - 1] = np.exp(-0.5 * dn * dn)
-
-        for i in range(1, self.n - 1):
-            while True:
-                dn_prev = dn
-                dn = np.sqrt(-2.0 * np.log(vn / dn + np.exp(-0.5 * dn * dn)))
-                if np.isfinite(dn) and dn > 0:
-                    break
-                dn = dn_prev  # Revert to the previous dn value if calculation fails
-
-            self.kn[i + 1] = int((dn / tn) * m1)
-            tn = dn
-            self.fn[i] = np.exp(-0.5 * dn * dn)
-            self.wn[i] = dn / m1
-
     def normal(self, mean=0.0, std_dev=1.0, size=1):
         samples = []
         while len(samples) < size:
-            u = self.pcg.random()
-            i = int(u * 256)
-            sign = 1 if (u * 256 - i) < 0.5 else -1
-            x = self.pcg.random() * self.wn[i]
-            if abs(x) < self.fn[i]:
-                samples.append(mean + sign * x * std_dev)
-            else:
-                while True:
-                    y = -np.log(self.pcg.random())
-                    if y + y >= x * x:
-                        break
-                samples.append(mean + sign * (self.kn[i] / 2147483648.0) * std_dev)
+            u1 = self.pcg.random()
+            u2 = self.pcg.random()
+            if u1 <= 0.0:
+                continue  # Skip to avoid log(0) or log(negative)
+            r = np.sqrt(-2 * np.log(u1))
+            theta = 2 * np.pi * u2
+            z0 = r * np.cos(theta)
+            z1 = r * np.sin(theta)
+            samples.append(mean + z0 * std_dev)
+            if len(samples) < size:
+                samples.append(mean + z1 * std_dev)
         return np.array(samples[:size])
-
-# Example usage:
-random_gen_ziggurat = RandomDistributionsZiggurat(seed=42, increment=0xda3e39cb94b95bdb)
-normal_samples_ziggurat = random_gen_ziggurat.normal(mean=0.0, std_dev=1.0, size=10)
-
-samples_df = pd.DataFrame({
-    "Ziggurat": normal_samples_ziggurat
-})
-
-import ace_tools as tools; tools.display_dataframe_to_user("Generated Ziggurat Normal Samples", samples_df)
-samples_df
