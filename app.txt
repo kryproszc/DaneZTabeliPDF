@@ -1,11 +1,46 @@
+ def setup_ziggurat(self):
+        self.R = 3.442620  # Right tail boundary for the normal distribution
+        self.n = 256
+        self.w = [0.0] * self.n
+        self.f = [0.0] * self.n
+        self.kn = [0] * self.n
+        self.wn = [0.0] * self.n
+        self.fn = [0.0] * self.n
+
+        m1 = 2147483648.0
+        dn = self.R
+        tn = self.R
+        q = 9.91256303526217e-3
+        
+        self.kn[0] = int((dn / q) * m1)
+        self.kn[1] = 0
+
+        self.wn[0] = q / m1
+        self.wn[255] = dn / m1
+
+        self.fn[0] = 1.0
+        self.fn[255] = np.exp(-0.5 * dn * dn)
+
+        for i in range(254, 0, -1):
+            dn = np.sqrt(-2.0 * np.log(q / dn + np.exp(-0.5 * dn * dn)))
+            self.kn[i + 1] = int((dn / tn) * m1)
+            tn = dn
+            self.fn[i] = np.exp(-0.5 * dn * dn)
+            self.wn[i] = dn / m1
+
     def normal(self, mean=0.0, std_dev=1.0, size=1):
-        NV_MAGICCONST = 4 * np.exp(-0.5) / np.sqrt(2.0)
         samples = []
         while len(samples) < size:
-            u1 = self.pcg.random()
-            u2 = 1.0 - self.pcg.random()
-            z = NV_MAGICCONST * (u1 - 0.5) / u2
-            zz = z * z / 4.0
-            if zz <= -np.log(u2):
-                samples.append(mean + z * std_dev)
+            u = self.pcg.random()
+            i = int(u * 256)
+            sign = 1 if (u * 256 - i) < 0.5 else -1
+            x = self.pcg.pcg32() * self.wn[i]
+            if abs(x) < self.fn[i]:
+                samples.append(mean + sign * x * std_dev)
+            else:
+                while True:
+                    y = -np.log(self.pcg.random())
+                    if y + y >= x * x:
+                        break
+                samples.append(mean + sign * (self.kn[i] / 2147483648.0) * std_dev)
         return np.array(samples[:size])
