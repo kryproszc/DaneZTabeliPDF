@@ -31,7 +31,6 @@ class RandomDistributionsZiggurat:
         self.wn = [0.0] * self.n
 
         m1 = 2147483648.0
-
         dn = self.R
         tn = self.R
         vn = 9.91256303526217e-3
@@ -46,9 +45,13 @@ class RandomDistributionsZiggurat:
         self.fn[self.n - 1] = np.exp(-0.5 * dn * dn)
 
         for i in range(1, self.n - 1):
-            dn = np.sqrt(-2.0 * np.log(vn / dn + np.exp(-0.5 * dn * dn)))
-            if not np.isfinite(dn) or dn <= 0:
-                dn = self.R
+            while True:
+                dn_prev = dn
+                dn = np.sqrt(-2.0 * np.log(vn / dn + np.exp(-0.5 * dn * dn)))
+                if np.isfinite(dn) and dn > 0:
+                    break
+                dn = dn_prev  # Revert to the previous dn value if calculation fails
+
             self.kn[i + 1] = int((dn / tn) * m1)
             tn = dn
             self.fn[i] = np.exp(-0.5 * dn * dn)
@@ -79,4 +82,5 @@ samples_df = pd.DataFrame({
     "Ziggurat": normal_samples_ziggurat
 })
 
+import ace_tools as tools; tools.display_dataframe_to_user("Generated Ziggurat Normal Samples", samples_df)
 samples_df
