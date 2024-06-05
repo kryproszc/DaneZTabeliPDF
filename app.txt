@@ -77,4 +77,4 @@ samples_df = pd.DataFrame({
     "Ziggurat": normal_samples_ziggurat
 })
 
-print(samples_df)
+samples_df
