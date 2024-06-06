@@ -1,19 +1,2 @@
-    def normal(self, mean=0.0, std_dev=1.0, size=1):
-        samples = []
-        while len(samples) < size:
-            u1 = self.pcg.random()
-            u2 = self.pcg.random()
-            if u1 <= 0.0:
-                continue  # Skip to avoid log(0) or log(negative)
-            r = np.sqrt(-2 * np.log(u1))
-            theta = 2 * np.pi * u2
-            z0 = r * np.cos(theta)
-            z1 = r * np.sin(theta)
-            samples.append(mean + z0 * std_dev)
-            if len(samples) < size:
-                samples.append(mean + z1 * std_dev)
-        return np.array(samples[:size])
-
-pip install numpy --proxy="http://user:password@proxyserver:port"
-pip install numpy --index-url=https://pypi.org/simple
-pip install path_to_downloaded_file
+    u = np.random.rand(size)
+    return mean + std_dev * np.sqrt(2) * erfinv(2 * u - 1)
