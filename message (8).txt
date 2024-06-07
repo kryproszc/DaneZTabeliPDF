@@ -1,0 +1,251 @@
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl2.h"
+#include <stdio.h>
+#ifdef __APPLE__
+#define GL_SILENCE_DEPRECATION
+#endif
+#include <GLFW/glfw3.h>
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
+#pragma comment(lib, "legacy_stdio_definitions")
+#endif
+#define IM_CLAMP(V, MN, MX)     ((V) < (MN) ? (MN) : (V) > (MX) ? (MX) : (V))
+
+static void glfw_error_callback(int error, const char* description)
+{
+    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
+}
+
+int main(int, char**)
+{
+    glfwSetErrorCallback(glfw_error_callback);
+    if (!glfwInit())
+        return 1;
+
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "Program", nullptr, nullptr);
+    if (window == nullptr)
+        return 1;
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+    ImFont* arialFont = io.Fonts->AddFontFromFileTTF("C:/Users/infor/Downloads/Projekt Symulacji2/Projekt Symulacji/Projekt GUI/projekt_gui/GUI/Debug/Arial.ttf", 18.0f);
+    ;
+
+    io.FontGlobalScale = 1.0f;
+
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.ScaleAllSizes(1.30f);
+
+    io.Fonts->AddFontDefault();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+
+    ImGui::StyleColorsLight();
+
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL2_Init();
+
+    bool show_demo_window = true;
+    bool show_another_window = false;
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+    while (!glfwWindowShouldClose(window))
+    {
+
+        glfwPollEvents();
+
+        ImGui_ImplOpenGL2_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        {
+            static float f = 0.0f;
+            static int counter = 0;
+
+            ImGui::Begin("SYMULATOR POZAROW");
+            ImGui::SeparatorText("Przygotowanie danych");
+
+            static char buf1[32] = ""; ImGui::InputText("Podaj sciezke do folderu input", buf1, 32);
+
+            ImGui::Columns(1, "word-wrapping");
+            ImGui::Separator();
+            static ImGuiComboFlags flags = 0;
+
+            ImGui::Dummy(ImVec2(0.0f, 5.f));
+
+            {
+                ImGuiWindowFlags window_flags = ImGuiWindowFlags_None;
+                window_flags |= ImGuiWindowFlags_NoScrollWithMouse;
+                window_flags |= ImGuiWindowFlags_MenuBar;
+                ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+                ImGui::BeginChild("ChildR", ImVec2(0, 260), ImGuiChildFlags_Border, window_flags);
+                if (ImGui::BeginMenuBar())
+                {
+                    if (ImGui::BeginMenu("Wybierz ubezpieczycieli ktorzy maja brac udzial w symulacji"))
+                    {
+                        ImGui::EndMenu();
+                    }
+                    ImGui::EndMenuBar();
+                }
+                if (ImGui::BeginTable("split", 1, ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings))
+                {
+
+                    ImGui::TableNextColumn();
+                    ImGui::CheckboxFlags("Ubezpieczyciel AXA", &flags, ImGuiComboFlags_PopupAlignLeft);
+                    if (ImGui::CheckboxFlags("Ubezpieczyciel UNIQ", &flags, ImGuiComboFlags_NoArrowButton))
+                        flags &= ~ImGuiComboFlags_NoPreview;
+                    if (ImGui::CheckboxFlags("Ubezpieczyciel OFE", &flags, ImGuiComboFlags_NoPreview))
+                        flags &= ~(ImGuiComboFlags_NoArrowButton | ImGuiComboFlags_WidthFitPreview);
+                    if (ImGui::CheckboxFlags("Ubezpieczyciel AXA", &flags, ImGuiComboFlags_WidthFitPreview))
+                        flags &= ~ImGuiComboFlags_NoPreview;
+                    ImGui::CheckboxFlags("Ubezpieczyciel AXA", &flags, ImGuiComboFlags_PopupAlignLeft);
+                    if (ImGui::CheckboxFlags("Ubezpieczyciel UNIQ", &flags, ImGuiComboFlags_NoArrowButton))
+                        flags &= ~ImGuiComboFlags_NoPreview;
+                    if (ImGui::CheckboxFlags("Ubezpieczyciel OFE", &flags, ImGuiComboFlags_NoPreview))
+                        flags &= ~(ImGuiComboFlags_NoArrowButton | ImGuiComboFlags_WidthFitPreview);
+                    if (ImGui::CheckboxFlags("Ubezpieczyciel AXA", &flags, ImGuiComboFlags_WidthFitPreview))
+                        flags &= ~ImGuiComboFlags_NoPreview;
+                    ImGui::CheckboxFlags("Ubezpieczyciel AXA", &flags, ImGuiComboFlags_PopupAlignLeft);
+                    if (ImGui::CheckboxFlags("Ubezpieczyciel UNIQ", &flags, ImGuiComboFlags_NoArrowButton))
+                        flags &= ~ImGuiComboFlags_NoPreview;
+                    if (ImGui::CheckboxFlags("Ubezpieczyciel OFE", &flags, ImGuiComboFlags_NoPreview))
+                        flags &= ~(ImGuiComboFlags_NoArrowButton | ImGuiComboFlags_WidthFitPreview);
+                    if (ImGui::CheckboxFlags("Ubezpieczyciel AXA", &flags, ImGuiComboFlags_WidthFitPreview))
+                        flags &= ~ImGuiComboFlags_NoPreview;
+                    ImGui::EndTable();
+                }
+                ImGui::EndChild();
+                ImGui::PopStyleVar();
+
+            }
+            static bool disable_mouse_wheel = false;
+            ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
+            if (disable_mouse_wheel)
+                window_flags |= ImGuiWindowFlags_NoScrollWithMouse;
+
+            ImGui::Dummy(ImVec2(0.0f, 2.f));
+
+            if (ImGui::Button("Wybierz wszystkich", ImVec2(ImGui::GetContentRegionAvail().x, 30)))
+                counter++;
+            ImGui::Columns(1);
+
+            {
+
+            }
+
+            ImGui::Dummy(ImVec2(0.0f, 5.f));
+
+            ImGui::SeparatorText("Odnowienia");
+
+            static int always_on = 0;
+            ImGui::RadioButton("Wylacz", &always_on, 0);
+            ImGui::SameLine();
+            ImGui::RadioButton("Wlacz", &always_on, 1);
+            if (always_on == 1)
+                ImGui::SetTooltip("I am following you around.");
+            else if (always_on == 2 && ImGui::BeginTooltip())
+            {
+                ImGui::EndTooltip();
+            }
+
+            ImGui::Dummy(ImVec2(0.0f, 5.f));
+
+            if (ImGui::Button("Wczytaj dane", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
+
+            }
+
+            static float progresss = 0.450f, progress_dirs = 1.0f;
+
+            ImGui::ProgressBar(progresss, ImVec2(0.0f, 0.0f));
+            ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
+            ImGui::Text("Pasek postepu wczytywania danych");
+
+            ImGui::Dummy(ImVec2(0.0f, 15.f));
+            ImGui::Separator();
+
+            ImGui::Dummy(ImVec2(0.0f, 5.f));
+
+            ImGui::SeparatorText("Parametry symulacji");
+            static int i0 = 123;
+            ImGui::InputInt("Liczba symulacji", &i0);
+            ImGui::InputInt("Liczba dzialajacych watkow", &i0);
+            static double d0 = 999999.00000001;
+            ImGui::InputDouble("Wartosc katastroficzna szkody", &d0, 0.01f, 1.0f, "%.8f");
+            static double d0v = 999999.00000001;
+            ImGui::InputDouble("Wartosc minimalna szkody", &d0v, 0.01f, 1.0f, "%.8f");
+            static char buf11[32] = "";
+            ImGui::InputText("Podaj sciezke gdzie zapisac", buf11, 32);
+            ImGui::Dummy(ImVec2(0.0f, 15.f));
+
+            ImGui::Separator();
+            ImGui::Dummy(ImVec2(0.0f, 15.f));
+
+            if (ImGui::Button("Wlacz symulacje", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
+
+            }
+            static float progress = 0.250f, progress_dir = 1.0f;
+
+            ImGui::ProgressBar(progress, ImVec2(ImGui::GetContentRegionAvail().x - 170, 25));
+            ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
+            ImGui::Text("Ogolny pasek postepu");
+
+            window_flags = ImGuiWindowFlags_None;
+            window_flags |= ImGuiWindowFlags_NoScrollWithMouse;
+            window_flags |= ImGuiWindowFlags_MenuBar;
+
+            ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+            ImGui::BeginChild("ChildL", ImVec2(0, 260), ImGuiChildFlags_Border, window_flags);
+            if (ImGui::BeginMenuBar())
+            {
+                if (ImGui::BeginMenu("Paski postepu pracy poszczegolnych watkow"))
+                {
+                    ImGui::EndMenu();
+                }
+                ImGui::EndMenuBar();
+            }
+            if (ImGui::BeginTable("split", 1, ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings))
+            {
+
+                ImGui::TableNextColumn();
+
+                char buf[32];
+
+                for (int i = 0; i < 32; i++) {
+                    ImGui::ProgressBar(0.03f * i, ImVec2(0.f, 0.f)); ImGui::SameLine();
+                    ImGui::Text("Watek %02d", i);
+                }
+                ImGui::EndTable();
+            }
+            ImGui::EndChild();
+            ImGui::PopStyleVar();
+
+            ImGui::End();
+        }
+
+        ImGui::Render();
+        int display_w, display_h;
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
+        glfwMakeContextCurrent(window);
+        glfwSwapBuffers(window);
+    }
+
+    ImGui_ImplOpenGL2_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
+
+    return 0;
+}
