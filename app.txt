@@ -3,7 +3,11 @@ std::vector<std::string> getFiles(const std::string& directoryPath) {
 
     for (const auto& entry : fs::directory_iterator(directoryPath)) {
         if (entry.is_regular_file()) {
-            fileNames.push_back(entry.path().filename().string());
+            std::string fileName = entry.path().filename().string();
+            if (fileName.size() > 4) {
+                fileName = fileName.substr(0, fileName.size() - 4);  
+            }
+            fileNames.push_back(fileName);
         }
     }
 
