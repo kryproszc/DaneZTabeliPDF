@@ -1,94 +1,114 @@
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl2.h"
-#include <GLFW/glfw3.h>
-#include <stdio.h>
+from numpy.random import Generator, PCG64
+from multiprocessing import Pool, cpu_count, freeze_support
+import warnings
+import math
+import scipy.special as special
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
-#ifdef __APPLE__
-#define GL_SILENCE_DEPRECATION
-#endif
+warnings.simplefilter(action="ignore", category=FutureWarning)
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
-#pragma comment(lib, "legacy_stdio_definitions")
-#endif
+class PCG64Generator:
+    def __init__(self, seed=202260011):
+        self.seed = seed
+        self.rng = Generator(PCG64(seed))
 
-static void glfw_error_callback(int error, const char* description)
-{
-    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
-}
+    def reset_rng(self):
+        self.rng = Generator(PCG64(self.seed))
 
-int main(int, char**)
-{
-    glfwSetErrorCallback(glfw_error_callback);
-    if (!glfwInit())
-        return 1;
+    def set_seed(self, seed):
+        self.seed = seed
+        self.reset_rng()
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Test", nullptr, nullptr);
-    if (window == nullptr)
-        return 1;
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1); // Enable vsync
+    def random(self, size=1):
+        return self.rng.random(size)
 
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    def normal(self, mu=0, sigma=1, size=1):
+        return self.rng.normal(mu, sigma, size)
 
-    ImGui::StyleColorsLight();
+    def lognormal(self, mean=0, sigma=1, size=1):
+        return self.rng.lognormal(mean, sigma, size)
 
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL2_Init();
+    def chi_squared(self, df, size=1):
+        return self.rng.chisquare(df, size)
 
-    bool show_demo_window = true;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+class StochasticModel:
+    def __init__(self, seed=202260011):
+        self.seed = seed
 
-    while (!glfwWindowShouldClose(window))
-    {
-        glfwPollEvents();
+    def process_row(self, args):
+        seed, row, mu, sigma, mm, data_paid_copy, Ultimate_Param_ReservingRisk = args
+        rng = PCG64Generator(seed)  # Inicjalizacja generatora losowego w procesie podrzędnym
+        m_i, sigma_i = mu.iloc[row, :], sigma.iloc[row, :]
+        for j in range(len(m_i)):
+            max_ind_row = np.max([0, mm - j - 1])
+            for i in range(max_ind_row, mm):
+                VAR_i_j = (sigma_i[j]) / (data_paid_copy.iloc[i, j])
+                lmean_i_j = np.log((m_i[j]) ** 2 / (np.sqrt((m_i[j]) ** 2 + VAR_i_j)))
+                lstdev_i_j = np.log(1 + ((VAR_i_j) / ((m_i[j]) ** 2)))
+                CL_i_j = rng.lognormal(lmean_i_j, lstdev_i_j, size=1)
+                data_paid_copy.iloc[i, j + 1] = data_paid_copy.iloc[i, j] * CL_i_j[0]
+        u_i = data_paid_copy.iloc[:, data_paid_copy.columns[-1] - 1].to_list()
+        result_j = 1.29 * (np.sum(u_i) - Ultimate_Param_ReservingRisk)
+        return result_j
 
-        ImGui_ImplOpenGL2_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
+    def random_stochastic_parameters(self, sigma_j, dev, sd, dimension):
+        rng = PCG64Generator(self.seed)  # Inicjalizacja generatora losowego
+        stochastic_sigma_j = pd.DataFrame(data=0, columns=np.arange(0, dimension[3], 1),
+                                          index=np.arange(0, dimension[2], 1))
+        mu_j = pd.DataFrame(data=0, columns=np.arange(0, dimension[3], 1),
+                            index=np.arange(0, dimension[2], 1))
+        for j in range(0, dimension[3]):
+            mu_j.iloc[:, j] = rng.normal(dev[j], sd[j], size=dimension[2])
+            st_swobody = np.max([1, dimension[0] - j])
+            chi_list = rng.chi_squared(st_swobody, size=dimension[2])
+            stochastic_sigma_j.iloc[:, j] = [(math.ceil(chi) * sigma_j[j]) / st_swobody for chi in chi_list]
+        return [mu_j, stochastic_sigma_j]
 
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
+    def stochastic_triangle_forward_test_szybki(self, data_paid, sigma_j, dev, sd, sim, Ultimate_Param_ReservingRisk):
+        mm, nn = data_paid.shape[0], data_paid.shape[1]
+        dimension = [mm, nn, sim, len(dev)]
+        Total_BE = []
+        mu, sigma = self.random_stochastic_parameters(sigma_j, dev, sd, dimension)
+        data_paid_copy = data_paid.copy()
+        data_paid_copy_reRe = data_paid.copy()
+        data_paid_copy_reRe[mm + 1] = np.nan
+        if len(dev) > mm:
+            for k in range(mm + 1, len(dev) + 2):
+                data_paid_copy[k] = np.nan
+        args = [(self.seed, row, mu, sigma, mm, data_paid_copy.copy(), Ultimate_Param_ReservingRisk) for row in range(0, sim)]
+        num_cores_to_use = max(cpu_count() - 5, 4)
+        with Pool(processes=num_cores_to_use) as pool:
+            Total_BE = pool.map(self.process_row, args)
+        return Total_BE
 
-        ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
-        ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+def main():
+    sim = 10000
+    pd.options.display.float_format = '{:12.5e}'.format
+    wsp = pd.read_csv("wsp_csv.csv", sep=";", decimal=",")
+    dev = wsp.iloc[0, 0:59].to_list()
+    sigma_j = wsp.iloc[1, 0:59].to_list()
+    sd = wsp.iloc[2, 0:59].to_list()
+    data_paid = pd.read_csv("data.csv", sep=";", decimal=",")
+    data_paid = data_paid.iloc[:, 1:]
+    model = StochasticModel(seed=202260011)
+    result = model.stochastic_triangle_forward_test_szybki(data_paid, sigma_j, dev, sd, sim, 4232149669)
+    print("Quantile 0.995:", np.quantile(result, 0.995))
+    print("Quantile 0.996:", np.quantile(result, 0.996))
+    print("Quantile 0.997:", np.quantile(result, 0.997))
+    print("Quantile 0.998:", np.quantile(result, 0.998))
+    print("Quantile 0.999:", np.quantile(result, 0.999))
+    print("Mean:", np.mean(result))
+    print("Difference (Quantile - Mean):", np.quantile(result, 0.995) - np.mean(result))
+    pd_dev = pd.DataFrame({"BE": result})
+    pd_dev.to_csv("BE_PCG.csv")
+    plt.hist(result, bins=50, edgecolor='black')
+    plt.xlabel('Wynik')
+    plt.ylabel('Częstość')
+    plt.title('Histogram wyników symulacji')
+    plt.show()
 
-        glfwSwapBuffers(window);
-    }
-
-    ImGui_ImplOpenGL2_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-
-    glfwDestroyWindow(window);
-    glfwTerminate();
-
-    return 0;
-}
-
-
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl2.h"
-#include <GLFW/glfw3.h>
-#include <stdio.h>
-
-#ifdef __APPLE__
-#define GL_SILENCE_DEPRECATION
-#endif
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
-#pragma comment(lib, "legacy_stdio_definitions")
-#endif
-
-static void glfw_error_callback(int error, const char* description)
-{
-    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
-}
+if __name__ == "__main__":
+    freeze_support()  # Potrzebne tylko na Windowsie w przypadku tworzenia wykonywalnych plików
+    main()
