@@ -1,3 +1,12 @@
-   if (ImGui::Button("Wczytaj dane", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
-wczytaj_dane();
+    if (ImGui::Button("Wybierz wszystkich", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
+        fileNames.clear();
+        for (int i = 0; i < ubezp_nazwy.size(); i++)
+        {
+            flagi[i] = 1;
+            if (flagi[i] != 0)
+            {
+                fileNames.push_back(ubezp_nazwy[i]);
+            }
+        }
+
     }
