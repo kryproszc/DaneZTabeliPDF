@@ -1,15 +1,16 @@
-std::vector<std::string> getFiles(const std::string& directoryPath) {
-    std::vector<std::string> fileNames;
+void test_func(BS::concurrency_t idx)
+{
+    using namespace std::chrono_literals;
+    std::uniform_int_distribution<> dist(200, 600);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    for (int i = 0; i < 100; i++)
+    {
+        int random_number = dist(gen);
 
-    for (const auto& entry : fs::directory_iterator(directoryPath)) {
-        if (entry.is_regular_file()) {
-            std::string fileName = entry.path().filename().string();
-            if (fileName.size() > 4) {
-                fileName = fileName.substr(0, fileName.size() - 4);  
-            }
-            fileNames.push_back(fileName);
-        }
+        progressbar[idx] += 0.01;
+        std::this_thread::sleep_for(std::chrono::milliseconds(random_number));
+
+
     }
-
-    return fileNames;
 }
