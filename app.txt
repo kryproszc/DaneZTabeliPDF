@@ -14,3 +14,10 @@ void dd(BS::concurrency_t idx)
 
     }
 }
+
+for (int i = 0; i < 55; i++)
+    {
+        pool.detach_task([](BS::concurrency_t idx) {
+            dd(idx);
+            });
+    }
