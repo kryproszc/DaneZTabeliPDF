@@ -1,4 +1,4 @@
-void test_func(BS::concurrency_t idx)
+void dd(BS::concurrency_t idx)
 {
     using namespace std::chrono_literals;
     std::uniform_int_distribution<> dist(200, 600);
