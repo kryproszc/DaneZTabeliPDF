@@ -1,6 +1,7 @@
-for (int i = 0; i < fileNames.size(); ++i)
-    {
-        std::cout << "Indeks " << i << ": " << fileNames[i] << std::endl;
-
-        ubezpieczyciele.push_back({});
-    }
+for (int i = 0; i < ubezp_nazwy.size(); i++)
+  { 
+      if (flagi[i] != 0)
+      {
+          fileNames.push_back(ubezp_nazwy[i]);
+      }
+  }
