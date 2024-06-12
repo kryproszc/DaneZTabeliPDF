@@ -1,35 +1,5 @@
-if (ImGui::Button("Wczytaj dane", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
-        std::async(cc); // TU ZMIANA
-    }
-
-
-void cc()
-{
-    pool.reset(liczba_dzialajacych_watkow);
-
-    for (int i = 0; i < 55; i++)
-    {
+wklej
+pool.reset(liczba_watkow);
         pool.detach_task([](BS::concurrency_t idx) {
-            dd(idx);
+            wczytaj();
             });
-    }
-
-}
-
-
-void dd(BS::concurrency_t idx)
-{
-    using namespace std::chrono_literals;
-    std::uniform_int_distribution<> dist(200, 600);
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    for (int i = 0; i < 100; i++)
-    {
-        int random_number = dist(gen);
-
-        pasek_postepu_wczytywania_danych += 0.01;
-        std::this_thread::sleep_for(std::chrono::milliseconds(random_number));
-
-
-    }
-}
