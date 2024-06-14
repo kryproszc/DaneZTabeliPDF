@@ -1,0 +1,145 @@
+
+void testALL(int choice)
+{
+
+    std::random_device rd;
+
+    std::setlocale(LC_ALL, "nb_NO.UTF-8");
+
+    if (choice == 1)
+    {
+        for (int woj = 0; woj < 17; ++woj)
+        {
+            exponsure_longitude[woj].resize(12);
+            exponsure_latitude[woj].resize(12);
+            exponsure_insurance[woj].resize(12);
+            exponsure_reassurance[woj].resize(12);
+            exponsure_sum_value[woj].resize(12);
+        }
+        std::vector<std::string> fileNames = {"Allianz", "Aviva", "Compensa", "CREDIT_AGRICOLE", "Generali_SA", "Inter_Polska", "InterRisk", "Link4", "NN", "PKO_SA", "Polski_Gaz", "PZU_SA", "Saltus", "Santander", "TU_EUROPA_SA", "TUW_CUPRUM", "TUW_TUW", "TUZ_TUW", "UNIQA", "Warta", "Wiener"};
+
+        //{ "Allianz","Aviva","Compensa","CREDIT_AGRICOLE","Generali_SA","Inter_Polska","InterRisk","Link4","NN","PKO_SA","Polski_Gaz","PZU_SA","Saltus","Santander","TU_EUROPA_SA","TUW_CUPRUM","TUW_TUW","TUZ_TUW","UNIQA","Warta", "Wiener" };
+        std::string dane_wejsciowe = "M:/Program ostateczny/tetsty_czytanie/tetsty_czytanie/csv/Input_all";
+        std::string odnowienia = "tak";
+        std::string year = "2022";
+        // std::string line = "UNIQA";
+        // fileNames.push_back(line);
+        std::cout << "Wczytywani Ubezpieczyciele: ";
+        for (int i = 0; i < fileNames.size(); ++i)
+        {
+            std::cout << fileNames[i] << ", ";
+            ubezpieczyciele.push_back({});
+        }
+
+        auto startf = std::chrono::high_resolution_clock::now();
+        processReas(dane_wejsciowe + "/Parametryzacja/Reasekuracja/", fileNames);
+        processOblig(dane_wejsciowe + "/Parametryzacja/Reasekuracja/", fileNames);
+        processBudynki(dane_wejsciowe, "/Ubezpieczyciele/", fileNames, year);
+        processPrPozaru(dane_wejsciowe + "/Parametryzacja/Pr_pozaru.csv");
+        processPrRozprzestrzenienia(dane_wejsciowe + "/Parametryzacja/pr_rozprzestrzenienia.csv");
+        processPrWielkoscPozaru(dane_wejsciowe + "/Parametryzacja/pr_wielkosc_pozaru.csv");
+
+        auto stopf = std::chrono::high_resolution_clock::now();
+        auto durationf = std::chrono::duration_cast<std::chrono::seconds>(stopf - startf);
+        std::cout << "Czas wczytania: " << durationf.count() << " sekund." << std::endl;
+
+        std::cout << "Dane wczytane prawidlowo" << std::endl;
+    }
+    else if (choice == 2)
+    {
+        int sim = 10000;
+        int kat_val = 5000000;
+
+
+        int ilosc_ubezpieczycieli = ubezpieczyciele.size();
+        std::cout << ilosc_ubezpieczycieli << std::endl;
+
+        auto start = std::chrono::high_resolution_clock::now();
+
+        for (int sim_num = 0; sim_num < sim; sim_num++)
+        {
+
+            pool.detach_task([sim, kat_val, ilosc_ubezpieczycieli, sim_num]()
+                             { simulateExponsureTEST(sim, kat_val, ilosc_ubezpieczycieli); });
+        }
+        pool.wait();
+
+        auto stop = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+        std::cout << "Symulacje zakonczone." << std::endl;
+        std::cout << "Czas symulacji: " << duration.count() << " sekund." << std::endl;
+        std::string dane_wyjsciowe = "M:/Program ostateczny/tetsty_czytanie/tetsty_czytanie/csv/Output";
+        std::string nazwakatalogu = createFolder(dane_wyjsciowe);
+        fs::path pat_buil = nazwakatalogu;
+        // Zapisywanie danych do plików CSV
+        for (int i = 0; i < ilosc_ubezpieczycieli; ++i)
+        {
+            zapiszDoCSV(fileNames[i], nazwakatalogu + "/Symulacje", i, out_brutto_final.returnVectorSim(), out_brutto_kat_final.returnVectorSim(), out_netto_final.returnVectorSim(), out_netto_kat_final.returnVectorSim());
+        }
+        std::cout << "Symulacje zostaly zapisane." << std::endl;
+
+        for (int insurerIndex = 0; insurerIndex < ubezpieczyciele.size(); ++insurerIndex)
+        {
+            std::string insurer = fileNames[insurerIndex];
+
+            fs::path base_path = pat_buil / "Pierwotne" / insurer;
+            std::vector<std::string> subfolders = {"Brutto", "Brutto_Kat", "Netto", "Netto_kat"};
+
+            {
+                fs::path full_path = base_path / subfolders[0];
+                create_custom_directory(full_path);
+                create_csv_files(full_path, subfolders[0], insurerIndex, true);
+            }
+
+            {
+                fs::path full_path = base_path / subfolders[1];
+                create_custom_directory(full_path);
+                create_csv_files(full_path, subfolders[1], insurerIndex, true);
+            }
+
+            {
+                fs::path full_path = base_path / subfolders[2];
+                create_custom_directory(full_path);
+                create_csv_files(full_path, subfolders[2], insurerIndex, true);
+            }
+
+            {
+                fs::path full_path = base_path / subfolders[3];
+                create_custom_directory(full_path);
+                create_csv_files(full_path, subfolders[3], insurerIndex, true);
+            }
+        }
+
+        for (int insurerIndex = 0; insurerIndex < ubezpieczyciele.size(); ++insurerIndex)
+        {
+            std::string insurer = fileNames[insurerIndex];
+
+            fs::path base_path = pat_buil / "Rozprzestrzeniony" / insurer;
+            std::vector<std::string> subfolders = {"Brutto", "Brutto_Kat", "Netto", "Netto_kat"};
+
+            {
+                fs::path full_path = base_path / subfolders[0];
+                create_custom_directory(full_path);
+                create_csv_files(full_path, subfolders[0], insurerIndex, false);
+            }
+
+            {
+                fs::path full_path = base_path / subfolders[1];
+                create_custom_directory(full_path);
+                create_csv_files(full_path, subfolders[1], insurerIndex, false);
+            }
+
+            {
+                fs::path full_path = base_path / subfolders[2];
+                create_custom_directory(full_path);
+                create_csv_files(full_path, subfolders[2], insurerIndex, false);
+            }
+
+            {
+                fs::path full_path = base_path / subfolders[3];
+                create_custom_directory(full_path);
+                create_csv_files(full_path, subfolders[3], insurerIndex, false);
+            }
+        }
+    }
+}
