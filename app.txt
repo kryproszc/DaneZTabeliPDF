@@ -1,7 +1,13 @@
-for (int i = 0; i < ubezp_nazwy.size(); i++)
-  { 
-      if (flagi[i] != 0)
-      {
-          fileNames.push_back(ubezp_nazwy[i]);
-      }
-  }
+sudo apt-get update -y && sudo apt-get upgrade -y
+
+sudo apt-get install apt-transport-https curl gnupg-agent ca-certificates software-properties-common -y
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+
+sudo systemctl enable docker && sudo systemctl start docker
+
+sudo systemctl status docker
