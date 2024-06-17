@@ -1,1 +1,1 @@
-https://ubuntu.com/download/desktop/thank-you?version=24.04&architecture=amd64&lts=true
+https://download.docker.com/win/static/stable/x86_64/docker-26.1.4.zip
