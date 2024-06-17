@@ -1,4 +1,6 @@
-﻿#include <chrono>
+﻿#include <atomic>
+std::atomic<double> stanSymulacji = 0.0;
+#include <chrono>
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -78,6 +80,7 @@
 #define GL_SILENCE_DEPRECATION
 #endif
 #include <GLFW/glfw3.h>
+
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
@@ -2297,9 +2300,12 @@ void cc()
 
 
 
+
 void simulateExponsureTEST(int sim, double kat_val, int ilosc_ubezpieczycieli,int num_watku)
 {
     float step_size = 1.0 / (17 * 12 + ilosc_ubezpieczycieli);
+    float bar_step = 1.0 / (17 * 12 + ilosc_ubezpieczycieli);
+
     progressbar[num_watku] = 0.0f;
     int exposure_number;
     int binom_fire;
@@ -2346,7 +2352,7 @@ void simulateExponsureTEST(int sim, double kat_val, int ilosc_ubezpieczycieli,in
 
                         std::vector<std::vector<double>> spread_one_building(11);
 
-                        spread_one_building = haversine_loop_cpp_vec(200,
+                        spread_one_building = haversine_loop_cpp_vec(promien,
                             nr_budynku,
                             woj, mies);
 
@@ -2421,6 +2427,8 @@ void simulateExponsureTEST(int sim, double kat_val, int ilosc_ubezpieczycieli,in
             }
             progressbar[num_watku] += step_size;
         }
+        stanSymulacji.fetch_add(bar_step);
+
     }
 
     std::vector<std::vector<double>> out_sum_vec_out = sim_brutto_final.returnVectorSim();
@@ -2529,21 +2537,35 @@ void simulateExponsureTEST(int sim, double kat_val, int ilosc_ubezpieczycieli,in
             ubezpieczyciele[kk].sum_vec_netto_out_vec.push_back(sum_netto_out);
         }
          progressbar[num_watku] += step_size;
+         stanSymulacji.fetch_add(bar_step);
 
     }
 
     /// g_num_mutex.unlock();
 }
 
-
-
 void testALL(int choice)
 {
+    pool.reset(liczba_dzialajacych_watkow);
+    std::vector<std::string> testVec;
+
+    for (int i = 0; i < ubezp_nazwy.size(); i++)
+    {
+        if (flagi[i] != 0)
+        {
+            testVec.push_back(ubezp_nazwy[i]);
+        }
+    }
+
+    for (int i = 0; i < testVec.size(); i++)
+    {
+        std::cout << testVec[i] << std::endl;
+    }
 
     std::random_device rd;
 
     std::setlocale(LC_ALL, "nb_NO.UTF-8");
-    std::vector<std::string> fileNames = { "Allianz" };
+    std::vector<std::string> fileNames = testVec;
     if (choice == 1)
     {
         for (int woj = 0; woj < 17; ++woj)
@@ -2554,12 +2576,11 @@ void testALL(int choice)
             exponsure_reassurance[woj].resize(12);
             exponsure_sum_value[woj].resize(12);
         }
-        std::vector<std::string> fileNames = { "Allianz" };
 
         //{ "Allianz","Aviva","Compensa","CREDIT_AGRICOLE","Generali_SA","Inter_Polska","InterRisk","Link4","NN","PKO_SA","Polski_Gaz","PZU_SA","Saltus","Santander","TU_EUROPA_SA","TUW_CUPRUM","TUW_TUW","TUZ_TUW","UNIQA","Warta", "Wiener" };
-        std::string dane_wejsciowe = "M:/Program ostateczny/tetsty_czytanie/tetsty_czytanie/csv/Input_all";
-        std::string odnowienia = "tak";
-        std::string year = "2022";
+        std::string dane_wejsciowe = std::string(sciezka_input);
+        std::string odnowienia = (czy_wlaczyc_odnowienia ==1)?"tak":"nie";
+        std::string year = std::to_string(wybrany_rok);
         // std::string line = "UNIQA";
         // fileNames.push_back(line);
         std::cout << "Wczytywani Ubezpieczyciele: ";
@@ -2572,17 +2593,17 @@ void testALL(int choice)
         auto startf = std::chrono::high_resolution_clock::now();
         pasek_postepu_wczytywania_danych = 0.0f;
         processReas(dane_wejsciowe + "/Parametryzacja/Reasekuracja/", fileNames);
-        pasek_postepu_wczytywania_danych = 0.16f;
+        pasek_postepu_wczytywania_danych += 0.16f;
         processOblig(dane_wejsciowe + "/Parametryzacja/Reasekuracja/", fileNames);
-        pasek_postepu_wczytywania_danych = 0.16f;
+        pasek_postepu_wczytywania_danych += 0.16f;
         processBudynki(dane_wejsciowe, "/Ubezpieczyciele/", fileNames, year,odnowienia);
-        pasek_postepu_wczytywania_danych = 0.16f;
+        pasek_postepu_wczytywania_danych += 0.16f;
         processPrPozaru(dane_wejsciowe + "/Parametryzacja/Pr_pozaru.csv");
-        pasek_postepu_wczytywania_danych = 0.16f;
+        pasek_postepu_wczytywania_danych += 0.16f;
         processPrRozprzestrzenienia(dane_wejsciowe + "/Parametryzacja/pr_rozprzestrzenienia.csv");
-        pasek_postepu_wczytywania_danych = 0.16f;
+        pasek_postepu_wczytywania_danych += 0.16f;
         processPrWielkoscPozaru(dane_wejsciowe + "/Parametryzacja/pr_wielkosc_pozaru.csv");
-        pasek_postepu_wczytywania_danych = 0.17f;
+        pasek_postepu_wczytywania_danych += 0.20f;
 
         auto stopf = std::chrono::high_resolution_clock::now();
         auto durationf = std::chrono::duration_cast<std::chrono::seconds>(stopf - startf);
@@ -2592,8 +2613,8 @@ void testALL(int choice)
     }
     else if (choice == 2)
     {
-        int sim = 100;
-        int kat_val = 5000000;
+        int sim = liczba_symulacji;
+        int kat_val = wartosc_katastrof_szkody;
 
 
         int ilosc_ubezpieczycieli = ubezpieczyciele.size();
@@ -2606,6 +2627,7 @@ void testALL(int choice)
 
             pool.detach_task([sim, kat_val, ilosc_ubezpieczycieli, sim_num](BS::concurrency_t idx)
                 { simulateExponsureTEST(sim, kat_val, ilosc_ubezpieczycieli,idx); });
+
         }
         pool.wait();
 
@@ -2613,7 +2635,7 @@ void testALL(int choice)
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
         std::cout << "Symulacje zakonczone." << std::endl;
         std::cout << "Czas symulacji: " << duration.count() << " sekund." << std::endl;
-        std::string dane_wyjsciowe = "M:/Program ostateczny/tetsty_czytanie/tetsty_czytanie/csv/Output";
+        std::string dane_wyjsciowe = std::string(gdzie_zapisac);
         std::string nazwakatalogu = createFolder(dane_wyjsciowe);
         fs::path pat_buil = nazwakatalogu;
         // Zapisywanie danych do plików CSV
@@ -2811,7 +2833,7 @@ void render_gui() {
     }
     ImGui::PopStyleColor(3);  // usuń ustawione kolory 
 
-    ImGui::ProgressBar(ogolnyprogress, ImVec2(ImGui::GetContentRegionAvail().x - 170, 25));
+    ImGui::ProgressBar(stanSymulacji, ImVec2(ImGui::GetContentRegionAvail().x - 170, 25));
     ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
     ImGui::Text("Ogolny pasek postepu");
     ImGui::Dummy(ImVec2(0.0f, 7.f));
