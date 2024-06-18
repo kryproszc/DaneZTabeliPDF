@@ -1,4 +1,91 @@
-ImGui::SeparatorText("Wybor zapisu budynow");
-            ImGui::RadioButton("Wszystkie budynki", &forma_zapisu_budynkow, 0);
-            ImGui::SameLine();
-            ImGui::RadioButton("Wybrane budynki", &forma_zapisu_budynkow, 0);
+library(data.table)
+library(readxl)
+
+# Funkcja generująca losowe parametry stochastyczne
+random_stochastic_parameters_Loss_ratio <- function(seed, sigma_j, loss_ratio, sd, dimension) {
+  set.seed(seed)
+  rng <- RNGkind()
+  stochastic_sigma <- data.table(matrix(0, ncol = dimension[4], nrow = dimension[3]))
+  mu_j <- data.table(matrix(0, ncol = dimension[4], nrow = dimension[3]))
+  
+  for (j in 1:dimension[4]) {
+    st_swobody <- max(1, dimension[1] - j)
+    chi_list <- rchisq(dimension[3], st_swobody)
+    stochastic_sigma[, j] := (ceiling(chi_list) * sigma_j[j]) / st_swobody
+    mu_j[, j] := rnorm(dimension[3], mean = loss_ratio[j], sd = sd[j])
+  }
+  
+  return(list(mu_j, stochastic_sigma))
+}
+
+# Funkcja obliczająca forward_loss_ratio
+stochastic_triangle_forward_Loss_ratio_szybki <- function(seed, data_paid, sigma_j, dev, sd, sim, eksposure, ult_cons) {
+  set.seed(seed)
+  rng <- RNGkind()
+  mm <- nrow(data_paid)
+  nn <- ncol(data_paid)
+  dimension <- c(mm, nn, sim, length(dev))
+  Total_BE <- c()
+  
+  params <- random_stochastic_parameters_Loss_ratio(seed, sigma_j, dev, sd, dimension)
+  mu <- params[[1]]
+  sigma <- params[[2]]
+  
+  data_paid_copy_reRe <- copy(data_paid)
+  data_paid_copy_reRe[mm + 1] <- NA
+  data_paid_copy <- copy(data_paid)
+  
+  if (length(dev) > mm) {
+    for (k in (mm + 1):length(dev)) {
+      data_paid_copy[k] <- NA
+    }
+  }
+  
+  for (row in 1:sim) {
+    m_i <- mu[row,]
+    sigma_i <- sigma[row,]
+    
+    for (j in 1:(ncol(m_i) - 1)) {
+      max_ind_row <- max(0, mm - j - 1)
+      
+      for (i in max_ind_row:mm) {
+        VAR_i_j <- (sigma_i[j + 1]) / eksposure[i]
+        lmean_i_j <- log((m_i[j + 1]^2) / sqrt((m_i[j + 1]^2 + VAR_i_j)))
+        lstdev_i_j <- log(1 + (VAR_i_j / (m_i[j + 1]^2)))
+        stochastic_LR_i_j <- rlnorm(1, meanlog = lmean_i_j, sdlog = lstdev_i_j)
+        data_paid_copy[i, j + 1] <- data_paid_copy[i, j] + eksposure[i] * stochastic_LR_i_j
+      }
+    }
+    
+    Ultimate <- data_paid_copy[, .SD, .SDcols = mm]
+    Ultimate <- Ultimate[Ultimate < 10000000]
+    BE <- sum(Ultimate) - ult_cons
+    Total_BE <- c(Total_BE, BE)
+  }
+  
+  return(Total_BE)
+}
+
+# Dane
+eksposure <- c(20161720.38467477, 26834803.195624165, 27479710.672134166, 28287255.65513652,
+               31830000.810523850, 37500122.398117306, 40934722.44187734, 57373121.65739994,
+               43694242.72670734, 5818947.98738208, 6917346.91158827, 7538307.27765097,
+               82596273.8555047, 93708508.42742883, 102001996.32229000, 12780600.35160262,
+               14917882.87290737, 150803789.98920902, 143447375.70219726, 149142181.85000002)
+
+# Odczyt danych z pliku Excel
+wspolczynniki <- read_excel('Dane_rzeczywiste/ACCID_OTH_21_param.xlsx', sheet = 'wsp_1')
+LR <- as.numeric(wspolczynniki[1, 2:ncol(wspolczynniki)])
+sigma_j <- as.numeric(wspolczynniki[2, 2:ncol(wspolczynniki)])
+sd <- as.numeric(wspolczynniki[3, 2:ncol(wspolczynniki)])
+
+# Odczyt danych z pliku CSV
+reserv_data <- fread('reserv_data_ACCID_OTH.csv', sep = ',', dec = '.')
+reserv_data <- reserv_data[, -1, with = FALSE]
+
+# Uruchomienie funkcji forward_loss_ratio
+xxx <- stochastic_triangle_forward_Loss_ratio_szybki(202206011, reserv_data, sigma_j, LR, sd, 10000, eksposure, 353043801.424839)
+
+# Wydruk wyników
+print(quantile(xxx, probs = 0.995))
+print(quantile(xxx, probs = 0.995) - mean(xxx))
