@@ -2304,7 +2304,7 @@ void cc()
 void simulateExponsureTEST(int sim, double kat_val, int ilosc_ubezpieczycieli,int num_watku)
 {
     float step_size = 1.0 / (17 * 12 + ilosc_ubezpieczycieli);
-    float bar_step = 1.0 / (17 * 12 + ilosc_ubezpieczycieli);
+    double bar_step = (1.0 / ((17 +ilosc_ubezpieczycieli)*sim));
 
     progressbar[num_watku] = 0.0f;
     int exposure_number;
