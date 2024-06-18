@@ -4,46 +4,44 @@ library(readxl)
 # Funkcja generująca losowe parametry stochastyczne
 random_stochastic_parameters_Loss_ratio <- function(seed, sigma_j, loss_ratio, sd, dimension) {
   set.seed(seed)
-  rng <- RNGkind()
-  stochastic_sigma <- data.table(matrix(0, ncol = dimension[4], nrow = dimension[3]))
-  mu_j <- data.table(matrix(0, ncol = dimension[4], nrow = dimension[3]))
+  stochastic_sigma <- data.frame(matrix(0, ncol = dimension[4], nrow = dimension[3]))
+  mu_j <- data.frame(matrix(0, ncol = dimension[4], nrow = dimension[3]))
   
   for (j in 1:dimension[4]) {
     st_swobody <- max(1, dimension[1] - j)
     chi_list <- rchisq(dimension[3], st_swobody)
-    stochastic_sigma[, j] := (ceiling(chi_list) * sigma_j[j]) / st_swobody
-    mu_j[, j] := rnorm(dimension[3], mean = loss_ratio[j], sd = sd[j])
+    stochastic_sigma[, j] <- sapply(chi_list, function(chi) (ceiling(chi) * sigma_j[j]) / st_swobody)
+    mu_j[, j] <- rnorm(dimension[3], mean = loss_ratio[j], sd = sd[j])
   }
   
-  return(list(mu_j, stochastic_sigma))
+  return(list(mu_j = mu_j, stochastic_sigma = stochastic_sigma))
 }
 
 # Funkcja obliczająca forward_loss_ratio
 stochastic_triangle_forward_Loss_ratio_szybki <- function(seed, data_paid, sigma_j, dev, sd, sim, eksposure, ult_cons) {
   set.seed(seed)
-  rng <- RNGkind()
   mm <- nrow(data_paid)
   nn <- ncol(data_paid)
   dimension <- c(mm, nn, sim, length(dev))
-  Total_BE <- c()
+  Total_BE <- numeric()
   
   params <- random_stochastic_parameters_Loss_ratio(seed, sigma_j, dev, sd, dimension)
-  mu <- params[[1]]
-  sigma <- params[[2]]
+  mu <- params$mu_j
+  sigma <- params$stochastic_sigma
   
-  data_paid_copy_reRe <- copy(data_paid)
-  data_paid_copy_reRe[mm + 1] <- NA
-  data_paid_copy <- copy(data_paid)
+  data_paid_copy_reRe <- data_paid
+  data_paid_copy_reRe[mm + 1, ] <- NA
+  data_paid_copy <- data_paid
   
   if (length(dev) > mm) {
     for (k in (mm + 1):length(dev)) {
-      data_paid_copy[k] <- NA
+      data_paid_copy[k, ] <- NA
     }
   }
   
   for (row in 1:sim) {
-    m_i <- mu[row,]
-    sigma_i <- sigma[row,]
+    m_i <- mu[row, ]
+    sigma_i <- sigma[row, ]
     
     for (j in 1:(ncol(m_i) - 1)) {
       max_ind_row <- max(0, mm - j - 1)
@@ -57,7 +55,7 @@ stochastic_triangle_forward_Loss_ratio_szybki <- function(seed, data_paid, sigma
       }
     }
     
-    Ultimate <- data_paid_copy[, .SD, .SDcols = mm]
+    Ultimate <- data_paid_copy[, mm]
     Ultimate <- Ultimate[Ultimate < 10000000]
     BE <- sum(Ultimate) - ult_cons
     Total_BE <- c(Total_BE, BE)
