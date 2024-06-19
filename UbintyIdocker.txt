@@ -1,0 +1,44 @@
+https://learn.microsoft.com/en-us/windows/wsl/install-manual
+
+1. instalacja ubuntu. Klikamy cmd wpisujemy wsl po wyświetleniu się różnych informacji wpisujemy
+wsl --install Ubuntu
+lub
+wsl --install -d Ubuntu-20.04
+
+Późiej próboawlem w powershellu
+wsl --update
+wsl --install
+
+Na moim kompie to działa
+
+2. Instalacje dockera
+
+sudo apt-get update -y && sudo apt-get upgrade -y
+
+sudo apt-get install apt-transport-https curl gnupg-agent ca-certificates software-properties-common -y
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+
+sudo systemctl enable docker && sudo systemctl start docker
+
+
+Jeśli nam się to nie uda to wtedy coś takiego możemy zrobić
+https://download.docker.com/win/static/stable/x86_64/docker-26.1.4.zip
+Expand-Archive /path/to/<FILE>.zip -DestinationPath $Env:ProgramFiles
+/path/to/<FILE>.zip - sciezka do zipa
+-DestinationPath $Env:ProgramFiles to zostaw jak jest
+nastepnie
+&$Env:ProgramFiles\Docker\dockerd --register-service
+oraz
+Start-Service docker
+oraz
+&$Env:ProgramFiles\Docker\docker run hello-world:nanoserver
+&$Env:ProgramFiles\Docker\docker run hello-world:nanoserver
+
+
+
+sudo systemctl status docker
