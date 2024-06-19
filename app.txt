@@ -1,8 +1,53 @@
-        # Debugowanie
-        print(paste("lmean_i_j:", lmean_i_j))
-        print(paste("lstdev_i_j:", lstdev_i_j))
-        
-        # Sprawdzenie poprawności argumentów
-        if (!is.finite(lmean_i_j) || !is.finite(lstdev_i_j)) {
-          stop("Nieprawidłowe argumenty dla rlnorm")
+void writeCSV(std::ofstream& file) const
+    {
+
+        file << "Insurer,Longitude,Latitude,Region,Month,SumValue,IndexTable,FireSize,ReasonFire\n";
+
+        int rows = build_fire.size();
+        int cols = build_fire[0].size();
+        for (int col = 0; col < cols; ++col)
+        {
+            for (int row = 0; row < rows; ++row)
+            {
+                file << build_fire[row][col];
+                if (row < rows - 1)
+                    file << ",";
+            }
+            file << "\n";
         }
+    }
+do klasy VectorPozarPierwotny
+oraz to
+void writeCSV(std::ofstream& file) const
+    {
+        file << "Insurer,BuildingNumber,Woj,Mies,IndexTable,Longitude,Latitude,SumValue,WielkoscPozarKwota,ReasFire\n";  // dopasuj nagłówek do rzeczywistej liczby kolumn
+
+        int rows = build_fire_rozprzestrzeniony.size();
+        if (rows == 0) return;
+
+
+        int max_cols = 0;
+        for (const auto& row : build_fire_rozprzestrzeniony) {
+            if (row.size() > max_cols)
+                max_cols = row.size();
+        }
+
+        for (int col = 0; col < max_cols; ++col)
+        {
+
+            for (int row = 0; row < rows; ++row)
+            {
+                if (col < build_fire_rozprzestrzeniony[row].size()) {
+                    file << build_fire_rozprzestrzeniony[row][col];
+                }
+                else {
+                    file << "";
+                }
+
+                if (row < rows - 1)
+                    file << ",";
+            }
+            file << "\n";
+        }
+    }
+do VectorPozarRozprz
