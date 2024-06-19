@@ -1,0 +1,157 @@
+
+class VectorPozarPierwotny
+{
+public:
+    std::vector<std::vector<long double>> build_fire;
+    VectorPozarPierwotny() : build_fire(9, std::vector<long double>()) {}
+
+    void addPozarPierwotny(int insurancer, int nr_budynku, int woj, int mies, int index_table, double wielkosc_pozar_kwota,
+        double reas_fire)
+    {
+        build_fire[0].push_back(insurancer);
+        build_fire[1].push_back(exponsure_longitude[woj - 1][mies - 1][nr_budynku]);
+        build_fire[2].push_back(exponsure_latitude[woj - 1][mies - 1][nr_budynku]);
+        build_fire[3].push_back(woj + 1);
+        build_fire[4].push_back(mies + 1);
+        build_fire[5].push_back(exponsure_sum_value[woj - 1][mies - 1][nr_budynku]);
+        build_fire[6].push_back(index_table);
+        build_fire[7].push_back(wielkosc_pozar_kwota);
+        build_fire[8].push_back(reas_fire);
+    }
+    std::vector<std::vector<long double>> returnPozarPierwotny() const
+    {
+        return (build_fire);
+    }
+
+    void writeCSV(const std::string& filePath, const std::string& fileName) {
+
+        std::string fullFilePath = filePath + "/" + fileName;
+        std::ofstream file(fullFilePath);
+
+        file << "Insurer,Longitude,Latitude,Region,Month,SumValue,IndexTable,FireSize,ReasonFire\n";
+
+        int rows = build_fire.size();
+        int cols = build_fire[0].size();
+        for (int col = 0; col < cols; ++col)
+        {
+            for (int row = 0; row < rows; ++row)
+            {
+                file << build_fire[row][col];
+                if (row < rows - 1)
+                    file << ",";
+            }
+            file << "\n";
+        }
+    }
+
+    void writeCSV(std::ofstream& file) const
+    {
+
+        file << "Insurer,Longitude,Latitude,Region,Month,SumValue,IndexTable,FireSize,ReasonFire\n";
+
+        int rows = build_fire.size();
+        int cols = build_fire[0].size();
+        for (int col = 0; col < cols; ++col)
+        {
+            for (int row = 0; row < rows; ++row)
+            {
+                file << build_fire[row][col];
+                if (row < rows - 1)
+                    file << ",";
+            }
+            file << "\n";
+        }
+    }
+};
+class VectorPozarRozprzestrzeniony
+{
+public:
+    std::vector<std::vector<double>> build_fire_rozprzestrzeniony;
+    VectorPozarRozprzestrzeniony() : build_fire_rozprzestrzeniony(11, std::vector<double>()) {}
+
+    void addPozarRozprzestrzeniony(std::vector<std::vector<double>> spread_one_building)
+    {
+        for (int ttt = 0; ttt < 11; ttt++)
+        {
+            build_fire_rozprzestrzeniony[ttt].insert(
+                build_fire_rozprzestrzeniony[ttt].end(),
+                spread_one_building[ttt].begin(),
+                spread_one_building[ttt].end());
+        }
+    }
+    std::vector<std::vector<double>> returnPozarRozprzestrzeniony() const
+    {
+        return (build_fire_rozprzestrzeniony);
+    }
+
+    void writeCSV(const std::string& filePath, const std::string& fileName) {
+        std::string fullFilePath = filePath + "/" + fileName;
+        std::ofstream file(fullFilePath);
+
+        file << "Insurer,BuildingNumber,Woj,Mies,IndexTable,Longitude,Latitude,SumValue,WielkoscPozarKwota,ReasFire\n"; // dopasuj nagłówek do rzeczywistej liczby kolumn
+
+        int rows = build_fire_rozprzestrzeniony.size();
+        if (rows == 0)
+            return;
+
+        int max_cols = 0;
+        for (const auto& row : build_fire_rozprzestrzeniony)
+        {
+            if (row.size() > max_cols)
+                max_cols = row.size();
+        }
+
+        for (int col = 0; col < max_cols; ++col)
+        {
+
+            for (int row = 0; row < rows; ++row)
+            {
+                if (col < build_fire_rozprzestrzeniony[row].size())
+                {
+                    file << build_fire_rozprzestrzeniony[row][col];
+                }
+                else
+                {
+                    file << "";
+                }
+
+                if (row < rows - 1)
+                    file << ",";
+            }
+            file << "\n";
+        }
+    }
+
+    void writeCSV(std::ofstream& file) const
+    {
+        file << "Insurer,BuildingNumber,Woj,Mies,IndexTable,Longitude,Latitude,SumValue,WielkoscPozarKwota,ReasFire\n";  // dopasuj nagłówek do rzeczywistej liczby kolumn
+
+        int rows = build_fire_rozprzestrzeniony.size();
+        if (rows == 0) return;
+
+
+        int max_cols = 0;
+        for (const auto& row : build_fire_rozprzestrzeniony) {
+            if (row.size() > max_cols)
+                max_cols = row.size();
+        }
+
+        for (int col = 0; col < max_cols; ++col)
+        {
+
+            for (int row = 0; row < rows; ++row)
+            {
+                if (col < build_fire_rozprzestrzeniony[row].size()) {
+                    file << build_fire_rozprzestrzeniony[row][col];
+                }
+                else {
+                    file << "";
+                }
+
+                if (row < rows - 1)
+                    file << ",";
+            }
+            file << "\n";
+        }
+    }
+};
