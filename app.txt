@@ -1,5 +1,12 @@
-if (forma_zapisu_budynkow == 0)
-  {
-      buildPierwotny.writeCSV(nazwakatalogu + "/Pierwotne/", std::to_string(numer_symulacji));
-      buildRozprzestrzeniony.writeCSV(nazwakatalogu + "/Rozprzestrzeniony/", std::to_string(numer_symulacji));
-  }
+lmean_i_j <- function(mu_j, c_ij_minus_1, e_i, VAR_i_j) {
+  numerator <- (mu_j + c_ij_minus_1 / e_i)^2
+  denominator <- sqrt(numerator + VAR_i_j)
+  return(log(numerator / denominator))
+}
+
+# Funkcja obliczająca lstdev_i_j
+lstdev_i_j <- function(VAR_i_j, mu_j, c_ij_minus_1, e_i) {
+  numerator <- VAR_i_j
+  denominator <- (mu_j + c_ij_minus_1 / e_i)^2
+  return(log(numerator / denominator + 1))
+}
