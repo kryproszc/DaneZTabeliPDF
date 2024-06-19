@@ -162,7 +162,7 @@ public:
         return (build_fire);
     }
 
-    void writeCSV(const std::string& filePath, const std::string& fileName)
+    void writeCSV(std::string& filePath, std::string& fileName)
     {
         std::string fullFilePath = filePath + "/" + fileName;
         std::ofstream file(fullFilePath);
@@ -223,7 +223,7 @@ public:
         return (build_fire_rozprzestrzeniony);
     }
 
-    void writeCSV(const std::string& filePath, const std::string& fileName)
+    void writeCSV(std::string& filePath, std::string& fileName)
     {
         std::string fullFilePath = filePath + "/" + fileName;
         std::ofstream file(fullFilePath);
@@ -1879,8 +1879,8 @@ void simulateExponsureTEST(std::string nazwakatalogu, int sim, int numer_symulac
 
     if (forma_zapisu_budynkow == 0)
     {
-        buildPierwotny.writeCSV(nazwakatalogu + "/Pierwotne/", numer_symulacji);
-        buildRozprzestrzeniony.writeCSV(nazwakatalogu + "/Rozprzestrzeniony/", numer_symulacji);
+        buildPierwotny.writeCSV(nazwakatalogu + "/Pierwotne/", std::to_string(numer_symulacji));
+        buildRozprzestrzeniony.writeCSV(nazwakatalogu + "/Rozprzestrzeniony/", std::to_string(numer_symulacji));
     }
 
     std::vector<std::vector<double>> out_sum_vec_out = sim_brutto_final.returnVectorSim();
