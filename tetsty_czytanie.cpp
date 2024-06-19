@@ -162,8 +162,8 @@ public:
         return (build_fire);
     }
 
-    void writeCSV(std::string& filePath, std::string& fileName)
-    {
+    void writeCSV(const std::string& filePath, const std::string& fileName) {
+
         std::string fullFilePath = filePath + "/" + fileName;
         std::ofstream file(fullFilePath);
 
@@ -223,8 +223,7 @@ public:
         return (build_fire_rozprzestrzeniony);
     }
 
-    void writeCSV(std::string& filePath, std::string& fileName)
-    {
+    void writeCSV(const std::string& filePath, const std::string& fileName) {
         std::string fullFilePath = filePath + "/" + fileName;
         std::ofstream file(fullFilePath);
 
@@ -1316,7 +1315,8 @@ std::vector<std::vector<double>> read_odnowienia(const std::string filename)
 {
     std::vector<std::vector<double>> odnowienia_vect;
 
-    csvstream csvin(filename);
+
+    csvstream csvin("M:/Program ostateczny/tetsty_czytanie/tetsty_czytanie/csv/Input_all/Parametryzacja/Odnowienia/UNIQA.csv");
 
     std::map<std::string, std::string> row;
     std::vector<double> pom_SU_dol_vec;
@@ -1877,11 +1877,11 @@ void simulateExponsureTEST(std::string nazwakatalogu, int sim, int numer_symulac
         stanSymulacji.fetch_add(bar_step);
     }
 
-    if (forma_zapisu_budynkow == 0)
-    {
-        buildPierwotny.writeCSV(nazwakatalogu + "/Pierwotne/", std::to_string(numer_symulacji));
-        buildRozprzestrzeniony.writeCSV(nazwakatalogu + "/Rozprzestrzeniony/", std::to_string(numer_symulacji));
-    }
+   // if (forma_zapisu_budynkow == 0)
+  //  {
+       buildPierwotny.writeCSV(nazwakatalogu + "/Pierwotne/", std::to_string(numer_symulacji));
+       buildRozprzestrzeniony.writeCSV(nazwakatalogu + "/Rozprzestrzeniony/", std::to_string(numer_symulacji));
+  //  }
 
     std::vector<std::vector<double>> out_sum_vec_out = sim_brutto_final.returnVectorSim();
     std::vector<std::vector<double>> sim_brutto_kat_final_out = sim_brutto_kat_final.returnVectorSim();
@@ -1934,8 +1934,8 @@ void simulateExponsureTEST(std::string nazwakatalogu, int sim, int numer_symulac
         // buildRozprzestrzeniony_netto_vec = []
         // sum_vec_netto_out_vec = []
 
-        if (forma_zapisu_budynkow == 1)
-        {
+       // if (forma_zapisu_budynkow == 1)
+        //{
             if (ubezpieczyciele[kk].buildPierwotny_brutto_kat_vec.size() > ilosc_budynkow_do_zapisania)
             {
                 // znajdowanie najmniejszej wartości i indeksów w odpowiednich wektorach
@@ -1990,7 +1990,7 @@ void simulateExponsureTEST(std::string nazwakatalogu, int sim, int numer_symulac
                 ubezpieczyciele[kk].sum_vec_netto_kat_out_vec.push_back(sum_netto_kat_out);
                 ubezpieczyciele[kk].sum_vec_netto_out_vec.push_back(sum_netto_out);
             }
-        }
+      //  }
         progressbar[num_watku] += step_size;
         stanSymulacji.fetch_add(bar_step);
     }
