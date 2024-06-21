@@ -8,12 +8,8 @@ repeat {
   }
   i <- as.integer(input_i)
   
-  cat("Podaj wartość j (lub 'exit' aby zakończyć): ")
+  cat("Podaj wartość j: ")
   input_j <- readLines(con = stdin(), n = 1)
-  if (tolower(input_j) == "exit") {
-    cat("Kończę program.\n")
-    break
-  }
   j <- as.integer(input_j)
   
   if (is.na(i) || is.na(j)) {
