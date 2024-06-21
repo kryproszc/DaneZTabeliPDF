@@ -1,12 +1,27 @@
-lmean_i_j <- function(mu_j, c_ij_minus_1, e_i, VAR_i_j) {
-  numerator <- (mu_j + c_ij_minus_1 / e_i)^2
-  denominator <- sqrt(numerator + VAR_i_j)
-  return(log(numerator / denominator))
+generate_plot <- function(i, j) {
+  dimension <- c(20, 20, 1, length(LR))
+  params <- random_stochastic_parameters_Loss_ratio(123456789, sigma_j, LR, sd, dimension)
+  mu <- params$mu_j
+  sigma <- params$stochastic_sigma
+  row_sim <- 1
+  m_i <- as.numeric(mu[row_sim, ])
+  sigma_i <- as.numeric(sigma[row_sim, ])
+  VAR_i_j <- (sigma_i[j] + 1) / eksposure[i]
+  lmean_i_j <- log((m_i[j] + 1)^2 / sqrt((m_i[j] + 1)^2 + VAR_i_j))
+  lstddev_i_j <- log(1 + (VAR_i_j / ((m_i[j] + 1)^2)))
+  sim_wspolczynniki <- rlnorm(500, meanlog = lmean_i_j, sdlog = lstddev_i_j)
+  hist(sim_wspolczynniki, main = paste("Histogram dla i =", i, "i j =", j), xlab = "Współczynniki")
 }
 
-# Funkcja obliczająca lstdev_i_j
-lstdev_i_j <- function(VAR_i_j, mu_j, c_ij_minus_1, e_i) {
-  numerator <- VAR_i_j
-  denominator <- (mu_j + c_ij_minus_1 / e_i)^2
-  return(log(numerator / denominator + 1))
+repeat {
+  cat("Podaj wartość i: ")
+  i <- as.integer(readLines(con = stdin(), n = 1))
+  cat("Podaj wartość j: ")
+  j <- as.integer(readLines(con = stdin(), n = 1))
+  
+  if (is.na(i) || is.na(j)) {
+    cat("Nieprawidłowe wartości. Proszę podać liczby całkowite.\n")
+  } else {
+    generate_plot(i, j)
+  }
 }
