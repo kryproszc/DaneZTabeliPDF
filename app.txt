@@ -1,51 +1,14 @@
-# Definiowanie funkcji Chain-Ladder z obliczeniem wartości ultimate
-chain_ladder <- function(triangle, development_factors) {
-  # Ustalanie rozmiaru trójkąta
-  num_years <- nrow(triangle)
-  num_dev <- ncol(triangle)
-  num_factors <- length(development_factors)
-  
-  # Tworzenie macierzy dla prognozowanych wartości
-  projected_triangle <- matrix(NA, nrow = num_years, ncol = num_factors)
-  projected_triangle[,1:num_dev] <- triangle  # Przypisanie rzeczywistych danych
-  
-  # Wypełnianie trójkąta prognozowanymi wartościami
-  for (i in (num_dev + 1):num_factors) {
-    for (j in 1:(num_years - i + 1)) {
-      projected_triangle[j, i] <- projected_triangle[j, i - 1] * development_factors[i - 1]
-    }
-  }
-  
-  # Obliczanie rezerw
-  reserves <- projected_triangle - triangle
-  reserves[is.na(reserves)] <- 0  # Ustawienie rezerw na 0, jeśli wartość prognozowana jest równa rzeczywistej
-  
-  # Obliczanie wartości ultimate
-  ultimate_values <- rowSums(projected_triangle, na.rm = TRUE)
-  
-  return(list(projected_triangle = projected_triangle, reserves = reserves, ultimate_values = ultimate_values))
-}
-
-# Przykładowe dane
-triangle <- matrix(c(
-  1000, 1500, 1800, 1900, 2000,
-  1100, 1600, 1900, 2000, NA,
-  1200, 1700, 2000, NA, NA,
-  1300, 1800, NA, NA, NA,
-  1400, NA, NA, NA, NA
-), nrow = 5, byrow = TRUE)
-
-development_factors <- c(1.4348, 1.1875, 1.0541, 1.0526, 1.03)
-
-# Wywołanie funkcji
-result <- chain_ladder(triangle, development_factors)
-
-# Wyświetlenie wyników
-cat("Prognozowane wartości:\n")
-print(result$projected_triangle)
-
-cat("\nRezerwy:\n")
-print(result$reserves)
-
-cat("\nWartości ultimate:\n")
-print(result$ultimate_values)
+def triangle_forward(self, df_data, f):
+    mm, nn = df_data.shape[0], df_data.shape[1]
+    df_t_copy = df_data.copy()
+    
+    if len(f) > mm:
+        for k in range(mm + 1, len(f) + 2):
+            df_t_copy[k] = np.nan
+    
+    for j in range(len(f)):
+        max_ind_row = np.max([0, mm - j - 1])
+        for i in range(max_ind_row):
+            df_t_copy.iloc[i, j + 1] = df_t_copy.iloc[i, j] * f[j]
+    
+    return df_t_copy
