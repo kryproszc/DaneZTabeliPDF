@@ -1,23 +1,20 @@
-generate_plot <- function(i, j) {
-  dimension <- c(20, 20, 1, length(LR))
-  params <- random_stochastic_parameters_Loss_ratio(123456789, sigma_j, LR, sd, dimension)
-  mu <- params$mu_j
-  sigma <- params$stochastic_sigma
-  row_sim <- 1
-  m_i <- as.numeric(mu[row_sim, ])
-  sigma_i <- as.numeric(sigma[row_sim, ])
-  VAR_i_j <- (sigma_i[j] + 1) / eksposure[i]
-  lmean_i_j <- log((m_i[j] + 1)^2 / sqrt((m_i[j] + 1)^2 + VAR_i_j))
-  lstddev_i_j <- log(1 + (VAR_i_j / ((m_i[j] + 1)^2)))
-  sim_wspolczynniki <- rlnorm(500, meanlog = lmean_i_j, sdlog = lstddev_i_j)
-  hist(sim_wspolczynniki, main = paste("Histogram dla i =", i, "i j =", j), xlab = "Współczynniki")
-}
-
+# Interactive console manipulation
 repeat {
-  cat("Podaj wartość i: ")
-  i <- as.integer(readLines(con = stdin(), n = 1))
-  cat("Podaj wartość j: ")
-  j <- as.integer(readLines(con = stdin(), n = 1))
+  cat("Podaj wartość i (lub 'exit' aby zakończyć): ")
+  input_i <- readLines(con = stdin(), n = 1)
+  if (tolower(input_i) == "exit") {
+    cat("Kończę program.\n")
+    break
+  }
+  i <- as.integer(input_i)
+  
+  cat("Podaj wartość j (lub 'exit' aby zakończyć): ")
+  input_j <- readLines(con = stdin(), n = 1)
+  if (tolower(input_j) == "exit") {
+    cat("Kończę program.\n")
+    break
+  }
+  j <- as.integer(input_j)
   
   if (is.na(i) || is.na(j)) {
     cat("Nieprawidłowe wartości. Proszę podać liczby całkowite.\n")
