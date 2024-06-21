@@ -1,32 +1,23 @@
-triangle_forward <- function(triangle, f) {
-  mm <- nrow(triangle)
-  nn <- ncol(triangle)
+random_stochastic_parameters <- function(sigma_j, dev, sd, dimension) {
+  rng <- PCG64Generator()
   
-  df_t_copy <- triangle
-  
-  if (length(f) > mm) {
-    for (k in (mm + 1):(length(f) + 2)) {
-      df_t_copy[k, ] <- NA
-    }
+  # Inicjalizujemy macierze jako NULL, aby je dynamicznie alokować później
+  stochastic_sigma_j <- matrix(0, nrow = dimension[3], ncol = dimension[4])
+  mu_j <- matrix(0, nrow = dimension[3], ncol = dimension[4])
+
+  for (j in 1:dimension[4]) {
+    # Wygenerowanie jednorazowo
+    mu_j[, j] <- rng$normal(dev[j], sd[j], size = dimension[3])
+    
+    # Maksymalizowanie st_swobody
+    st_swobody <- max(1, dimension[1] - j)
+    
+    # Generowanie wartości chi_squared tylko raz dla każdej iteracji j
+    chi_list <- rng$chi_squared(st_swobody, size = dimension[3])
+    
+    # Obliczanie stochastic_sigma_j
+    stochastic_sigma_j[, j] <- (ceiling(chi_list) * sigma_j[j]) / st_swobody
   }
   
-  for (j in 1:length(f)) {
-    max_ind_row <- max(0, mm - j)
-    for (i in 1:max_ind_row) {
-      df_t_copy[i, j + 1] <- df_t_copy[i, j] * f[j]
-    }
-  }
-  
-  return(df_t_copy)
+  list(mu_j, stochastic_sigma_j)
 }
-
-# Przykładowe dane
-triangle <- matrix(c(
-  1000, 1500, 1800, 1900, 2000,
-  1100, 1600, 1900, 2000, NA,
-  1200, 1700, 2000, NA, NA,
-  1300, 1800, NA, NA, NA,
-  1400, NA, NA, NA, NA
-), nrow = 5, byrow = TRUE)
-
-development_factors <- c(1.4348, 1
