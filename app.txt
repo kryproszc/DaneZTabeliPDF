@@ -1,20 +1,4 @@
-# Interactive console manipulation
-repeat {
-  cat("Podaj wartość i (lub 'exit' aby zakończyć): ")
-  input_i <- readLines(con = stdin(), n = 1)
-  if (tolower(input_i) == "exit") {
-    cat("Kończę program.\n")
-    break
-  }
-  i <- as.integer(input_i)
-  
-  cat("Podaj wartość j: ")
-  input_j <- readLines(con = stdin(), n = 1)
-  j <- as.integer(input_j)
-  
-  if (is.na(i) || is.na(j)) {
-    cat("Nieprawidłowe wartości. Proszę podać liczby całkowite.\n")
-  } else {
-    generate_plot(i, j)
-  }
+create_nan_dataframe <- function(rows, cols) {
+  df <- as.data.frame(matrix(rep(NaN, rows * cols), nrow = rows, ncol = cols))
+  return(df)
 }
