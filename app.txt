@@ -1,23 +1,66 @@
-random_stochastic_parameters <- function(sigma_j, dev, sd, dimension) {
-  rng <- PCG64Generator()
-  
-  # Inicjalizujemy macierze jako NULL, aby je dynamicznie alokować później
-  stochastic_sigma_j <- matrix(0, nrow = dimension[3], ncol = dimension[4])
-  mu_j <- matrix(0, nrow = dimension[3], ncol = dimension[4])
+#include <iostream>
+#include <string>
+#include <curl/curl.h>
+#include <json/json.h>
+#include <fstream>
 
-  for (j in 1:dimension[4]) {
-    # Wygenerowanie jednorazowo
-    mu_j[, j] <- rng$normal(dev[j], sd[j], size = dimension[3])
-    
-    # Maksymalizowanie st_swobody
-    st_swobody <- max(1, dimension[1] - j)
-    
-    # Generowanie wartości chi_squared tylko raz dla każdej iteracji j
-    chi_list <- rng$chi_squared(st_swobody, size = dimension[3])
-    
-    # Obliczanie stochastic_sigma_j
-    stochastic_sigma_j[, j] <- (ceiling(chi_list) * sigma_j[j]) / st_swobody
-  }
-  
-  list(mu_j, stochastic_sigma_j)
+// Funkcja do zapisu odpowiedzi z serwera
+size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* s) {
+    size_t newLength = size * nmemb;
+    try {
+        s->append((char*)contents, newLength);
+    } catch(std::bad_alloc &e) {
+        // Handle memory problem
+        return 0;
+    }
+    return newLength;
+}
+
+// Funkcja do geokodowania jednego adresu
+void geocodeAddress(const std::string& address) {
+    std::string url = "http://localhost:8080/search?q=" + address + "&format=json";
+    CURL* curl;
+    CURLcode res;
+    std::string readBuffer;
+
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+    curl = curl_easy_init();
+
+    if(curl) {
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+
+        res = curl_easy_perform(curl);
+        if(res == CURLE_OK) {
+            // Przetwarzanie odpowiedzi JSON
+            Json::CharReaderBuilder rbuilder;
+            std::string errs;
+            Json::Value jsonObj;
+            std::istringstream s(readBuffer);
+
+            if (Json::parseFromStream(rbuilder, s, &jsonObj, &errs)) {
+                if (!jsonObj.empty() && jsonObj.isArray()) {
+                    Json::Value firstResult = jsonObj[0];
+                    std::string lat = firstResult["lat"].asString();
+                    std::string lon = firstResult["lon"].asString();
+
+                    std::cout << "Address: " << address << std::endl;
+                    std::cout << "Latitude: " << lat << ", Longitude: " << lon << std::endl;
+                } else {
+                    std::cerr << "Failed to parse JSON response" << std::endl;
+                }
+            }
+        } else {
+            std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
+        }
+        curl_easy_cleanup(curl);
+    }
+    curl_global_cleanup();
+}
+
+int main() {
+    std::string address = "Bracka 4, Kraków, krakowski, 31-005";
+    geocodeAddress(address);
+    return 0;
 }
