@@ -1,9 +1,15 @@
-GET /search.php?q=WANDY%RUTKIEWICZ%25A%Wroc%C5%82aw HTTP/1.1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-Accept-Encoding: gzip, deflate
-Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7
-Cache-Control: max-age=0
-Connection: keep-alive
-Host: dft-everace:8080
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36
+C:\WINDOWS\system32>curl -v "http://dft-everace:8080/search.php?q=WANDY%RUTKIEWICZ%25A%Wroc%C5%82aw"
+*   Trying 172.25.9.44:8080...
+* Connected to dft-everace (172.25.9.44) port 8080 (#0)
+> GET /search.php?q=WANDY%RUTKIEWICZ%25A%Wroc%C5%82aw HTTP/1.1
+> Host: dft-everace:8080
+> User-Agent: curl/8.0.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Date: Wed, 26 Jun 2024 10:09:47 GMT
+< Server: Apache/2.4.52 (Ubuntu)
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: OPTIONS,GET
+< Content-Length: 2646
+< Content-Type: application/json; charset=UTF-8
