@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+
+#pragma comment(lib, "Ws2_32.lib")
+
+int main() {
+    WSADATA wsaData;
+    SOCKET ConnectSocket = INVALID_SOCKET;
+    struct addrinfo* result = NULL,
+        * ptr = NULL,
+        hints;
+    const char* sendbuf = "GET /search.php?q=WANDY%20RUTKIEWICZ%20A%20Wrocław HTTP/1.1\r\n"
+        "Host: 172.25.9.44:8080\r\n"
+        "Connection: close\r\n\r\n";
+    char recvbuf[512];
+    int iResult;
+    int recvbuflen = 512;
+
+    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (iResult != 0) {
+        std::cerr << "WSAStartup failed with error: " << iResult << std::endl;
+        return 1;
+    }
+
+    ZeroMemory(&hints, sizeof(hints));
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol = IPPROTO_TCP;
+
+    iResult = getaddrinfo("172.25.9.44", "8080", &hints, &result);
+    if (iResult != 0) {
+        std::cerr << "getaddrinfo failed with error: " << iResult << std::endl;
+        WSACleanup();
+        return 1;
+    }
+
+    ptr = result;
+    ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
+    if (ConnectSocket == INVALID_SOCKET) {
+        std::cerr << "Socket failed with error: " << WSAGetLastError() << std::endl;
+        freeaddrinfo(result);
+        WSACleanup();
+        return 1;
+    }
+
+    iResult = connect(ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
+    if (iResult == SOCKET_ERROR) {
+        closesocket(ConnectSocket);
+        ConnectSocket = INVALID_SOCKET;
+    }
+
+    freeaddrinfo(result);
+
+    if (ConnectSocket == INVALID_SOCKET) {
+        std::cerr << "Unable to connect to server!" << std::endl;
+        WSACleanup();
+        return 1;
+    }
+
+    iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
+    if (iResult == SOCKET_ERROR) {
+        std::cerr << "Send failed with error: " << WSAGetLastError() << std::endl;
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return 1;
+    }
+
+    do {
+        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+        if (iResult > 0) {
+            std::cout << std::string(recvbuf, iResult);
+        }
+        else if (iResult == 0)
+            std::cout << "Connection closed" << std::endl;
+        else
+            std::cerr << "recv failed with error: " << WSAGetLastError() << std::endl;
+    } while (iResult > 0);
+
+    closesocket(ConnectSocket);
+    WSACleanup();
+
+    return 0;
+}
