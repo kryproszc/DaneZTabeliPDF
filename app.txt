@@ -27,8 +27,8 @@ process_row <- function(args) {
   Ultimate_Param_ReservingRisk <- args[[7]]
   
   rng <- PCG64Generator(seed)
-  m_i <- mu[row, ]
-  sigma_i <- sigma[row, ]
+  m_i <- mu
+  sigma_i <- sigma
   
   for (j in seq_along(m_i)) {
     max_ind_row <- max(0, mm - j - 1)
@@ -45,7 +45,7 @@ process_row <- function(args) {
   return(result_j)
 }
 
-random_stochastic_parameters <- function(sigma_j, dev, sd, dimension, save_to_file = FALSE, mu_file_name = NULL, sigma_file_name = NULL) {
+random_stochastic_parameters <- function(sigma_j, dev, sd, dimension) {
   rng <- PCG64Generator()
   stochastic_sigma_j <- matrix(0, nrow = dimension[3], ncol = dimension[4])
   mu_j <- matrix(0, nrow = dimension[3], ncol = dimension[4])
@@ -55,15 +55,6 @@ random_stochastic_parameters <- function(sigma_j, dev, sd, dimension, save_to_fi
     st_swobody <- max(1, dimension[1] - j)
     chi_list <- rng$chi_squared(st_swobody, size = dimension[3])
     stochastic_sigma_j[, j] <- (ceiling(chi_list) * sigma_j[j]) / st_swobody
-  }
-  
-  if (save_to_file) {
-    if (!is.null(mu_file_name)) {
-      write.csv(mu_j, file = mu_file_name, row.names = FALSE)
-    }
-    if (!is.null(sigma_file_name)) {
-      write.csv(stochastic_sigma_j, file = sigma_file_name, row.names = FALSE)
-    }
   }
   
   list(mu_j, stochastic_sigma_j)
@@ -88,11 +79,12 @@ stochastic_triangle_forward_test_szybki <- function(data_paid, sigma_j, dev, sd,
     current_batch_size <- min(batch_size, sim - i + 1)
     data_paid_copy <- data_paid
     
-    args <- lapply(1:current_batch_size, function(row) {
-      list(seed = 202260011 + num_sim + row, row = row, mu = mu, sigma = sigma, mm = mm, data_paid_copy = data_paid_copy, Ultimate_Param_ReservingRisk = Ultimate_Param_ReservingRisk)
+    args <- lapply(1:current_batch_size, function(batch_row) {
+      global_row <- i + batch_row - 1  # Przesunięcie indeksu, aby uwzględnić numer partii
+      list(seed = 202260011, row = global_row, mu = mu[global_row, ], sigma = sigma[global_row, ], mm = mm, data_paid_copy = data_paid_copy, Ultimate_Param_ReservingRisk = Ultimate_Param_ReservingRisk)
     })
     
-    num_cores <- max(4, 2)
+    num_cores <- detectCores() - 1
     cl <- makeCluster(num_cores)
     clusterExport(cl, list("process_row", "PCG64Generator"))
     Total_BE <- parLapply(cl, args, process_row)
@@ -111,8 +103,7 @@ stochastic_triangle_forward_test_szybki <- function(data_paid, sigma_j, dev, sd,
   results
 }
 # Przykład wywołania
-result <- stochastic_triangle_forward_test_szybki(data_paid, sigma_j, dev, sd, 50000, 4232149669, 0)
-
+result <- stochastic_triangle_forward_test_szybki(data_paid, sigma_j, dev, sd, 100000, 4232149669, 0)
 
 
 cat("Quantile 0.995:", quantile(result, 0.995), "\n")
@@ -122,4 +113,4 @@ cat("Quantile 0.998:", quantile(result, 0.998), "\n")
 cat("Quantile 0.999:", quantile(result, 0.999), "\n")
 cat("Mean:", mean(result), "\n")
 cat("Difference (Quantile - Mean):", quantile(result, 0.995) - mean(result), "\n")
-
+seq(1, 10000, by = 1000)
