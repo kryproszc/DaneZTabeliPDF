@@ -1,0 +1,151 @@
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <chrono>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <chrono>
+#pragma comment(lib, "Ws2_32.lib")
+
+#define DEFAULT_BUFLEN 512
+
+void initialize_winsock() {
+    WSADATA wsaData;
+    int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (result != 0) {
+        std::cerr << "WSAStartup failed: " << result << std::endl;
+        exit(1);
+    }
+}
+
+SOCKET create_socket() {
+    SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (sock == INVALID_SOCKET) {
+        std::cerr << "Error at socket(): " << WSAGetLastError() << std::endl;
+        WSACleanup();
+        exit(1);
+    }
+    return sock;
+}
+
+void connect_socket(SOCKET& sock, const std::string& host, const std::string& port) {
+    sockaddr_in server_addr;
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(std::stoi(port));
+    inet_pton(AF_INET, host.c_str(), &server_addr.sin_addr);
+
+    int res = connect(sock, (sockaddr*)&server_addr, sizeof(server_addr));
+    if (res == SOCKET_ERROR) {
+        std::cerr << "Unable to connect to server: " << WSAGetLastError() << std::endl;
+        closesocket(sock);
+        WSACleanup();
+        exit(1);
+    }
+}
+
+void send_request(SOCKET& sock, const std::string& request) {
+    int res = send(sock, request.c_str(), static_cast<int>(request.length()), 0);
+    if (res == SOCKET_ERROR) {
+        std::cerr << "send failed: " << WSAGetLastError() << std::endl;
+        closesocket(sock);
+        WSACleanup();
+        exit(1);
+    }
+}
+
+std::string receive_response(SOCKET& sock) {
+    char buffer[DEFAULT_BUFLEN];
+    int res = recv(sock, buffer, DEFAULT_BUFLEN, 0);
+    if (res > 0) {
+        return std::string(buffer, res);
+    }
+    else if (res == 0) {
+        std::cerr << "Connection closed" << std::endl;
+    }
+    else {
+        std::cerr << "recv failed: " << WSAGetLastError() << std::endl;
+    }
+    return "";
+}
+
+std::string get_line(const std::string& response, int lineNumber) {
+    std::istringstream responseStream(response);
+    std::string line;
+    for (int i = 0; i < lineNumber; ++i) {
+        if (!std::getline(responseStream, line)) {
+            return "Line not found";
+        }
+    }
+    return line;
+}
+
+#include <windows.h>
+#include <iostream>
+#include <string>
+int main() {
+    HANDLE hPipeRead, hPipeWrite;
+
+    SECURITY_ATTRIBUTES saAttr = { sizeof(SECURITY_ATTRIBUTES) };
+    saAttr.bInheritHandle = TRUE;
+    saAttr.lpSecurityDescriptor = NULL;
+
+    if (!CreatePipe(&hPipeRead, &hPipeWrite, &saAttr, 0)) {
+        std::cerr << "CreatePipe failed.\n";
+        return 1;
+    }
+
+    SetHandleInformation(hPipeRead, HANDLE_FLAG_INHERIT, 0);
+
+    STARTUPINFO si = { sizeof(STARTUPINFO) };
+    si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+    si.hStdOutput = hPipeWrite;
+    si.hStdError = hPipeWrite;
+    si.wShowWindow = SW_HIDE;
+
+    PROCESS_INFORMATION pi;
+
+    wchar_t cmd[] = L"curl http://example.com";
+
+    BOOL bSuccess = CreateProcess(
+        NULL,
+        cmd,
+        NULL,
+        NULL,
+        TRUE,
+        0,
+        NULL,
+        NULL,
+        &si,
+        &pi
+    );
+
+    if (!bSuccess) {
+        std::cerr << "CreateProcess failed.\n";
+        CloseHandle(hPipeWrite);
+        CloseHandle(hPipeRead);
+        return 1;
+    }
+
+    CloseHandle(hPipeWrite);
+
+    const int bufferSize = 4096;
+    char buffer[bufferSize];
+    DWORD bytesRead;
+
+    std::string output;
+    while (ReadFile(hPipeRead, buffer, bufferSize, &bytesRead, NULL) && bytesRead != 0) {
+        output.append(buffer, bytesRead);
+    }
+
+    std::cout << "Dane : " << output << std::endl;
+
+    CloseHandle(hPipeRead);
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+
+    return 0;
+}
