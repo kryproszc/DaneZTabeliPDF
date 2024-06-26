@@ -88,10 +88,10 @@ int main() {
     initialize_winsock();
 
     SOCKET sock = create_socket();
-    connect_socket(sock, "dft-everace", "8080");
+    connect_socket(sock, "172.25.9.44", "8080");
 
     std::string request = "GET /search.php?q=WANDY%20RUTKIEWICZ%20A%20Wroc%C5%82aw HTTP/1.1\r\n"
-        "Host: dft-everace:8080\r\n"
+        "Host: 172.25.9.44:8080\r\n"
         "Connection: keep-alive\r\n"
         "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\r\n"
         "Accept-Encoding: gzip, deflate\r\n"
