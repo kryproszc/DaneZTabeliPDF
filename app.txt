@@ -1,15 +1,7 @@
-    std::string request = "GET /search.php?q=WANDY%20RUTKIEWICZ%20A%20Wroc%C5%82aw HTTP/1.1\r\n"
+ connect_socket(sock, "172.25.9.44", "8080");
+
+    std::string request = "GET /d HTTP/1.1\r\n"
         "Host: 172.25.9.44:8080\r\n"
         "Connection: keep-alive\r\n"
-        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\r\n"
-        "Accept-Encoding: gzip, deflate\r\n"
-        "Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7\r\n"
-        "Cache-Control: max-age=0\r\n"
-        "Upgrade-Insecure-Requests: 1\r\n"
-        "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36\r\n"
-        "\r\n";
-
-
-
-
-    connect_socket(sock, "172.25.9.44", "8080");
+        "Accept: */*\r\n"
+        "User-Agent: simple-client\r\n\r\n";
