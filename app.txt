@@ -1,7 +1,6 @@
-git clone https://github.com/microsoft/vcpkg.git
-cd vcpkg
-.\bootstrap-vcpkg.bat
-
-.\vcpkg.exe install jsoncpp
-
-.\vcpkg integrate install
+    std::string request = "GET /search.php?q=WANDY%20RUTKIEWICZ%25A%20Wroc%C5%82aw HTTP/1.1\r\n"
+        "Host: dft-everace:8080\r\n"
+        "Connection: keep-alive\r\n"
+ "Content-Type: application/json\r\n"
+        "Accept: */*\r\n"
+        "User-Agent: simple-client\r\n\r\n";
