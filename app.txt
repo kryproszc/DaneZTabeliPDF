@@ -1,7 +1,31 @@
- connect_socket(sock, "172.25.9.44", "8080");
+int main() {
+    initialize_winsock();
 
-    std::string request = "GET /d HTTP/1.1\r\n"
-        "Host: 172.25.9.44:8080\r\n"
-        "Connection: keep-alive\r\n"
+    SOCKET sock = create_socket();
+    connect_socket(sock, "188.114.96.11", "443");         
+    std::string request = "GET /todos/1 HTTP/1.1\r\n"
+        "Host: jsonplaceholder.typicode.com\r\n"
+        "User-Agent: curl/8.7.1\r\n"
         "Accept: */*\r\n"
-        "User-Agent: simple-client\r\n\r\n";
+        "\r\n";
+
+    auto start = std::chrono::high_resolution_clock::now();
+    std::ofstream outFile("responses300k.txt", std::ios::app);
+
+    for (int i = 0; i < 1; ++i) {
+        send_request(sock, request);
+        std::string response = receive_response(sock); 
+        outFile << "Response " << i + 1 << ": " << response << std::endl;
+        std::cout << "Response " << i + 1 << ": " << response << std::endl;
+      
+    }
+    auto stop = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
+
+    std::cout << "Czas wykonania: " << duration.count() << " sekund" << std::endl;
+
+    closesocket(sock);
+    WSACleanup();
+    return 0;
+}
