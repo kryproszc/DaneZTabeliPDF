@@ -1,3 +1,4 @@
+#include <iostream>
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
@@ -21,7 +22,7 @@ void printLastError() {
 int main() {
     WSADATA wsaData;
     SOCKET ConnectSocket = INVALID_SOCKET;
-    struct addrinfo *result = NULL, *ptr = NULL, hints;
+    struct addrinfo* result = NULL, * ptr = NULL, hints;
     int iResult;
 
     // Initialize Winsock
@@ -33,6 +34,7 @@ int main() {
     }
     std::cerr << "WSAStartup succeeded" << std::endl;
 
+    // Zero out the hints structure
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
