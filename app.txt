@@ -1,20 +1,27 @@
-#include <boost/asio.hpp>
-#include <iostream>
+import socket
 
-int main() {
-    try {
-        boost::asio::io_context io_context;
-        boost::asio::ip::tcp::socket socket(io_context);
+def main():
+    server_address = '172.25.9.44'
+    server_port = 8080
 
-        boost::asio::ip::tcp::resolver resolver(io_context);
-        auto endpoints = resolver.resolve("172.25.9.44", "8080");
+    # Create a socket
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print("Socket successfully created")
+    except socket.error as err:
+        print(f"Socket creation failed with error {err}")
+        return
 
-        boost::asio::connect(socket, endpoints);
+    # Connect to the server
+    try:
+        sock.connect((server_address, server_port))
+        print("Successfully connected to the server")
+    except socket.error as err:
+        print(f"Connection to server failed with error {err}")
+        return
 
-        std::cout << "Connected to the server!" << std::endl;
-    } catch (std::exception& e) {
-        std::cerr << "Exception: " << e.what() << std::endl;
-    }
+    # Close the socket
+    sock.close()
 
-    return 0;
-}
+if __name__ == "__main__":
+    main()
