@@ -1,42 +1,78 @@
-import socket
+#include <iostream>
+#include <winsock2.h>
+#include <ws2tcpip.h>
 
-def main():
-    server_address = '172.25.9.44'
-    server_port = 8080
+#pragma comment(lib, "Ws2_32.lib")
 
-    # Create a socket
-    try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print("Socket successfully created")
-    except socket.error as err:
-        print(f"Socket creation failed with error {err}")
-        return
+void printLastError() {
+    int error = WSAGetLastError();
+    LPVOID lpMsgBuf;
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        error,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR) &lpMsgBuf,
+        0, NULL );
 
-    # Connect to the server
-    try:
-        sock.connect((server_address, server_port))
-        print("Successfully connected to the server")
-    except socket.error as err:
-        print(f"Connection to server failed with error {err}")
-        return
+    std::cout << "Error: " << error << " - " << (char*)lpMsgBuf << std::endl;
+    LocalFree(lpMsgBuf);
+}
 
-    # Send HTTP GET request
-    request = "GET / HTTP/1.1\r\nHost: 172.25.9.44\r\n\r\n"
-    try:
-        sock.sendall(request.encode())
-    except socket.error as err:
-        print(f"Failed to send request: {err}")
-        return
+int main() {
+    WSADATA wsaData;
+    SOCKET ConnectSocket = INVALID_SOCKET;
+    struct sockaddr_in serverAddr;
+    int iResult;
 
-    # Receive response
-    try:
-        response = sock.recv(4096)
-        print("Response received from server:")
-        print(response.decode())
-    except socket.error as err:
-        print(f"Failed to receive response: {err}")
-    finally:
-        sock.close()
+    // Initialize Winsock
+    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (iResult != 0) {
+        std::cout << "WSAStartup failed with error: " << iResult << std::endl;
+        printLastError();
+        return 1;
+    }
+    std::cout << "WSAStartup succeeded" << std::endl;
 
-if __name__ == "__main__":
-    main()
+    // Create a SOCKET for connecting to server
+    ConnectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (ConnectSocket == INVALID_SOCKET) {
+        std::cout << "socket failed with error: " << WSAGetLastError() << std::endl;
+        printLastError();
+        WSACleanup();
+        return 1;
+    }
+    std::cout << "Socket created" << std::endl;
+
+    // Setup the sockaddr_in structure
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(8080);
+    iResult = inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
+    if (iResult <= 0) {
+        if (iResult == 0)
+            std::cout << "inet_pton failed: invalid address string" << std::endl;
+        else
+            std::cout << "inet_pton failed with error: " << WSAGetLastError() << std::endl;
+        printLastError();
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return 1;
+    }
+
+    // Connect to server
+    iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+    if (iResult == SOCKET_ERROR) {
+        std::cout << "connect failed with error: " << WSAGetLastError() << std::endl;
+        printLastError();
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return 1;
+    }
+    std::cout << "Successfully connected to the server" << std::endl;
+
+    // Cleanup
+    closesocket(ConnectSocket);
+    WSACleanup();
+
+    return 0;
+}
