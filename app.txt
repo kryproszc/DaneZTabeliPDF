@@ -19,6 +19,7 @@ int main() {
         std::cerr << "WSAStartup succeeded" << std::endl;
     }
 
+    // Zero out the hints structure and set it up
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
