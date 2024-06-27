@@ -1,0 +1,74 @@
+#include <iostream>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+
+#pragma comment(lib, "ws2_32.lib")
+
+void printDetailedError(const char* context, int errorCode) {
+    char* errorMsg = nullptr;
+    FormatMessageA(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+        nullptr, errorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPSTR)&errorMsg, 0, nullptr);
+    std::cerr << context << " error (" << errorCode << "): " << errorMsg << std::endl;
+    LocalFree(errorMsg);
+}
+
+int main() {
+    const char* server_address = "172.25.9.44";
+    int server_port = 8080;
+
+    WSADATA wsaData;
+    int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (result != 0) {
+        printDetailedError("WSAStartup", result);
+        return -1;
+    }
+
+    SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock == INVALID_SOCKET) {
+        printDetailedError("Socket", WSAGetLastError());
+        WSACleanup();
+        return -1;
+    }
+    std::cout << "Socket utworzony" << std::endl;
+
+    sockaddr_in server;
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = inet_addr(server_address);
+    server.sin_port = htons(server_port);
+
+    result = connect(sock, (sockaddr*)&server, sizeof(server));
+    if (result == SOCKET_ERROR) {
+        printDetailedError("Polaczenie", WSAGetLastError());
+        closesocket(sock);
+        WSACleanup();
+        return -1;
+    }
+    std::cout << "Polaczono poprawnie" << std::endl;
+
+    const char* request = "GET / HTTP/1.1\r\nHost: 172.25.9.44\r\n\r\n";
+    result = send(sock, request, strlen(request), 0);
+    if (result == SOCKET_ERROR) {
+        printDetailedError("Send", WSAGetLastError());
+        closesocket(sock);
+        WSACleanup();
+        return -1;
+    }
+
+    char response[4096];
+    result = recv(sock, response, sizeof(response), 0);
+    if (result > 0) {
+        std::cout << "Wiadomosc zwrotna z serwera:" << std::endl;
+        std::cout.write(response, result);
+        std::cout << std::endl;
+    } else if (result == 0) {
+        std::cout << "Polaczenie zamknieto" << std::endl;
+    } else {
+        printDetailedError("Recv", WSAGetLastError());
+    }
+
+    closesocket(sock);
+    WSACleanup();
+    return 0;
+}
