@@ -1,78 +1,63 @@
 #include <iostream>
 #include <winsock2.h>
-#include <ws2tcpip.h>
 
-#pragma comment(lib, "Ws2_32.lib")
-
-void printLastError() {
-    int error = WSAGetLastError();
-    LPVOID lpMsgBuf;
-    FormatMessage(
-        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-        NULL,
-        error,
-        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        (LPTSTR) &lpMsgBuf,
-        0, NULL );
-
-    std::cout << "Error: " << error << " - " << (char*)lpMsgBuf << std::endl;
-    LocalFree(lpMsgBuf);
-}
+#pragma comment(lib, "ws2_32.lib")
 
 int main() {
+    const char* server_address = "172.25.9.44";
+    int server_port = 8080;
+
     WSADATA wsaData;
-    SOCKET ConnectSocket = INVALID_SOCKET;
-    struct sockaddr_in serverAddr;
-    int iResult;
-
-    // Initialize Winsock
-    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
-    if (iResult != 0) {
-        std::cout << "WSAStartup failed with error: " << iResult << std::endl;
-        printLastError();
-        return 1;
+    int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (result != 0) {
+        std::cerr << "WSAStartup error: " << result << std::endl;
+        return -1;
     }
-    std::cout << "WSAStartup succeeded" << std::endl;
 
-    // Create a SOCKET for connecting to server
-    ConnectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (ConnectSocket == INVALID_SOCKET) {
-        std::cout << "socket failed with error: " << WSAGetLastError() << std::endl;
-        printLastError();
+    SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock == INVALID_SOCKET) {
+        std::cerr << "Socket error: " << WSAGetLastError() << std::endl;
         WSACleanup();
-        return 1;
+        return -1;
     }
-    std::cout << "Socket created" << std::endl;
+    std::cout << "Socket utworzony" << std::endl;
 
-    // Setup the sockaddr_in structure
-    serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(8080);
-    iResult = inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
-    if (iResult <= 0) {
-        if (iResult == 0)
-            std::cout << "inet_pton failed: invalid address string" << std::endl;
-        else
-            std::cout << "inet_pton failed with error: " << WSAGetLastError() << std::endl;
-        printLastError();
-        closesocket(ConnectSocket);
+    sockaddr_in server;
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = inet_addr(server_address);
+    server.sin_port = htons(server_port);
+
+    result = connect(sock, (sockaddr*)&server, sizeof(server));
+    if (result == SOCKET_ERROR) {
+        std::cerr << "Blad polaczenia z serwerem: " << WSAGetLastError() << std::endl;
+        closesocket(sock);
         WSACleanup();
-        return 1;
+        return -1;
     }
+    std::cout << "Polaczono poprawnie" << std::endl;
 
-    // Connect to server
-    iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
-    if (iResult == SOCKET_ERROR) {
-        std::cout << "connect failed with error: " << WSAGetLastError() << std::endl;
-        printLastError();
-        closesocket(ConnectSocket);
+    const char* request = "GET / HTTP/1.1\r\nHost: 172.25.9.44\r\n\r\n";
+    result = send(sock, request, strlen(request), 0);
+    if (result == SOCKET_ERROR) {
+        std::cerr << "Nie udalo sie wyslac zadania: " << WSAGetLastError() << std::endl;
+        closesocket(sock);
         WSACleanup();
-        return 1;
+        return -1;
     }
-    std::cout << "Successfully connected to the server" << std::endl;
 
-    // Cleanup
-    closesocket(ConnectSocket);
+    char response[4096];
+    result = recv(sock, response, sizeof(response), 0);
+    if (result > 0) {
+        std::cout << "Wiadomosc zwrotna z serwera:" << std::endl;
+        std::cout.write(response, result);
+        std::cout << std::endl;
+    } else if (result == 0) {
+        std::cout << "Polaczenie zamknieto" << std::endl;
+    } else {
+        std::cerr << "Nie udalo sie uzyskac odpowiedzi: " << WSAGetLastError() << std::endl;
+    }
+
+    closesocket(sock);
     WSACleanup();
-
     return 0;
 }
