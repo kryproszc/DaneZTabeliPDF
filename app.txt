@@ -1,33 +1,77 @@
-iResult = connect(ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
-if (iResult == SOCKET_ERROR) {
-    std::cerr << "connect failed with error: " << WSAGetLastError() << std::endl;
+#include <iostream>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+
+#pragma comment(lib, "Ws2_32.lib")
+
+int main() {
+    WSADATA wsaData;
+    SOCKET ConnectSocket = INVALID_SOCKET;
+    struct addrinfo* result = NULL, * ptr = NULL, hints;
+    int iResult;
+
+    // Initialize Winsock
+    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (iResult != 0) {
+        std::cerr << "WSAStartup failed with error: " << iResult << std::endl;
+        return 1;
+    } else {
+        std::cerr << "WSAStartup succeeded" << std::endl;
+    }
+
+    ZeroMemory(&hints, sizeof(hints));
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol = IPPROTO_TCP;
+
+    // Resolve the server address and port
+    iResult = getaddrinfo("172.25.9.44", "8080", &hints, &result);
+    if (iResult != 0) {
+        std::cerr << "getaddrinfo failed with error: " << iResult << std::endl;
+        WSACleanup();
+        return 1;
+    } else {
+        std::cerr << "getaddrinfo succeeded" << std::endl;
+    }
+
+    // Attempt to connect to an address until one succeeds
+    for (ptr = result; ptr != NULL; ptr = ptr->ai_next) {
+        // Create a SOCKET for connecting to server
+        ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
+        if (ConnectSocket == INVALID_SOCKET) {
+            std::cerr << "socket failed with error: " << WSAGetLastError() << std::endl;
+            WSACleanup();
+            return 1;
+        } else {
+            std::cerr << "Socket created" << std::endl;
+        }
+
+        // Connect to server
+        iResult = connect(ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
+        if (iResult == SOCKET_ERROR) {
+            std::cerr << "connect failed with error: " << WSAGetLastError() << std::endl;
+            closesocket(ConnectSocket);
+            ConnectSocket = INVALID_SOCKET;
+            continue;
+        } else {
+            std::cerr << "connect succeeded" << std::endl;
+            break;
+        }
+    }
+
+    freeaddrinfo(result);
+
+    if (ConnectSocket == INVALID_SOCKET) {
+        std::cerr << "Unable to connect to server!" << std::endl;
+        WSACleanup();
+        return 1;
+    }
+
+    std::cerr << "Successfully connected to the server" << std::endl;
+
+    // Cleanup
     closesocket(ConnectSocket);
-    ConnectSocket = INVALID_SOCKET;
     WSACleanup();
-    return 1;
-} else {
-    std::cerr << "connect succeeded" << std::endl;
+
+    return 0;
 }
-
-
-iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
-if (iResult == SOCKET_ERROR) {
-    std::cerr << "send failed with error: " << WSAGetLastError() << std::endl;
-    closesocket(ConnectSocket);
-    WSACleanup();
-    return 1;
-} else {
-    std::cerr << "Bytes Sent: " << iResult << std::endl;
-}
-
-
-iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-if (iResult > 0) {
-    std::cerr << "Bytes received: " << iResult << std::endl;
-} else if (iResult == 0) {
-    std::cerr << "Connection closed" << std::endl;
-} else {
-    std::cerr << "recv failed with error: " << WSAGetLastError() << std::endl;
-}
-
-
