@@ -4,6 +4,21 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
+void printLastError() {
+    int error = WSAGetLastError();
+    LPVOID lpMsgBuf;
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        error,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR) &lpMsgBuf,
+        0, NULL );
+
+    std::cerr << "Error: " << error << " - " << (char*)lpMsgBuf << std::endl;
+    LocalFree(lpMsgBuf);
+}
+
 int main() {
     WSADATA wsaData;
     SOCKET ConnectSocket = INVALID_SOCKET;
@@ -14,6 +29,7 @@ int main() {
     iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
         std::cerr << "WSAStartup failed with error: " << iResult << std::endl;
+        printLastError();
         return 1;
     } else {
         std::cerr << "WSAStartup succeeded" << std::endl;
@@ -23,6 +39,7 @@ int main() {
     ConnectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (ConnectSocket == INVALID_SOCKET) {
         std::cerr << "socket failed with error: " << WSAGetLastError() << std::endl;
+        printLastError();
         WSACleanup();
         return 1;
     } else {
@@ -32,12 +49,13 @@ int main() {
     // Setup the sockaddr_in structure
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(8080);
-    serverAddr.sin_addr.s_addr = inet_addr("172.25.9.44");
+    inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
 
     // Connect to server
     iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
     if (iResult == SOCKET_ERROR) {
         std::cerr << "connect failed with error: " << WSAGetLastError() << std::endl;
+        printLastError();
         closesocket(ConnectSocket);
         WSACleanup();
         return 1;
@@ -53,6 +71,3 @@ int main() {
 
     return 0;
 }
-
-
-g++ test.cpp -o test.exe -lws2_32
