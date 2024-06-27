@@ -15,7 +15,7 @@ void printLastError() {
         (LPTSTR) &lpMsgBuf,
         0, NULL );
 
-    std::cerr << "Error: " << error << " - " << (char*)lpMsgBuf << std::endl;
+    std::cout << "Error: " << error << " - " << (char*)lpMsgBuf << std::endl;
     LocalFree(lpMsgBuf);
 }
 
@@ -47,7 +47,17 @@ int main() {
     // Setup the sockaddr_in structure
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(8080);
-    inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
+    iResult = inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
+    if (iResult <= 0) {
+        if (iResult == 0)
+            std::cout << "inet_pton failed: invalid address string" << std::endl;
+        else
+            std::cout << "inet_pton failed with error: " << WSAGetLastError() << std::endl;
+        printLastError();
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return 1;
+    }
 
     // Connect to server
     iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
