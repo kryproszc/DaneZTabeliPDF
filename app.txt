@@ -41,9 +41,9 @@ std::string urlencode(const std::string &value) {
 void geocode_address(const std::string& street, const std::string& city, const std::string& postal_code) {
     WSADATA wsaData;
     SOCKET ConnectSocket = INVALID_SOCKET;
-    struct addrinfo* result = NULL, * ptr = NULL, hints;
+    struct sockaddr_in serverAddr;
     int iResult;
-    const std::string server_address = "dft-everace";
+    const std::string server_ip = "172.25.9.44"; // Zamień nazwę hosta na adres IP
     const int server_port = 8080;
 
     std::string address_query = street + " " + city + " " + postal_code;
@@ -58,52 +58,33 @@ void geocode_address(const std::string& street, const std::string& city, const s
     }
     std::cerr << "WSAStartup succeeded" << std::endl;
 
-    ZeroMemory(&hints, sizeof(hints));
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_protocol = IPPROTO_TCP;
-
-    // Resolve the server address and port
-    iResult = getaddrinfo(server_address.c_str(), std::to_string(server_port).c_str(), &hints, &result);
-    if (iResult != 0) {
-        std::cerr << "getaddrinfo failed with error: " << iResult << std::endl;
+    // Create a SOCKET for connecting to server
+    ConnectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (ConnectSocket == INVALID_SOCKET) {
+        std::cerr << "socket failed with error: " << WSAGetLastError() << std::endl;
         printLastError();
         WSACleanup();
         return;
     }
 
-    // Attempt to connect to an address until one succeeds
-    for (ptr = result; ptr != NULL; ptr = ptr->ai_next) {
-        // Create a SOCKET for connecting to server
-        ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
-        if (ConnectSocket == INVALID_SOCKET) {
-            std::cerr << "socket failed with error: " << WSAGetLastError() << std::endl;
-            printLastError();
-            WSACleanup();
-            return;
-        }
+    // Setup the sockaddr_in structure
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(server_port);
+    inet_pton(AF_INET, server_ip.c_str(), &serverAddr.sin_addr);
 
-        // Connect to server
-        iResult = connect(ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
-        if (iResult == SOCKET_ERROR) {
-            closesocket(ConnectSocket);
-            ConnectSocket = INVALID_SOCKET;
-            continue;
-        }
-        break;
-    }
-
-    freeaddrinfo(result);
-
-    if (ConnectSocket == INVALID_SOCKET) {
-        std::cerr << "Unable to connect to server!" << std::endl;
+    // Connect to server
+    iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+    if (iResult == SOCKET_ERROR) {
+        std::cerr << "connect failed with error: " << WSAGetLastError() << std::endl;
+        printLastError();
+        closesocket(ConnectSocket);
         WSACleanup();
         return;
     }
     std::cerr << "Successfully connected to the server" << std::endl;
 
     // Prepare the HTTP GET request
-    std::string request = "GET /search.php?q=" + query + " HTTP/1.1\r\nHost: " + server_address + "\r\n\r\n";
+    std::string request = "GET /search.php?q=" + query + " HTTP/1.1\r\nHost: " + server_ip + "\r\n\r\n";
     iResult = send(ConnectSocket, request.c_str(), (int)request.length(), 0);
     if (iResult == SOCKET_ERROR) {
         std::cerr << "send failed with error: " << WSAGetLastError() << std::endl;
