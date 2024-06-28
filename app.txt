@@ -1,63 +1,59 @@
-#include <iostream>
-#include <winsock2.h>
+import socket
+import json
 
-#pragma comment(lib, "ws2_32.lib")
+def geocode_address(address):
+    server_address = '172.25.9.44'
+    server_port = 8080
 
-int main() {
-    const char* server_address = "172.25.9.44";
-    int server_port = 8080;
+    # Create a socket
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print("Socket successfully created")
+    except socket.error as err:
+        print(f"Socket creation failed with error {err}")
+        return
 
-    WSADATA wsaData;
-    int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
-    if (result != 0) {
-        std::cerr << "WSAStartup error: " << result << std::endl;
-        return -1;
-    }
+    # Connect to the server
+    try:
+        sock.connect((server_address, server_port))
+        print("Successfully connected to the server")
+    except socket.error as err:
+        print(f"Connection to server failed with error {err}")
+        return
 
-    SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock == INVALID_SOCKET) {
-        std::cerr << "Socket error: " << WSAGetLastError() << std::endl;
-        WSACleanup();
-        return -1;
-    }
-    std::cout << "Socket utworzony" << std::endl;
+    # Prepare HTTP GET request with the address as a query parameter
+    request = f"GET /geocode?address={address.replace(' ', '%20')} HTTP/1.1\r\nHost: {server_address}\r\n\r\n"
+    try:
+        sock.sendall(request.encode())
+    except socket.error as err:
+        print(f"Failed to send request: {err}")
+        return
 
-    sockaddr_in server;
-    server.sin_family = AF_INET;
-    server.sin_addr.s_addr = inet_addr(server_address);
-    server.sin_port = htons(server_port);
+    # Receive response
+    try:
+        response = sock.recv(4096)
+        response_str = response.decode()
+        print("Response received from server:")
+        print(response_str)
 
-    result = connect(sock, (sockaddr*)&server, sizeof(server));
-    if (result == SOCKET_ERROR) {
-        std::cerr << "Blad polaczenia z serwerem: " << WSAGetLastError() << std::endl;
-        closesocket(sock);
-        WSACleanup();
-        return -1;
-    }
-    std::cout << "Polaczono poprawnie" << std::endl;
+        # Extract JSON data from HTTP response
+        header_end = response_str.find("\r\n\r\n")
+        json_data = response_str[header_end+4:]
+        data = json.loads(json_data)
+        return data
+    except socket.error as err:
+        print(f"Failed to receive response: {err}")
+    finally:
+        sock.close()
 
-    const char* request = "GET / HTTP/1.1\r\nHost: 172.25.9.44\r\n\r\n";
-    result = send(sock, request, strlen(request), 0);
-    if (result == SOCKET_ERROR) {
-        std::cerr << "Nie udalo sie wyslac zadania: " << WSAGetLastError() << std::endl;
-        closesocket(sock);
-        WSACleanup();
-        return -1;
-    }
+def main():
+    address = input("Enter an address to geocode: ")
+    coordinates = geocode_address(address)
+    if coordinates:
+        print(f"Coordinates for the address '{address}':")
+        print(f"Latitude: {coordinates.get('latitude')}, Longitude: {coordinates.get('longitude')}")
+    else:
+        print("Geocoding failed.")
 
-    char response[4096];
-    result = recv(sock, response, sizeof(response), 0);
-    if (result > 0) {
-        std::cout << "Wiadomosc zwrotna z serwera:" << std::endl;
-        std::cout.write(response, result);
-        std::cout << std::endl;
-    } else if (result == 0) {
-        std::cout << "Polaczenie zamknieto" << std::endl;
-    } else {
-        std::cerr << "Nie udalo sie uzyskac odpowiedzi: " << WSAGetLastError() << std::endl;
-    }
-
-    closesocket(sock);
-    WSACleanup();
-    return 0;
-}
+if __name__ == "__main__":
+    main()
