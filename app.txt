@@ -1,9 +1,6 @@
 #include <iostream>
-#include <string>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <iomanip>
-#include <sstream>
 
 #pragma comment(lib, "Ws2_32.lib")
 
@@ -22,39 +19,18 @@ void printLastError() {
     LocalFree(lpMsgBuf);
 }
 
-std::string urlencode(const std::string &value) {
-    std::ostringstream escaped;
-    escaped.fill('0');
-    escaped << std::hex;
-
-    for (unsigned char c : value) {
-        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
-            escaped << c;
-        } else {
-            escaped << '%' << std::setw(2) << std::uppercase << int(c);
-        }
-    }
-
-    return escaped.str();
-}
-
-void geocode_address(const std::string& street, const std::string& city, const std::string& postal_code) {
+int main() {
     WSADATA wsaData;
     SOCKET ConnectSocket = INVALID_SOCKET;
     struct sockaddr_in serverAddr;
     int iResult;
-    const std::string server_ip = "172.25.9.44"; // Zamień nazwę hosta na adres IP
-    const int server_port = 8080;
-
-    std::string address_query = street + " " + city + " " + postal_code;
-    std::string query = urlencode(address_query);
 
     // Initialize Winsock
     iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
         std::cerr << "WSAStartup failed with error: " << iResult << std::endl;
         printLastError();
-        return;
+        return 1;
     }
     std::cerr << "WSAStartup succeeded" << std::endl;
 
@@ -64,13 +40,14 @@ void geocode_address(const std::string& street, const std::string& city, const s
         std::cerr << "socket failed with error: " << WSAGetLastError() << std::endl;
         printLastError();
         WSACleanup();
-        return;
+        return 1;
     }
+    std::cerr << "Socket created" << std::endl;
 
     // Setup the sockaddr_in structure
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(server_port);
-    inet_pton(AF_INET, server_ip.c_str(), &serverAddr.sin_addr);
+    serverAddr.sin_port = htons(8080);
+    inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
 
     // Connect to server
     iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
@@ -79,46 +56,11 @@ void geocode_address(const std::string& street, const std::string& city, const s
         printLastError();
         closesocket(ConnectSocket);
         WSACleanup();
-        return;
+        return 1;
     }
     std::cerr << "Successfully connected to the server" << std::endl;
 
-    // Prepare the HTTP GET request
-    std::string request = "GET /search.php?q=" + query + " HTTP/1.1\r\nHost: " + server_ip + "\r\n\r\n";
-    iResult = send(ConnectSocket, request.c_str(), (int)request.length(), 0);
-    if (iResult == SOCKET_ERROR) {
-        std::cerr << "send failed with error: " << WSAGetLastError() << std::endl;
-        printLastError();
-        closesocket(ConnectSocket);
-        WSACleanup();
-        return;
-    }
-
-    // Receive the response
-    char recvbuf[4096];
-    iResult = recv(ConnectSocket, recvbuf, sizeof(recvbuf), 0);
-    if (iResult > 0) {
-        std::cout << "Full response received from server:" << std::endl;
-        std::cout << std::string(recvbuf, iResult) << std::endl;
-    } else if (iResult == 0) {
-        std::cerr << "Connection closed" << std::endl;
-    } else {
-        std::cerr << "recv failed with error: " << WSAGetLastError() << std::endl;
-        printLastError();
-    }
-
-    // Cleanup
     closesocket(ConnectSocket);
     WSACleanup();
-}
-
-int main() {
-    // Example address
-    std::string street = "WANDY RUTKIEWICZ";
-    std::string city = "Wrocław";
-    std::string postal_code = "50-571";
-
-    geocode_address(street, city, postal_code);
-
     return 0;
 }
