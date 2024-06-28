@@ -1,46 +1,36 @@
-#include <iostream>
-#include <winsock2.h>
+import pandas as pd
+import re
 
-#pragma comment(lib, "Ws2_32.lib")
-
-void printLastError(const std::string& function) {
-    int error = WSAGetLastError();
-    LPVOID lpMsgBuf;
-    FormatMessage(
-        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-        NULL,
-        error,
-        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        (LPTSTR) &lpMsgBuf,
-        0, NULL);
-
-    std::cerr << function << " failed with error: " << error << " - " << (char*)lpMsgBuf << std::endl;
-    LocalFree(lpMsgBuf);
+# Przykładowy DataFrame
+data = {
+    'Adres ubezpieczonego obiektu - Ulica i numer': ['.123', ',456', '(789', '-012', '|345', '_678'],
+    'Adres ubezpieczonego obiektu - Kod pocztowy': ['12-345', '34-567', '56-789', '78-012', '90-123', '12-34A'],
+    'Adres ubezpieczonego obiektu - Miasto': ['Miasto1', 'Miasto2', 'Miasto3', 'Miasto4', 'Miasto5', 'Miasto6']
 }
+DaneObiekty = pd.DataFrame(data)
 
-int main() {
-    WSADATA wsaData;
-    SOCKET ConnectSocket = INVALID_SOCKET;
-    int iResult;
+# Funkcja sprawdzająca pierwszy znak
+def first_char_check(value):
+    if not isinstance(value, str):
+        return False
+    return value[0] in {'.', ',', '(', '-', '|', '_'}
 
-    // Initialize Winsock
-    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
-    if (iResult != 0) {
-        printLastError("WSAStartup");
-        return 1;
-    }
-    std::cerr << "WSAStartup succeeded" << std::endl;
+# Funkcja sprawdzająca format kodu pocztowego
+def postal_code_check(value):
+    if not isinstance(value, str):
+        return False
+    return bool(re.match(r'^\d{2}-\d{3}$', value))
 
-    // Create a SOCKET for connecting to server
-    ConnectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (ConnectSocket == INVALID_SOCKET) {
-        printLastError("socket");
-        WSACleanup();
-        return 1;
-    }
-    std::cerr << "Socket created successfully" << std::endl;
+# Tworzenie maski dla pierwszego znaku
+mask_first_char = DaneObiekty['Adres ubezpieczonego obiektu - Ulica i numer'].apply(first_char_check)
 
-    closesocket(ConnectSocket);
-    WSACleanup();
-    return 0;
-}
+# Tworzenie maski dla formatu kodu pocztowego
+mask_postal_code = DaneObiekty['Adres ubezpieczonego obiektu - Kod pocztowy'].apply(postal_code_check)
+
+# Sprawdzenie obu warunków i połączenie z poprzednim warunkiem
+a = pd.notnull(DaneObiekty['Adres ubezpieczonego obiektu - Ulica i numer']) & (
+    pd.notnull(DaneObiekty['Adres ubezpieczonego obiektu - Kod pocztowy']) | 
+    pd.notnull(DaneObiekty['Adres ubezpieczonego obiektu - Miasto'])
+) & mask_first_char & mask_postal_code
+
+print(a)
