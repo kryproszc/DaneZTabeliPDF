@@ -1,7 +1,5 @@
 #include <iostream>
 #include <winsock2.h>
-#include <ws2tcpip.h>
-#include <string>
 
 #pragma comment(lib, "Ws2_32.lib")
 
@@ -23,7 +21,6 @@ void printLastError(const std::string& function) {
 int main() {
     WSADATA wsaData;
     SOCKET ConnectSocket = INVALID_SOCKET;
-    struct sockaddr_in serverAddr;
     int iResult;
 
     // Initialize Winsock
@@ -41,36 +38,8 @@ int main() {
         WSACleanup();
         return 1;
     }
-    std::cerr << "Socket created" << std::endl;
+    std::cerr << "Socket created successfully" << std::endl;
 
-    // Setup the sockaddr_in structure
-    serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(8080);
-    iResult = inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
-    if (iResult <= 0) {
-        if (iResult == 0) {
-            std::cerr << "inet_pton failed: invalid address string" << std::endl;
-        } else {
-            printLastError("inet_pton");
-        }
-        closesocket(ConnectSocket);
-        WSACleanup();
-        return 1;
-    }
-
-    std::cerr << "Server address setup succeeded" << std::endl;
-
-    // Connect to server
-    iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
-    if (iResult == SOCKET_ERROR) {
-        printLastError("connect");
-        closesocket(ConnectSocket);
-        WSACleanup();
-        return 1;
-    }
-    std::cerr << "Successfully connected to the server" << std::endl;
-
-    // Cleanup
     closesocket(ConnectSocket);
     WSACleanup();
     return 0;
