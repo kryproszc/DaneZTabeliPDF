@@ -1,10 +1,13 @@
 import socket
-import json
+import urllib.parse
 
-def geocode_address():
+def geocode_address(street, city, postal_code):
     server_address = 'dft-everace'
     server_port = 8080
-    query = 'WANDY%20RUTKIEWICZ%20A%20Wrocław'
+
+    # Prepare query parameters
+    address_query = f"{street} {city} {postal_code}"
+    query = urllib.parse.quote(address_query)
 
     # Create a socket
     try:
@@ -36,34 +39,19 @@ def geocode_address():
         response_str = response.decode()
         print("Full response received from server:")
         print(response_str)
-
-        # Extract JSON data from HTTP response
-        header_end = response_str.find("\r\n\r\n")
-        if header_end != -1:
-            json_data = response_str[header_end+4:]
-            print("Extracted JSON data:")
-            print(json_data)
-            try:
-                data = json.loads(json_data)
-                return data
-            except json.JSONDecodeError as json_err:
-                print(f"JSON decoding failed: {json_err}")
-                return None
-        else:
-            print("No JSON data found in response")
-            return None
     except socket.error as err:
         print(f"Failed to receive response: {err}")
     finally:
         sock.close()
 
 def main():
-    coordinates = geocode_address()
-    if coordinates:
-        print("Geocoded data received from the server:")
-        print(coordinates)
-    else:
-        print("Geocoding failed.")
+    # Example address
+    street = "WANDY RUTKIEWICZ"
+    city = "Wrocław"
+    postal_code = "50-571"
+
+    geocode_address(street, city, postal_code)
 
 if __name__ == "__main__":
     main()
+
