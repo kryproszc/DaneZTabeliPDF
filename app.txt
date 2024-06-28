@@ -1,9 +1,10 @@
 import socket
 import json
 
-def geocode_address(address):
-    server_address = '172.25.9.44'
+def geocode_address():
+    server_address = 'dft-everace'
     server_port = 8080
+    query = 'WANDY%20RUTKIEWICZ%20A%20Wrocław'
 
     # Create a socket
     try:
@@ -21,8 +22,8 @@ def geocode_address(address):
         print(f"Connection to server failed with error {err}")
         return
 
-    # Prepare HTTP GET request with the address as a query parameter
-    request = f"GET /geocode?address={address.replace(' ', '%20')} HTTP/1.1\r\nHost: {server_address}\r\n\r\n"
+    # Prepare HTTP GET request
+    request = f"GET /search.php?q={query} HTTP/1.1\r\nHost: {server_address}\r\n\r\n"
     try:
         sock.sendall(request.encode())
     except socket.error as err:
@@ -57,11 +58,10 @@ def geocode_address(address):
         sock.close()
 
 def main():
-    address = "Nowogrodzka 12, Warszawa, Polska"
-    coordinates = geocode_address(address)
+    coordinates = geocode_address()
     if coordinates:
-        print(f"Coordinates for the address '{address}':")
-        print(f"Latitude: {coordinates.get('latitude')}, Longitude: {coordinates.get('longitude')}")
+        print("Geocoded data received from the server:")
+        print(coordinates)
     else:
         print("Geocoding failed.")
 
