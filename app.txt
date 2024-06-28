@@ -4,7 +4,7 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-void printLastError() {
+void printLastError(const std::string& function) {
     int error = WSAGetLastError();
     LPVOID lpMsgBuf;
     FormatMessage(
@@ -15,7 +15,7 @@ void printLastError() {
         (LPTSTR) &lpMsgBuf,
         0, NULL );
 
-    std::cerr << "Error: " << error << " - " << (char*)lpMsgBuf << std::endl;
+    std::cerr << function << " failed with error: " << error << " - " << (char*)lpMsgBuf << std::endl;
     LocalFree(lpMsgBuf);
 }
 
@@ -28,8 +28,7 @@ int main() {
     // Initialize Winsock
     iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
-        std::cerr << "WSAStartup failed with error: " << iResult << std::endl;
-        printLastError();
+        printLastError("WSAStartup");
         return 1;
     }
     std::cerr << "WSAStartup succeeded" << std::endl;
@@ -37,8 +36,7 @@ int main() {
     // Create a SOCKET for connecting to server
     ConnectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (ConnectSocket == INVALID_SOCKET) {
-        std::cerr << "socket failed with error: " << WSAGetLastError() << std::endl;
-        printLastError();
+        printLastError("socket");
         WSACleanup();
         return 1;
     }
@@ -47,19 +45,29 @@ int main() {
     // Setup the sockaddr_in structure
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(8080);
-    inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
+    iResult = inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
+    if (iResult <= 0) {
+        if (iResult == 0) {
+            std::cerr << "inet_pton failed: invalid address string" << std::endl;
+        } else {
+            printLastError("inet_pton");
+        }
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return 1;
+    }
 
     // Connect to server
     iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
     if (iResult == SOCKET_ERROR) {
-        std::cerr << "connect failed with error: " << WSAGetLastError() << std::endl;
-        printLastError();
+        printLastError("connect");
         closesocket(ConnectSocket);
         WSACleanup();
         return 1;
     }
     std::cerr << "Successfully connected to the server" << std::endl;
 
+    // Cleanup
     closesocket(ConnectSocket);
     WSACleanup();
     return 0;
