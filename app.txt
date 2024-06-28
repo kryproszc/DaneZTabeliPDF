@@ -3,9 +3,9 @@ import re
 
 # Przykładowy DataFrame
 data = {
-    'Adres ubezpieczonego obiektu - Ulica i numer': ['.123', ',456', '(789', '-012', '|345', '_678'],
-    'Adres ubezpieczonego obiektu - Kod pocztowy': ['12-345', '34-567', '56-789', '78-012', '90-123', '12-34A'],
-    'Adres ubezpieczonego obiektu - Miasto': ['Miasto1', 'Miasto2', 'Miasto3', 'Miasto4', 'Miasto5', 'Miasto6']
+    'Adres ubezpieczonego obiektu - Ulica i numer': ['.123', ',456', '(789', '-012', '|345', '_678', '1234'],
+    'Adres ubezpieczonego obiektu - Kod pocztowy': ['12-345', '34-567', '56-789', '78-012', '90-123', '12-34A', '12-345'],
+    'Adres ubezpieczonego obiektu - Miasto': ['Miasto1', 'Miasto2', 'Miasto3', 'Miasto4', 'Miasto5', 'Miasto6', 'Miasto7']
 }
 DaneObiekty = pd.DataFrame(data)
 
@@ -27,10 +27,7 @@ mask_first_char = DaneObiekty['Adres ubezpieczonego obiektu - Ulica i numer'].ap
 # Tworzenie maski dla formatu kodu pocztowego
 mask_postal_code = DaneObiekty['Adres ubezpieczonego obiektu - Kod pocztowy'].apply(postal_code_check)
 
-# Sprawdzenie obu warunków i połączenie z poprzednim warunkiem
-a = pd.notnull(DaneObiekty['Adres ubezpieczonego obiektu - Ulica i numer']) & (
-    pd.notnull(DaneObiekty['Adres ubezpieczonego obiektu - Kod pocztowy']) | 
-    pd.notnull(DaneObiekty['Adres ubezpieczonego obiektu - Miasto'])
-) & mask_first_char & mask_postal_code
+# Tworzenie maski dla warunku końcowego
+final_mask = ~(mask_first_char | ~mask_postal_code)
 
-print(a)
+print(final_mask)
