@@ -1,33 +1,32 @@
 import pandas as pd
-import re
 
-# Przykładowy DataFrame
+# Przykładowy DataFrame z datami oddzielonymi kropkami
 data = {
-    'Adres ubezpieczonego obiektu - Ulica i numer': ['.123', ',456', '(789', '-012', '|345', '_678', '1234'],
-    'Adres ubezpieczonego obiektu - Kod pocztowy': ['12-345', '34-567', '56-789', '78-012', '90-123', '12-34A', '12-345'],
-    'Adres ubezpieczonego obiektu - Miasto': ['Miasto1', 'Miasto2', 'Miasto3', 'Miasto4', 'Miasto5', 'Miasto6', 'Miasto7']
+    'Data początku obowiązywania okresu ubezpieczenia': ['01.01.2009', '15.05.2010', '20.07.2015'],
+    'Data końca obowiązywania okresu ubezpieczenia': ['31.12.2023', '01.01.2024', '30.06.2025']
 }
 DaneObiekty = pd.DataFrame(data)
 
-# Funkcja sprawdzająca pierwszy znak
-def first_char_check(value):
-    if not isinstance(value, str):
-        return False
-    return value[0] in {'.', ',', '(', '-', '|', '_'}
+# Konwersja kolumn do daty z uwzględnieniem formatu dd.mm.yyyy
+DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'] = pd.to_datetime(DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'], format='%d.%m.%Y')
+DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'] = pd.to_datetime(DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'], format='%d.%m.%Y')
 
-# Funkcja sprawdzająca format kodu pocztowego
-def postal_code_check(value):
-    if not isinstance(value, str):
-        return False
-    return bool(re.match(r'^\d{2}-\d{3}$', value))
+# Warunki testowe
+rok_2010 = pd.Timestamp('2010-01-01')
+data_2023 = pd.Timestamp('2023-12-31')
 
-# Tworzenie maski dla pierwszego znaku
-mask_first_char = DaneObiekty['Adres ubezpieczonego obiektu - Ulica i numer'].apply(first_char_check)
+# Sprawdzenie warunków
+mask_start_date = DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'] >= rok_2010
+mask_end_date = DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'] > data_2023
 
-# Tworzenie maski dla formatu kodu pocztowego
-mask_postal_code = DaneObiekty['Adres ubezpieczonego obiektu - Kod pocztowy'].apply(postal_code_check)
-
-# Tworzenie maski dla warunku końcowego
-final_mask = ~(mask_first_char | ~mask_postal_code)
+# Łączenie warunków
+final_mask = mask_start_date & mask_end_date
 
 print(final_mask)
+
+# Wyświetlanie wyników
+print("Warunki spełnione dla wierszy:")
+print(DaneObiekty[final_mask])
+
+print("Warunki niespełnione dla wierszy:")
+print(DaneObiekty[~final_mask])
