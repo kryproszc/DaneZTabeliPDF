@@ -1,13 +1,15 @@
-# Funkcja do konwersji dat z uwzględnieniem różnych formatów
+# Konwersja kolumn do daty z uwzględnieniem formatu yyyy.mm.dd i yyyy-mm-dd
 def convert_date(date_str):
     try:
         return pd.to_datetime(date_str, format='%Y.%m.%d')
     except ValueError:
         return pd.to_datetime(date_str, format='%Y-%m-%d')
 
-# Zastosowanie funkcji do konwersji kolumn
 DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'] = DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'].apply(convert_date)
 DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'] = DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'].apply(convert_date)
+
+# Wyświetlanie danych po konwersji
+print(DaneObiekty)
 
 # Warunki testowe
 rok_2010 = pd.Timestamp('2010-01-01')
