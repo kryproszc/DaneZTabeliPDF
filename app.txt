@@ -1,15 +1,13 @@
-import pandas as pd
+# Funkcja do konwersji dat z uwzględnieniem różnych formatów
+def convert_date(date_str):
+    try:
+        return pd.to_datetime(date_str, format='%Y.%m.%d')
+    except ValueError:
+        return pd.to_datetime(date_str, format='%Y-%m-%d')
 
-# Przykładowy DataFrame z datami oddzielonymi kropkami
-data = {
-    'Data początku obowiązywania okresu ubezpieczenia': ['01.01.2009', '15.05.2010', '20.07.2015'],
-    'Data końca obowiązywania okresu ubezpieczenia': ['31.12.2023', '01.01.2024', '30.06.2025']
-}
-DaneObiekty = pd.DataFrame(data)
-
-# Konwersja kolumn do daty z uwzględnieniem formatu dd.mm.yyyy
-DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'] = pd.to_datetime(DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'], format='%d.%m.%Y')
-DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'] = pd.to_datetime(DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'], format='%d.%m.%Y')
+# Zastosowanie funkcji do konwersji kolumn
+DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'] = DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'].apply(convert_date)
+DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'] = DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'].apply(convert_date)
 
 # Warunki testowe
 rok_2010 = pd.Timestamp('2010-01-01')
@@ -21,12 +19,3 @@ mask_end_date = DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'] >
 
 # Łączenie warunków
 final_mask = mask_start_date & mask_end_date
-
-print(final_mask)
-
-# Wyświetlanie wyników
-print("Warunki spełnione dla wierszy:")
-print(DaneObiekty[final_mask])
-
-print("Warunki niespełnione dla wierszy:")
-print(DaneObiekty[~final_mask])
