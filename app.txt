@@ -1,23 +1,8 @@
-# Konwersja kolumn do daty z uwzględnieniem formatu yyyy.mm.dd i yyyy-mm-dd
-def convert_date(date_str):
-    try:
-        return pd.to_datetime(date_str, format='%Y.%m.%d')
-    except ValueError:
-        return pd.to_datetime(date_str, format='%Y-%m-%d')
+# Warunek: "Suma ubezpieczenia na umowę ubezpieczenia" jest większa od zera
+mask_suma_wieksza_od_zera = DaneObiekty['Suma ubezpieczenia na umowę ubezpieczenia'] > 0
 
-DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'] = DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'].apply(convert_date)
-DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'] = DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'].apply(convert_date)
-
-# Wyświetlanie danych po konwersji
-print(DaneObiekty)
-
-# Warunki testowe
-rok_2010 = pd.Timestamp('2010-01-01')
-data_2023 = pd.Timestamp('2023-12-31')
-
-# Sprawdzenie warunków
-mask_start_date = DaneObiekty['Data początku obowiązywania okresu ubezpieczenia'] >= rok_2010
-mask_end_date = DaneObiekty['Data końca obowiązywania okresu ubezpieczenia'] > data_2023
+# Warunek: "Waluta sumy ubezpieczenia na umowę ubezpieczyciela" jest skrótem składającym się z trzech liter drukowanych
+mask_waluta_trzy_litery = DaneObiekty['Waluta sumy ubezpieczenia na umowę ubezpieczyciela'].apply(lambda x: bool(re.match(r'^[A-Z]{3}$', x)))
 
 # Łączenie warunków
-final_mask = mask_start_date & mask_end_date
+final_mask = ~(mask_suma_wieksza_od_zera & mask_waluta_trzy_litery)
