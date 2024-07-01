@@ -1,1 +1,1 @@
-r'^\d{1,2}\.(sty|lut|mar|kwi|maj|cze|lip|sie|wrz|paź|lis|gru)$|^(sty|lut|mar|kwi|maj|cze|lip|sie|wrz|paź|lis|gru)\.\d{1,2}$', re.IGNORECASE
+.apply(lambda x: isinstance(x, str) and bool(re.match(r'^[A-Z]{3}$', x)))
