@@ -1,21 +1,2 @@
-# Warunek: "Suma ubezpieczenia na umowę ubezpieczenia" jest większa od zera
-mask_suma_wieksza_od_zera = DaneObiekty['Suma ubezpieczenia na umowę ubezpieczenia'] > 0
-
-# Warunek: "Waluta sumy ubezpieczenia na umowę ubezpieczyciela" jest skrótem składającym się z trzech liter drukowanych
-mask_waluta_trzy_litery = DaneObiekty['Waluta sumy ubezpieczenia na umowę ubezpieczyciela'].apply(lambda x: bool(re.match(r'^[A-Z]{3}$', x)))
-
-# Łączenie warunków
-final_mask = ~(mask_suma_wieksza_od_zera & mask_waluta_trzy_litery)
-
-
-
-# Warunek: wszystkie kolumny są większe od zera
-mask_suma_umowa = DaneObiekty['Suma ubezpieczenia na umowę ubezpieczenia'] > 0
-mask_suma_obiekt = DaneObiekty['Suma ubezpieczenia na obiekt'] > 0
-mask_pml_obiekt = DaneObiekty['PML na obiekt'] > 0
-
-# Warunek: "Waluta sumy ubezpieczenia na umowę ubezpieczyciela" jest skrótem składającym się z trzech liter drukowanych
-mask_waluta_trzy_litery = DaneObiekty['Waluta sumy ubezpieczenia na umowę ubezpieczyciela'].apply(lambda x: bool(re.match(r'^[A-Z]{3}$', x)))
-
-# Łączenie warunków
-final_mask = mask_suma_umowa & mask_suma_obiekt & mask_pml_obiekt & mask_waluta_trzy_litery
+valid_values = {'Tak', 'Nie', 'bd'}
+mask_valid_values = DaneObiekty['Czy pożar wynikał z zajęcia się od innego pożaru?'].apply(lambda x: x in valid_values)
