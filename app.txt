@@ -1,1 +1,31 @@
-.apply(lambda x: isinstance(x, str) and bool(re.match(r'^[A-Z]{3}$', x)))
+import pandas as pd
+import re
+import numpy as np
+
+# Przykładowy DataFrame
+data = {
+    'Adres ubezpieczonego obiektu - Ulica i numer': ['123 Main St', '456 Elm St', np.nan, '789 Oak St', '24.kwie', 'gru.28', '101 Pine St']
+}
+DaneObiekty = pd.DataFrame(data)
+
+# Wyrażenia regularne dla danych godzinowych i typu daty
+time_pattern = re.compile(r'^\d{1,2}:\d{2}\s?(AM|PM)?$', re.IGNORECASE)
+date_pattern = re.compile(r'^\d{1,2}\.(sty|lut|mar|kwi|maj|cze|lip|sie|wrz|paź|lis|gru)$|^(sty|lut|mar|kwi|maj|cze|lip|sie|wrz|paź|lis|gru)\.\d{1,2}$', re.IGNORECASE)
+
+# Funkcja sprawdzająca, czy wartość pasuje do wzorca godzinowego lub daty
+def check_time_or_date(value):
+    if isinstance(value, str):
+        return bool(time_pattern.match(value)) or bool(date_pattern.match(value))
+    return False
+
+# Zastosowanie funkcji do kolumny
+mask_invalid_data = DaneObiekty['Adres ubezpieczonego obiektu - Ulica i numer'].apply(check_time_or_date)
+
+# Wyświetlanie wyników
+print(mask_invalid_data)
+
+print("Wiersze z danymi godzinowymi lub typu daty:")
+print(DaneObiekty[mask_invalid_data])
+
+print("Wiersze bez danych godzinowych lub typu daty:")
+print(DaneObiekty[~mask_invalid_data])
