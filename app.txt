@@ -1,27 +1,37 @@
-import pandas as pd
-import re
+from shiny import App, ui, render
 
-# Przykładowy DataFrame
-data = {
-    'Adres ubezpieczonego obiektu - Miasto': ['Warsaw', 'Krakow 2', 'Poznan', 'Lodz1', 'Gdansk', 'Wroclaw3']
-}
-DaneObiekty = pd.DataFrame(data)
+app_ui = ui.page_fluid(
+    ui.layout_sidebar(
+        ui.panel_sidebar(
+            ui.h3("Panel boczny"),
+            ui.p("Tutaj możesz umieścić elementy UI, takie jak wejścia, przyciski itp.")
+        ),
+        ui.panel_main(
+            ui.navset_tab(
+                ui.nav(
+                    "Tab 1",
+                    ui.h3("Witamy w Zakładce 1"),
+                    ui.p("To jest zawartość pierwszej zakładki."),
+                ),
+                ui.nav(
+                    "Tab 2",
+                    ui.h3("Witamy w Zakładce 2"),
+                    ui.p("To jest zawartość drugiej zakładki."),
+                ),
+                ui.nav(
+                    "Tab 3",
+                    ui.h3("Witamy w Zakładce 3"),
+                    ui.p("To jest zawartość trzeciej zakładki."),
+                ),
+            )
+        )
+    )
+)
 
-# Wyrażenie regularne dla sprawdzenia liczb w stringu
-number_pattern = re.compile(r'\d')
+def server(input, output, session):
+    pass  # Tutaj możesz dodać logikę serwera, jeśli jest potrzebna
 
-# Funkcja sprawdzająca, czy wartość zawiera liczby
-def contains_number(value):
-    return bool(number_pattern.search(value))
+app = App(app_ui, server)
 
-# Zastosowanie funkcji do kolumny
-mask_contains_number = DaneObiekty['Adres ubezpieczonego obiektu - Miasto'].apply(contains_number)
-
-# Wyświetlanie wyników
-print(mask_contains_number)
-
-print("Wiersze z liczbami w kolumnie 'Adres ubezpieczonego obiektu - Miasto':")
-print(DaneObiekty[mask_contains_number])
-
-print("Wiersze bez liczb w kolumnie 'Adres ubezpieczonego obiektu - Miasto':")
-print(DaneObiekty[~mask_contains_number])
+if __name__ == "__main__":
+    app.run()
