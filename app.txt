@@ -1,36 +1,141 @@
-from shiny import App, ui, render
+import pandas as pd
+import numpy as np
+from shiny import App, ui, render, reactive, Inputs, Outputs, Session
+import matplotlib.pyplot as plt
 
+# Dane
+data = {
+    "AY": [1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990],
+    1: [5012, 106, 3410, 5655, 1092, 1513, 557, 1351, 3133, 2063],
+    2: [8269, 4285, 8992, 11555, 9565, 6445, 4020, 6947, 5395, None],
+    3: [19007, 5396, 13873, 15766, 15836, 11702, 10946, 13112, None, None],
+    4: [11805, 10666, 16141, 21266, 22169, 12935, 12314, None, None, None],
+    5: [13539, 13782, 18735, 23425, 25955, 15852, None, None, None, None],
+    6: [16181, 15599, 22214, 26083, 26180, None, None, None, None, None],
+    7: [18009, 15496, 22863, None, None, None, None, None, None, None],
+    8: [18608, 16169, 23466, None, None, None, None, None, None, None],
+    9: [18662, 16704, None, None, None, None, None, None, None, None],
+    10: [18834, None, None, None, None, None, None, None, None, None]
+}
+
+df = pd.DataFrame(data)
+
+# Obliczenie ilorazów
+def calculate_ratios(df):
+    ratio_df = pd.DataFrame()
+    for i in range(1, df.shape[1] - 1):
+        ratio_col = df.iloc[:, i + 1] / df.iloc[:, i]
+        ratio_df[f'Ratio_{i + 1}/{i}'] = ratio_col
+    return ratio_df
+
+# Funkcja do tworzenia DataFrame wypełnionego 1 i NaN
+def create_binary_df(ratio_df):
+    binary_df = ratio_df.applymap(lambda x: 1 if pd.notna(x) else np.nan)
+    return binary_df
+
+ratio_df = calculate_ratios(df)
+binary_df = create_binary_df(ratio_df)
+
+# JavaScript code to handle cell edits and clicks
+js_code = """
+$(document).on('click', 'td', function() {
+    var row = $(this).closest('tr').index();
+    var col = $(this).index();
+    if ($(this).hasClass('highlighted')) {
+        $(this).removeClass('highlighted');
+        Shiny.setInputValue('clicked_cell', {row: row, col: col - 1, highlighted: false});
+    } else {
+        $(this).addClass('highlighted');
+        Shiny.setInputValue('clicked_cell', {row: row, col: col - 1, highlighted: true});
+    }
+});
+"""
+
+# CSS for highlighted cells
+css_code = """
+.highlighted {
+    background-color: yellow !important;
+}
+"""
+
+# Definiowanie interfejsu użytkownika
 app_ui = ui.page_fluid(
-    ui.layout_sidebar(
-        ui.panel_sidebar(
-            ui.h3("Panel boczny"),
-            ui.p("Tutaj możesz umieścić elementy UI, takie jak wejścia, przyciski itp.")
+    ui.navset_tab(
+        ui.nav_panel("Histogram",
+            ui.input_slider("n", "Number of bins", min=5, max=50, value=30),
+            ui.output_plot("plot")
         ),
-        ui.panel_main(
-            ui.navset_tab(
-                ui.nav(
-                    "Tab 1",
-                    ui.h3("Witamy w Zakładce 1"),
-                    ui.p("To jest zawartość pierwszej zakładki."),
-                ),
-                ui.nav(
-                    "Tab 2",
-                    ui.h3("Witamy w Zakładce 2"),
-                    ui.p("To jest zawartość drugiej zakładki."),
-                ),
-                ui.nav(
-                    "Tab 3",
-                    ui.h3("Witamy w Zakładce 3"),
-                    ui.p("To jest zawartość trzeciej zakładki."),
-                ),
-            )
+        ui.nav_panel("Trójkąt",
+            ui.input_slider("height", "Height of the triangle", min=1, max=20, value=5),
+            ui.output_text("triangle"),
+            ui.output_table("triangle_table")
+        ),
+        ui.nav_panel("Ilorazy",
+            ui.output_ui("ratios_table_ui")
+        ),
+        ui.nav_panel("Binary Ilorazy",
+            ui.output_ui("binary_ratios_table_ui")
         )
-    )
+    ),
+    ui.tags.style(css_code),
+    ui.tags.script(js_code)
 )
 
-def server(input, output, session):
-    pass  # Tutaj możesz dodać logikę serwera, jeśli jest potrzebna
+# Definiowanie funkcji serwera
+def server(input: Inputs, output: Outputs, session: Session):
+    clicked_cells = reactive.Value([])
+    update_trigger = reactive.Value(0)
 
+    @output
+    @render.plot
+    def plot():
+        x = np.random.randn(1000)
+        bins = np.linspace(min(x), max(x), input.n() + 1)
+        plt.hist(x, bins=bins)
+        return plt.gcf()
+
+    @output
+    @render.text
+    def triangle():
+        height = input.height()
+        return '\n'.join(' ' * (height - i - 1) + '*' * (2 * i + 1) for i in range(height))
+
+    @output
+    @render.table
+    def triangle_table():
+        return df
+
+    @output
+    @render.ui
+    def ratios_table_ui():
+        return ui.HTML(ratio_df.to_html(classes='table table-striped table-hover', table_id="ratios-table"))
+
+    @output
+    @render.ui
+    def binary_ratios_table_ui():
+        # Ensure this function reacts to changes in clicked_cells
+        update_trigger.get()
+        return ui.HTML(binary_df.to_html(classes='table table-striped table-hover', table_id="binary-ratios-table", na_rep='NaN', float_format='{:.0f}'.format))
+
+    @reactive.Effect
+    @reactive.event(input.clicked_cell)
+    def update_clicked_cell():
+        cell = input.clicked_cell()
+        if cell:
+            row, col, highlighted = cell['row'], cell['col'], cell['highlighted']
+            current_cells = clicked_cells.get()
+            if highlighted:
+                if (row, col) not in current_cells:
+                    current_cells.append((row, col))
+                    binary_df.iat[row, col] = 0  # Update the value to 0
+            else:
+                if (row, col) in current_cells:
+                    current_cells.remove((row, col))
+                    binary_df.iat[row, col] = 1  # Update the value to 1
+            clicked_cells.set(current_cells)
+            update_trigger.set(update_trigger.get() + 1)  # Trigger re-render
+
+# Tworzenie aplikacji
 app = App(app_ui, server)
 
 if __name__ == "__main__":
