@@ -1,31 +1,27 @@
 import pandas as pd
 import re
-import numpy as np
 
 # Przykładowy DataFrame
 data = {
-    'Adres ubezpieczonego obiektu - Ulica i numer': ['123 Main St', '456 Elm St', np.nan, '789 Oak St', '24.kwie', 'gru.28', '101 Pine St']
+    'Adres ubezpieczonego obiektu - Miasto': ['Warsaw', 'Krakow 2', 'Poznan', 'Lodz1', 'Gdansk', 'Wroclaw3']
 }
 DaneObiekty = pd.DataFrame(data)
 
-# Wyrażenia regularne dla danych godzinowych i typu daty
-time_pattern = re.compile(r'^\d{1,2}:\d{2}\s?(AM|PM)?$', re.IGNORECASE)
-date_pattern = re.compile(r'^\d{1,2}\.(sty|lut|mar|kwi|maj|cze|lip|sie|wrz|paź|lis|gru)$|^(sty|lut|mar|kwi|maj|cze|lip|sie|wrz|paź|lis|gru)\.\d{1,2}$', re.IGNORECASE)
+# Wyrażenie regularne dla sprawdzenia liczb w stringu
+number_pattern = re.compile(r'\d')
 
-# Funkcja sprawdzająca, czy wartość pasuje do wzorca godzinowego lub daty
-def check_time_or_date(value):
-    if isinstance(value, str):
-        return bool(time_pattern.match(value)) or bool(date_pattern.match(value))
-    return False
+# Funkcja sprawdzająca, czy wartość zawiera liczby
+def contains_number(value):
+    return bool(number_pattern.search(value))
 
 # Zastosowanie funkcji do kolumny
-mask_invalid_data = DaneObiekty['Adres ubezpieczonego obiektu - Ulica i numer'].apply(check_time_or_date)
+mask_contains_number = DaneObiekty['Adres ubezpieczonego obiektu - Miasto'].apply(contains_number)
 
 # Wyświetlanie wyników
-print(mask_invalid_data)
+print(mask_contains_number)
 
-print("Wiersze z danymi godzinowymi lub typu daty:")
-print(DaneObiekty[mask_invalid_data])
+print("Wiersze z liczbami w kolumnie 'Adres ubezpieczonego obiektu - Miasto':")
+print(DaneObiekty[mask_contains_number])
 
-print("Wiersze bez danych godzinowych lub typu daty:")
-print(DaneObiekty[~mask_invalid_data])
+print("Wiersze bez liczb w kolumnie 'Adres ubezpieczonego obiektu - Miasto':")
+print(DaneObiekty[~mask_contains_number])
