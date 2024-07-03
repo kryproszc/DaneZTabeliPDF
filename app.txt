@@ -1,6 +1,16 @@
-def check_country(value):
-    return isinstance(value, str) and value.lower() in valid_countries
 
-# Funkcja sprawdzająca, czy wartość w kolumnie "Adres ubezpieczonego obiektu - Kod pocztowy" ma format xx-xxx
-def check_postal_code(value):
-    return isinstance(value, str) and bool(postal_code_pattern.match(value))
+# Wyrażenie regularne dla sprawdzenia znaków specjalnych i liczb w nazwie
+special_chars_pattern = re.compile(r'[.,()/:"]')
+number_pattern = re.compile(r'\d')
+
+# Funkcja sprawdzająca, czy wartość zawiera znaki specjalne
+def contains_special_chars(value):
+    return bool(special_chars_pattern.search(value))
+
+# Funkcja sprawdzająca, czy wartość zawiera liczby
+def contains_number(value):
+    return bool(number_pattern.search(value))
+
+# Zastosowanie funkcji do kolumny
+mask_contains_special_chars = DaneObiekty['Adres ubezpieczonego obiektu - Miasto'].apply(contains_special_chars)
+mask_contains_number = DaneObiekty['Adres ubezpieczonego obiektu - Miasto'].apply(contains_number)
