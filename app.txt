@@ -1,40 +1,6 @@
-import pandas as pd
-import re
-
-# Przykładowy DataFrame
-data = {
-    'Adres ubezpieczonego obiektu - Kraj': ['Polska', 'Germany', 'PL', 'USA', 'poland'],
-    'Adres ubezpieczonego obiektu - Kod pocztowy': ['00-123', '45123', '12-345', '32-100', '98-765']
-}
-DaneObiekty = pd.DataFrame(data)
-
-# Ustawienie wartości, które będą sprawdzane w kolumnie "Adres ubezpieczonego obiektu - Kraj"
-valid_countries = {'polska', 'poland', 'pl'}
-
-# Wyrażenie regularne dla formatu kodu pocztowego xx-xxx
-postal_code_pattern = re.compile(r'^\d{2}-\d{3}$')
-
-# Funkcja sprawdzająca, czy wartość w kolumnie "Adres ubezpieczonego obiektu - Kraj" jest jedną z dozwolonych wartości
 def check_country(value):
-    return value.lower() in valid_countries
+    return isinstance(value, str) and value.lower() in valid_countries
 
 # Funkcja sprawdzająca, czy wartość w kolumnie "Adres ubezpieczonego obiektu - Kod pocztowy" ma format xx-xxx
 def check_postal_code(value):
-    return bool(postal_code_pattern.match(value))
-
-# Zastosowanie funkcji do kolumn
-mask_valid_country = DaneObiekty['Adres ubezpieczonego obiektu - Kraj'].apply(check_country)
-mask_valid_postal_code = DaneObiekty['Adres ubezpieczonego obiektu - Kod pocztowy'].apply(check_postal_code)
-
-# Łączenie warunków
-final_mask = mask_valid_country & mask_valid_postal_code
-
-# Wyświetlanie wyników
-print("Maska wynikowa (True oznacza, że warunki są spełnione):")
-print(final_mask)
-
-print("Wiersze spełniające warunki:")
-print(DaneObiekty[final_mask])
-
-print("Wiersze niespełniające warunków:")
-print(DaneObiekty[~final_mask])
+    return isinstance(value, str) and bool(postal_code_pattern.match(value))
