@@ -1,17 +1,15 @@
 import shinyswatch
 import pandas as pd
 import numpy as np
-from shiny import App, Inputs, Outputs, Session, render, ui,run_app,reactive
+from shiny import App, Inputs, Outputs, Session, render, ui, run_app, reactive
 from shiny.types import FileInfo
 from shiny import experimental as x
 import matplotlib.pyplot as plt
 from shinywidgets import output_widget, render_widget
 from shiny.types import ImgData
+from metody_jednoroczne_copy import YearHorizont
 
-
-# Obliczenie ilorazów
-
-
+yh = YearHorizont()
 
 # JavaScript code to handle cell edits and clicks
 js_code = """
@@ -20,10 +18,10 @@ $(document).on('click', 'td', function() {
     var col = $(this).index();
     if ($(this).hasClass('highlighted')) {
         $(this).removeClass('highlighted');
-        Shiny.setInputValue('clicked_cell', {row: row, col: col - 1, highlighted: false});
+        Shiny.setInputValue('clicked_cell_ratios_table_1', {row: row, col: col - 1, highlighted: false});
     } else {
         $(this).addClass('highlighted');
-        Shiny.setInputValue('clicked_cell', {row: row, col: col - 1, highlighted: true});
+        Shiny.setInputValue('clicked_cell_ratios_table_1', {row: row, col: col - 1, highlighted: true});
     }
 });
 """
@@ -41,10 +39,10 @@ $(document).on('click', 'td', function() {
     var col = $(this).index();
     if ($(this).hasClass('highlighted')) {
         $(this).removeClass('highlighted');
-        Shiny.setInputValue('clicked_cell', {row: row, col: col - 1, highlighted: false});
+        Shiny.setInputValue('clicked_cell_ratios_table_2', {row: row, col: col - 1, highlighted: false});
     } else {
         $(this).addClass('highlighted');
-        Shiny.setInputValue('clicked_cell', {row: row, col: col - 1, highlighted: true});
+        Shiny.setInputValue('clicked_cell_ratios_table_2', {row: row, col: col - 1, highlighted: true});
     }
 });
 """
@@ -56,166 +54,156 @@ css_code_incurred = """
 }
 """
 
-from metody_jednoroczne_copy import YearHorizont
-yh = YearHorizont()
-app_ui = ui.page_fluid(ui.page_navbar(
-    shinyswatch.theme.superhero(),
-    ui.nav("Igloo", ui.output_image("image")),
-    ui.nav("Wprowadź dane",
-        ui.row(
-            ui.column(
-                4,
-                "Dane do rezerw",
-                ui.input_file("file1", "Wprowadź listę trójkątów w Excel", accept=[".xlsx"], multiple=False),
-                ui.input_file("wagi_input", "Wprowadź wagi dla CL", accept=[".xlsx"], multiple=False),
-                ui.input_file("wagi_input_LR", "Wprowadź wagi dla LR", accept=[".xlsx"], multiple=False),
-                ui.input_file("ekspozycja_input", "Wprowadź ekspozycję w Excel", accept=[".xlsx"], multiple=False),
-                ui.input_file("inflacja_input", "Wprowadź inflację w Excel", accept=[".xlsx"], multiple=False),
-                ui.input_switch("potwierdz_inflacje", "Uwzględnij inflację"),
-                ui.input_action_button("go", "Wykonaj obliczenia", class_="btn-success"),
-                x.ui.card(ui.output_text_verbatim("wykonaj_funkcje"))
-            ),
-            ui.column(
-                4,
-                "Wagi P/I",
-                ui.input_file("wagi_p_i_input", "Wprowadź wagi dla P/I", accept=[".xlsx"], multiple=False),
+app_ui = ui.page_fluid(
+    ui.page_navbar(
+        shinyswatch.theme.superhero(),
+        ui.nav("Igloo", ui.output_image("image")),
+        ui.nav(
+            "Wprowadź dane",
+            ui.row(
+                ui.column(
+                    4,
+                    "Dane do rezerw",
+                    ui.input_file("file1", "Wprowadź listę trójkątów w Excel", accept=[".xlsx"], multiple=False),
+                    ui.input_file("wagi_input", "Wprowadź wagi dla CL", accept=[".xlsx"], multiple=False),
+                    ui.input_file("wagi_input_LR", "Wprowadź wagi dla LR", accept=[".xlsx"], multiple=False),
+                    ui.input_file("ekspozycja_input", "Wprowadź ekspozycję w Excel", accept=[".xlsx"], multiple=False),
+                    ui.input_file("inflacja_input", "Wprowadź inflację w Excel", accept=[".xlsx"], multiple=False),
+                    ui.input_switch("potwierdz_inflacje", "Uwzględnij inflację"),
+                    ui.input_action_button("go", "Wykonaj obliczenia", class_="btn-success"),
+                    x.ui.card(ui.output_text_verbatim("wykonaj_funkcje"))
+                ),
+                ui.column(
+                    4,
+                    "Wagi P/I",
+                    ui.input_file("wagi_p_i_input", "Wprowadź wagi dla P/I", accept=[".xlsx"], multiple=False),
+                ),
             ),
         ),
-
-           ),
-    ui.nav("Paid Claims",ui.layout_sidebar(ui.panel_sidebar(ui.input_selectize("linie_biznesowe_CL_Paid", "Wybierz linię biznesową", choices=['-'], multiple=False),
-                                                             ui.input_numeric("ilosc_okresow", "Ilość okresów",
-                                                                              value=0),
-                                                             x.ui.accordion(x.ui.accordion_panel(
-                                              "Dopasowanie CL",
-                                              ui.input_numeric("x", "Maksymalna wartośc CL", value=3),
-                                              ui.input_numeric("Poz_CL", "Pozostawione CL", value=2),
-                                              ui.input_numeric("Max_CL", "Maksymalny CL", value=10),
-                                              ui.input_numeric("Min_CL", "Minimlany CL", value=1),
-                                              ui.input_selectize('chose_CL','Wybierz CL do dopasowania krzywej',
-                                                             [int(x) for x in range(1,20)],selected = [1,2],multiple = True),
-                                              ui.input_action_button("accept_CL", "Dopasuj krzywą", class_="btn-success"),
-                                              ),
-                                                x.ui.accordion_panel(
-                                              "Dopasowanie wariancji CL",
-                                              ui.input_numeric("loss_max_var", "Maksymalna wartośc wariancji", value=100000),
-                                              ui.input_numeric("Poz_CL_var", "Pozostawione wariancji", value=2),
-                                              ui.input_numeric("Max_var", "Maksymalna wariancja", value=1000000),
-                                              ui.input_numeric("Min_var", "Minimlana wariancja", value=0),
-                                              ui.input_selectize('chose_var','Wybierz wariancje do dopasowania krzywej',
-                                                              [int(x) for x in range(1,20)],selected = [1,2],multiple = True),
-                                              ui.input_action_button("accept_CL_var", "Dopasuj krzywą", class_="btn-success"),
-                                              ),
-                                              id = 'id_panel',open=False, multiple=False),
-                                          width = 2,),
-            ui.panel_main(
-                ui.navset_tab(
-                    ui.nav("Trójkąt",
-                        ui.output_table("triangle_table"),
+        ui.nav(
+            "Paid Claims",
+            ui.layout_sidebar(
+                ui.panel_sidebar(
+                    ui.input_selectize("linie_biznesowe_CL_Paid", "Wybierz linię biznesową", choices=['-'], multiple=False),
+                    ui.input_numeric("ilosc_okresow", "Ilość okresów", value=0),
+                    x.ui.accordion(
+                        x.ui.accordion_panel(
+                            "Dopasowanie CL",
+                            ui.input_numeric("x", "Maksymalna wartośc CL", value=3),
+                            ui.input_numeric("Poz_CL", "Pozostawione CL", value=2),
+                            ui.input_numeric("Max_CL", "Maksymalny CL", value=10),
+                            ui.input_numeric("Min_CL", "Minimlany CL", value=1),
+                            ui.input_selectize('chose_CL', 'Wybierz CL do dopasowania krzywej',
+                                               [int(x) for x in range(1, 20)], selected=[1, 2], multiple=True),
+                            ui.input_action_button("accept_CL", "Dopasuj krzywą", class_="btn-success"),
+                        ),
+                        x.ui.accordion_panel(
+                            "Dopasowanie wariancji CL",
+                            ui.input_numeric("loss_max_var", "Maksymalna wartośc wariancji", value=100000),
+                            ui.input_numeric("Poz_CL_var", "Pozostawione wariancji", value=2),
+                            ui.input_numeric("Max_var", "Maksymalna wariancja", value=1000000),
+                            ui.input_numeric("Min_var", "Minimlana wariancja", value=0),
+                            ui.input_selectize('chose_var', 'Wybierz wariancje do dopasowania krzywej',
+                                               [int(x) for x in range(1, 20)], selected=[1, 2], multiple=True),
+                            ui.input_action_button("accept_CL_var", "Dopasuj krzywą", class_="btn-success"),
+                        ),
+                        id='id_panel', open=False, multiple=False
                     ),
-                    ui.nav_panel("Współczynniki CL",
-                                 ui.div(
-                                        ui.output_ui("ratios_table_ui"),
-                                        id="panel1"
-                                        )
-                                 ),
-
-                    ui.nav("Wagi",
-                           ui.output_ui("binary_ratios_table_ui")
-                           ),
-                    ui.nav("Skumulowane CL",
-                            x.ui.page_fillable(x.ui.layout_column_wrap(1, x.ui.card(ui.output_data_frame("macierz_wspol_CL_interaktywna"), ),
-                                                                       height=180)),
-                                    x.ui.page_fillable(x.ui.layout_column_wrap(1, x.ui.card(
-                                        ui.output_data_frame("wspol_z_krzywej_CL_paid_interaktywna"), ), height=180)),
-                                       x.ui.layout_column_wrap(
-                                           1,
-                                           x.ui.card(
-                                               ui.output_plot("plot_wspolczynniki_dopasowane_interaktywny"),
-                                           ),
-                                           height=400),
-                           ),
-                    ui.nav("Wizualizacja i wyniki",
-                        x.ui.page_fillable(x.ui.layout_column_wrap(1, x.ui.card(
-                            ui.output_data_frame("Ult_BE_data_interaktywne"), ), height=400)),
-
-                           ),
-
+                    width=2,
                 ),
-               ui.tags.style(css_code),
-               ui.tags.script(js_code)
+                ui.panel_main(
+                    ui.navset_tab(
+                        ui.nav("Trójkąt", ui.output_table("triangle_table")),
+                        ui.nav_panel(
+                            "Współczynniki CL",
+                            ui.div(ui.output_ui("ratios_table_ui"), id="panel1")
+                        ),
+                        ui.nav("Wagi", ui.output_ui("binary_ratios_table_ui")),
+                        ui.nav(
+                            "Skumulowane CL",
+                            x.ui.page_fillable(
+                                x.ui.layout_column_wrap(1, x.ui.card(ui.output_data_frame("macierz_wspol_CL_interaktywna")), height=180)
+                            ),
+                            x.ui.page_fillable(
+                                x.ui.layout_column_wrap(1, x.ui.card(ui.output_data_frame("wspol_z_krzywej_CL_paid_interaktywna")), height=180)
+                            ),
+                            x.ui.layout_column_wrap(
+                                1,
+                                x.ui.card(ui.output_plot("plot_wspolczynniki_dopasowane_interaktywny")),
+                                height=400
+                            ),
+                        ),
+                        ui.nav(
+                            "Wizualizacja i wyniki",
+                            x.ui.page_fillable(
+                                x.ui.layout_column_wrap(1, x.ui.card(ui.output_data_frame("Ult_BE_data_interaktywne")), height=400)
+                            ),
+                        ),
+                    ),
+                    ui.tags.style(css_code),
+                    ui.tags.script(js_code)
+                )
             )
-
-)),
-
-
-    ui.nav("Incurred Claim",
-ui.layout_sidebar(ui.panel_sidebar(ui.input_selectize("linie_biznesowe_CL_incurred", "Wybierz linię biznesową", choices=['-'], multiple=False),
-                                                             ui.input_numeric("ilosc_okresow_incurred", "Ilość okresów",
-                                                                              value=0),
-                                                             x.ui.accordion(x.ui.accordion_panel(
-                                              "Dopasowanie CL",
-                                              ui.input_numeric("x_incurred", "Maksymalna wartośc CL", value=3),
-                                              ui.input_numeric("Poz_CL_incurred", "Pozostawione CL", value=2),
-                                              ui.input_numeric("Max_CL_incurred", "Maksymalny CL", value=10),
-                                              ui.input_numeric("Min_CL_incurred", "Minimlany CL", value=1),
-                                              ui.input_selectize('chose_CL','Wybierz CL do dopasowania krzywej',
-                                                             [int(x) for x in range(1,20)],selected = [1,2],multiple = True),
-                                              ui.input_action_button("accept_CL_incurred", "Dopasuj krzywą", class_="btn-success"),
-                                              ),
-                                                x.ui.accordion_panel(
-                                              "Dopasowanie wariancji CL",
-                                              ui.input_numeric("loss_max_var_incurred", "Maksymalna wartośc wariancji", value=100000),
-                                              ui.input_numeric("Poz_CL_var_incurred", "Pozostawione wariancji", value=2),
-                                              ui.input_numeric("Max_var_incurred", "Maksymalna wariancja", value=1000000),
-                                              ui.input_numeric("Min_var_incurred", "Minimlana wariancja", value=0),
-                                              ui.input_selectize('chose_var','Wybierz wariancje do dopasowania krzywej',
-                                                              [int(x) for x in range(1,20)],selected = [1,2],multiple = True),
-                                              ui.input_action_button("accept_CL_var_incurred", "Dopasuj krzywą", class_="btn-success"),
-                                              ),
-                                              id = 'id_panel',open=False, multiple=False),
-                                          width = 2,),
-                  ui.panel_main(
-                      ui.navset_tab(
-                          ui.nav("Trójkąt",
-                                 ui.output_table("triangle_table_incurred"),
-                                 ),
-                          ui.nav("Współczynniki CL",
-                                 ui.output_ui("panel2", "ratios_table_ui_incurred")
-                                 ),
-
-                          ui.nav("Wagi",
-                                 ui.output_ui("binary_ratios_table_ui_incurred")
-                                 ),
-                            ui.nav("Skumulowane CL",
-                            x.ui.page_fillable(x.ui.layout_column_wrap(1, x.ui.card(ui.output_data_frame("macierz_wspol_CL_interaktywna_incurred"), ),
-                                                                       height=180)),
-                                    x.ui.page_fillable(x.ui.layout_column_wrap(1, x.ui.card(
-                                        ui.output_data_frame("wspol_z_krzywej_CL_paid_interaktywna_incurred"), ), height=180)),
-                                       x.ui.layout_column_wrap(
-                                           1,
-                                           x.ui.card(
-                                               ui.output_plot("plot_wspolczynniki_dopasowane_interaktywny_incurred"),
-                                           ),
-                                           height=400),
-
-                           ),
-                      ),
-                       # ui.tags.style(css_code),
-                       # ui.tags.script(js_code)
-                  )
-
-           ),
-
-
-
-
-           ),
-    title="",
-),
-
+        ),
+        ui.nav(
+            "Incurred Claim",
+            ui.layout_sidebar(
+                ui.panel_sidebar(
+                    ui.input_selectize("linie_biznesowe_CL_incurred", "Wybierz linię biznesową", choices=['-'], multiple=False),
+                    ui.input_numeric("ilosc_okresow_incurred", "Ilość okresów", value=0),
+                    x.ui.accordion(
+                        x.ui.accordion_panel(
+                            "Dopasowanie CL",
+                            ui.input_numeric("x_incurred", "Maksymalna wartośc CL", value=3),
+                            ui.input_numeric("Poz_CL_incurred", "Pozostawione CL", value=2),
+                            ui.input_numeric("Max_CL_incurred", "Maksymalny CL", value=10),
+                            ui.input_numeric("Min_CL_incurred", "Minimlany CL", value=1),
+                            ui.input_selectize('chose_CL', 'Wybierz CL do dopasowania krzywej',
+                                               [int(x) for x in range(1, 20)], selected=[1, 2], multiple=True),
+                            ui.input_action_button("accept_CL_incurred", "Dopasuj krzywą", class_="btn-success"),
+                        ),
+                        x.ui.accordion_panel(
+                            "Dopasowanie wariancji CL",
+                            ui.input_numeric("loss_max_var_incurred", "Maksymalna wartośc wariancji", value=100000),
+                            ui.input_numeric("Poz_CL_var_incurred", "Pozostawione wariancji", value=2),
+                            ui.input_numeric("Max_var_incurred", "Maksymalna wariancja", value=1000000),
+                            ui.input_numeric("Min_var_incurred", "Minimlana wariancja", value=0),
+                            ui.input_selectize('chose_var', 'Wybierz wariancje do dopasowania krzywej',
+                                               [int(x) for x in range(1, 20)], selected=[1, 2], multiple=True),
+                            ui.input_action_button("accept_CL_var_incurred", "Dopasuj krzywą", class_="btn-success"),
+                        ),
+                        id='id_panel', open=False, multiple=False
+                    ),
+                    width=2,
+                ),
+                ui.panel_main(
+                    ui.navset_tab(
+                        ui.nav("Trójkąt", ui.output_table("triangle_table_incurred")),
+                        ui.nav("Współczynniki CL", ui.output_ui("panel2", "ratios_table_ui_incurred")),
+                        ui.nav("Wagi", ui.output_ui("binary_ratios_table_ui_incurred")),
+                        ui.nav(
+                            "Skumulowane CL",
+                            x.ui.page_fillable(
+                                x.ui.layout_column_wrap(1, x.ui.card(ui.output_data_frame("macierz_wspol_CL_interaktywna_incurred")), height=180)
+                            ),
+                            x.ui.page_fillable(
+                                x.ui.layout_column_wrap(1, x.ui.card(ui.output_data_frame("wspol_z_krzywej_CL_paid_interaktywna_incurred")), height=180)
+                            ),
+                            x.ui.layout_column_wrap(
+                                1,
+                                x.ui.card(ui.output_plot("plot_wspolczynniki_dopasowane_interaktywny_incurred")),
+                                height=400
+                            ),
+                        ),
+                    ),
+                    # ui.tags.style(css_code_incurred),
+                    # ui.tags.script(js_code_incurred)
+                )
+            )
+        ),
+        title="",
+    ),
 )
-
 
 def server(input: Inputs, output: Outputs, session: Session):
     clicked_cells1 = reactive.Value([])
@@ -223,7 +211,6 @@ def server(input: Inputs, output: Outputs, session: Session):
     update_trigger1 = reactive.Value(0)
     update_trigger2 = reactive.Value(0)
 
-######
     @reactive.Calc
     def triangle_paid():
         data = {
@@ -259,40 +246,37 @@ def server(input: Inputs, output: Outputs, session: Session):
         df = pd.DataFrame(data)
         return df
 
-    ######
     @render.table
     def triangle_table():
-        df_trian = triangle_paid()
-        return df_trian
+        return triangle_paid()
 
     @render.table
     def triangle_table_incurred():
-        df_trian = triangle_incurred()
-        return df_trian
+        return triangle_incurred()
 
     @reactive.Calc
     def ratio_df():
         df_input = triangle_paid()
         ratio_df_pd = yh.calculate_ratios(df_input)
-        return (ratio_df_pd)
+        return ratio_df_pd
 
     @reactive.Calc
     def ratio_df_incurred():
         df_input = triangle_incurred()
         ratio_df_pd = yh.calculate_ratios(df_input)
-        return (ratio_df_pd)
+        return ratio_df_pd
 
     @reactive.Calc
     def binary_df():
         ratio_df_pd = ratio_df()
         binary_df = yh.create_binary_df(ratio_df_pd)
-        return (binary_df)
+        return binary_df
 
     @reactive.Calc
     def binary_df_incurred():
         ratio_df_pd = ratio_df_incurred()
         binary_df = yh.create_binary_df(ratio_df_pd)
-        return (binary_df)
+        return binary_df
 
     @output
     @render.ui
@@ -300,35 +284,30 @@ def server(input: Inputs, output: Outputs, session: Session):
         df_ratio_out = ratio_df()
         return ui.HTML(df_ratio_out.to_html(classes='table table-striped table-hover', table_id="ratios-table1"))
 
-
     @output
     @render.ui
     def ratios_table_ui_incurred():
-        df_ratio_out = ratio_df_incurred()
-        return ui.HTML(df_ratio_out.to_html(classes='table table-striped table-hover', table_id="ratios-table2"))
+        df_ratio_out_incurred = ratio_df_incurred()
+        return ui.HTML(df_ratio_out_incurred.to_html(classes='table table-striped table-hover', table_id="ratios-table2"))
 
     @output
     @render.ui
     def binary_ratios_table_ui():
-        # Ensure this function reacts to changes in clicked_cells
         update_trigger1.get()
-
         binary_df_pd = binary_df()
         return ui.HTML(binary_df_pd.to_html(classes='table table-striped table-hover', table_id="binary-ratios-table1", na_rep='NaN', float_format='{:.0f}'.format))
 
     @output
     @render.ui
     def binary_ratios_table_ui_incurred():
-        # Ensure this function reacts to changes in clicked_cells
-        binary_df_pd = binary_df_incurred()
         update_trigger2.get()
-        return ui.HTML(binary_df_pd.to_html(classes='table table-striped table-hover', table_id="binary-ratios-table2",
-                                            na_rep='NaN', float_format='{:.0f}'.format))
+        binary_df_pd = binary_df_incurred()
+        return ui.HTML(binary_df_pd.to_html(classes='table table-striped table-hover', table_id="binary-ratios-table2", na_rep='NaN', float_format='{:.0f}'.format))
 
     @reactive.Effect
-    @reactive.event(input.panel1_clicked_cell)
+    @reactive.event(input.clicked_cell_ratios_table_1)
     def update_clicked_cell1():
-        cell = input.panel1_clicked_cell()
+        cell = input.clicked_cell_ratios_table_1()
         binary_df_inter = binary_df()
         if cell:
             row, col, highlighted = cell['row'], cell['col'], cell['highlighted']
@@ -336,19 +315,18 @@ def server(input: Inputs, output: Outputs, session: Session):
             if highlighted:
                 if (row, col) not in current_cells:
                     current_cells.append((row, col))
-                    binary_df_inter.iat[row, col] = 0  # Update the value to 0
+                    binary_df_inter.iat[row, col] = 0
             else:
                 if (row, col) in current_cells:
                     current_cells.remove((row, col))
-                    binary_df_inter.iat[row, col] = 1  # Update the value to 1
-            print(binary_df_inter)
+                    binary_df_inter.iat[row, col] = 1
             clicked_cells1.set(current_cells)
-            update_trigger1.set(update_trigger1.get() + 1)  # Trigger re-render
+            update_trigger1.set(update_trigger1.get() + 1)
 
     @reactive.Effect
-    @reactive.event(input.panel2_clicked_cell)
+    @reactive.event(input.clicked_cell_ratios_table_2)
     def update_clicked_cell2():
-        cell = input.panel2_clicked_cell()
+        cell = input.clicked_cell_ratios_table_2()
         binary_df_inter = binary_df_incurred()
         if cell:
             row, col, highlighted = cell['row'], cell['col'], cell['highlighted']
@@ -356,55 +334,16 @@ def server(input: Inputs, output: Outputs, session: Session):
             if highlighted:
                 if (row, col) not in current_cells:
                     current_cells.append((row, col))
-                    binary_df_inter.iat[row, col] = 0  # Update the value to 0
+                    binary_df_inter.iat[row, col] = 0
             else:
                 if (row, col) in current_cells:
                     current_cells.remove((row, col))
-                    binary_df_inter.iat[row, col] = 1  # Update the value to 1
+                    binary_df_inter.iat[row, col] = 1
             clicked_cells2.set(current_cells)
-            update_trigger2.set(update_trigger2.get() + 1)  # Trigger re-render
+            update_trigger2.set(update_trigger2.get() + 1)
 
-    @output
-    @render.image
-    def image():
-        from pathlib import Path
-
-        dir = Path(__file__).resolve().parent
-        img: ImgData = {"src": str(dir / "Model Ryzyka Rezerw.png"), "width": "1600px", "height": "900px"}
-        return img
-
-  #WEJSCIE
-    @reactive.Calc
-    def Upload_data():
-        if input.file1() is None:
-            return "Wprowadź dane"
-        f: list[FileInfo] = input.file1()
-        xl = pd.ExcelFile(f[0]["datapath"])
-        sheet_names = xl.sheet_names
-        #xl.close()
-        return [xl, sheet_names]
-
-    #Aktuaizacja zakladek
-    @reactive.Effect
-    def _():
-        if input.file1() is None:
-            ui.update_selectize(
-                "zakladka",
-                choices=['-'],
-                server=True,
-            )
-        else:
-            x = Upload_data()[1]
-            ui.update_selectize(
-                "zakladka",
-                choices=x,
-                server=False,
-            )
-
-########################################################################################################################
-################################## liczenie
     #@reactive.Effect
-    @reactive.event(input.clicked_cell)
+    @reactive.event(input.clicked_cell_ratios_table_1)
     def wspolczynniki_multiplikatywna_interaktywna():
         triagnle = triangle_paid().iloc[:,1:]
         binary_df_pd = binary_df()
@@ -425,8 +364,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         I_dataframe.iloc[3, :] =  ["sd"]+sd_j
         return I_dataframe
 
-    #@reactive.Effect
-    @reactive.event(input.clicked_cell)
+    @reactive.event(input.clicked_cell_ratios_table_2)
     def wspolczynniki_multiplikatywna_interaktywna_incurred():
         triagnle = triangle_incurred().iloc[:,1:]
         binary_df_pd = binary_df_incurred()
@@ -500,14 +438,10 @@ def server(input: Inputs, output: Outputs, session: Session):
             k = k + 1
         return (data_output)
 
-
-
-
-################# output
     @output
     @render.data_frame
     def macierz_wspol_CL_interaktywna():
-        df_out_mult= wspolczynniki_multiplikatywna_interaktywna()
+        df_out_mult = wspolczynniki_multiplikatywna_interaktywna()
         return render.DataGrid(
             df_out_mult,
             width="100%",
@@ -517,7 +451,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     @output
     @render.data_frame
     def macierz_wspol_CL_interaktywna_incurred():
-        df_out_mult= wspolczynniki_multiplikatywna_interaktywna_incurred()
+        df_out_mult = wspolczynniki_multiplikatywna_interaktywna_incurred()
         return render.DataGrid(
             df_out_mult,
             width="100%",
@@ -527,22 +461,20 @@ def server(input: Inputs, output: Outputs, session: Session):
     @output
     @render.data_frame
     def wspol_z_krzywej_CL_paid_interaktywna():
-        Dev_pd = wspolczynniki_multiplikatywna_interaktywna().iloc[0,:]
+        Dev_pd = wspolczynniki_multiplikatywna_interaktywna().iloc[0, :]
         print("Dev_pd")
         print(Dev_pd)
         print('dopasowanie_krzywej_factor_interaktywne()')
         print(dopasowanie_krzywej_factor_interaktywne())
-        size_col = len(Dev_pd)+input.ilosc_okresow()
-        II_dataframe = pd.DataFrame(0,index = [0,1,2], columns = [str(x) for x in range(1,size_col+1)])
-        if (len(dopasowanie_krzywej_factor_interaktywne())!=size_col and len(dopasowanie_krzywej_variance_interaktywne())==size_col):
+        size_col = len(Dev_pd) + input.ilosc_okresow()
+        II_dataframe = pd.DataFrame(0, index=[0, 1, 2], columns=[str(x) for x in range(1, size_col + 1)])
+        if len(dopasowanie_krzywej_factor_interaktywne()) != size_col and len(dopasowanie_krzywej_variance_interaktywne()) == size_col:
             II_dataframe.iloc[1, :] = dopasowanie_krzywej_variance_interaktywne()
-        elif (len(dopasowanie_krzywej_variance_interaktywne())!=size_col and len(dopasowanie_krzywej_factor_interaktywne())==(size_col+1)):
+        elif len(dopasowanie_krzywej_variance_interaktywne()) != size_col and len(dopasowanie_krzywej_factor_interaktywne()) == (size_col + 1):
             II_dataframe.iloc[0, :] = dopasowanie_krzywej_factor_interaktywne()
-        elif (len(dopasowanie_krzywej_variance_interaktywne()) == size_col and len(dopasowanie_krzywej_factor_interaktywne()) == size_col):
-            II_dataframe.iloc[0,:] = dopasowanie_krzywej_factor_interaktywne()
-            II_dataframe.iloc[1,:] = dopasowanie_krzywej_variance_interaktywne()
-        else:
-            II_dataframe
+        elif len(dopasowanie_krzywej_variance_interaktywne()) == size_col and len(dopasowanie_krzywej_factor_interaktywne()) == size_col:
+            II_dataframe.iloc[0, :] = dopasowanie_krzywej_factor_interaktywne()
+            II_dataframe.iloc[1, :] = dopasowanie_krzywej_variance_interaktywne()
         print(II_dataframe.to_string())
         return render.DataGrid(
             II_dataframe,
@@ -554,24 +486,24 @@ def server(input: Inputs, output: Outputs, session: Session):
     @output
     @render.plot()
     def plot_wspolczynniki_dopasowane_interaktywny():
-        Dev_pd = wspolczynniki_multiplikatywna_interaktywna().iloc[0,1:]
-        sigma_pd = wspolczynniki_multiplikatywna_interaktywna().iloc[1,1:]
+        Dev_pd = wspolczynniki_multiplikatywna_interaktywna().iloc[0, 1:]
+        sigma_pd = wspolczynniki_multiplikatywna_interaktywna().iloc[1, 1:]
         fig = plt.figure()
-        if (input.id_panel() == None):
-            plt.xticks(np.arange(1, len(sigma_pd.tolist())+input.ilosc_okresow()))
+        if input.id_panel() is None:
+            plt.xticks(np.arange(1, len(sigma_pd.tolist()) + input.ilosc_okresow()))
             fig.autofmt_xdate()
-        elif (input.id_panel()[0]=='Dopasowanie wariancji CL'):
+        elif input.id_panel()[0] == 'Dopasowanie wariancji CL':
             var_fit = dopasowanie_krzywej_variance_interaktywne()
-            plt.plot(np.arange(1,len(sigma_pd.tolist())+1), sigma_pd.to_list(), 'b',label='Sigma CL')
-            plt.plot(np.arange(input.Poz_CL_var(),len(var_fit)), var_fit[input.Poz_CL_var():], 'r',label='Dopasowana Sigma CL')
-            plt.xticks(np.arange(1, len(sigma_pd.tolist())+1+input.ilosc_okresow()))
+            plt.plot(np.arange(1, len(sigma_pd.tolist()) + 1), sigma_pd.to_list(), 'b', label='Sigma CL')
+            plt.plot(np.arange(input.Poz_CL_var(), len(var_fit)), var_fit[input.Poz_CL_var():], 'r', label='Dopasowana Sigma CL')
+            plt.xticks(np.arange(1, len(sigma_pd.tolist()) + 1 + input.ilosc_okresow()))
             fig.autofmt_xdate()
             fig.legend()
-        elif (input.id_panel()[0]=='Dopasowanie CL'):
+        elif input.id_panel()[0] == 'Dopasowanie CL':
             CL_fit = dopasowanie_krzywej_factor_interaktywne()
-            plt.plot(np.arange(1,len(Dev_pd.tolist())+1), Dev_pd.to_list(), 'b',label='CL')
-            plt.plot(np.arange(input.Poz_CL(),len(CL_fit)), CL_fit[input.Poz_CL():], 'r',label='Dopasowane CL')
-            plt.xticks(np.arange(1, len(Dev_pd.tolist())+1+input.ilosc_okresow()))
+            plt.plot(np.arange(1, len(Dev_pd.tolist()) + 1), Dev_pd.to_list(), 'b', label='CL')
+            plt.plot(np.arange(input.Poz_CL(), len(CL_fit)), CL_fit[input.Poz_CL():], 'r', label='Dopasowane CL')
+            plt.xticks(np.arange(1, len(Dev_pd.tolist()) + 1 + input.ilosc_okresow()))
             fig.autofmt_xdate()
             fig.legend()
         return fig
@@ -586,9 +518,31 @@ def server(input: Inputs, output: Outputs, session: Session):
             height="150%",
         )
 
-########################################################################################################################
+    @output
+    @render.image
+    def image():
+        from pathlib import Path
 
+        dir = Path(__file__).resolve().parent
+        img: ImgData = {"src": str(dir / "Model Ryzyka Rezerw.png"), "width": "1600px", "height": "900px"}
+        return img
 
+    @reactive.Calc
+    def Upload_data():
+        if input.file1() is None:
+            return "Wprowadź dane"
+        f: list[FileInfo] = input.file1()
+        xl = pd.ExcelFile(f[0]["datapath"])
+        sheet_names = xl.sheet_names
+        return [xl, sheet_names]
+
+    @reactive.Effect
+    def _():
+        if input.file1() is None:
+            ui.update_selectize("zakladka", choices=['-'], server=True)
+        else:
+            x = Upload_data()[1]
+            ui.update_selectize("zakladka", choices=x, server=False)
 
 app = App(app_ui, server)
 run_app(app)
