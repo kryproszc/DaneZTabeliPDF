@@ -237,6 +237,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.Calc
     def ratio_df():
+        update_trigger1.get()  # Make sure to react to trigger
         df_input = triangle_paid()
         ratio_df_pd = yh.calculate_ratios(df_input)
         return ratio_df_pd
@@ -283,7 +284,6 @@ def server(input: Inputs, output: Outputs, session: Session):
                     current_cells.remove((row, col))
             clicked_cells1.set(current_cells)
             update_trigger1.set(update_trigger1.get() + 1)  # Trigger re-render
-            ratio_df.invalidate()  # Invalidate ratio_df to trigger recalculation
 
     ###### Incurred Claims ######
 
@@ -307,6 +307,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.Calc
     def ratio_df_incurred():
+        update_trigger2.get()  # Make sure to react to trigger
         df_input = triangle_incurred()
         ratio_df_pd = yh.calculate_ratios(df_input)
         return ratio_df_pd
@@ -353,7 +354,6 @@ def server(input: Inputs, output: Outputs, session: Session):
                     current_cells.remove((row, col))
             clicked_cells2.set(current_cells)
             update_trigger2.set(update_trigger2.get() + 1)  # Trigger re-render
-            ratio_df_incurred.invalidate()  # Invalidate ratio_df to trigger recalculation
 
     @output
     @render.image
