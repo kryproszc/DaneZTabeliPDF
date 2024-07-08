@@ -14,9 +14,9 @@ app_ui = ui.page_fluid(
             ui.input_action_button("load_data", "Wczytaj dane")
         ),
         ui.panel_main(
-            ui.output_table("table"),
-            ui.output_table("triangle_paid_table"),
-            ui.output_table("triangle_incurred_table")
+            ui.output_data_frame("table"),
+            ui.output_data_frame("triangle_paid_table"),
+            ui.output_data_frame("triangle_incurred_table")
         )
     )
 )
@@ -52,17 +52,17 @@ def server(input, output, session):
             df_incurred.set(pd.DataFrame())
 
     @output
-    @ui.render_table
+    @render.data_frame
     def table():
         return df_paid.get() if not df_paid.get().empty else df_incurred.get()
 
     @output
-    @ui.render_table
+    @render.data_frame
     def triangle_paid_table():
         return triangle_paid()
 
     @output
-    @ui.render_table
+    @render.data_frame
     def triangle_incurred_table():
         return triangle_incurred()
 
