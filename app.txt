@@ -23,50 +23,58 @@ app_ui = ui.page_fluid(
 
 # Definiowanie logiki serwera
 def server(input, output, session):
-    df = reactive.Value(pd.DataFrame())
+    df_paid = reactive.Value(pd.DataFrame())
+    df_incurred = reactive.Value(pd.DataFrame())
 
     @reactive.Effect
     @reactive.event(input.load_data)
     def load_data():
         file = input.file()
         if not file:
-            df.set(pd.DataFrame())
+            df_paid.set(pd.DataFrame())
+            df_incurred.set(pd.DataFrame())
             return
 
-        start_row = input.start_row() - 1  # Korekta dla indeksowania 0
-        num_rows = input.num_rows()
-        usecols = input.usecols()
+        try:
+            sheet_name_paid = f"DFM paid {input.sheet_name()}"
+            sheet_name_incurred = f"DFM incurred {input.sheet_name()}"
+            start_row = input.start_row() - 1  # Korekta dla indeksowania 0
+            num_rows = input.num_rows()
+            usecols = input.usecols()
 
-        # Odczytywanie pliku Excel z określonymi parametrami
-        loaded_df = pd.read_excel(file[0]['datapath'], usecols=usecols, skiprows=start_row, nrows=num_rows)
-        df.set(loaded_df)
+            # Odczytywanie pliku Excel z określonymi parametrami
+            df_paid.set(pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_paid, usecols=usecols, skiprows=start_row, nrows=num_rows))
+            df_incurred.set(pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_incurred, usecols=usecols, skiprows=start_row, nrows=num_rows))
+        
+        except Exception as e:
+            print(f"Błąd wczytywania danych: {e}")
+            df_paid.set(pd.DataFrame())
+            df_incurred.set(pd.DataFrame())
 
     @output
     @ui.render_table
     def table():
-        return df.get()
+        return df_paid.get() if not df_paid.get().empty else df_incurred.get()
 
     @output
     @ui.render_table
     def triangle_paid_table():
-        triangle_df = triangle_paid(df.get())
-        return triangle_df
+        return triangle_paid()
 
     @output
     @ui.render_table
     def triangle_incurred_table():
-        triangle_df = triangle_incurred(df.get())
-        return triangle_df
+        return triangle_incurred()
 
-    def triangle_paid(loaded_df):
+    def triangle_paid():
+        df = df_paid.get()
         # Dodaj tu logikę przetwarzania dla triangle_paid
-        # Na przykład: przefiltruj dane, oblicz coś, itd.
-        return loaded_df  # Zwróć przetworzone dane
+        return df  # Zwróć przetworzone dane
 
-    def triangle_incurred(loaded_df):
+    def triangle_incurred():
+        df = df_incurred.get()
         # Dodaj tu logikę przetwarzania dla triangle_incurred
-        # Na przykład: przefiltruj dane, oblicz coś, itd.
-        return loaded_df  # Zwróć przetworzone dane
+        return df  # Zwróć przetworzone dane
 
 # Tworzenie aplikacji
 app = App(app_ui, server)
