@@ -1,9 +1,36 @@
+from shiny import App, ui, reactive
+import pandas as pd
+import openpyxl
+
+# Definiowanie interfejsu użytkownika
+app_ui = ui.page_fluid(
+    ui.panel_title("Excel Data Loader"),
+    ui.layout_sidebar(
+        ui.panel_sidebar(
+            ui.input_file("file", "Wybierz plik Excel", accept=[".xlsx"]),
+            ui.input_select("sheet_name", "Nazwa arkusza", {str(i): str(i) for i in range(1, 25)}, selected="1"),
+            ui.input_numeric("start_row", "Początkowy wiersz", value=5, min=1),
+            ui.input_numeric("num_rows", "Liczba wierszy", value=34, min=1),
+            ui.input_text("usecols", "Zakres kolumn", value="A:AI"),
+            ui.input_action_button("load_data", "Wczytaj dane")
+        ),
+        ui.panel_main(
+            ui.output_text("loading_message"),
+            ui.output_table("table")
+        )
+    )
+)
+
+# Definiowanie logiki serwera
+def server(input, output, session):
     @reactive.Effect
     @reactive.event(input.load_data)
     def load_data():
         file = input.file()
         if not file:
-            reactive.write('df', pd.DataFrame())
+            reactive.write('loading_message', "Brak pliku")
+            reactive.write('df_paid', pd.DataFrame())
+            reactive.write('df_incurred', pd.DataFrame())
             return
         
         try:
@@ -27,7 +54,7 @@
             reactive.write('df_incurred', pd.DataFrame())
 
     @output
-    @ui.render_text_verbatim
+    @ui.render_text
     def loading_message():
         return reactive.read('loading_message')
 
@@ -46,3 +73,10 @@
     def triangle_incurred():
         df = reactive.read('df_incurred')
         return df
+
+# Tworzenie aplikacji
+app = App(app_ui, server)
+
+# Uruchamianie aplikacji, jeśli skrypt jest uruchomiony bezpośrednio
+if __name__ == "__main__":
+    app.run()
