@@ -1,51 +1,48 @@
-from shiny import App, ui, reactive
-import pandas as pd
-import openpyxl
-
-# Define the UI
-app_ui = ui.page_fluid(
-    ui.panel_title("Excel Data Loader"),
-    ui.layout_sidebar(
-        ui.panel_sidebar(
-            ui.input_file("file", "Choose an Excel File", accept=[".xlsx"]),
-            ui.input_select("sheet_name", "Sheet Name", {i: str(i) for i in range(1, 25)}, selected=1),
-            ui.input_numeric("start_row", "Start Row", value=5, min=1),
-            ui.input_numeric("num_rows", "Number of Rows", value=34, min=1),
-            ui.input_text("usecols", "Columns Range", value="A:AI"),
-            ui.input_action_button("load_data", "Load Data")
-        ),
-        ui.panel_main(
-            ui.output_table("table")
-        )
-    )
-)
-
-# Define the server logic
-def server(input, output, session):
-
-    @reactive.Calc
+    @reactive.Effect
+    @reactive.event(input.load_data)
     def load_data():
         file = input.file()
         if not file:
-            return pd.DataFrame()
+            reactive.write('df', pd.DataFrame())
+            return
+        
+        try:
+            sheet_name_paid = f"DFM paid {input.sheet_name()}"
+            sheet_name_incurred = f"DFM incurred {input.sheet_name()}"
+            start_row = input.start_row() - 1  # Korekta dla indeksowania 0
+            num_rows = input.num_rows()
+            usecols = input.usecols()
 
-        sheet_name = f"DFM paid{input.sheet_name()}"
-        start_row = input.start_row() - 1  # Adjust for 0-indexing
-        num_rows = input.num_rows()
-        usecols = input.usecols()
+            # Odczytywanie pliku Excel z określonymi parametrami
+            df_paid = pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_paid, usecols=usecols, skiprows=start_row, nrows=num_rows)
+            df_incurred = pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_incurred, usecols=usecols, skiprows=start_row, nrows=num_rows)
+            
+            reactive.write('df_paid', df_paid)
+            reactive.write('df_incurred', df_incurred)
+            reactive.write('loading_message', "Dane wczytane pomyślnie")
+        
+        except Exception as e:
+            reactive.write('loading_message', f"Błąd wczytywania danych: {e}")
+            reactive.write('df_paid', pd.DataFrame())
+            reactive.write('df_incurred', pd.DataFrame())
 
-        # Read the Excel file with the specified parameters
-        df = pd.read_excel(file[0]['datapath'], sheet_name=sheet_name, usecols=usecols, skiprows=start_row, nrows=num_rows)
-        return df
+    @output
+    @ui.render_text_verbatim
+    def loading_message():
+        return reactive.read('loading_message')
 
     @output
     @ui.render_table
     def table():
-        return load_data()
+        df_paid = reactive.read('df_paid')
+        df_incurred = reactive.read('df_incurred')
+        if not df_paid.empty and not df_incurred.empty:
+            return df_paid  # Można tutaj zmienić, żeby wyświetlać df_incurred lub oba DataFrame'y
 
-# Create the app
-app = App(app_ui, server)
+    def triangle_paid():
+        df = reactive.read('df_paid')
+        return df
 
-# Run the app if the script is run directly (not imported as a module)
-if __name__ == "__main__":
-    app.run()
+    def triangle_incurred():
+        df = reactive.read('df_incurred')
+        return df
