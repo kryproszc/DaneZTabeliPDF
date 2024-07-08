@@ -1,38 +1,35 @@
-    df_paid = reactive.Value(pd.DataFrame())
-    df_incurred = reactive.Value(pd.DataFrame())
+import pandas as pd
+import openpyxl
 
-    @reactive.Effect
-    @reactive.event(input.load_data)
-    def load_data():
-        file = input.file()
-        sheet_name_paid = f"DFM paid ({input.sheet_name()})"
-        sheet_name_incurred = f"DFM inccured ({input.sheet_name()})"
-        start_row = input.start_row() - 1  # Korekta dla indeksowania 0
-        num_rows = input.num_rows()
-        usecols = input.usecols()
-        print(sheet_name_paid)
-        print(sheet_name_incurred)
-        if not file:
-            df_paid.set(pd.DataFrame())
-            df_incurred.set(pd.DataFrame())
+def load_data_from_sheets(file_path, start_row, num_rows, usecols):
+    df_paid_list = []
+    df_incurred_list = []
+    
+    for i in range(1, 25):  # Zakładki od 1 do 24
+        sheet_name_paid = f"DFM paid{i}"
+        sheet_name_incurred = f"DFM incurred{i}"
+        
         try:
-            df_paid.set(
-                pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_paid, usecols=usecols, skiprows=start_row, nrows=num_rows)
-            )
-            df_incurred.set(
-                pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_incurred, usecols=usecols, skiprows=start_row, nrows=num_rows)
-            )
+            df_paid = pd.read_excel(file_path, sheet_name=sheet_name_paid, usecols=usecols, skiprows=start_row-1, nrows=num_rows)
+            df_incurred = pd.read_excel(file_path, sheet_name=sheet_name_incurred, usecols=usecols, skiprows=start_row-1, nrows=num_rows)
+            
+            df_paid_list.append(df_paid)
+            df_incurred_list.append(df_incurred)
         except Exception as e:
-            print(f"Błąd wczytywania danych: {e}")
-            df_paid.set(pd.DataFrame())
-            df_incurred.set(pd.DataFrame())
+            print(f"Error loading data from sheet {i}: {e}")
+            df_paid_list.append(pd.DataFrame())
+            df_incurred_list.append(pd.DataFrame())
+    
+    return df_paid_list, df_incurred_list
 
-    @reactive.Calc
-    def triangle_paid():
-        df = df_paid.get()
-        return df  # Zwróć przetworzone dane
+# Przykład użycia funkcji
+file_path = 'path_to_your_excel_file.xlsx'
+start_row = 5
+num_rows = 34
+usecols = 'A:AI'
 
-    @reactive.Calc
-    def triangle_incurred():
-        df = df_incurred.get()
-        return df  # Zwróć przetworzone dane
+df_paid_list, df_incurred_list = load_data_from_sheets(file_path, start_row, num_rows, usecols)
+
+# Przykładowe wywołanie dla trójkątów
+print(df_paid_list[3])
+print(df_incurred_list[3])
