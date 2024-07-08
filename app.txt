@@ -1,28 +1,3 @@
-from shiny import App, ui, reactive
-import pandas as pd
-import openpyxl
-
-# Definiowanie interfejsu użytkownika
-app_ui = ui.page_fluid(
-    ui.panel_title("Excel Data Loader"),
-    ui.layout_sidebar(
-        ui.panel_sidebar(
-            ui.input_file("file", "Wybierz plik Excel", accept=[".xlsx"]),
-            ui.input_numeric("start_row", "Początkowy wiersz", value=5, min=1),
-            ui.input_numeric("num_rows", "Liczba wierszy", value=34, min=1),
-            ui.input_text("usecols", "Zakres kolumn", value="A:AI"),
-            ui.input_action_button("load_data", "Wczytaj dane")
-        ),
-        ui.panel_main(
-            ui.output_data_frame("table"),
-            ui.output_data_frame("triangle_paid_table"),
-            ui.output_data_frame("triangle_incurred_table")
-        )
-    )
-)
-
-# Definiowanie logiki serwera
-def server(input, output, session):
     df_paid = reactive.Value(pd.DataFrame())
     df_incurred = reactive.Value(pd.DataFrame())
 
@@ -30,55 +5,34 @@ def server(input, output, session):
     @reactive.event(input.load_data)
     def load_data():
         file = input.file()
+        sheet_name_paid = f"DFM paid ({input.sheet_name()})"
+        sheet_name_incurred = f"DFM inccured ({input.sheet_name()})"
+        start_row = input.start_row() - 1  # Korekta dla indeksowania 0
+        num_rows = input.num_rows()
+        usecols = input.usecols()
+        print(sheet_name_paid)
+        print(sheet_name_incurred)
         if not file:
             df_paid.set(pd.DataFrame())
             df_incurred.set(pd.DataFrame())
-            return
-
         try:
-            sheet_name_paid = f"DFM paid {input.sheet_name()}"
-            sheet_name_incurred = f"DFM incurred {input.sheet_name()}"
-            start_row = input.start_row() - 1  # Korekta dla indeksowania 0
-            num_rows = input.num_rows()
-            usecols = input.usecols()
-
-            # Odczytywanie pliku Excel z określonymi parametrami
-            df_paid.set(pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_paid, usecols=usecols, skiprows=start_row, nrows=num_rows))
-            df_incurred.set(pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_incurred, usecols=usecols, skiprows=start_row, nrows=num_rows))
-        
+            df_paid.set(
+                pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_paid, usecols=usecols, skiprows=start_row, nrows=num_rows)
+            )
+            df_incurred.set(
+                pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_incurred, usecols=usecols, skiprows=start_row, nrows=num_rows)
+            )
         except Exception as e:
             print(f"Błąd wczytywania danych: {e}")
             df_paid.set(pd.DataFrame())
             df_incurred.set(pd.DataFrame())
 
-    @output
-    @render.data_frame
-    def table():
-        return df_paid.get() if not df_paid.get().empty else df_incurred.get()
-
-    @output
-    @render.data_frame
-    def triangle_paid_table():
-        return triangle_paid()
-
-    @output
-    @render.data_frame
-    def triangle_incurred_table():
-        return triangle_incurred()
-
+    @reactive.Calc
     def triangle_paid():
         df = df_paid.get()
-        # Dodaj tu logikę przetwarzania dla triangle_paid
         return df  # Zwróć przetworzone dane
 
+    @reactive.Calc
     def triangle_incurred():
         df = df_incurred.get()
-        # Dodaj tu logikę przetwarzania dla triangle_incurred
         return df  # Zwróć przetworzone dane
-
-# Tworzenie aplikacji
-app = App(app_ui, server)
-
-# Uruchamianie aplikacji, jeśli skrypt jest uruchomiony bezpośrednio
-if __name__ == "__main__":
-    app.run()
