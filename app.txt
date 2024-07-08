@@ -14,20 +14,23 @@ app_ui = ui.page_fluid(
             ui.input_action_button("load_data", "Wczytaj dane")
         ),
         ui.panel_main(
-            ui.output_table("table")
+            ui.output_table("table"),
+            ui.output_table("triangle_paid_table"),
+            ui.output_table("triangle_incurred_table")
         )
     )
 )
 
-
 # Definiowanie logiki serwera
 def server(input, output, session):
+    df = reactive.Value(pd.DataFrame())
+
     @reactive.Effect
     @reactive.event(input.load_data)
     def load_data():
         file = input.file()
         if not file:
-            reactive.write('df', pd.DataFrame())
+            df.set(pd.DataFrame())
             return
 
         start_row = input.start_row() - 1  # Korekta dla indeksowania 0
@@ -35,10 +38,35 @@ def server(input, output, session):
         usecols = input.usecols()
 
         # Odczytywanie pliku Excel z określonymi parametrami
-        df = pd.read_excel(file[0]['datapath'], usecols=usecols, skiprows=start_row, nrows=num_rows)
-        reactive.write('df', df)
+        loaded_df = pd.read_excel(file[0]['datapath'], usecols=usecols, skiprows=start_row, nrows=num_rows)
+        df.set(loaded_df)
 
+    @output
+    @ui.render_table
+    def table():
+        return df.get()
 
+    @output
+    @ui.render_table
+    def triangle_paid_table():
+        triangle_df = triangle_paid(df.get())
+        return triangle_df
+
+    @output
+    @ui.render_table
+    def triangle_incurred_table():
+        triangle_df = triangle_incurred(df.get())
+        return triangle_df
+
+    def triangle_paid(loaded_df):
+        # Dodaj tu logikę przetwarzania dla triangle_paid
+        # Na przykład: przefiltruj dane, oblicz coś, itd.
+        return loaded_df  # Zwróć przetworzone dane
+
+    def triangle_incurred(loaded_df):
+        # Dodaj tu logikę przetwarzania dla triangle_incurred
+        # Na przykład: przefiltruj dane, oblicz coś, itd.
+        return loaded_df  # Zwróć przetworzone dane
 
 # Tworzenie aplikacji
 app = App(app_ui, server)
