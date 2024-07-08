@@ -1,13 +1,51 @@
+from shiny import App, ui, reactive
 import pandas as pd
+import openpyxl
 
-# Load the Excel file
-file_path = '/mnt/data/your_excel_file.xlsx'  # Update with your actual file path
-sheet_name = 'DFM paid'
+# Define the UI
+app_ui = ui.page_fluid(
+    ui.panel_title("Excel Data Loader"),
+    ui.layout_sidebar(
+        ui.panel_sidebar(
+            ui.input_file("file", "Choose an Excel File", accept=[".xlsx"]),
+            ui.input_select("sheet_name", "Sheet Name", {i: str(i) for i in range(1, 25)}, selected=1),
+            ui.input_numeric("start_row", "Start Row", value=5, min=1),
+            ui.input_numeric("num_rows", "Number of Rows", value=34, min=1),
+            ui.input_text("usecols", "Columns Range", value="A:AI"),
+            ui.input_action_button("load_data", "Load Data")
+        ),
+        ui.panel_main(
+            ui.output_table("table")
+        )
+    )
+)
 
-# Define the starting row, number of rows, and column range
-start_row = 4  # Excel is 0-indexed in pandas, so row 5 in Excel is 4 in pandas
-num_rows = 16  # Number of rows to read, here from row 5 to 20
-usecols = 'A:E'  # Columns range
+# Define the server logic
+def server(input, output, session):
 
-# Read the specified rows and columns from the Excel file
-df = pd.read_excel(file_path, sheet_name=sheet_name, usecols=usecols, skiprows=start_row, nrows=num_rows)
+    @reactive.Calc
+    def load_data():
+        file = input.file()
+        if not file:
+            return pd.DataFrame()
+
+        sheet_name = f"DFM paid{input.sheet_name()}"
+        start_row = input.start_row() - 1  # Adjust for 0-indexing
+        num_rows = input.num_rows()
+        usecols = input.usecols()
+
+        # Read the Excel file with the specified parameters
+        df = pd.read_excel(file[0]['datapath'], sheet_name=sheet_name, usecols=usecols, skiprows=start_row, nrows=num_rows)
+        return df
+
+    @output
+    @ui.render_table
+    def table():
+        return load_data()
+
+# Create the app
+app = App(app_ui, server)
+
+# Run the app if the script is run directly (not imported as a module)
+if __name__ == "__main__":
+    app.run()
