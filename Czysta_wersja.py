@@ -13,6 +13,7 @@ from metody_jednoroczne_copy import YearHorizont
 
 yh = YearHorizont()
 # Obliczenie ilorazów
+
 def calculate_ratios(df):
     ratio_df = pd.DataFrame()
     for i in range(1, df.shape[1] - 1):
@@ -20,11 +21,10 @@ def calculate_ratios(df):
         ratio_df[f'Ratio_{i + 1}/{i}'] = ratio_col
     return ratio_df
 
-# Funkcja do tworzenia DataFrame wypełnionego 1 i NaN
+
 def create_binary_df(ratio_df):
     binary_df = ratio_df.applymap(lambda x: 1 if pd.notna(x) else np.nan)
     return binary_df
-
 # JavaScript code to handle cell edits and clicks
 js_code_p = """
 $(document).on('click', '#ratios-table-1 td', function() {
@@ -61,24 +61,55 @@ css_code = """
 }
 """
 
+
+def load_data_from_sheets(file_path, start_row, num_rows, usecols):
+    df_paid_list = []
+    df_incurred_list = []
+    df_result_list = []
+
+    for i in range(1, 25):  # Zakładki od 1 do 24
+        sheet_name_paid = f"DFM paid ({i})"
+        sheet_name_incurred = f"DFM inccured ({i})"
+        sheet_name_result = f"Result ({i})"
+
+        try:
+            df_paid = pd.read_excel(file_path, sheet_name=sheet_name_paid, usecols=usecols, skiprows=start_row - 1,
+                                    nrows=num_rows,header = None)
+            df_incurred = pd.read_excel(file_path, sheet_name=sheet_name_incurred, usecols=usecols,
+                                        skiprows=start_row - 1, nrows=num_rows,header = None)
+            df_result = pd.read_excel(file_path, sheet_name=sheet_name_result, usecols='D:K',
+                                        skiprows=12 - 1, nrows=37,header = None)
+            df_paid_change = df_paid.copy()
+            df_incurred_change = df_incurred.copy()
+            df_paid_list.append(df_paid_change)
+            df_incurred_list.append(df_incurred_change)
+            df_result_list.append(df_result)
+        except Exception as e:
+            print(f"Error loading data from sheet {i}: {e}")
+            df_paid_list.append(pd.DataFrame())
+            df_incurred_list.append(pd.DataFrame())
+
+    return df_paid_list, df_incurred_list, df_result_list
+
+# Przykład użycia funkcji
+file_path = 'Kopia RESQ_CLAIMS_S2_2024.Q1.xlsx'
+start_row = 7
+num_rows = 34
+usecols = 'A:AI'
+linia_biznesowa = 0
+
+df_paid_list, df_incurred_list, df_result_list = load_data_from_sheets(file_path, start_row, num_rows, usecols)
+
+
 # Definiowanie interfejsu użytkownika
 app_ui = ui.page_fluid(
     ui.navset_tab(
-
-ui.nav("Wczytaj dane",
-       ui.input_file("file", "Wybierz Excel z danymi", accept=[".xlsx"]),
-       ui.input_select("sheet_name", "Wybierz linię biznesową", {i: str(i) for i in range(1, 25)}, selected=1),
-       ui.input_numeric("start_row", "Podaj wiersz od którego wczytać dane", value=5, min=1),
-       ui.input_numeric("num_rows", "Podaj ilośc wierszy", value=34, min=1),
-       ui.input_text("usecols", "Podaj kolumny, z których wczytać dane", value="A:AI"),
-       ui.input_action_button("load_data", "Wczytaj")
-
-       ),
-
-        ui.nav("Paid Claims",
+        ui.nav("Wybierz dane",
+               ui.input_numeric("linie_biznesowe", "Wybierz linię biznesową", value=0),),
+               ui.nav("Paid Claims",
 ui.layout_sidebar(
                 ui.panel_sidebar(
-                    ui.input_selectize("linie_biznesowe_CL_Paid", "Wybierz linię biznesową", choices=['-'], multiple=False),
+                    ui.input_numeric("ilosc_jedynek", "Ile zostawić współczynników", value=5),
                     ui.input_numeric("ilosc_okresow", "Ilość okresów", value=0),
                     x.ui.accordion(
                         x.ui.accordion_panel(
@@ -108,7 +139,6 @@ ui.layout_sidebar(
     ui.panel_main(
             ui.navset_tab(
                 ui.nav_panel("Trójkąt",
-                    ui.input_slider("height_p", "Height of the triangle", min=1, max=20, value=5),
                     ui.output_table("triangle_table_p")
                 ),
                 ui.nav_panel("Ilorazy",
@@ -128,6 +158,11 @@ ui.layout_sidebar(
                                                 x.ui.card(ui.output_data_frame("wspol_z_krzywej_CL_paid_interaktywna")),
                                                 height=180)
                     ),
+                    x.ui.page_fillable(
+                        x.ui.layout_column_wrap(1, x.ui.card(
+                            ui.output_data_frame("wspol_jedynki")),
+                                                height=100)
+                    ),
                     x.ui.layout_column_wrap(
                         1,
                         x.ui.card(ui.output_plot("plot_wspolczynniki_dopasowane_interaktywny")),
@@ -138,7 +173,7 @@ ui.layout_sidebar(
                     "Wizualizacja i wyniki",
                     x.ui.page_fillable(
                         x.ui.layout_column_wrap(1, x.ui.card(ui.output_data_frame("Ult_BE_data_interaktywne")),
-                                                height=400)
+                                                height=800)
                     ),
                 ),
             ),
@@ -150,8 +185,7 @@ ui.layout_sidebar(
                ,
                ui.layout_sidebar(
                    ui.panel_sidebar(
-                       ui.input_selectize("linie_biznesowe_CL__incurred", "Wybierz linię biznesową", choices=['-'],
-                                          multiple=False),
+                       ui.input_numeric("ilosc_jedynek_incurred", "Ile zostawić współczynników", value=5),
                        ui.input_numeric("ilosc_okresow_incurred", "Ilość okresów", value=0),
                        x.ui.accordion(
                            x.ui.accordion_panel(
@@ -181,8 +215,6 @@ ui.layout_sidebar(
                    ui.panel_main(
                        ui.navset_tab(
                            ui.nav_panel("Trójkąt",
-                                        ui.input_slider("height_p", "Height of the triangle", min=1, max=20, value=5),
-                                        ui.output_text("triangle_i"),
                                         ui.output_table("triangle_table_i")
                                         ),
                            ui.nav_panel("Ilorazy",
@@ -203,6 +235,11 @@ ui.layout_sidebar(
                                        ui.output_data_frame("wspol_z_krzywej_CL_interaktywna_incurred")),
                                                            height=180)
                                ),
+                               x.ui.page_fillable(
+                                   x.ui.layout_column_wrap(1, x.ui.card(
+                                       ui.output_data_frame("wspol_jedynki_inccured")),
+                                                           height=100)
+                               ),
                                x.ui.layout_column_wrap(
                                    1,
                                    x.ui.card(ui.output_plot("plot_wspolczynniki_dopasowane_interaktywny_incurred")),
@@ -214,7 +251,7 @@ ui.layout_sidebar(
                                x.ui.page_fillable(
                                    x.ui.layout_column_wrap(1,
                                                            x.ui.card(ui.output_data_frame("Ult_BE_data_interaktywne_incurred")),
-                                                           height=400)
+                                                           height=800)
                                ),
                            ),
                        ),
@@ -222,51 +259,34 @@ ui.layout_sidebar(
                        ui.tags.script(js_code_i)
                    ))
                ),
-        )
+        ui.nav("Podsumowanie",
+               x.ui.page_fillable(
+                   x.ui.layout_column_wrap(1,
+                                           x.ui.card(ui.output_data_frame("posumowanie_wyniki")),
+                                           height=800)
+               ),
+
+               )
+               )
     )
 
 
 # Definiowanie funkcji serwera
 def server(input: Inputs, output: Outputs, session: Session):
-    df_paid = reactive.Value(pd.DataFrame())
-    df_incurred = reactive.Value(pd.DataFrame())
-    @reactive.Effect
-    #@reactive.event(input.load_data)
-    def load_data():
-        file = input.file()
-        sheet_name_paid = f"DFM paid ({input.sheet_name()})"
-        sheet_name_incurred = f"DFM inccured ({input.sheet_name()})"
-        start_row = input.start_row() - 1  # Korekta dla indeksowania 0
-        num_rows = input.num_rows()
-        usecols = input.usecols()
-        print(sheet_name_paid)
-        print(sheet_name_incurred)
-        if not file:
-            df_paid.set(pd.DataFrame())
-            df_incurred.set(pd.DataFrame())
-        try:
-            df_paid.set(
-                pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_paid, usecols=usecols, skiprows=start_row,
-                              nrows=num_rows))
-            df_incurred.set(
-                pd.read_excel(file[0]['datapath'], sheet_name=sheet_name_incurred, usecols=usecols, skiprows=start_row,
-                              nrows=num_rows))
-        except Exception as e:
-            print(f"Błąd wczytywania danych: {e}")
-            df_paid.set(pd.DataFrame())
-            df_incurred.set(pd.DataFrame())
 
-    @reactive.Calc
+
     def triangle_paid():
-        df = df_paid.get()
-        # Dodaj tu logikę przetwarzania dla triangle_paid
+        df = df_paid_list[linia_biznesowa]
         return df  # Zwróć przetworzone dane
 
-    @reactive.Calc
     def triangle_incurred():
-        df = df_incurred.get()
-        # Dodaj tu logikę przetwarzania dla triangle_incurred
+        df = df_incurred_list[linia_biznesowa]
         return df  # Zwróć przetworzone dane
+
+    def triangle_result():
+        df = df_result_list[linia_biznesowa]
+        return df  # Zwróć przetworzone dane
+
 ####################################################
     # Zakładka P
     clicked_cells_p = reactive.Value([])
@@ -278,7 +298,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @output
     @render.table
     def triangle_table_p():
-        return triangle_paid()
+        df = df_paid_list[linia_biznesowa]
+        return df
 
     @output
     @render.ui
@@ -321,7 +342,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @output
     @render.table
     def triangle_table_i():
-        return triangle_incurred()
+        df = df_incurred_list[linia_biznesowa]
+        return df
 
     @output
     @render.ui
@@ -350,6 +372,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     ### Zakładki ze współczynnikami
     ###########################################################################################
     #Paid
+    @reactive.Calc
     @reactive.event(input.clicked_cell_ratios_table_1)
     def wspolczynniki_multiplikatywna_interaktywna():
         triagnle = triangle_paid().iloc[:, 1:]
@@ -357,9 +380,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         binary_df_deterministic = yh.create_binary_df(triagnle)
         ind_all, m_i, m_first = yh.index_all(triagnle)
         macierz_wsp_l = yh.l_i_j(triagnle, ind_all)
-        print("Dev_j_deterministic")
         Dev_j_deterministic = yh.Dev(triagnle, binary_df_deterministic, macierz_wsp_l, ind_all)
-        print("Dev_j")
         Dev_j = yh.Dev(triagnle, binary_df_pd, macierz_wsp_l, ind_all)
         sigma_j = yh.sigma(triagnle, binary_df_pd, macierz_wsp_l, Dev_j, ind_all)
         sd_j = yh.wspolczynnik_sd(triagnle, binary_df_pd, sigma_j, ind_all)
@@ -370,6 +391,30 @@ def server(input: Inputs, output: Outputs, session: Session):
         I_dataframe.iloc[2, :] = ["sigma"] + sigma_j
         I_dataframe.iloc[3, :] = ["sd"] + sd_j
         return I_dataframe
+
+    #Paid
+   # @reactive.Effect
+    def ilosc_jedynek_paid():
+        CL_input = wspolczynniki_multiplikatywna_interaktywna().iloc[1,1:].to_list()
+        print( CL_input[:int(input.ilosc_jedynek())])
+        print([1 for x in range(int(input.ilosc_jedynek()),len(CL_input))])
+        CL_output = CL_input[:int(input.ilosc_jedynek())]+[1 for x in range(int(input.ilosc_jedynek()),len(CL_input))]
+
+        I_dataframe = pd.DataFrame(0, index=['CL_dopasowanie'],
+                                   columns=[str(x) for x in range(1, len(CL_output) + 2)])
+        I_dataframe.iloc[0, :] = ["CL_dopasowanie"] + CL_output
+        return(I_dataframe)
+
+
+    @output
+    @render.data_frame
+    def wspol_jedynki():
+        df_out_mult = ilosc_jedynek_paid()
+        return render.DataGrid(
+            df_out_mult,
+            width="100%",
+            height="150%",
+        )
 
     @output
     @render.data_frame
@@ -467,16 +512,18 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.Calc
     def calc_chainladder_interaktywne():
+        df_out_mult = ilosc_jedynek_paid().iloc[0,1:].to_list()
         triangle = triangle_paid().iloc[:, 1:]
         CL_fit = dopasowanie_krzywej_factor_interaktywne()
         Dev_j_base = wspolczynniki_multiplikatywna_interaktywna().iloc[0, 1:].to_list()
         Dev_j_z_wagami = wspolczynniki_multiplikatywna_interaktywna().iloc[1, 1:].to_list()
         data_output = pd.DataFrame(0, index=np.arange(0, triangle.shape[0] + 1),
-                                   columns=['Rok/Suma', 'Ult_base', 'IBNR_base', 'Ult z wagami', 'IBNR z wagami',
+                                   columns=['Rok/Suma', 'Ult_base', 'IBNR_base', 'Ult z wagami', 'IBNR z wagami','Ult z jedynkami', 'IBNR z jedynkami',
                                             'Ult z krzywą', 'IBNR z krzywą'])
         data_output.iloc[:, 0] = np.arange(0, triangle.shape[0] + 1)
+        print(data_output.to_string())
         k = 1
-        for wspolczynniki in [Dev_j_base, Dev_j_z_wagami, CL_fit[1:]]:
+        for wspolczynniki in [Dev_j_base, Dev_j_z_wagami,df_out_mult, CL_fit[1:]]:
             proj_triangle = yh.triangle_forward(triangle, wspolczynniki, 0)
             diag = yh.reverse_list(yh.trian_diag(triangle))
             Ultimate_Param_ReservingRisk = proj_triangle.iloc[:, int(proj_triangle.columns[-1]) - 1].to_list()
@@ -498,6 +545,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 #########################################################################################
 #Incurred
+    @reactive.Calc
     @reactive.event(input.clicked_cell_ratios_table_2)
     def wspolczynniki_multiplikatywna_interaktywna_incurred():
         triagnle = triangle_incurred().iloc[:, 1:]
@@ -582,6 +630,28 @@ def server(input: Inputs, output: Outputs, session: Session):
             row_selection_mode='single'
         )
 
+    def ilosc_jedynek_incurred_pd():
+        CL_input = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[1,1:].to_list()
+        CL_output = CL_input[:int(input.ilosc_jedynek_incurred())]+[1 for x in range(int(input.ilosc_jedynek_incurred()),len(CL_input))]
+
+        I_dataframe = pd.DataFrame(0, index=['CL_dopasowanie'],
+                                   columns=[str(x) for x in range(1, len(CL_output) + 2)])
+        I_dataframe.iloc[0, :] = ["CL_dopasowanie"] + CL_output
+        return(I_dataframe)
+
+
+    @output
+    @render.data_frame
+    def wspol_jedynki_inccured():
+        df_out_mult = ilosc_jedynek_incurred_pd()
+        return render.DataGrid(
+            df_out_mult,
+            width="100%",
+            height="150%",
+        )
+
+
+
     @output
     @render.plot()
     def plot_wspolczynniki_dopasowane_interaktywny_incurred():
@@ -609,16 +679,17 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.Calc
     def calc_chainladder_interaktywne_incurred():
+        df_out_mult = ilosc_jedynek_incurred_pd().iloc[0,1:].to_list()
         triangle = triangle_incurred().iloc[:, 1:]
         CL_fit = dopasowanie_krzywej_factor_interaktywne_incurred()
         Dev_j_base = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[0, 1:].to_list()
         Dev_j_z_wagami = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[1, 1:].to_list()
         data_output = pd.DataFrame(0, index=np.arange(0, triangle.shape[0] + 1),
-                                   columns=['Rok/Suma', 'Ult_base', 'IBNR_base', 'Ult z wagami', 'IBNR z wagami',
+                                   columns=['Rok/Suma', 'Ult_base', 'IBNR_base', 'Ult z wagami', 'IBNR z wagami','Ult z jedynkami', 'IBNR z jedynkami',
                                             'Ult z krzywą', 'IBNR z krzywą'])
         data_output.iloc[:, 0] = np.arange(0, triangle.shape[0] + 1)
         k = 1
-        for wspolczynniki in [Dev_j_base, Dev_j_z_wagami, CL_fit[1:]]:
+        for wspolczynniki in [Dev_j_base, Dev_j_z_wagami,df_out_mult, CL_fit[1:]]:
             proj_triangle = yh.triangle_forward(triangle, wspolczynniki, 0)
             diag = yh.reverse_list(yh.trian_diag(triangle))
             Ultimate_Param_ReservingRisk = proj_triangle.iloc[:, int(proj_triangle.columns[-1]) - 1].to_list()
@@ -639,6 +710,42 @@ def server(input: Inputs, output: Outputs, session: Session):
             height="150%",
         )
 
+    @reactive.Calc
+    def calc_posumowanie():
+        res_df = triangle_result()
+        ult_paid_insurance_p = res_df.iloc[1:35,4].to_list() + [res_df.iloc[36,4]]
+        ult_paid_insurance_i = res_df.iloc[1:35,6].to_list() + [res_df.iloc[36,6]]
+        ult_Ult_base_paid = calc_chainladder_interaktywne()['Ult_base']
+        ult_Ult_z_jedynkami_paid = calc_chainladder_interaktywne()['Ult z jedynkami']
+
+        ult_Ult_base_incurred = calc_chainladder_interaktywne_incurred()['Ult_base']
+        ult_Ult_z_jedynkami_incurred = calc_chainladder_interaktywne_incurred()['Ult z jedynkami']
+        triangle = triangle_incurred().iloc[:, 1:]
+        data_output = pd.DataFrame(0, index=np.arange(0, triangle.shape[0]+1),
+                                   columns=['Rok/Suma', 'Ult_base Paid', 'Ult z jedynkami Paid', "Ult zakład","Różnica base p","Różnica z jedynkami p", 'Ult_base Inccured', 'Ult z jedynkami Inccured',"Ult zakład i","Różnica base i","Różnica z jedynkami i"])
+        data_output.iloc[:, 0] = np.arange(0, triangle.shape[0] + 1)
+        data_output.iloc[:,1]=[round(x) for x in ult_Ult_base_paid]
+        data_output.iloc[:,2]=[round(x) for x in ult_Ult_z_jedynkami_paid]
+        data_output.iloc[:,3]=[round(x) for x in ult_paid_insurance_p]
+        data_output.iloc[:,4]=[round(x-y) for x,y in zip(ult_Ult_base_paid,ult_paid_insurance_p)]
+        data_output.iloc[:,5]=[round(x-y) for x,y in zip(ult_Ult_z_jedynkami_paid,ult_paid_insurance_p)]
+        data_output.iloc[:,6]=[round(x) for x in ult_Ult_base_incurred]
+        data_output.iloc[:,7]=[round(x) for x in ult_Ult_z_jedynkami_incurred]
+        data_output.iloc[:, 8] = [round(x) for x in ult_paid_insurance_i]
+        data_output.iloc[:, 9] = [round(x-y) for x,y in zip(ult_Ult_base_incurred,ult_paid_insurance_i)]
+        data_output.iloc[:, 10] = [round(x-y) for x,y in zip(ult_Ult_z_jedynkami_incurred,ult_paid_insurance_i)]
+        return (data_output)
+
+
+    @output
+    @render.data_frame
+    def posumowanie_wyniki():
+        data_output = calc_posumowanie()
+        return render.DataGrid(
+            data_output,
+            width="100%",
+            height="150%",
+        )
 
 
 # Tworzenie aplikacji
