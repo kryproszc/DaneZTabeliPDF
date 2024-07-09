@@ -1,32 +1,5 @@
-from shiny import App, Inputs, Outputs, Session, render, ui, reactive
-import pandas as pd
-
-# Przykładowe dane
-df_paid_list = [pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]}) for _ in range(10)]
-df_incurred_list = [pd.DataFrame({'A': [7, 8, 9], 'B': [10, 11, 12]}) for _ in range(10)]
-df_result_list = [pd.DataFrame({'A': [13, 14, 15], 'B': [16, 17, 18]}) for _ in range(10)]
-
-def calculate_ratios(df):
-    ratio_df = pd.DataFrame()
-    for i in range(1, df.shape[1]):
-        ratio_col = df.iloc[:, i] / df.iloc[:, i - 1]
-        ratio_df[f'Ratio_{i}/{i-1}'] = ratio_col
-    return ratio_df
-
-def create_binary_df(ratio_df):
-    binary_df = ratio_df.applymap(lambda x: 1 if pd.notna(x) else np.nan)
-    return binary_df
-
-# Globalne zmienne
-ratio_df_p = None
-binary_df_p = None
-
-def update_global_variables(linia_biznesowa):
     global ratio_df_p, binary_df_p
-    ratio_df_p = calculate_ratios(df_paid_list[linia_biznesowa])
-    binary_df_p = create_binary_df(ratio_df_p)
-
-def server(input: Inputs, output: Outputs, session: Session):
+    
     linia_biznesowa = reactive.Value(0)
     
     @reactive.Effect
@@ -34,34 +7,9 @@ def server(input: Inputs, output: Outputs, session: Session):
     def update_linia_biznesowa():
         linia_biznesowa.set(input.linie_biznesowe())
         print(f"Updated linia_biznesowa: {linia_biznesowa.get()}")
-        update_global_variables(linia_biznesowa.get())
+        update_global_variables()
 
-    @reactive.Calc
-    def get_triangle_paid():
-        return df_paid_list[linia_biznesowa.get()]
-
-    @reactive.Calc
-    def get_triangle_incurred():
-        return df_incurred_list[linia_biznesowa.get()]
-
-    @reactive.Calc
-    def get_triangle_result():
-        return df_result_list[linia_biznesowa.get()]
-
-    @output
-    @render.table
-    def triangle_table_p():
-        df = get_triangle_paid()
-        return df
-
-    @output
-    @render.ui
-    def ratios_table_ui_p():
-        return ui.HTML(ratio_df_p.to_html(classes='table table-striped table-hover', table_id="ratios-table-1"))
-
-    @output
-    @render.ui
-    def binary_ratios_table_ui_p():
-        return ui.HTML(binary_df_p.to_html(classes='table table-striped table-hover', table_id="binary-ratios-table-1", na_rep='NaN', float_format='{:.0f}'.format))
-
-app = App(app_ui
+    def update_global_variables():
+        global ratio_df_p, binary_df_p
+        ratio_df_p = calculate_ratios(df_paid_list[linia_biznesowa.get()])
+        binary_df_p = create_binary_df(ratio_df_p)
