@@ -1,35 +1,6 @@
-import pandas as pd
-import openpyxl
-
-def load_data_from_sheets(file_path, start_row, num_rows, usecols):
-    df_paid_list = []
-    df_incurred_list = []
-    
-    for i in range(1, 25):  # Zakładki od 1 do 24
-        sheet_name_paid = f"DFM paid{i}"
-        sheet_name_incurred = f"DFM incurred{i}"
-        
-        try:
-            df_paid = pd.read_excel(file_path, sheet_name=sheet_name_paid, usecols=usecols, skiprows=start_row-1, nrows=num_rows)
-            df_incurred = pd.read_excel(file_path, sheet_name=sheet_name_incurred, usecols=usecols, skiprows=start_row-1, nrows=num_rows)
-            
-            df_paid_list.append(df_paid)
-            df_incurred_list.append(df_incurred)
-        except Exception as e:
-            print(f"Error loading data from sheet {i}: {e}")
-            df_paid_list.append(pd.DataFrame())
-            df_incurred_list.append(pd.DataFrame())
-    
-    return df_paid_list, df_incurred_list
-
-# Przykład użycia funkcji
-file_path = 'path_to_your_excel_file.xlsx'
-start_row = 5
-num_rows = 34
-usecols = 'A:AI'
-
-df_paid_list, df_incurred_list = load_data_from_sheets(file_path, start_row, num_rows, usecols)
-
-# Przykładowe wywołanie dla trójkątów
-print(df_paid_list[3])
-print(df_incurred_list[3])
+    @reactive.Effect
+    @reactive.event(input.linie_biznesowe)
+    def update_linia_biznesowa():
+        global linia_biznesowa
+        linia_biznesowa = input.linie_biznesowe()
+        print(f"Updated linia_biznesowa: {linia_biznesowa}")
