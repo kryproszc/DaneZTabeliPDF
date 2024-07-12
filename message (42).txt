@@ -1,0 +1,96 @@
+#include <ws2tcpip.h>
+#include <winsock2.h>
+#include <iostream>
+#include <string>
+
+void printLastError(const std::string& function) {
+    int error = WSAGetLastError();
+    LPVOID lpMsgBuf;
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        error,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR) &lpMsgBuf,
+        0, NULL);
+
+    std::cerr << function << " nie powiodło się, kod błędu: " << error << " - " << (char*)lpMsgBuf << std::endl;
+    LocalFree(lpMsgBuf);
+}
+
+int main() {
+    WSADATA wsaData;
+    int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (iResult != 0) {
+        printLastError("WSAStartup");
+        return 1;
+    }
+    std::cerr << "inicjalizacja WSA powiodła się" << std::endl;
+
+    for (int i = 0; i < 100; ++i) {
+        SOCKET ConnectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        if (ConnectSocket == INVALID_SOCKET) {
+            printLastError("socket");
+            WSACleanup();
+            return 1;
+        }
+        std::cerr << "utworzono gniazdo" << std::endl;
+
+        struct sockaddr_in serverAddr;
+        serverAddr.sin_family = AF_INET;
+        serverAddr.sin_port = htons(8080);
+        iResult = inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
+        if (iResult <= 0) {
+            if (iResult == 0) {
+                std::cerr << "inet_pton nie powiodło się: nieprawidłowy ciąg adresowy" << std::endl;
+            } else {
+                printLastError("inet_pton");
+            }
+            closesocket(ConnectSocket);
+            WSACleanup();
+            return 1;
+        }
+
+        std::cerr << "konfiguracja adresu serwera powiodła się" << std::endl;
+
+        iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+        if (iResult == SOCKET_ERROR) {
+            printLastError("connect");
+            closesocket(ConnectSocket);
+            WSACleanup();
+            continue;
+        }
+        std::cerr << "pomyślnie połączono z serwerem" << std::endl;
+
+        std::string httpRequest = 
+            "GET /search.php?q=WANDY%20RUTKIEWICZ%20A%20Wrocław HTTP/1.1\r\n"
+            "Host: dft-everace:8080\r\n"
+            "Connection: close\r\n\r\n";
+        iResult = send(ConnectSocket, httpRequest.c_str(), httpRequest.length(), 0);
+        if (iResult == SOCKET_ERROR) {
+            printLastError("send");
+            closesocket(ConnectSocket);
+            WSACleanup();
+            continue;
+        }
+        std::cerr << "wysłano żądanie HTTP GET" << std::endl;
+
+        char recvbuf[512];
+        int recvbuflen = 512;
+        do {
+            iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+            if (iResult > 0) {
+                std::cout.write(recvbuf, iResult);
+            } else if (iResult == 0) {
+                std::cerr << "zamknięto połączenie" << std::endl;
+            } else {
+                printLastError("recv");
+            }
+        } while (iResult > 0);
+
+        closesocket(ConnectSocket);
+    }
+
+    WSACleanup();
+    return 0;
+}
