@@ -15,11 +15,10 @@ yh = YearHorizont()
 # Obliczenie ilorazów
 
 def calculate_ratios(df):
-    ratio_df = pd.DataFrame()
-    for i in range(1, df.shape[1] - 1):
-        ratio_col = df.iloc[:, i + 1] / df.iloc[:, i]
-        ratio_df[f'Ratio_{i + 1}/{i}'] = ratio_col
-    return ratio_df
+    print(df.to_string())
+    ind_all, m_i, m_first = yh.index_all(df.iloc[:,1:])
+    macierz_wsp_l = yh.l_i_j(df.iloc[:,1:], ind_all)
+    return macierz_wsp_l
 
 
 def create_binary_df(ratio_df):
@@ -96,16 +95,16 @@ file_path = 'Kopia RESQ_CLAIMS_S2_2024.Q1.xlsx'
 start_row = 7
 num_rows = 34
 usecols = 'A:AI'
-linia_biznesowa = 0
 
 df_paid_list, df_incurred_list, df_result_list = load_data_from_sheets(file_path, start_row, num_rows, usecols)
+
 
 
 # Definiowanie interfejsu użytkownika
 app_ui = ui.page_fluid(
     ui.navset_tab(
         ui.nav("Wybierz dane",
-               ui.input_numeric("linie_biznesowe", "Wybierz linię biznesową", value=0),),
+               ui.input_numeric("linie_biznesowe", "Wybierz linię biznesową", value=1),),
                ui.nav("Paid Claims",
 ui.layout_sidebar(
                 ui.panel_sidebar(
@@ -273,18 +272,42 @@ ui.layout_sidebar(
 
 # Definiowanie funkcji serwera
 def server(input: Inputs, output: Outputs, session: Session):
+    linia_biznesowa = reactive.Value(0)
+    global ratio_df_p, binary_df_p
+    global ratio_df_i, binary_df_i
 
+    @reactive.Effect
+    @reactive.event(input.linie_biznesowe)
+    def update_linia_biznesowa():
+        linia_biznesowa.set(input.linie_biznesowe()-1)
+        print(f"Updated linia_biznesowa: {linia_biznesowa}")
+        update_global_variables(linia_biznesowa.get())
+        update_global_variables_i(linia_biznesowa.get())
+        #global  ratio_df_p,binary_df_p
 
+    def update_global_variables(linia_biznesowa):
+        global ratio_df_p, binary_df_p
+        ratio_df_p = calculate_ratios(df_paid_list[linia_biznesowa])
+        binary_df_p = create_binary_df(ratio_df_p)
+
+    def update_global_variables_i(linia_biznesowa):
+        global ratio_df_i, binary_df_i
+        ratio_df_i = calculate_ratios(df_paid_list[linia_biznesowa])
+        binary_df_i = create_binary_df(ratio_df_p)
+
+    @reactive.Calc
     def triangle_paid():
-        df = df_paid_list[linia_biznesowa]
+        df = df_paid_list[linia_biznesowa.get()]
         return df  # Zwróć przetworzone dane
 
+    @reactive.Calc
     def triangle_incurred():
-        df = df_incurred_list[linia_biznesowa]
+        df = df_incurred_list[linia_biznesowa.get()]
         return df  # Zwróć przetworzone dane
 
+    @reactive.Calc
     def triangle_result():
-        df = df_result_list[linia_biznesowa]
+        df = df_result_list[linia_biznesowa.get()]
         return df  # Zwróć przetworzone dane
 
 ####################################################
@@ -292,18 +315,21 @@ def server(input: Inputs, output: Outputs, session: Session):
     clicked_cells_p = reactive.Value([])
     update_trigger_p = reactive.Value(0)
 
-    ratio_df_p = calculate_ratios(triangle_paid())
-    binary_df_p = create_binary_df(ratio_df_p)
-
     @output
     @render.table
     def triangle_table_p():
-        df = df_paid_list[linia_biznesowa]
+        df = triangle_paid()
         return df
+
+    #ratio_df_p = calculate_ratios(df_paid_list[0])
+    #binary_df_p = create_binary_df(ratio_df_p)
+
+
 
     @output
     @render.ui
     def ratios_table_ui_p():
+        update_global_variables(linia_biznesowa.get())
         return ui.HTML(ratio_df_p.to_html(classes='table table-striped table-hover', table_id="ratios-table-1"))
 
     @output
@@ -330,8 +356,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     clicked_cells_i = reactive.Value([])
     update_trigger_i = reactive.Value(0)
 
-    ratio_df_i = calculate_ratios(triangle_incurred())
-    binary_df_i = create_binary_df(ratio_df_i)
+    ##ratio_df_i = calculate_ratios(df_incurred_list[0])
+    #binary_df_i = create_binary_df(ratio_df_i)
 
     @output
     @render.text
@@ -342,12 +368,13 @@ def server(input: Inputs, output: Outputs, session: Session):
     @output
     @render.table
     def triangle_table_i():
-        df = df_incurred_list[linia_biznesowa]
+        df = triangle_incurred()
         return df
 
     @output
     @render.ui
     def ratios_table_ui_i():
+        update_global_variables_i(linia_biznesowa.get())
         return ui.HTML(ratio_df_i.to_html(classes='table table-striped table-hover', table_id="ratios-table-2"))
 
     @output
