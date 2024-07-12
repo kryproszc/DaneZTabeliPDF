@@ -12,6 +12,15 @@ Final_factors_list = [0, 8]
 
 
 class YearHorizont:
+    def Union(self, lst1, lst2):
+        final_list = list(set(lst1) | set(lst2))
+        return final_list
+    def delete_element_list(self, list_1, list_2):
+        for item in list_2:
+            if item in list_1:
+                list_1.remove(item)
+        return (list_1)
+
     def index_all(self, df_trian):
         index_he = []
         index_ost = []
