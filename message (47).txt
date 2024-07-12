@@ -1,0 +1,170 @@
+#define _WIN32_WINNT 0x0600 
+#include <ws2tcpip.h>
+#include <winsock2.h>
+#include <iostream>
+#include <string>
+
+#pragma comment(lib, "Ws2_32.lib")
+
+void printLastError(const std::string& function) {
+    int error = WSAGetLastError();
+    LPVOID lpMsgBuf;
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        error,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR)&lpMsgBuf,
+        0, NULL);
+
+    std::cerr << function << " failed with error: " << error << " - " << (char*)lpMsgBuf << std::endl;
+    LocalFree(lpMsgBuf);
+}
+
+void sendRequest() {
+    WSADATA wsaData;
+    SOCKET ConnectSocket = INVALID_SOCKET;
+    struct sockaddr_in serverAddr;
+    int iResult;
+
+    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (iResult != 0) {
+        printLastError("WSAStartup");
+        return;
+    }
+    std::cerr << "WSAStartup succeeded" << std::endl;
+
+    ConnectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (ConnectSocket == INVALID_SOCKET) {
+        printLastError("socket");
+        WSACleanup();
+        return;
+    }
+
+    u_long mode = 1; 
+    iResult = ioctlsocket(ConnectSocket, FIONBIO, &mode);
+    if (iResult != NO_ERROR) {
+        printLastError("ioctlsocket");
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return;
+    }
+
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(8080);
+    iResult = inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
+    if (iResult <= 0) {
+        if (iResult == 0) {
+            std::cerr << "inet_pton failed: invalid address family" << std::endl;
+        } else {
+            printLastError("inet_pton");
+        }
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return;
+    }
+
+    iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+    if (iResult == SOCKET_ERROR) {
+        int error = WSAGetLastError();
+        if (error != WSAEWOULDBLOCK) {
+            printLastError("connect");
+            closesocket(ConnectSocket);
+            WSACleanup();
+            return;
+        }
+
+        fd_set writefds;
+        FD_ZERO(&writefds);
+        FD_SET(ConnectSocket, &writefds);
+        timeval timeout;
+        timeout.tv_sec = 10; 
+        timeout.tv_usec = 0;
+
+        iResult = select(0, NULL, &writefds, NULL, &timeout);
+        if (iResult == SOCKET_ERROR) {
+            printLastError("select");
+            closesocket(ConnectSocket);
+            WSACleanup();
+            return;
+        } else if (iResult == 0) {
+            std::cerr << "connect timed out" << std::endl;
+            closesocket(ConnectSocket);
+            WSACleanup();
+            return;
+        }
+
+        int optVal;
+        int optLen = sizeof(optVal);
+        if (getsockopt(ConnectSocket, SOL_SOCKET, SO_ERROR, (char*)&optVal, &optLen) == SOCKET_ERROR) {
+            printLastError("getsockopt");
+            closesocket(ConnectSocket);
+            WSACleanup();
+            return;
+        }
+        if (optVal != 0) {
+            std::cerr << "connect failed with error: " << optVal << std::endl;
+            closesocket(ConnectSocket);
+            WSACleanup();
+            return;
+        }
+    }
+
+    std::string httpRequest = 
+        "GET /search.php?q=WANDY%20RUTKIEWICZ%20A%20Wrocław HTTP/1.1\r\n"
+        "Host: dft-everace:8080\r\n"
+        "Connection: close\r\n\r\n";
+    iResult = send(ConnectSocket, httpRequest.c_str(), httpRequest.length(), 0);
+    if (iResult == SOCKET_ERROR) {
+        int error = WSAGetLastError();
+        if (error != WSAEWOULDBLOCK) {
+            printLastError("send");
+            closesocket(ConnectSocket);
+            WSACleanup();
+            return;
+        }
+    }
+    std::cerr << "HTTP GET request wyslany" << std::endl;
+
+    char recvbuf[512];
+    int recvbuflen = 512;
+    FD_SET readfds;
+
+    while (true) {
+        FD_ZERO(&readfds);
+        FD_SET(ConnectSocket, &readfds);
+
+        timeval timeout;
+        timeout.tv_sec = 1;
+        timeout.tv_usec = 0;
+
+        iResult = select(0, &readfds, NULL, NULL, &timeout);
+        if (iResult == SOCKET_ERROR) {
+            printLastError("select");
+            break;
+        }
+
+        if (FD_ISSET(ConnectSocket, &readfds)) {
+            iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+            if (iResult > 0) {
+                std::cout.write(recvbuf, iResult);
+            } else if (iResult == 0) {
+                std::cerr << "zamkniete" << std::endl;
+                break;
+            } else {
+                printLastError("recv");
+                break;
+            }
+        }
+    }
+
+    closesocket(ConnectSocket);
+    WSACleanup();
+}
+
+int main() {
+    for (int i = 0; i < 100; ++i) {
+        sendRequest();
+    }
+    return 0;
+}
