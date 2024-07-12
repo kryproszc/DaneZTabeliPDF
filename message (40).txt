@@ -1,0 +1,105 @@
+#define _WIN32_WINNT 0x0600 
+#include <ws2tcpip.h>
+#include <winsock2.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+void printLastError(const std::string& function) {
+    int error = WSAGetLastError();
+    LPVOID lpMsgBuf;
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        error,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR)&lpMsgBuf,
+        0, NULL);
+
+    std::cerr << function << " blad: " << error << " - " << (char*)lpMsgBuf << std::endl;
+    LocalFree(lpMsgBuf);
+}
+
+std::string send_request() {
+    WSADATA wsaData;
+    SOCKET ConnectSocket = INVALID_SOCKET;
+    struct sockaddr_in serverAddr;
+    int iResult;
+
+    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (iResult != 0) {
+        printLastError("WSAStartup");
+        return "";
+    }
+
+    ConnectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (ConnectSocket == INVALID_SOCKET) {
+        printLastError("socket");
+        WSACleanup();
+        return "";
+    }
+
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(8080);
+    iResult = inet_pton(AF_INET, "172.25.9.44", &serverAddr.sin_addr);
+    if (iResult <= 0) {
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return "";
+    }
+
+    iResult = connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+    if (iResult == SOCKET_ERROR) {
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return "";
+    }
+
+    std::string httpRequest =
+        "GET /search.php?q=WANDY%20RUTKIEWICZ%20A%20Wrocław HTTP/1.1\r\n"
+        "Host: dft-everace:8080\r\n"
+        "Connection: close\r\n\r\n";
+    iResult = send(ConnectSocket, httpRequest.c_str(), httpRequest.length(), 0);
+    if (iResult == SOCKET_ERROR) {
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return "";
+    }
+
+    char recvbuf[512];
+    int recvbuflen = 512;
+    std::string response = "";
+    do {
+        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+        if (iResult > 0) {
+            response.append(recvbuf, iResult);
+        } else if (iResult == 0) {
+
+        } else {
+            printLastError("recv");
+        }
+    } while (iResult > 0);
+
+    closesocket(ConnectSocket);
+    WSACleanup();
+    return response;
+}
+
+int main() {
+    std::ofstream outfile("info.csv", std::ios::out | std::ios::app);
+    if (!outfile.is_open()) {
+        std::cerr << "blad z plikiem" << std::endl;
+        return 1;
+    }
+
+    for (int i = 0; i < 100; ++i) {
+        std::string response = send_request();
+        if (!response.empty()) {
+            outfile << "\"" << response << "\"" << std::endl;
+        }
+    }
+
+    outfile.close();
+    return 0;
+}
