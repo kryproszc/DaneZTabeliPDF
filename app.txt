@@ -1,14 +1,717 @@
-reduced_df = df.iloc[1:, 1:]
+import shinyswatch
+import pandas as pd
+import numpy as np
+from shiny import App, Inputs, Outputs, Session, render, ui, run_app, reactive
+from shiny.types import FileInfo
+from shiny import experimental as x
+import matplotlib.pyplot as plt
+from shinywidgets import output_widget, render_widget
+from shiny.types import ImgData
+from metody_jednoroczne_copy import YearHorizont
 
-# Zamiana liczb na 1, NaN pozostają bez zmian
+yh = YearHorizont()
 
-def create_pattern_matrix(reduced_df, pattern_number):
-    size = reduced_df.shape[0]-1
-    reduced_df_copy = reduced_df.copy()
-    for j in range(size):
-        for i in range(size-pattern_number-j):
-            reduced_df_copy.iloc[i,j] = 0
-    return reduced_df_copy
+def calculate_ratios(df):
+    ind_all, m_i, m_first = yh.index_all(df.iloc[:, 1:])
+    macierz_wsp_l = yh.l_i_j(df.iloc[:, 1:], ind_all)
+    return macierz_wsp_l
 
-# Przykłady dla wzoru 1 i 2
-pattern_1 = create_pattern_matrix(reduced_df, 4)
+def create_binary_df(ratio_df):
+    binary_df = ratio_df.applymap(lambda x: 1 if pd.notna(x) else np.nan)
+    return binary_df
+
+js_code_p = """
+$(document).on('click', '#ratios-table-1 td', function() {
+    var row = $(this).closest('tr').index();
+    var col = $(this).index();
+    if (col > 0) {  // Ignore only the first column
+        console.log(`Cell clicked: row=${row}, col=${col}`);
+        if ($(this).hasClass('highlighted')) {
+            $(this).removeClass('highlighted');
+            Shiny.setInputValue('clicked_cell_ratios_table_1', {row: row, col: col - 1, highlighted: false}); // Adjusted for 0-based index in Python
+        } else {
+            $(this).addClass('highlighted');
+            Shiny.setInputValue('clicked_cell_ratios_table_1', {row: row, col: col - 1, highlighted: true}); // Adjusted for 0-based index in Python
+        }
+    }
+});
+
+let highlightedCells = [];
+
+function highlight_default_cell(offset) {
+    var table = document.getElementById('ratios-table-1');
+    if (table) {
+        console.log(`Highlighting cells with offset: ${offset}`);
+
+        // Remove existing highlights before adding new ones
+        remove_highlights([]);
+
+        if (offset === 0) {
+            console.log("Offset is zero, no cells will be highlighted.");
+            return;
+        }
+
+        var newHighlightedCells = [];
+        var baseOffset = -1;
+        var foundBase = false;
+
+        for (var colIndex = 1; colIndex < table.rows[0].cells.length; colIndex++) {
+            for (var rowIndex = table.rows.length - 1; rowIndex > 0; rowIndex--) {
+                var cell = table.rows[rowIndex].cells[colIndex];
+                if (cell.innerText.trim() !== '0') {
+                    if (!foundBase) {
+                        baseOffset = rowIndex;
+                        foundBase = true;
+                    }
+
+                    var targetRow = baseOffset - (colIndex - 1) - offset;
+                    if (targetRow >= 1) {
+                        for (var highlightRow = targetRow; highlightRow >= 1; highlightRow--) {
+                            var targetCell = table.rows[highlightRow].cells[colIndex];
+                            newHighlightedCells.push({ row: highlightRow, col: colIndex });
+
+                            if (!targetCell.classList.contains('highlighted')) {
+                                targetCell.classList.add('highlighted');
+                                console.log(`Cell highlighted: row=${highlightRow}, col=${colIndex}`);
+                                Shiny.setInputValue('generated_cell_ratios_table_1', { row: highlightRow - 1, col: colIndex - 1, highlighted: true }, { priority: "event" });
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        highlightedCells = newHighlightedCells;
+    }
+}
+
+function remove_highlights(newHighlightedCells) {
+    var table = document.getElementById('ratios-table-1');
+    highlightedCells.forEach(function (cell) {
+        var targetCell = table.rows[cell.row].cells[cell.col];
+        if (!newHighlightedCells.some(newCell => newCell.row === cell.row && newCell.col === cell.col)) {
+            targetCell.classList.remove('highlighted');
+            Shiny.setInputValue('generated_cell_ratios_table_1', { row: cell.row - 1, col: cell.col - 1, highlighted: false }, { priority: "event" });
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    Shiny.addCustomMessageHandler('highlight_cells', function (offset) {
+        highlight_default_cell(offset);
+    });
+});
+"""
+
+js_code_i = """
+$(document).on('click', '#ratios-table-2 td', function() {
+    var row = $(this).closest('tr').index();
+    var col = $(this).index();
+    if (col > 0) {
+        console.log(`Cell clicked: row=${row}, col=${col}`);
+        if ($(this).hasClass('highlighted')) {
+            $(this).removeClass('highlighted');
+            Shiny.setInputValue('clicked_cell_ratios_table_2', {row: row, col: col - 1, highlighted: false});
+        } else {
+            $(this).addClass('highlighted');
+            Shiny.setInputValue('clicked_cell_ratios_table_2', {row: row, col: col - 1, highlighted: true});
+        }
+    }
+});
+
+let highlightedCellsIncurred = [];
+
+function highlight_default_cell_incurred(offset) {
+    var table = document.getElementById('ratios-table-2');
+    if (table) {
+        console.log(`Highlighting cells with offset: ${offset}`);
+
+        // Remove existing highlights before adding new ones
+        remove_highlights_incurred([]);
+
+        if (offset === 0) {
+            console.log("Offset is zero, no cells will be highlighted.");
+            return;
+        }
+
+        var newHighlightedCells = [];
+        var baseOffset = -1;
+        var foundBase = false;
+
+        for (var colIndex = 1; colIndex < table.rows[0].cells.length; colIndex++) {
+            for (var rowIndex = table.rows.length - 1; rowIndex > 0; rowIndex--) {
+                var cell = table.rows[rowIndex].cells[colIndex];
+                if (cell.innerText.trim() !== '0') {
+                    if (!foundBase) {
+                        baseOffset = rowIndex;
+                        foundBase = true;
+                    }
+
+                    var targetRow = baseOffset - (colIndex - 1) - offset;
+                    if (targetRow >= 1) {
+                        for (var highlightRow = targetRow; highlightRow >= 1; highlightRow--) {
+                            var targetCell = table.rows[highlightRow].cells[colIndex];
+                            newHighlightedCells.push({ row: highlightRow, col: colIndex });
+
+                            if (!targetCell.classList.contains('highlighted')) {
+                                targetCell.classList.add('highlighted');
+                                console.log(`Cell highlighted: row=${highlightRow}, col=${colIndex}`);
+                                Shiny.setInputValue('generated_cell_ratios_table_2', { row: highlightRow - 1, col: colIndex - 1, highlighted: true }, { priority: "event" });
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        highlightedCellsIncurred = newHighlightedCells;
+    }
+}
+
+function remove_highlights_incurred(newHighlightedCells) {
+    var table = document.getElementById('ratios-table-2');
+    highlightedCellsIncurred.forEach(function (cell) {
+        var targetCell = table.rows[cell.row].cells[cell.col];
+        if (!newHighlightedCells.some(newCell => newCell.row === cell.row && newCell.col === cell.col)) {
+            targetCell.classList.remove('highlighted');
+            Shiny.setInputValue('generated_cell_ratios_table_2', { row: cell.row - 1, col: cell.col - 1, highlighted: false }, { priority: "event" });
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    Shiny.addCustomMessageHandler('highlight_cells_incurred', function (offset) {
+        highlight_default_cell_incurred(offset);
+    });
+});
+"""
+
+css_code = """
+.highlighted {
+    background-color: yellow !important;
+}
+"""
+
+def load_data_from_sheets(file_path, start_row, num_rows, usecols):
+    df_paid_list = []
+    df_incurred_list = []
+
+    for i in range(1, 25):
+        sheet_name_paid = f"DFM paid ({i})"
+        sheet_name_incurred = f"DFM inccured ({i})"
+
+        try:
+            df_paid = pd.read_excel(file_path, sheet_name=sheet_name_paid, usecols=usecols, skiprows=start_row - 1,
+                                    nrows=num_rows, header=None)
+            df_incurred = pd.read_excel(file_path, sheet_name=sheet_name_incurred, usecols=usecols,
+                                        skiprows=start_row - 1, nrows=num_rows, header=None)
+
+            df_paid_change = df_paid.copy()
+            df_incurred_change = df_incurred.copy()
+            df_paid_list.append(df_paid_change)
+            df_incurred_list.append(df_incurred_change)
+        except Exception as e:
+            print(f"Error loading data from sheet {i}: {e}")
+            df_paid_list.append(pd.DataFrame())
+            df_incurred_list.append(pd.DataFrame())
+
+    return df_paid_list, df_incurred_list
+
+file_path = 'R_Q.xlsx'
+start_row = 7
+num_rows = 34
+usecols = 'A:AI'
+
+df_paid_list, df_incurred_list = load_data_from_sheets(file_path, start_row, num_rows, usecols)
+
+app_ui = ui.page_fluid(
+    ui.navset_tab(
+        ui.nav_panel("Wybierz dane",
+            ui.input_numeric("linie_biznesowe", "Wybierz linię biznesową", value=1),
+        ),
+        ui.nav_panel("Paid Claims",
+            ui.layout_sidebar(
+                ui.panel_sidebar(
+                    ui.input_numeric("ilosc_jedynek", "Ile zostawić współczynników", value=5),
+                    ui.input_numeric("ilosc_okresow", "Ilość okresów", value=0),
+                    ui.input_numeric("offset_distance", "Offset Distance", value=0, min=0),
+                    ui.accordion(
+                        ui.accordion_panel(
+                            "Dopasowanie CL",
+                            ui.input_numeric("x", "Maksymalna wartość CL", value=3),
+                            ui.input_numeric("Poz_CL", "Pozostawione CL", value=0),
+                            ui.input_numeric("Max_CL", "Maksymalny CL", value=10),
+                            ui.input_numeric("Min_CL", "Minimalny CL", value=1),
+                            ui.input_selectize('chose_CL', 'Wybierz CL do dopasowania krzywej',
+                                               [int(x) for x in range(1, 20)], selected=[1, 2], multiple=True),
+                            ui.input_action_button("accept_CL", "Dopasuj krzywą", class_="btn-success"),
+                        ),
+                        ui.accordion_panel(
+                            "Dopasowanie wariancji CL",
+                            ui.input_numeric("loss_max_var", "Maksymalna wartość wariancji", value=100000),
+                            ui.input_numeric("Poz_CL_var", "Pozostawione wariancje", value=2),
+                            ui.input_numeric("Max_var", "Maksymalna wariancja", value=1000000),
+                            ui.input_numeric("Min_var", "Minimalna wariancja", value=0),
+                            ui.input_selectize('chose_var', 'Wybierz wariancje do dopasowania krzywej',
+                                               [int(x) for x in range(1, 20)], selected=[1, 2], multiple=True),
+                            ui.input_action_button("accept_CL_var", "Dopasuj krzywą", class_="btn-success"),
+                        ),
+                        id='id_panel', open=False, multiple=False
+                    ),
+                    width=2,
+                ),
+                ui.panel_main(
+                    ui.navset_tab(
+                        ui.nav_panel("Trójkąt",
+                            ui.output_table("triangle_table_p")
+                        ),
+                        ui.nav_panel("Ilorazy",
+                            ui.output_ui("ratios_table_ui_p")
+                        ),
+                        ui.nav_panel("Binary Ilorazy",
+                            ui.output_ui("binary_ratios_table_ui_p")
+                        ),
+                        ui.nav_panel("Skumulowane CL",
+                            ui.page_fillable(
+                                ui.layout_column_wrap(1, ui.card(ui.output_data_frame("macierz_wspol_CL_interaktywna")),
+                                                      height=180)
+                            ),
+                            ui.page_fillable(
+                                ui.layout_column_wrap(1, ui.card(ui.output_data_frame("wspol_z_krzywej_CL_paid_interaktywna")),
+                                                      height=180)
+                            ),
+                            ui.page_fillable(
+                                ui.layout_column_wrap(1, ui.card(ui.output_data_frame("wspol_jedynki")),
+                                                      height=100)
+                            ),
+                            ui.layout_column_wrap(
+                                1,
+                                ui.card(ui.output_plot("plot_wspolczynniki_dopasowane_interaktywny")),
+                                height=400
+                            ),
+                        ),
+                    ),
+                    ui.tags.style(css_code),
+                    ui.tags.script(js_code_p)
+                )
+            ),
+        ),
+        ui.nav_panel("Incurred Claims",
+            ui.layout_sidebar(
+                ui.panel_sidebar(
+                    ui.input_numeric("ilosc_jedynek_incurred", "Ile zostawić współczynników", value=5),
+                    ui.input_numeric("ilosc_okresow_incurred", "Ilość okresów", value=0),
+                    ui.input_numeric("offset_distance_incurred", "Offset Distance", value=0, min=0),
+                    ui.accordion(
+                        ui.accordion_panel(
+                            "Dopasowanie CL",
+                            ui.input_numeric("x_incurred", "Maksymalna wartość CL", value=3),
+                            ui.input_numeric("Poz_CL_incurred", "Pozostawione CL", value=2),
+                            ui.input_numeric("Max_CL_incurred", "Maksymalny CL", value=10),
+                            ui.input_numeric("Min_CL_incurred", "Minimalny CL", value=1),
+                            ui.input_selectize('chose_CL_incurred', 'Wybierz CL do dopasowania krzywej',
+                                               [int(x) for x in range(1, 20)], selected=[1, 2], multiple=True),
+                            ui.input_action_button("accept_CL_incurred", "Dopasuj krzywą", class_="btn-success"),
+                        ),
+                        ui.accordion_panel(
+                            "Dopasowanie wariancji CL",
+                            ui.input_numeric("loss_max_var_incurred", "Maksymalna wartość wariancji", value=100000),
+                            ui.input_numeric("Poz_CL_var_incurred", "Pozostawione wariancje", value=0),
+                            ui.input_numeric("Max_var_incurred", "Maksymalna wariancja", value=1000000),
+                            ui.input_numeric("Min_var_incurred", "Minimalna wariancja", value=0),
+                            ui.input_selectize('chose_var_incurred', 'Wybierz wariancje do dopasowania krzywej',
+                                               [int(x) for x in range(1, 20)], selected=[1, 2], multiple=True),
+                            ui.input_action_button("accept_CL_var_incurred", "Dopasuj krzywą", class_="btn-success"),
+                        ),
+                        id='id_panel_incurred', open=False, multiple=False
+                    ),
+                    width=2,
+                ),
+                ui.panel_main(
+                    ui.navset_tab(
+                        ui.nav_panel("Trójkąt",
+                            ui.output_table("triangle_table_i")
+                        ),
+                        ui.nav_panel("Ilorazy",
+                            ui.output_ui("ratios_table_ui_i")
+                        ),
+                        ui.nav_panel("Binary Ilorazy",
+                            ui.output_ui("binary_ratios_table_ui_i")
+                        ),
+                        ui.nav_panel("Skumulowane CL",
+                            ui.page_fillable(
+                                ui.layout_column_wrap(1, ui.card(ui.output_data_frame("macierz_wspol_CL_interaktywna_incurred")),
+                                                      height=180)
+                            ),
+                            ui.page_fillable(
+                                ui.layout_column_wrap(1, ui.card(ui.output_data_frame("wspol_z_krzywej_CL_interaktywna_incurred")),
+                                                      height=180)
+                            ),
+                            ui.page_fillable(
+                                ui.layout_column_wrap(1, ui.card(ui.output_data_frame("wspol_jedynki_inccured")),
+                                                      height=100)
+                            ),
+                            ui.layout_column_wrap(
+                                1,
+                                ui.card(ui.output_plot("plot_wspolczynniki_dopasowane_interaktywny_incurred")),
+                                height=400
+                            ),
+                        ),
+                    ),
+                    ui.tags.style(css_code),
+                    ui.tags.script(js_code_i)
+                )
+            ),
+        ),
+        ui.nav_panel("Podsumowanie",
+            ui.page_fillable(
+                ui.layout_column_wrap(1,
+                                      ui.card(ui.output_data_frame("posumowanie_wyniki")),
+                                      width=800)
+            ),
+        ),
+    )
+)
+
+def server(input: Inputs, output: Outputs, session: Session):
+    linia_biznesowa = reactive.Value(0)
+    global ratio_df_p, binary_df_p
+    global ratio_df_i, binary_df_i
+
+    update_trigger_p = reactive.Value(0)
+    update_trigger_i = reactive.Value(0)
+
+    @reactive.Effect
+    @reactive.event(input.linie_biznesowe)
+    def update_linia_biznesowa():
+        linia_biznesowa.set(input.linie_biznesowe() - 1)
+        update_global_variables(linia_biznesowa.get())
+        update_global_variables_i(linia_biznesowa.get())
+
+    def update_global_variables(linia_biznesowa):
+        global ratio_df_p, binary_df_p
+        ratio_df_p = calculate_ratios(df_paid_list[linia_biznesowa])
+        binary_df_p = create_binary_df(ratio_df_p)
+        print(f"Updated ratio_df_p: {ratio_df_p}")
+        print(f"Updated binary_df_p: {binary_df_p}")
+
+    def update_global_variables_i(linia_biznesowa):
+        global ratio_df_i, binary_df_i
+        ratio_df_i = calculate_ratios(df_incurred_list[linia_biznesowa])
+        binary_df_i = create_binary_df(ratio_df_i)
+        print(f"Updated ratio_df_i: {ratio_df_i}")
+        print(f"Updated binary_df_i: {binary_df_i}")
+
+    @reactive.Calc
+    def triangle_paid():
+        df = df_paid_list[linia_biznesowa.get()]
+        return df
+
+    @reactive.Calc
+    def triangle_incurred():
+        df = df_incurred_list[linia_biznesowa.get()]
+        return df
+
+    clicked_cells_p = reactive.Value([])
+
+    @output
+    @render.table
+    def triangle_table_p():
+        df = triangle_paid()
+        return df
+
+    @output
+    @render.ui
+    def ratios_table_ui_p():
+        update_global_variables(linia_biznesowa.get())
+        return ui.HTML(
+            ratio_df_p.to_html(classes='table table-striped table-hover', table_id="ratios-table-1")
+        ), ui.tags.script("highlight_default_cell(" + str(input.offset_distance()) + ");")
+
+    @output
+    @render.ui
+    def binary_ratios_table_ui_p():
+        update_trigger_p.get()
+        df = binary_df_p.copy()
+        return ui.HTML(df.to_html(classes='table table-striped table-hover', table_id="binary-ratios-table-1", na_rep='NaN', float_format='{:.0f}'.format))
+
+    @reactive.Effect
+    @reactive.event(lambda: input.clicked_cell_ratios_table_1())
+    def update_clicked_cell_p():
+        cell = input.clicked_cell_ratios_table_1()
+        print(f"Clicked cell: {cell}")
+        if cell:
+            row, col, highlighted = cell['row'], cell['col'], cell['highlighted']
+            if row < binary_df_p.shape[0] and col < binary_df_p.shape[1]:  # Check bounds
+                if highlighted:
+                    binary_df_p.iat[row, col] = 0
+                else:
+                    binary_df_p.iat[row, col] = 1
+                update_trigger_p.set(update_trigger_p.get() + 1)
+
+    @reactive.Effect
+    @reactive.event(input.offset_distance)
+    async def update_highlight_default_cell():
+        offset = input.offset_distance()
+        if offset == 0:
+            await session.send_custom_message('highlight_cells', 0)
+        else:
+            await session.send_custom_message('highlight_cells', offset)
+
+    clicked_cells_i = reactive.Value([])
+
+    @reactive.Effect
+    @reactive.event(lambda: input.clicked_cell_ratios_table_2())
+    @reactive.event(input.offset_distance)
+    def update_clicked_cell_i():
+        cell = input.clicked_cell_ratios_table_2()
+        print(f"Clicked cell: {cell}")
+        if cell:
+            row, col, highlighted = cell['row'], cell['col'], cell['highlighted']
+            if row < binary_df_i.shape[0] and col < binary_df_i.shape[1]:  # Check bounds
+                if highlighted:
+                    binary_df_i.iat[row, col] = 0
+                else:
+                    binary_df_i.iat[row, col] = 1
+                update_trigger_i.set(update_trigger_i.get() + 1)
+
+    @reactive.Effect
+    @reactive.event(input.offset_distance_incurred)
+    async def update_highlight_default_cell_incurred():
+        offset = input.offset_distance_incurred()
+        if offset == 0:
+            await session.send_custom_message('highlight_cells_incurred', 0)
+        else:
+            await session.send_custom_message('highlight_cells_incurred', offset)
+
+    @output
+    @render.table
+    def triangle_table_i():
+        df = triangle_incurred()
+        return df
+
+    @output
+    @render.ui
+    def ratios_table_ui_i():
+        update_global_variables_i(linia_biznesowa.get())
+        return ui.HTML(ratio_df_i.to_html(classes='table table-striped table-hover', table_id="ratios-table-2"))
+
+    @output
+    @render.ui
+    def binary_ratios_table_ui_i():
+        update_trigger_i.get()
+        df = binary_df_i.copy()
+        return ui.HTML(df.to_html(classes='table table-striped table-hover', table_id="binary-ratios-table-2", na_rep='NaN', float_format='{:.0f}'.format))
+
+    @reactive.Effect
+    @reactive.event(lambda: input.clicked_cell_ratios_table_2())
+    @reactive.event(input.offset_distance)
+    def update_clicked_cell_i():
+        cell = input.clicked_cell_ratios_table_2()
+        print(f"Clicked cell: {cell}")
+        if cell:
+            row, col, highlighted = cell['row'], cell['col'], cell['highlighted']
+            if row < binary_df_i.shape[0] and col < binary_df_i.shape[1]:  # Check bounds
+                if highlighted:
+                    binary_df_i.iat[row, col] = 0
+                else:
+                    binary_df_i.iat[row, col] = 1
+                update_trigger_i.set(update_trigger_i.get() + 1)
+
+    @reactive.Effect
+    @reactive.event(lambda: input.generated_cell_ratios_table_1())
+    def update_generated_cells():
+        cell = input.generated_cell_ratios_table_1()
+        print(f"Generated cell: {cell}")
+        if cell:
+            row, col, highlighted = cell['row'], cell['col'], cell['highlighted']
+            if row < binary_df_p.shape[0] and col < binary_df_p.shape[1]:  # Check bounds
+                if highlighted:
+                    binary_df_p.iat[row, col] = 0
+                else:
+                    binary_df_p.iat[row, col] = 1
+                update_trigger_p.set(update_trigger_p.get() + 1)
+
+    @reactive.Effect
+    @reactive.event(lambda: input.generated_cell_ratios_table_2())
+    def update_generated_cells_i():
+        cell = input.generated_cell_ratios_table_2()
+        print(f"Generated cell: {cell}")
+        if cell:
+            row, col, highlighted = cell['row'], cell['col'], cell['highlighted']
+            if row < binary_df_i.shape[0] and col < binary_df_i.shape[1]:
+                if highlighted:
+                    binary_df_i.iat[row, col] = 0
+                else:
+                    binary_df_i.iat[row, col] = 1
+                update_trigger_i.set(update_trigger_i.get() + 1)
+
+    @reactive.Calc
+    @reactive.event(lambda: input.clicked_cell_ratios_table_2())
+    @reactive.event(input.offset_distance)
+    def wspolczynniki_multiplikatywna_interaktywna_incurred():
+        triagnle = triangle_incurred().iloc[:, 1:]
+        binary_df_pd = binary_df_i.copy()
+        binary_df_deterministic = yh.create_binary_df(triagnle)
+        ind_all, m_i, m_first = yh.index_all(triagnle)
+        macierz_wsp_l = yh.l_i_j(triagnle, ind_all)
+        Dev_j_deterministic = yh.Dev(triagnle, binary_df_deterministic, macierz_wsp_l, ind_all)
+        Dev_j = yh.Dev(triagnle, binary_df_pd, macierz_wsp_l, ind_all)
+        sigma_j = yh.sigma(triagnle, binary_df_pd, macierz_wsp_l, Dev_j, ind_all)
+        sd_j = yh.wspolczynnik_sd(triagnle, binary_df_pd, sigma_j, ind_all)
+        I_dataframe = pd.DataFrame(0, index=['CL_base', 'CL', 'sigma', 'sd'],
+                                   columns=[str(x) for x in range(1, len(Dev_j) + 2)])
+        I_dataframe.iloc[0, :] = ["CL_base"] + Dev_j_deterministic
+        I_dataframe.iloc[1, :] = ["CL"] + Dev_j
+        I_dataframe.iloc[2, :] = ["sigma"] + sigma_j
+        I_dataframe.iloc[3, :] = ["sd"] + sd_j
+        return I_dataframe
+
+    @output
+    @render.data_frame
+    def macierz_wspol_CL_interaktywna_incurred():
+        df_out_mult = wspolczynniki_multiplikatywna_interaktywna_incurred()
+        return render.DataGrid(
+            df_out_mult,
+            width="100%",
+            height="150%",
+        )
+
+    @reactive.Calc
+    @reactive.event(input.accept_CL_incurred, ignore_none=False)
+    def dopasowanie_krzywej_factor_interaktywne_incurred():
+        Dev_pd = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[1, 1:]
+        sd_pd = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[3, 1:]
+        ilosc_dop_wsp_CL = [int(x) for x in input.chose_CL_incurred()]
+        vector_value, x_k_ind = yh.check_value(Dev_pd, ilosc_dop_wsp_CL,
+                                               input.Min_CL_incurred(), input.Max_CL_incurred())
+        sd_chose = [sd_pd[x] for x in x_k_ind]
+        n_CL = len(Dev_pd) - (len(ilosc_dop_wsp_CL) - len(x_k_ind))
+        a, b = yh.fit_curve(vector_value, sd_chose, x_k_ind, 'factor_CL', n_CL)
+        dev_pozostawione = [Dev_pd[x] for x in range(0, (input.Poz_CL_incurred()))]
+        vec_output = ['CL'] + dev_pozostawione + yh.wspolczynnik_reg(a, b, input.Poz_CL_incurred() + 1,
+                                                                     len(Dev_pd.tolist()) + input.ilosc_okresow_incurred(),
+                                                                     'factor_CL')
+        return vec_output
+
+    @reactive.Calc
+    @reactive.event(input.accept_CL_var_incurred, ignore_none=False)
+    def dopasowanie_krzywej_variance_interaktywne_incurred():
+        sigma_pd = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[2, 1:]
+        sd_pd = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[3, 1:]
+        ilosc_dop_wsp_var = [int(x) for x in input.chose_var_incurred()]
+        sigma_pd_choose = [sigma_pd[x] for x in ilosc_dop_wsp_var]
+        vector_value, x_k_ind = yh.check_value(sigma_pd_choose, ilosc_dop_wsp_var,
+                                               input.Min_var_incurred(), input.Max_var_incurred())
+        n_CL_var = len(sigma_pd) - (len(ilosc_dop_wsp_var) - len(x_k_ind))
+        sd_chose = [sd_pd[x] for x in x_k_ind]
+        a, b = yh.fit_curve(vector_value, sd_chose, x_k_ind, 'variance_CL', n_CL_var)
+        sigma_pozostawione = [sigma_pd[x] for x in range(0, (input.Poz_CL_var_incurred()))]
+        vec_output = ['sigma'] + sigma_pozostawione + yh.wspolczynnik_reg(a, b, input.Poz_CL_var_incurred() + 1,
+                                                                          len(sigma_pd.tolist()) + input.ilosc_okresow_incurred(),
+                                                                          'variance_CL')
+        return vec_output
+
+    @output
+    @render.data_frame
+    def wspol_z_krzywej_CL_interaktywna_incurred():
+        Dev_pd = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[0,:]
+        size_col = len(Dev_pd) + input.ilosc_okresow_incurred()
+        II_dataframe = pd.DataFrame(0, index=[0, 1, 2], columns=[str(x) for x in range(1, size_col + 1)])
+        if len(dopasowanie_krzywej_factor_interaktywne_incurred()) != size_col and len(dopasowanie_krzywej_variance_interaktywne_incurred()) == size_col:
+            II_dataframe.iloc[1, :] = dopasowanie_krzywej_variance_interaktywne_incurred()
+        elif len(dopasowanie_krzywej_variance_interaktywne_incurred()) != size_col and len(dopasowanie_krzywej_factor_interaktywne_incurred()) == size_col:
+            II_dataframe.iloc[0, :] = dopasowanie_krzywej_factor_interaktywne_incurred()
+        elif len(dopasowanie_krzywej_variance_interaktywne_incurred()) == size_col and len(dopasowanie_krzywej_factor_interaktywne_incurred()) == size_col:
+            II_dataframe.iloc[0, :] = dopasowanie_krzywej_factor_interaktywne_incurred()
+            II_dataframe.iloc[1, :] = dopasowanie_krzywej_variance_interaktywne_incurred()
+        return render.DataGrid(
+            II_dataframe,
+            width="100%",
+            height="100%",
+            row_selection_mode='single'
+        )
+
+    def ilosc_jedynek_incurred_pd():
+        CL_input = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[1, 1:].to_list()
+        CL_output = CL_input[:int(input.ilosc_jedynek_incurred())]+[1 for x in range(int(input.ilosc_jedynek_incurred()),len(CL_input))]
+
+        I_dataframe = pd.DataFrame(0, index=['CL_dopasowanie'],
+                                   columns=[str(x) for x in range(1, len(CL_output) + 2)])
+        I_dataframe.iloc[0, :] = ["CL_dopasowanie"] + CL_output
+        return I_dataframe
+
+    @output
+    @render.data_frame
+    def wspol_jedynki_inccured():
+        df_out_mult = ilosc_jedynek_incurred_pd()
+        return render.DataGrid(
+            df_out_mult,
+            width="100%",
+            height="150%",
+        )
+
+    @output
+    @render.plot()
+    def plot_wspolczynniki_dopasowane_interaktywny_incurred():
+        Dev_pd = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[1, 1:]
+        sigma_pd = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[2, 1:]
+        fig = plt.figure()
+        if input.id_panel_incurred() is None:
+            plt.xticks(np.arange(1, len(sigma_pd.tolist()) + input.ilosc_okresow_incurred()))
+            fig.autofmt_xdate()
+        elif input.id_panel_incurred()[0] == 'Dopasowanie wariancji CL':
+            var_fit = dopasowanie_krzywej_variance_interaktywne_incurred()
+            plt.plot(np.arange(1, len(sigma_pd.tolist()) + 1), sigma_pd.to_list(), 'b', label='Sigma CL')
+            plt.plot(np.arange(input.Poz_CL_var_incurred(), len(var_fit)), var_fit[input.Poz_CL_var_incurred():], 'r', label='Dopasowana Sigma CL')
+            plt.xticks(np.arange(1, len(sigma_pd.tolist()) + 1 + input.ilosc_okresow_incurred()))
+            fig.autofmt_xdate()
+            fig.legend()
+        elif input.id_panel_incurred()[0] == 'Dopasowanie CL':
+            CL_fit = dopasowanie_krzywej_factor_interaktywne_incurred()
+            plt.plot(np.arange(1, len(Dev_pd.tolist()) + 1), Dev_pd.to_list(), 'b', label='CL')
+            plt.plot(np.arange(input.Poz_CL_incurred(), len(CL_fit)), CL_fit[input.Poz_CL_incurred():], 'r', label='Dopasowane CL')
+            plt.xticks(np.arange(1, len(Dev_pd.tolist()) + 1 + input.ilosc_okresow_incurred()))
+            fig.autofmt_xdate()
+            fig.legend()
+        return fig
+
+    @reactive.Calc
+    def calc_chainladder_interaktywne_incurred():
+        df_out_mult = ilosc_jedynek_incurred_pd().iloc[0,1:].to_list()
+        triangle = triangle_incurred().iloc[:, 1:]
+        CL_fit = dopasowanie_krzywej_factor_interaktywne_incurred()
+        Dev_j_base = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[0, 1:].to_list()
+        Dev_j_z_wagami = wspolczynniki_multiplikatywna_interaktywna_incurred().iloc[1, 1:].to_list()
+        data_output = pd.DataFrame(0, index=np.arange(0, triangle.shape[0] + 1),
+                                   columns=['Rok/Suma', 'Ult_base', 'IBNR_base', 'Ult z wagami', 'IBNR z wagami','Ult z jedynkami', 'IBNR z jedynkami',
+                                            'Ult z krzywą', 'IBNR z krzywą'])
+        data_output.iloc[:, 0] = np.arange(0, triangle.shape[0] + 1)
+        k = 1
+        for wspolczynniki in [Dev_j_base, Dev_j_z_wagami,df_out_mult, CL_fit[1:]]:
+            proj_triangle = yh.triangle_forward(triangle, wspolczynniki, 0)
+            diag = yh.reverse_list(yh.trian_diag(triangle))
+            Ultimate_Param_ReservingRisk = proj_triangle.iloc[:, int(proj_triangle.columns[-1]) - 1].to_list()
+            data_output.iloc[:, k] = Ultimate_Param_ReservingRisk + [np.sum(Ultimate_Param_ReservingRisk)]
+            k = k + 1
+            BE_Param_ReservingRisk = [x - y for x, y in zip(Ultimate_Param_ReservingRisk, diag)]
+            data_output.iloc[:, k] = BE_Param_ReservingRisk + [np.sum(BE_Param_ReservingRisk)]
+            k = k + 1
+        return data_output
+
+    @output
+    @render.data_frame
+    def Ult_BE_data_interaktywne_incurred():
+        df = calc_chainladder_interaktywne_incurred()
+        return render.DataGrid(
+            df,
+            width="100%",
+            height="150%",
+        )
+
+app = App(app_ui, server)
+
+if __name__ == "__main__":
+    app.run()
