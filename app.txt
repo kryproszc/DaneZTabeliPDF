@@ -1,106 +1,14 @@
-from shiny import App, Inputs, Outputs, Session, render, ui, reactive
-import pandas as pd
+reduced_df = df.iloc[1:, 1:]
 
-# Przykładowe dane
-df_paid_list = [pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]}),
-                pd.DataFrame({'A': [10, 23, 30], 'B': [20, 50, 60]}),
-                pd.DataFrame({'A': [100, 200, 300], 'B': [400, 500, 600]})]
+# Zamiana liczb na 1, NaN pozostają bez zmian
 
-df_incurred_list = [pd.DataFrame({'A': [7, 8, 9], 'B': [10, 11, 12]}),
-                    pd.DataFrame({'A': [70, 80, 90], 'B': [100, 110, 120]}),
-                    pd.DataFrame({'A': [700, 800, 900], 'B': [1000, 1100, 1200]})]
+def create_pattern_matrix(reduced_df, pattern_number):
+    size = reduced_df.shape[0]-1
+    reduced_df_copy = reduced_df.copy()
+    for j in range(size):
+        for i in range(size-pattern_number-j):
+            reduced_df_copy.iloc[i,j] = 0
+    return reduced_df_copy
 
-df_result_list = [pd.DataFrame({'A': [13, 14, 15], 'B': [16, 17, 18]}),
-                  pd.DataFrame({'A': [130, 140, 150], 'B': [160, 170, 180]}),
-                  pd.DataFrame({'A': [1300, 1400, 1500], 'B': [1600, 1700, 1800]})]
-
-def calculate_ratios(df):
-    ratio_df = pd.DataFrame()
-    for i in range(1, df.shape[1]):
-        ratio_col = df.iloc[:, i] / df.iloc[:, i - 1]
-        ratio_df[f'Ratio_{i}/{i-1}'] = ratio_col
-    return ratio_df
-
-def create_binary_df(ratio_df):
-    binary_df = ratio_df.applymap(lambda x: 1 if pd.notna(x) else np.nan)
-    return binary_df
-
-app_ui = ui.page_fluid(
-    ui.navset_tab(
-        ui.nav("Wybierz dane",
-               ui.input_numeric("linie_biznesowe", "Wybierz linię biznesową", value=0, min=0, max=2)),
-        ui.nav("Paid Claims",
-               ui.layout_sidebar(
-                   ui.panel_sidebar(
-                       ui.input_numeric("ilosc_jedynek", "Ile zostawić współczynników", value=5),
-                       ui.input_numeric("ilosc_okresow", "Ilość okresów", value=0)
-                   ),
-                   ui.panel_main(
-                       ui.navset_tab(
-                           ui.nav_panel("Trójkąt",
-                                        ui.output_table("triangle_table_p")
-                                        ),
-                           ui.nav_panel("Ilorazy",
-                                        ui.output_ui("ratios_table_ui_p")
-                                        ),
-                           ui.nav_panel("Binary Ilorazy",
-                                        ui.output_ui("binary_ratios_table_ui_p")
-                                        )
-                       )
-                   )
-               )
-        )
-    )
-)
-
-
-def server(input: Inputs, output: Outputs, session: Session):
-    global ratio_df_p, binary_df_p
-
-    linia_biznesowa = reactive.Value(0)
-
-    @reactive.Effect
-    @reactive.event(input.linie_biznesowe)
-    def update_linia_biznesowa():
-        linia_biznesowa.set(input.linie_biznesowe())
-        print(f"Updated linia_biznesowa: {linia_biznesowa.get()}")
-        update_global_variables(linia_biznesowa.get())
-
-    def update_global_variables(linia_biznesowa):
-        global ratio_df_p, binary_df_p
-        ratio_df_p = calculate_ratios(df_paid_list[linia_biznesowa])
-        binary_df_p = create_binary_df(ratio_df_p)
-
-    @reactive.Calc
-    def get_ratio_df_p():
-        update_global_variables(linia_biznesowa.get())
-        return ratio_df_p
-
-    @reactive.Calc
-    def get_binary_df_p():
-        update_global_variables(linia_biznesowa.get())
-        return binary_df_p
-
-    @output
-    @render.table
-    def triangle_table_p():
-        df = df_paid_list[linia_biznesowa.get()]
-        return df
-
-    @output
-    @render.ui
-    def ratios_table_ui_p():
-        ratio_df = get_ratio_df_p()
-        return ui.HTML(ratio_df.to_html(classes='table table-striped table-hover', table_id="ratios-table-1"))
-
-    @output
-    @render.ui
-    def binary_ratios_table_ui_p():
-        binary_df = get_binary_df_p()
-        return ui.HTML(binary_df.to_html(classes='table table-striped table-hover', table_id="binary-ratios-table-1",
-                                         na_rep='NaN', float_format='{:.0f}'.format))
-
-app = App(app_ui, server)
-
-if __name__ == "__main__":
-    app.run()
+# Przykłady dla wzoru 1 i 2
+pattern_1 = create_pattern_matrix(reduced_df, 4)
