@@ -1,41 +1,83 @@
-# Wektor danych
-data_vector <- c(2, 8, 1, 4, 9, 5, 3, 7, 6, 10)  # Zmień na swoje dane
+library(ggplot2)
+library(officer)
+library(rvg)
+library(dplyr)
 
-# Kwantyle
-quantiles <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
+# Funkcja do tworzenia wykresu
+create_plot <- function(data_vector, input_values, title) {
+  # Kwantyle
+  quantiles <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
+  
+  # Obliczanie wartości kwantyli
+  quantile_values <- quantile(data_vector, probs = quantiles)
+  
+  # Tworzenie ramki danych dla ggplot
+  df <- data.frame(Quantiles = quantiles, Values = quantile_values)
+  
+  # Obliczenie odpowiadających kwantyli dla podanych wartości
+  input_quantiles <- sapply(input_values, function(value) ecdf(data_vector)(value))
+  
+  # Wykres
+  plot <- ggplot(df, aes(x = Quantiles, y = Values)) +
+    geom_line(aes(color = "Bootstrap"), size = 1.2) +
+    geom_point(aes(color = "Bootstrap"), size = 3) +
+    geom_vline(aes(xintercept = input_quantiles["X"], color = "X"), linetype = "dashed", size = 1) +
+    geom_vline(aes(xintercept = input_quantiles["Y"], color = "Y"), linetype = "dashed", size = 1) +
+    geom_vline(aes(xintercept = input_quantiles["Z"], color = "Z"), linetype = "dashed", size = 1) +
+    scale_x_continuous(breaks = quantiles) +
+    scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue", "X" = "green", "Y" = "orange", "Z" = "purple")) +
+    labs(title = title,
+         x = "Kwantyle",
+         y = "Wartości kwantyli") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+          plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+          axis.title = element_text(size = 12, face = "bold"),
+          legend.position = "top")
+  
+  return(plot)
+}
 
-# Obliczanie wartości kwantyli
-quantile_values <- quantile(data_vector, probs = quantiles)
+# Przykładowe wektory danych (w rzeczywistości zastąp odpowiednimi danymi)
+DFM_paid_1 <- c(2, 8, 1, 4, 9, 5, 3, 7, 6, 10)
+DFM_paid_2 <- c(3, 7, 2, 5, 10, 6, 4, 8, 1, 9)
+DFM_paid_3 <- c(1, 9, 2, 6, 8, 3, 5, 7, 4, 10)
 
-# Tworzenie ramki danych dla ggplot
-df <- data.frame(Quantiles = quantiles, Values = quantile_values)
+DFM_incurred_1 <- c(2, 9, 1, 7, 4, 6, 3, 8, 5, 10)
+DFM_incurred_2 <- c(4, 6, 2, 9, 1, 8, 3, 7, 5, 10)
+DFM_incurred_3 <- c(5, 7, 1, 8, 2, 9, 3, 10, 4, 6)
 
-# Wprowadzenie wartości
-input_values <- c(X = 5, Y = 7, Z = 9)  # Zmień na swoje wartości
+# Wprowadzenie wartości dla każdej pary
+input_values_list <- list(
+  list(paid = c(X = 5, Y = 7, Z = 9), incurred = c(X = 6, Y = 8, Z = 10)),
+  list(paid = c(X = 4, Y = 6, Z = 8), incurred = c(X = 5, Y = 7, Z = 9)),
+  list(paid = c(X = 3, Y = 5, Z = 7), incurred = c(X = 4, Y = 6, Z = 8))
+)
 
-# Obliczenie odpowiadających kwantyli dla podanych wartości
-input_quantiles <- sapply(input_values, function(value) ecdf(data_vector)(value))
+# Utworzenie nowego dokumentu Word
+doc <- read_docx()
 
-# Wykres
-plot <- ggplot(df, aes(x = Quantiles, y = Values)) +
-  geom_line(aes(color = "Bootstrap"), size = 1.2) +
-  geom_point(aes(color = "Bootstrap"), size = 3) +
-  geom_vline(aes(xintercept = input_quantiles["X"], color = "X"), linetype = "dashed", size = 1) +
-  geom_vline(aes(xintercept = input_quantiles["Y"], color = "Y"), linetype = "dashed", size = 1) +
-  geom_vline(aes(xintercept = input_quantiles["Z"], color = "Z"), linetype = "dashed", size = 1) +
-  scale_x_continuous(breaks = quantiles) +
-  scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue", "X" = "green", "Y" = "orange", "Z" = "purple")) +
-  labs(title = "Wykres kwantyli",
-       x = "Kwantyle",
-       y = "Wartości kwantyli") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
-        plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
-        axis.title = element_text(size = 12, face = "bold"),
-        legend.position = "top")
+# Dodanie tytułów, tabel i wykresów do dokumentu Word w pętli
+for (i in 1:3) {
+  doc <- doc %>%
+    body_add_par(paste(i, "Dla linii", i), style = "heading 1")
+  
+  for (type in c("paid", "incurred")) {
+    data_vector <- get(paste("DFM_", type, "_", i, sep = ""))
+    title <- paste("DFM ", type, " (", i, ")", sep = "")
+    input_values <- input_values_list[[i]][[type]]
+    
+    value_table <- data.frame(Wartości = c("X", "Y", "Z"), Wartości_Value = c(input_values["X"], input_values["Y"], input_values["Z"]))
+    
+    doc <- doc %>%
+      body_add_par(paste("1.", ifelse(type == "paid", "1", "4"), " Tabela wartości dla DFM ", type, " (", i, ")", sep = ""), style = "heading 2") %>%
+      body_add_table(value_table, style = "table_template") %>%
+      body_add_par(paste("1.", ifelse(type == "paid", "2", "5"), " Wykres dla DFM ", type, " (", i, ")", sep = ""), style = "heading 2") %>%
+      body_add_gg(value = create_plot(data_vector, input_values, title), width = 6, height = 4) %>%
+      body_add_par(paste("1.", ifelse(type == "paid", "3", "6"), " Komentarz dla DFM ", type, " (", i, ")", sep = ""), style = "heading 2") %>%
+      body_add_par("", style = "Normal")  # Puste miejsce na komentarz
+  }
+}
 
-# Wyświetlenie wykresu
-print(plot)
-
-# Zapisanie wykresu do pliku
-ggsave("wykres_kwantyli.png", plot = plot, path = "sciezka/do/folderu", width = 8, height = 6)
+# Zapisanie dokumentu Word
+print(doc, target = "wykresy_linii_z_tabelami.docx")
