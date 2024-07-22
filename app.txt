@@ -1,7 +1,36 @@
-rows_with_zeros <- apply(df, 1, function(row) all(row == 0))
+library(readxl)
+library(dplyr)
 
-# Krok 2: Usunięcie tych wierszy
-df <- df[!rows_with_zeros, ]
+# Ścieżka do pliku Excel
+file_path <- "sciezka/do/pliku.xlsx"
 
-# Krok 3: Usunięcie ostatniej kolumny
-df <- df[, -ncol(df)]
+# Funkcja do wczytywania określonych kolumn i wierszy z arkusza
+read_sheet_subset <- function(sheet_name, cols, rows) {
+  data <- read_excel(file_path, sheet = sheet_name, range = cell_rows(rows))
+  data <- data[, cols]
+  return(data)
+}
+
+# Pobranie nazw wszystkich arkuszy
+sheet_names <- excel_sheets(file_path)
+
+# Wczytanie określonych kolumn i wierszy z każdego arkusza do listy
+cols_to_read <- c("Kolumna1", "Kolumna2") # Zmień na nazwy kolumn, które chcesz wczytać
+rows_to_read <- 1:10 # Zmień na zakres wierszy, które chcesz wczytać
+
+data_list <- lapply(sheet_names, function(sheet) {
+  read_sheet_subset(sheet, cols_to_read, rows_to_read)
+})
+
+# Przypisanie nazw arkuszy jako nazw listy
+names(data_list) <- sheet_names
+
+# Funkcja do pobierania tabeli na podstawie nazwy arkusza
+get_table_by_sheet <- function(sheet_name) {
+  return(data_list[[sheet_name]])
+}
+
+# Przykład użycia funkcji
+sheet_to_get <- "Sheet1" # Zmień na nazwę arkusza, który chcesz pobrać
+table <- get_table_by_sheet(sheet_to_get)
+print(table)
