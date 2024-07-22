@@ -1,7 +1,3 @@
-library(readxl)
-library(dplyr)
-library(ggplot2)
-
 # Wektor danych
 data_vector <- c(2, 8, 1, 4, 9, 5, 3, 7, 6, 10)  # Zmień na swoje dane
 
@@ -14,19 +10,21 @@ quantile_values <- quantile(data_vector, probs = quantiles)
 # Tworzenie ramki danych dla ggplot
 df <- data.frame(Quantiles = quantiles, Values = quantile_values)
 
-# Wprowadzenie liczby
-input_value <- 5  # Zmień na swoją wartość
+# Wprowadzenie wartości
+input_values <- c(X = 5, Y = 7, Z = 9)  # Zmień na swoje wartości
 
-# Obliczenie odpowiadającego kwantyla dla podanej wartości
-input_quantile <- ecdf(data_vector)(input_value)
+# Obliczenie odpowiadających kwantyli dla podanych wartości
+input_quantiles <- sapply(input_values, function(value) ecdf(data_vector)(value))
 
 # Wykres
 plot <- ggplot(df, aes(x = Quantiles, y = Values)) +
   geom_line(aes(color = "Bootstrap"), size = 1.2) +
   geom_point(aes(color = "Bootstrap"), size = 3) +
-  geom_vline(aes(xintercept = input_quantile, color = "X"), linetype = "dashed", size = 1) +
+  geom_vline(aes(xintercept = input_quantiles["X"], color = "X"), linetype = "dashed", size = 1) +
+  geom_vline(aes(xintercept = input_quantiles["Y"], color = "Y"), linetype = "dashed", size = 1) +
+  geom_vline(aes(xintercept = input_quantiles["Z"], color = "Z"), linetype = "dashed", size = 1) +
   scale_x_continuous(breaks = quantiles) +
-  scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue", "X" = "green")) +
+  scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue", "X" = "green", "Y" = "orange", "Z" = "purple")) +
   labs(title = "Wykres kwantyli",
        x = "Kwantyle",
        y = "Wartości kwantyli") +
