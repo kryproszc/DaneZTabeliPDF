@@ -1,34 +1,43 @@
 library(readxl)
 library(dplyr)
+library(ggplot2)
 
-# Ścieżka do pliku Excel
-file_path <- "sciezka/do/pliku.xlsx"
+# Wektor danych
+data_vector <- c(2, 8, 1, 4, 9, 5, 3, 7, 6, 10)  # Zmień na swoje dane
 
-# Funkcja do wczytywania określonych kolumn i wierszy z arkusza
-read_sheet_subset <- function(sheet_name) {
-  # Definiowanie zakresu wierszy i kolumn
-  range <- "A6:Z29"
-  data <- read_excel(file_path, sheet = sheet_name, range = range)
-  return(data)
-}
+# Kwantyle
+quantiles <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
 
-# Pobranie nazw wszystkich arkuszy
-sheet_names <- excel_sheets(file_path)
+# Obliczanie wartości kwantyli
+quantile_values <- quantile(data_vector, probs = quantiles)
 
-# Wczytanie określonych kolumn i wierszy z każdego arkusza do listy
-data_list <- lapply(sheet_names, function(sheet) {
-  read_sheet_subset(sheet)
-})
+# Tworzenie ramki danych dla ggplot
+df <- data.frame(Quantiles = quantiles, Values = quantile_values)
 
-# Przypisanie nazw arkuszy jako nazw listy
-names(data_list) <- sheet_names
+# Wprowadzenie liczby
+input_value <- 5  # Zmień na swoją wartość
 
-# Funkcja do pobierania tabeli na podstawie nazwy arkusza
-get_table_by_sheet <- function(sheet_name) {
-  return(data_list[[sheet_name]])
-}
+# Obliczenie odpowiadającego kwantyla dla podanej wartości
+input_quantile <- ecdf(data_vector)(input_value)
 
-# Przykład użycia funkcji
-sheet_to_get <- "Sheet1" # Zmień na nazwę arkusza, który chcesz pobrać
-table <- get_table_by_sheet(sheet_to_get)
-print(table)
+# Wykres
+plot <- ggplot(df, aes(x = Quantiles, y = Values)) +
+  geom_line(aes(color = "Bootstrap"), size = 1.2) +
+  geom_point(aes(color = "Bootstrap"), size = 3) +
+  geom_vline(aes(xintercept = input_quantile, color = "X"), linetype = "dashed", size = 1) +
+  scale_x_continuous(breaks = quantiles) +
+  scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue", "X" = "green")) +
+  labs(title = "Wykres kwantyli",
+       x = "Kwantyle",
+       y = "Wartości kwantyli") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+        axis.title = element_text(size = 12, face = "bold"),
+        legend.position = "top")
+
+# Wyświetlenie wykresu
+print(plot)
+
+# Zapisanie wykresu do pliku
+ggsave("wykres_kwantyli.png", plot = plot, path = "sciezka/do/folderu", width = 8, height = 6)
