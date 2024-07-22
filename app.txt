@@ -2,6 +2,7 @@ library(ggplot2)
 library(officer)
 library(rvg)
 library(dplyr)
+library(flextable)
 
 # Funkcja do tworzenia wykresu
 create_plot <- function(data_vector, input_values, title) {
@@ -57,10 +58,12 @@ input_values_list <- list(
 # Utworzenie nowego dokumentu Word
 doc <- read_docx()
 
-# Dodanie tytułów, tabel i wykresów do dokumentu Word w pętli
+# Rozdział 1: Wykresy i tabele dla każdej linii
+doc <- doc %>% body_add_par("Rozdział 1", style = "heading 1")
+
 for (i in 1:3) {
   doc <- doc %>%
-    body_add_par(paste(i, "Dla linii", i), style = "heading 1")
+    body_add_par(paste("1.", i, " Linia ", i, sep = ""), style = "heading 2")
   
   for (type in c("paid", "incurred")) {
     data_vector <- get(paste("DFM_", type, "_", i, sep = ""))
@@ -70,13 +73,36 @@ for (i in 1:3) {
     value_table <- data.frame(Wartości = c("X", "Y", "Z"), Wartości_Value = c(input_values["X"], input_values["Y"], input_values["Z"]))
     
     doc <- doc %>%
-      body_add_par(paste("1.", ifelse(type == "paid", "1", "4"), " Tabela wartości dla DFM ", type, " (", i, ")", sep = ""), style = "heading 2") %>%
+      body_add_par(paste("1.", i, ".", ifelse(type == "paid", "1", "2"), " Tabela wartości dla DFM ", type, " (", i, ")", sep = ""), style = "heading 3") %>%
       body_add_table(value_table, style = "table_template") %>%
-      body_add_par(paste("1.", ifelse(type == "paid", "2", "5"), " Wykres dla DFM ", type, " (", i, ")", sep = ""), style = "heading 2") %>%
+      body_add_par(paste("1.", i, ".", ifelse(type == "paid", "2", "3"), " Wykres dla DFM ", type, " (", i, ")", sep = ""), style = "heading 3") %>%
       body_add_gg(value = create_plot(data_vector, input_values, title), width = 6, height = 4) %>%
-      body_add_par(paste("1.", ifelse(type == "paid", "3", "6"), " Komentarz dla DFM ", type, " (", i, ")", sep = ""), style = "heading 2") %>%
+      body_add_par(paste("1.", i, ".", ifelse(type == "paid", "3", "4"), " Komentarz dla DFM ", type, " (", i, ")", sep = ""), style = "heading 3") %>%
       body_add_par("", style = "Normal")  # Puste miejsce na komentarz
   }
+}
+
+# Rozdział 2: Tabele z wynikami kwantyli dla `paid` i `incurred`
+doc <- doc %>% body_add_par("Rozdział 2", style = "heading 1")
+
+for (type in c("paid", "incurred")) {
+  # Tworzenie tabeli z wartościami kwantyli dla wszystkich linii
+  quantile_tables <- lapply(1:3, function(i) {
+    data_vector <- get(paste("DFM_", type, "_", i, sep = ""))
+    input_values <- input_values_list[[i]][[type]]
+    quantiles <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
+    sapply(input_values, function(value) ecdf(data_vector)(value))
+  })
+  
+  quantile_df <- as.data.frame(do.call(rbind, quantile_tables))
+  colnames(quantile_df) <- c("X", "Y", "Z")
+  rownames(quantile_df) <- paste("Linia", 1:3)
+  
+  ft <- regulartable(quantile_df)
+  
+  doc <- doc %>%
+    body_add_par(paste("2.", ifelse(type == "paid", "1", "2"), " ", type, sep = ""), style = "heading 2") %>%
+    body_add_flextable(ft)
 }
 
 # Zapisanie dokumentu Word
