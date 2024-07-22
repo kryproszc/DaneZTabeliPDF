@@ -5,9 +5,10 @@ library(dplyr)
 file_path <- "sciezka/do/pliku.xlsx"
 
 # Funkcja do wczytywania określonych kolumn i wierszy z arkusza
-read_sheet_subset <- function(sheet_name, cols, rows) {
-  data <- read_excel(file_path, sheet = sheet_name, range = cell_rows(rows))
-  data <- data[, cols]
+read_sheet_subset <- function(sheet_name) {
+  # Definiowanie zakresu wierszy i kolumn
+  range <- "A6:Z29"
+  data <- read_excel(file_path, sheet = sheet_name, range = range)
   return(data)
 }
 
@@ -15,11 +16,8 @@ read_sheet_subset <- function(sheet_name, cols, rows) {
 sheet_names <- excel_sheets(file_path)
 
 # Wczytanie określonych kolumn i wierszy z każdego arkusza do listy
-cols_to_read <- c("Kolumna1", "Kolumna2") # Zmień na nazwy kolumn, które chcesz wczytać
-rows_to_read <- 1:10 # Zmień na zakres wierszy, które chcesz wczytać
-
 data_list <- lapply(sheet_names, function(sheet) {
-  read_sheet_subset(sheet, cols_to_read, rows_to_read)
+  read_sheet_subset(sheet)
 })
 
 # Przypisanie nazw arkuszy jako nazw listy
