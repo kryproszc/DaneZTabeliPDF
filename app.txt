@@ -1,15 +1,184 @@
+library(ggplot2)
+library(officer)
+library(rvg)
 library(dplyr)
-library(openxlsx)
+library(flextable)
+library(gridExtra)
+library(ggplotify)
 
-# Ścieżka do pliku Excel
-file_path <- "path_to_your_excel_file.xlsx"
+# Funkcja do tworzenia wykresu bez tytułu
+create_plot <- function(data_vector, input_values) {
+  quantiles <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
+  quantile_values <- quantile(data_vector, probs = quantiles)
+  df <- data.frame(Quantiles = quantiles, Values = quantile_values)
+  input_quantiles <- sapply(input_values, function(value) ecdf(data_vector)(value))
+  
+  plot <- ggplot(df, aes(x = Quantiles, y = Values)) +
+    geom_line(aes(color = "Bootstrap"), size = 1.2) +
+    geom_point(aes(color = "Bootstrap"), size = 3) +
+    geom_vline(aes(xintercept = input_quantiles["X"], color = "X"), linetype = "dashed", size = 1) +
+    geom_vline(aes(xintercept = input_quantiles["Y"], color = "Y"), linetype = "dashed", size = 1) +
+    geom_vline(aes(xintercept = input_quantiles["Z"], color = "Z"), linetype = "dashed", size = 1) +
+    scale_x_continuous(breaks = quantiles) +
+    scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue", "X" = "green", "Y" = "orange", "Z" = "purple")) +
+    labs(x = "Kwantyle", y = "Wartości kwantyli") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+          plot.title = element_blank(),  # Usuń tytuł
+          axis.title = element_text(size = 12, face = "bold"),
+          legend.position = "top")
+  
+  return(plot)
+}
 
-# Wczytanie całego arkusza
-sheet_data <- read.xlsx(file_path, sheet = "Sheet1")
+# Przykładowe wektory danych
+DFM_paid_1 <- c(2, 8, 1, 4, 9, 5, 3, 7, 6, 10)
+DFM_paid_2 <- c(3, 7, 2, 5, 10, 6, 4, 8, 1, 9)
+DFM_paid_3 <- c(1, 9, 2, 6, 8, 3, 5, 7, 4, 10)
 
-# Konwersja kolumn na liczby typu float
-numeric_data <- sheet_data %>%
-  mutate(across(everything(), ~ as.numeric(gsub(",", ".", .))))
+DFM_incurred_1 <- c(2, 9, 1, 7, 4, 6, 3, 8, 5, 10)
+DFM_incurred_2 <- c(4, 6, 2, 9, 1, 8, 3, 7, 5, 10)
+DFM_incurred_3 <- c(5, 7, 1, 8, 2, 9, 3, 10, 4, 6)
 
-# Wyświetlenie przekonwertowanego DataFrame
-print(numeric_data)
+# Wprowadzenie wartości dla każdej pary
+input_values_list <- list(
+  list(paid = c(X = 5, Y = 7, Z = 9), incurred = c(X = 6, Y = 8, Z = 10)),
+  list(paid = c(X = 4, Y = 6, Z = 8), incurred = c(X = 5, Y = 7, Z = 9)),
+  list(paid = c(X = 3, Y = 5, Z = 7), incurred = c(X = 4, Y = 6, Z = 8))
+)
+
+# Przykładowe dane dla trzech wektorów o tej samej długości
+vector_length <- 10
+vector1 <- runif(vector_length, min = 1, max = 10)
+vector2 <- runif(vector_length, min = 1, max = 10)
+vector3 <- runif(vector_length, min = 1, max = 10)
+
+# Tworzenie ramki danych dla wykresu trzech wektorów
+df_vectors <- data.frame(
+  Index = 1:vector_length,
+  Vector1 = vector1,
+  Vector2 = vector2,
+  Vector3 = vector3
+)
+
+# Tworzenie wykresu z trzema wektorami bez legendy i tytułu
+create_three_vectors_plot <- function(data, indices, show_legend = TRUE) {
+  plot_vectors <- ggplot(data[indices, ], aes(x = Index)) +
+    geom_point(aes(y = Vector1, color = "Vector1")) +
+    geom_line(aes(y = Vector1, color = "Vector1")) +
+    geom_point(aes(y = Vector2, color = "Vector2")) +
+    geom_line(aes(y = Vector2, color = "Vector2")) +
+    geom_point(aes(y = Vector3, color = "Vector3")) +
+    geom_line(aes(y = Vector3, color = "Vector3")) +
+    scale_color_manual(values = c("Vector1" = "red", "Vector2" = "green", "Vector3" = "blue")) +
+    labs(x = "Indeks", y = "Wartość", color = "Wektory") +
+    theme_minimal() +
+    theme(plot.title = element_blank())  # Usuń tytuł
+  
+  if (!show_legend) {
+    plot_vectors <- plot_vectors + theme(legend.position = "none")
+  }
+  
+  return(plot_vectors)
+}
+
+# Funkcja do usuwania wierszy z zerami i kolumn
+remove_zero_rows_and_cols <- function(df) {
+  # Usuwanie wierszy, które zawierają tylko zera, ignorując wartości NA
+  initial_row_count <- nrow(df)
+  df_clean <- df %>%
+    filter(rowSums(replace(., is.na(.), 1)) != 0)
+  
+  # Liczba usuniętych wierszy
+  removed_rows <- initial_row_count - nrow(df_clean)
+  
+  # Usuwanie ostatnich tyle kolumn, ile zostało usuniętych wierszy
+  if (removed_rows > 0) {
+    df_clean <- df_clean[, 1:(ncol(df_clean) - removed_rows)]
+  }
+  
+  return(df_clean)
+}
+
+# Przykład użycia funkcji remove_zero_rows_and_cols
+df_example <- data.frame(
+  A = c(0, 2, 0, 4, NA),
+  B = c(0, 0, 0, 5, NA),
+  C = c(0, 1, 0, 6, NA),
+  D = c(0, 2, 0, 7, NA),
+  E = c(0, 3, 0, 8, NA)
+)
+
+print("Oryginalny DataFrame:")
+print(df_example)
+
+df_cleaned <- remove_zero_rows_and_cols(df_example)
+
+print("Wyczyszczony DataFrame:")
+print(df_cleaned)
+
+# Utworzenie nowego dokumentu Word
+doc <- read_docx()
+
+# Rozdział 1: Wykresy i tabele dla każdej linii
+doc <- doc %>% body_add_par("Rozdział 1", style = "heading 1")
+
+for (i in 1:3) {
+  doc <- doc %>%
+    body_add_par(paste("Linia ", i, sep = ""), style = "heading 2") %>%
+    body_add_par("", style = "Normal")
+  
+  for (type in c("paid", "incurred")) {
+    data_vector <- get(paste("DFM_", type, "_", i, sep = ""))
+    input_values <- input_values_list[[i]][[type]]
+    
+    value_table <- data.frame(Wartości = c("X", "Y", "Z"), Wartości_Value = c(input_values["X"], input_values["Y"], input_values["Z"]))
+    
+    # Podzielone wykresy
+    plot1 <- create_three_vectors_plot(df_vectors, 1:2, show_legend = FALSE) + scale_x_continuous(breaks = c(1, 2))
+    plot2 <- create_three_vectors_plot(df_vectors, 3:vector_length, show_legend = TRUE)
+    
+    # Połączone wykresy obok siebie, pierwszy na 30%, drugi na 70% szerokości
+    combined_plot <- arrangeGrob(plot1, plot2, ncol = 2, widths = c(3, 7))
+    combined_plot <- as.ggplot(combined_plot) # Konwersja do obiektu ggplot
+    
+    # Dodanie wykresów do dokumentu
+    doc <- doc %>%
+      body_add_par(paste("Tabela wartości dla DFM ", type, " (", i, ")", sep = ""), style = "heading 3") %>%
+      body_add_table(value_table, style = "table_template") %>%
+      body_add_par(paste("Wykresy dla DFM ", type, " (", i, ")", sep = ""), style = "heading 3") %>%
+      body_add_gg(value = combined_plot, width = 7, height = 4) %>%
+      body_add_par(paste("Komentarz dla DFM ", type, " (", i, ")", sep = ""), style = "heading 3") %>%
+      body_add_par("", style = "Normal") %>%
+      body_add_par("", style = "Normal")  # Puste miejsce na komentarz
+    
+    # Dodanie podziału strony po każdym typie danych
+    doc <- doc %>% body_add_break()
+  }
+}
+
+# Rozdział 2: Tabele z wynikami kwantyli dla paid i incurred
+doc <- doc %>% body_add_par("Rozdział 2", style = "heading 1")
+
+for (type in c("paid", "incurred")) {
+  # Tworzenie tabeli z wartościami kwantyli dla wszystkich linii
+  quantile_tables <- lapply(1:3, function(i) {
+    data_vector <- get(paste("DFM_", type, "_", i, sep = ""))
+    input_values <- input_values_list[[i]][[type]]
+    quantiles <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
+    sapply(input_values, function(value) ecdf(data_vector)(value))
+  })
+  
+  quantile_df <- as.data.frame(do.call(rbind, quantile_tables))
+  colnames(quantile_df) <- c("X", "Y", "Z")
+  rownames(quantile_df) <- paste("Linia", 1:3)
+  
+  ft <- regulartable(quantile_df)
+  
+  doc <- doc %>%
+    body_add_par(paste(type, sep = ""), style = "heading 2") %>%
+    body_add_flextable(ft)
+}
+
+# Zapisanie dokumentu Word
+print(doc, target = "wykresy_linii_z_tabelami.docx")
