@@ -1,14 +1,41 @@
-library(dplyr)
-
-# Liczba analizowanych linii
-liczba_analizowanych_Linii <- 10  # Zmień na potrzebną wartość
-
-# Tworzenie DataFrame z zerowymi wartościami
+# Przykładowy DataFrame
 df <- data.frame(
-  X = rep(0, liczba_analizowanych_Linii),
-  `Pięć przekątnych` = rep(0, liczba_analizowanych_Linii),
-  `Wszystkie przekątne` = rep(0, liczba_analizowanych_Linii)
+  A = c(0, 2, 0, 4),
+  B = c(0, 0, 0, 5),
+  C = c(0, 1, 0, 6)
 )
 
-# Wyświetlenie DataFrame
+# Wyświetlenie oryginalnego DataFrame
+print("Oryginalny DataFrame:")
 print(df)
+
+# Usuwanie wierszy, które zawierają tylko zera
+df_clean <- df %>%
+  filter(rowSums(.) != 0)
+
+# Wyświetlenie wyczyszczonego DataFrame
+print("Wyczyszczony DataFrame:")
+print(df_clean)
+
+---------
+library(openxlsx)
+
+# Ścieżka do pliku Excel
+file_path <- "sciezka/do/pliku.xlsx"
+
+# Wczytanie całego pliku Excel do listy
+all_sheets <- read.xlsx(file_path, sheet = NULL)
+
+# Funkcja do pobierania danych z odpowiedniego arkusza
+get_data <- function(sheet_name) {
+  if (sheet_name %in% names(all_sheets)) {
+    return(all_sheets[[sheet_name]])
+  } else {
+    stop("Nie znaleziono arkusza o podanej nazwie.")
+  }
+}
+
+# Przykład użycia funkcji
+sheet_to_get <- "DFM paid (1)" # Podaj nazwę arkusza, który chcesz pobrać
+data <- get_data(sheet_to_get)
+print(data)
