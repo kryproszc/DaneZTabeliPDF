@@ -1,0 +1,2755 @@
+#include <atomic>
+std::atomic<double> stanSymulacji = 0.0;
+std::atomic<double> stanSymulacjiZapisu = 0.0;
+// std::atomic<bool> running(true);
+std::atomic<int> licznik_sym = 0;
+static double wartosc_minimalna_szkody = 0;
+
+double save_step = 0.0;
+#include <chrono>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <iterator>
+#include <random>
+#include <numeric>
+#include <sstream>
+#include <chrono>
+#include <iostream>
+#include <algorithm>
+#include <optional>
+#include <vector>
+#include <string>
+#include <iterator>
+#include <random>
+#include <numeric>
+#include <chrono>
+#include <atomic>
+#include <mutex>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <iterator>
+#include <random>
+#include <numeric>
+#include <sstream>
+#include <deque>
+#include <condition_variable>
+#include <thread>
+#include <functional>
+#include <future>
+#include <sstream>
+#include <iostream>
+#include <string>
+#include <map>
+#include <chrono>
+#include <vector>
+#include "csvstream.hpp"
+#include "BS_thread_pool.hpp"
+#include <boost/random/beta_distribution.hpp>
+
+#include <iostream>
+#include <future>
+#include <thread>
+#include <stdio.h>
+#include <thread>
+#include <random>
+#include <future>
+#include <filesystem>
+#include <chrono>
+#include <future>
+#include <iostream>
+#include <chrono>
+#include <thread>
+
+#include <filesystem>
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl2.h"
+#include <iostream>
+#include <future>
+#include <thread>
+#include <stdio.h>
+#include <filesystem>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <ctime>
+#include <iomanip>
+#include <direct.h>
+#ifdef __APPLE__
+#define GL_SILENCE_DEPRECATION
+#endif
+#include <GLFW/glfw3.h>
+static int ilosc_budynkow_do_zapisania = 50;
+static int forma_zapisu_budynkow = 0;
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
+#pragma comment(lib, "legacy_stdio_definitions")
+#endif
+
+#define IM_CLAMP(V, MN, MX) ((V) < (MN) ? (MN) : (V) > (MX) ? (MX) \
+                                                            : (V))
+
+const char *lata[] = {"2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"};
+BS::thread_pool pool(0);
+BS::thread_pool poolFiles(0);
+
+// BS::thread_pool pool(28);
+using namespace std;
+
+const unsigned int fixedSeed = 123456789;
+std::mt19937 gen(fixedSeed);
+
+const int numRegions = 17;
+const int numMonths = 12;
+
+std::vector<std::vector<std::vector<long double>>> exponsure_longitude(numRegions);
+std::vector<std::vector<std::vector<long double>>> exponsure_latitude(numRegions);
+std::vector<std::vector<long double>> list_list_wyb(numRegions);
+std::vector<std::vector<long double>> fire_spread_prob_vec(4);
+std::vector<long double> conditional_mean_trend_parameters(2);
+std::vector<long double> conditional_Cov(2);
+std::vector<std::vector<std::vector<int>>> exponsure_insurance(numRegions);
+std::vector<std::vector<std::vector<int>>> exponsure_reassurance(numRegions);
+std::vector<std::vector<std::vector<double>>> exponsure_sum_value(numRegions);
+std::vector<std::vector<double>> wielkosc_pozaru(2);
+std::vector<std::vector<double>> fakultatywna_input_num;
+std::vector<std::vector<std::vector<double>>> fakultatywna_input_val;
+std::vector<std::vector<double>> obligatoryjna_input_risk;
+std::vector<std::vector<double>> obligatoryjna_input_event;
+
+class VectorSim
+{
+public:
+    std::vector<std::vector<double>> data;
+    VectorSim() : data(30, std::vector<double>()) {}
+
+    void addDataVec(int insurane, double value)
+    {
+        data[insurane].push_back(value);
+    }
+
+    std::vector<std::vector<double>> returnVectorSim()
+    {
+        return (data);
+    }
+
+    void clearVector(int num_vec)
+    {
+        data[num_vec].clear();
+    }
+
+    void clear()
+    {
+        for (auto& vec : data)
+        {
+            vec.clear();
+        }
+    }
+};
+
+VectorSim out_brutto_final;
+
+class VectorPozarPierwotny
+{
+public:
+    std::vector<std::vector<long double>> build_fire;
+    VectorPozarPierwotny() : build_fire(9, std::vector<long double>()) {}
+
+    // konstruktor przenoszący
+    VectorPozarPierwotny(VectorPozarPierwotny &&other) noexcept
+        : build_fire(std::move(other.build_fire)) {}
+
+    // kon. kop.
+    VectorPozarPierwotny(const VectorPozarPierwotny &other)
+    : build_fire(other.build_fire) {}
+
+    // operator przypisisania
+VectorPozarPierwotny &operator=(const VectorPozarPierwotny &other)
+{
+    if (this != &other)
+    {
+        build_fire = other.build_fire;
+    }
+    return *this;
+}
+
+
+  // operator przenoszenia
+    VectorPozarPierwotny &operator=(VectorPozarPierwotny &&other) noexcept
+    {
+        if (this != &other)
+        {
+            build_fire = std::move(other.build_fire);
+        }
+        return *this;
+    }
+
+    void addPozarPierwotny(int insurancer, int nr_budynku, int woj, int mies, int index_table, double wielkosc_pozar_kwota,
+                           double reas_fire)
+    {
+        build_fire[0].push_back(insurancer);
+        build_fire[1].push_back(exponsure_longitude[woj - 1][mies - 1][nr_budynku]);
+        build_fire[2].push_back(exponsure_latitude[woj - 1][mies - 1][nr_budynku]);
+        build_fire[3].push_back(woj + 1);
+        build_fire[4].push_back(mies + 1);
+        build_fire[5].push_back(exponsure_sum_value[woj - 1][mies - 1][nr_budynku]);
+        build_fire[6].push_back(index_table);
+        build_fire[7].push_back(wielkosc_pozar_kwota);
+        build_fire[8].push_back(reas_fire);
+    }
+    std::vector<std::vector<long double>> returnPozarPierwotny() const
+    {
+        return (build_fire);
+    }
+
+    void writeCSV(const std::string &filePath, const std::string &fileName)
+    {
+
+        std::string fullFilePath = filePath + "/" + fileName;
+        std::ofstream file(fullFilePath);
+
+        file << "Insurer,Longitude,Latitude,Region,Month,SumValue,IndexTable,FireSize,ReasonFire\n";
+
+        int rows = build_fire.size();
+        int cols = build_fire[0].size();
+
+        int max_cols = 0;
+        for (const auto &row : build_fire)
+        {
+            if (row.size() > max_cols)
+                max_cols = row.size();
+        }
+
+        cols = max_cols;
+
+        for (int col = 0; col < max_cols; ++col)
+        {
+
+            for (int row = 0; row < rows; ++row)
+            {
+                if (col < build_fire[row].size())
+                {
+                    file << build_fire[row][col];
+                }
+                else
+                {
+                    file << "";
+                }
+
+                if (row < rows - 1)
+                    file << ",";
+            }
+            file << "\n";
+        }
+
+        // for (int col = 0; col < cols; ++col)
+        // {
+        //     for (int row = 0; row < rows; ++row)
+        //     {
+        //         file << build_fire[row][col];
+        //         if (row < rows - 1)
+        //             file << ",";
+        //     }
+        //     file << "\n";
+        // }
+    }
+
+    void writeCSV(std::ofstream &file) const
+    {
+
+        file << "Insurer,Longitude,Latitude,Region,Month,SumValue,IndexTable,FireSize,ReasonFire\n";
+
+        int rows = build_fire.size();
+        int cols = build_fire[0].size();
+        for (int col = 0; col < cols; ++col)
+        {
+            for (int row = 0; row < rows; ++row)
+            {
+                file << build_fire[row][col];
+                if (row < rows - 1)
+                    file << ",";
+            }
+            file << "\n";
+        }
+    }
+
+    void wypiszRozmiar() const
+    {
+        for (size_t i = 0; i < build_fire.size(); ++i)
+        {
+            std::cout << "Rozmiar build_fire[" << i << "]: " << build_fire[i].size() << std::endl;
+        }
+        std::cout << "=========================" << std::endl;
+    }
+};
+class VectorPozarRozprzestrzeniony
+{
+public:
+    std::vector<std::vector<double>> build_fire_rozprzestrzeniony;
+    VectorPozarRozprzestrzeniony() : build_fire_rozprzestrzeniony(11, std::vector<double>()) {}
+
+    // konstruktor przenoszący
+    VectorPozarRozprzestrzeniony(VectorPozarRozprzestrzeniony &&other) noexcept
+        : build_fire_rozprzestrzeniony(std::move(other.build_fire_rozprzestrzeniony)) {}
+
+    // operator przenoszenia
+    VectorPozarRozprzestrzeniony &operator=(VectorPozarRozprzestrzeniony &&other) noexcept
+    {
+        if (this != &other)
+        {
+            build_fire_rozprzestrzeniony = std::move(other.build_fire_rozprzestrzeniony);
+        }
+        return *this;
+    }
+
+        // konstruktor kopiujący
+    VectorPozarRozprzestrzeniony(const VectorPozarRozprzestrzeniony &other)
+        : build_fire_rozprzestrzeniony(other.build_fire_rozprzestrzeniony) {}
+
+    // operator kopiujący przypisania
+    VectorPozarRozprzestrzeniony &operator=(const VectorPozarRozprzestrzeniony &other)
+    {
+        if (this != &other)
+        {
+            build_fire_rozprzestrzeniony = other.build_fire_rozprzestrzeniony;
+        }
+        return *this;
+    }
+
+    void addPozarRozprzestrzeniony(std::vector<std::vector<double>> spread_one_building)
+    {
+        for (int ttt = 0; ttt < 11; ttt++)
+        {
+            build_fire_rozprzestrzeniony[ttt].insert(
+                build_fire_rozprzestrzeniony[ttt].end(),
+                spread_one_building[ttt].begin(),
+                spread_one_building[ttt].end());
+        }
+    }
+    std::vector<std::vector<double>> returnPozarRozprzestrzeniony() const
+    {
+        return (build_fire_rozprzestrzeniony);
+    }
+
+ void writeCSV(const std::string &filePath, const std::string &fileName)
+    {
+        std::string fullFilePath = filePath + "/" + fileName;
+        std::ofstream file(fullFilePath);
+
+        file << "Promien,lat,lon,insurance,resurance,SumValue, WIelkoscKwota,IndexTable,Region,Month,ReasonFire\n"; // dopasuj nagłówek do rzeczywistej liczby kolumn
+
+        int rows = build_fire_rozprzestrzeniony.size();
+        if (rows == 0)
+            return;
+
+        int max_cols = 0;
+        for (const auto& row : build_fire_rozprzestrzeniony)
+        {
+            if (row.size() > max_cols)
+                max_cols = row.size();
+        }
+
+        for (int col = 0; col < max_cols; ++col)
+        {
+
+            for (int row = 0; row < rows; ++row)
+            {
+                if (col < build_fire_rozprzestrzeniony[row].size())
+                {
+                    file << build_fire_rozprzestrzeniony[row][col];
+                }
+                else
+                {
+                    file << "";
+                }
+
+                if (row < rows - 1)
+                    file << ",";
+            }
+            file << "\n";
+        }
+    }
+    void wypiszRozmiar() const
+    {
+        if (build_fire_rozprzestrzeniony[0].size() != build_fire_rozprzestrzeniony[1].size())
+        {
+            for (size_t i = 0; i < build_fire_rozprzestrzeniony.size(); ++i)
+            {
+                std::cout << "Rozmiar build_rozp[" << i << "]: " << build_fire_rozprzestrzeniony[i].size() << std::endl;
+            }
+            std::cout << "=========================" << std::endl;
+        }
+    }
+    void writeCSV(std::ofstream &file) const
+    {
+        file << "Insurer,BuildingNumber,Woj,Mies,IndexTable,Longitude,Latitude,SumValue,WielkoscPozarKwota,ReasFire\n"; // dopasuj nagłówek do rzeczywistej liczby kolumn
+
+        int rows = build_fire_rozprzestrzeniony.size();
+        if (rows == 0)
+            return;
+
+        int max_cols = 0;
+        for (const auto &row : build_fire_rozprzestrzeniony)
+        {
+            if (row.size() > max_cols)
+                max_cols = row.size();
+        }
+
+        for (int col = 0; col < max_cols; ++col)
+        {
+
+            for (int row = 0; row < rows; ++row)
+            {
+                if (col < build_fire_rozprzestrzeniony[row].size())
+                {
+                    file << build_fire_rozprzestrzeniony[row][col];
+                }
+                else
+                {
+                    file << "";
+                }
+
+                if (row < rows - 1)
+                    file << ",";
+            }
+            file << "\n";
+        }
+    }
+};
+struct Data
+{
+    double lat_sub;
+    double lon_sub;
+    double insu_sub;
+    double reas_sub;
+    double premium_sub;
+};
+
+
+
+// typ do przechowywania w buforze
+struct BuforPierwotny
+{
+    VectorPozarPierwotny vpp;
+    std::string filePath;
+    std::string fileName;
+    BuforPierwotny(VectorPozarPierwotny &&vpp, std::string filePath, std::string fileName)
+        : vpp(std::move(vpp)), filePath(filePath), fileName(fileName) {}
+};
+
+struct BuforRozprz
+{
+    VectorPozarRozprzestrzeniony vpr;
+    std::string filePath;
+    std::string fileName;
+    BuforRozprz(VectorPozarRozprzestrzeniony &&vpr, std::string filePath, std::string fileName)
+        : vpr(std::move(vpr)), filePath(filePath), fileName(fileName) {}
+};
+
+// globalny bufor
+std::deque<BuforPierwotny> global_buffer_pierwotny;
+std::deque<BuforRozprz> global_buffer_rozprz;
+
+std::mutex mtx_pierwotny;
+std::mutex mtx_rozprz;
+
+std::mutex mtxx;
+std::mutex mtxy;
+std::condition_variable cv;
+std::condition_variable cy;
+
+// void przeniesDoBuforPierwotny(VectorPozarPierwotny &&vpp, std::string filePath,std::string fileName )
+// {
+ 
+//     mtxx.lock();
+//     global_buffer_pierwotny.emplace_back(std::move(vpp), filePath, fileName);
+//     mtxx.unlock();
+//     cv.notify_all(); // powiadomienie konsumentów o nowym elemencie
+
+// }
+
+// void przeniesDoBuforRozprz(VectorPozarRozprzestrzeniony &&vpr, std::string filePath,std::string fileName)
+// {
+
+//     mtxy.lock();
+//     global_buffer_rozprz.emplace_back(std::move(vpr), filePath, fileName);
+//     mtxy.unlock();
+//     cy.notify_all(); // powiadomienie konsumentów o nowym elemencie
+// }
+
+// std::optional<BuforPierwotny> pobierzZBuforPierwotny()
+// {
+//     std::lock_guard<std::mutex> lock(mtx_pierwotny);
+
+//     if (!global_buffer_pierwotny.empty())
+//     {
+//         BuforPierwotny bufor = std::move(global_buffer_pierwotny.back());
+//         global_buffer_pierwotny.pop_back();
+//         return bufor;
+//     }
+//     return std::nullopt;
+// }
+
+// std::optional<BuforRozprz> pobierzZBuforRozprz()
+// {
+//     std::lock_guard<std::mutex> lock(mtx_rozprz);
+
+//     if (!global_buffer_rozprz.empty())
+//     {
+//         BuforRozprz bufor = std::move(global_buffer_rozprz.back());
+//         global_buffer_rozprz.pop_back();
+//         return bufor;
+//     }
+//     return std::nullopt;
+// }
+
+void przeniesDoBuforPierwotny(VectorPozarPierwotny &&vpp, std::string filePath, std::string fileName)
+{
+    {
+        std::lock_guard<std::mutex> lock(mtxx);
+        global_buffer_pierwotny.emplace_back(std::move(vpp), std::move(filePath), std::move(fileName));
+    }
+    cv.notify_one(); // powiadomienie konsumentów o nowym elemencie
+}
+
+void przeniesDoBuforRozprz(VectorPozarRozprzestrzeniony &&vpr, std::string filePath, std::string fileName)
+{
+    {
+        std::lock_guard<std::mutex> lock(mtxy);
+        global_buffer_rozprz.emplace_back(std::move(vpr), std::move(filePath), std::move(fileName));
+    }
+    cy.notify_one(); // powiadomienie konsumentów o nowym elemencie
+}
+
+// void watekZapisPierwotny()
+// {
+//     std::cout << "ROZPOCZETO " << std::this_thread::get_id() << std::endl;
+//     while (licznik_sym) {
+//         std::cout << " JESTEM W WATKU "  << licznik_sym << std::endl;
+//         std::unique_lock<std::mutex> lock(mtxx);
+//         cv.wait(lock, []() { return !global_buffer_pierwotny.empty(); });
+//         std::cout << "TERAZ JEST PO LOCKU" << std::endl;
+//         BuforPierwotny data = std::move(global_buffer_pierwotny.front());
+//         global_buffer_pierwotny.pop_front();
+//         // global_buffer_pierwotny.erase(global_buffer_pierwotny.begin());
+//         lock.unlock();
+//         cv.notify_one();  
+//         data.vpp.writeCSV(data.filePath, data.fileName);
+//         stanSymulacjiZapisu.fetch_add(save_step);
+//         licznik_sym--; 
+//         std::cout << "WATEK ZAPIS PIERW PRACUJE NR " << std::this_thread::get_id() << " LICZNIK SYM: " << licznik_sym << std::endl;
+//     } 
+//     std::cout << "WATEK PIERW UBITO " << std::this_thread::get_id()  << std::endl;
+// }
+
+
+void watekZapisPierwotny() {
+    // std::cout << "ROZPOCZETO " << std::this_thread::get_id() << std::endl;
+    while (true) {
+        std::unique_lock<std::mutex> lock(mtxx);
+        cv.wait(lock, []() { return !global_buffer_pierwotny.empty() || licznik_sym == 0; });
+        
+        if (licznik_sym == 0 && global_buffer_pierwotny.empty()) {
+            break; // kończymy wątek, gdy licznik_sym jest równy 0 i bufor jest pusty
+        }
+
+        if (!global_buffer_pierwotny.empty()) {
+            BuforPierwotny data = std::move(global_buffer_pierwotny.front());
+            global_buffer_pierwotny.pop_front();
+            licznik_sym--; 
+            // std::cout << "WATEK ZAPIS PIERW PRACUJE NR " << std::this_thread::get_id() << " LICZNIK SYM: " << licznik_sym << std::endl;
+            if (licznik_sym == 0) {
+                cv.notify_all();  // powiadomienie wszystkich wątków, że licznik_sym jest równy 0
+            } else if (!global_buffer_pierwotny.empty()) {
+                cv.notify_one();  // powiadomienie jednego wątku o zmianie
+            }
+            lock.unlock();  // odblokowanie mutexa po powiadomieniu
+
+            data.vpp.writeCSV(data.filePath, data.fileName);
+            stanSymulacjiZapisu.fetch_add(save_step);
+        } else {
+            lock.unlock();
+        }
+    }
+    // std::cout << "WATEK PIERW UBITO " << std::this_thread::get_id() << std::endl;
+}
+// void watekZapisRozprz()
+// {
+//       while (licznik_sym) {
+//         std::unique_lock<std::mutex> lock(mtxy);
+//         cy.wait(lock, []() { return !global_buffer_rozprz.empty(); });
+//         BuforRozprz data = std::move(global_buffer_rozprz.front());
+//         global_buffer_rozprz.pop_front();
+//         lock.unlock();
+//         cy.notify_one();  
+//         data.vpr.writeCSV(data.filePath, data.fileName); 
+//         stanSymulacjiZapisu.fetch_add(save_step);
+//         licznik_sym--;
+//         std::cout << "WATEK ZAPIS ROZPR PRACUJE NR " << std::this_thread::get_id() << " LICZNIK SYM: " << licznik_sym << std::endl;
+//     } 
+//     std::cout << "WATEK ROZP UBITO " << std::this_thread::get_id()  << std::endl;
+// }
+
+void watekZapisRozprz() {
+    while (true) {
+        std::unique_lock<std::mutex> lock(mtxy);
+        cy.wait(lock, []() { return !global_buffer_rozprz.empty() || licznik_sym == 0; });
+
+        if (licznik_sym == 0 && global_buffer_rozprz.empty()) {
+            break; // kończymy wątek, gdy licznik_sym jest równy 0 i bufor jest pusty
+        }
+
+        if (!global_buffer_rozprz.empty()) {
+            BuforRozprz data = std::move(global_buffer_rozprz.front());
+            global_buffer_rozprz.pop_front();
+            licznik_sym--;
+            // std::cout << "WATEK ZAPIS ROZPR PRACUJE NR " << std::this_thread::get_id() << " LICZNIK SYM: " << licznik_sym << std::endl;
+            if (licznik_sym == 0) {
+                cy.notify_all();  // powiadomienie wszystkich wątków, że licznik_sym jest równy 0
+            } else if (!global_buffer_rozprz.empty()) {
+                cy.notify_one();  // powiadomienie jednego wątku o zmianie
+            }
+            lock.unlock();  // odblokowanie mutexa zaraz po usunięciu elementu z bufora
+
+            data.vpr.writeCSV(data.filePath, data.fileName); 
+            stanSymulacjiZapisu.fetch_add(save_step);
+        } else {
+            lock.unlock();
+        }
+    }
+    // std::cout << "WATEK ROZP UBITO " << std::this_thread::get_id() << std::endl;
+}
+
+struct Ubezpieczyciel
+{
+    // Vectors
+    std::vector<VectorPozarPierwotny> buildPierwotny_brutto_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_brutto_vec;
+    std::vector<double> sum_vec_out_vec;
+
+    // Vectors  sum_vec_kat_out
+    std::vector<VectorPozarPierwotny> buildPierwotny_brutto_kat_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_brutto_kat_vec;
+    std::vector<double> sum_vec_kat_out_vec;
+
+    // Vectors sum_netto_out
+    std::vector<VectorPozarPierwotny> buildPierwotny_netto_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_netto_vec;
+    std::vector<double> sum_vec_netto_out_vec;
+
+    // Vectors sum_netto_kat_out
+    std::vector<VectorPozarPierwotny> buildPierwotny_netto_kat_vec;
+    std::vector<VectorPozarRozprzestrzeniony> buildRozprzestrzeniony_netto_kat_vec;
+    std::vector<double> sum_vec_netto_kat_out_vec;
+};
+
+std::vector<Ubezpieczyciel> ubezpieczyciele;
+
+double randZeroToOne(int a, int b)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> distribution;
+    distribution.param(std::uniform_real_distribution<double>::param_type(a, b));
+    return distribution(gen);
+}
+
+std::vector<int> sample_vec(std::vector<int> &population, int sampleSize)
+{
+    std::vector<int> sampleData(sampleSize);
+    for (int i = 0; i < sampleSize; i++)
+    {
+        int randomIndex = randZeroToOne(0.0, population.size() - 1);
+        sampleData[i] = population[randomIndex];
+    }
+    return sampleData;
+}
+
+int randBin(int size_exp, double prob_size)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::binomial_distribution<> distrib(size_exp, prob_size);
+
+    return distrib(gen);
+}
+
+bool contains(std::vector<bool> vec, int elem)
+{
+    bool result = false;
+    if (find(vec.begin(), vec.end(), elem) != vec.end())
+    {
+        result = true;
+    }
+    return result;
+}
+
+int search_closest(const std::vector<double> &sorted_array, double x)
+{
+    auto iter_geq = std::lower_bound(
+        sorted_array.begin(),
+        sorted_array.end(),
+        x);
+
+    if (iter_geq == sorted_array.begin())
+    {
+
+        return 0;
+    }
+    else if (iter_geq == sorted_array.end())
+    {
+
+        return sorted_array.size() - 1;
+    }
+
+    double a = *(iter_geq - 1);
+    double b = *(iter_geq);
+
+    if (fabs(x - a) < fabs(x - b))
+    {
+        return iter_geq - sorted_array.begin() - 1;
+    }
+    return iter_geq - sorted_array.begin();
+}
+
+double percentage_of_loss(std::vector<std::vector<double>> wielkosc_pozaru)
+{
+    int ind_prob;
+    double exp_sen;
+    double val_dist;
+    val_dist = randZeroToOne(0, 1);
+    std::vector<double> probability;
+    probability = wielkosc_pozaru[1];
+    std::vector<double> exponsure_sensitiv;
+    exponsure_sensitiv = wielkosc_pozaru[0];
+    ind_prob = search_closest(probability, val_dist);
+    exp_sen = exponsure_sensitiv[ind_prob];
+    return (exp_sen);
+}
+
+double calc_reas_bligator(std::vector<double> vec_obligat_insur_risk, double sum_prem)
+{
+    double out_obl = 0.0;
+    if (sum_prem < vec_obligat_insur_risk[0])
+    {
+        out_obl = vec_obligat_insur_risk[2] * sum_prem;
+    }
+    else if (sum_prem > vec_obligat_insur_risk[0] && sum_prem < vec_obligat_insur_risk[1])
+    {
+        out_obl = vec_obligat_insur_risk[2] * vec_obligat_insur_risk[0];
+    }
+    else if (sum_prem > vec_obligat_insur_risk[1])
+    {
+        out_obl = sum_prem - (vec_obligat_insur_risk[1] - vec_obligat_insur_risk[0]);
+    }
+    return (out_obl);
+}
+
+double reasecuration_build_fire(double exp_fire_pre, int woj, int mies, int nr_budynku)
+{
+
+    double reas = exponsure_reassurance[woj][mies][nr_budynku];
+    std::vector<double> vec_fakul_insur_num = fakultatywna_input_num[exponsure_insurance[woj][mies][nr_budynku]];
+    std::vector<std::vector<double>> vec_fakul_insur_val = fakultatywna_input_val[exponsure_insurance[woj][mies][nr_budynku]];
+    std::vector<double> vec_obligat_insur_risk = obligatoryjna_input_risk[exponsure_insurance[woj][mies][nr_budynku]];
+    double reas_oblig;
+    double b_f;
+    double reas_fakultat;
+    reas_fakultat = exp_fire_pre;
+    reas_oblig = exp_fire_pre;
+    if ((reas > 1000000))
+    {
+        if (std::find(vec_fakul_insur_num.begin(), vec_fakul_insur_num.end(), reas) != vec_fakul_insur_num.end())
+        {
+            b_f = vec_fakul_insur_val[reas][0];
+
+            reas_fakultat = exp_fire_pre * b_f + std::max(0.0, (1 - b_f) * exp_fire_pre - vec_fakul_insur_val[reas][1]);
+            reas_oblig = reas_fakultat;
+        }
+        else
+        {
+            reas_fakultat = std::min(exp_fire_pre, vec_fakul_insur_val[reas][0]) +
+                            std::max(0.0,
+                                     exp_fire_pre - vec_fakul_insur_val[reas][0] - vec_fakul_insur_val[reas][1]);
+            reas_oblig = reas_fakultat;
+        }
+    }
+    if (floor(vec_obligat_insur_risk[0]) >= 0)
+    {
+        reas_oblig = calc_reas_bligator(vec_obligat_insur_risk, reas_fakultat);
+    }
+    return (reas_oblig);
+}
+
+std::vector<std::vector<double>> index_spread_build(
+    long double lat_center,
+    long double lon_center,
+    const std::vector<std::vector<double>> &distance_res,
+    const std::vector<std::vector<long double>> &lat_ring,
+    const std::vector<std::vector<long double>> &lon_ring,
+    const std::vector<std::vector<int>> &insu_ring,
+    const std::vector<std::vector<int>> &reas_ring,
+    const std::vector<std::vector<double>> &exposure_sum_ring)
+{
+    int exposure_number;
+
+    std::vector<double> out_distance;
+    std::vector<int> ind_number_pom;
+    std::vector<double> distance_res_pom;
+    std::vector<long double> out_lat_pom;
+    std::vector<long double> out_lon_pom;
+    std::vector<int> out_insu_pom;
+    std::vector<int> out_reas_pom;
+    std::vector<double> out_exp_sum_pom;
+    std::vector<std::vector<double>> out_data(11);
+    std::vector<std::vector<std::vector<double>>> amount_of_loss_vec;
+    std::vector<int> number_of_fire_spreads(9);
+    std::vector<int> fire_spreads_indicator(9);
+    std::vector<double> conditional_mean(9);
+    std::vector<double> alpha(9);
+    std::vector<double> beta(9);
+    std::vector<double> simulated_probability(9);
+    std::vector<std::vector<int>> fire_spreads_rings_list(9);
+    for (int j = 0; j < 9; j++)
+    {
+        std::vector<int> output_sources_list;
+        exposure_number = lat_ring[j].size();
+        out_lat_pom = lat_ring[j];
+        out_lon_pom = lon_ring[j];
+        out_insu_pom = insu_ring[j];
+        out_reas_pom = reas_ring[j];
+        out_exp_sum_pom = exposure_sum_ring[j];
+        distance_res_pom = distance_res[j];
+        std::vector<int> ring_exposure_list(exposure_number);
+        std::iota(std::begin(ring_exposure_list), std::end(ring_exposure_list), 0);
+        if (exposure_number > 0)
+        {
+            if (j == 0)
+            {
+                fire_spreads_indicator[j] = randBin(1, fire_spread_prob_vec[0][j]);
+            }
+            else if (j == 1)
+            {
+                fire_spreads_indicator[j] = randBin(1, fire_spread_prob_vec[0 + fire_spreads_indicator[j - 1]][j]);
+            }
+            else
+            {
+                fire_spreads_indicator[j] = randBin(1, fire_spread_prob_vec[0 + 2 * fire_spreads_indicator[j - 1] + fire_spreads_indicator[j - 2]][j]);
+            }
+            if (fire_spreads_indicator[j] > 0)
+            {
+                if (exposure_number == 1)
+                {
+                    number_of_fire_spreads[j] = 1;
+                    fire_spreads_rings_list[j] = sample_vec(ring_exposure_list, number_of_fire_spreads[j]);
+                }
+                else if (exposure_number == 2)
+                {
+                    conditional_mean[j] = conditional_mean_trend_parameters[0] * std::pow(exposure_number - 1, conditional_mean_trend_parameters[1]);
+                    number_of_fire_spreads[j] = 1 + randBin(1, conditional_mean[j]);
+                    fire_spreads_rings_list[j] = sample_vec(ring_exposure_list, number_of_fire_spreads[j]);
+                }
+                else if (exposure_number == 3)
+                {
+                    conditional_mean[j] = conditional_mean_trend_parameters[0] * std::pow(exposure_number - 1, conditional_mean_trend_parameters[1]);
+                    alpha[j] = conditional_mean[j] * (exposure_number - 1 - conditional_mean[j] - conditional_Cov[0]) / (conditional_mean[j] + (exposure_number - 1) * (conditional_Cov[0] - 1));
+                    beta[j] = (exposure_number - 1 - conditional_mean[j]) * (exposure_number - 1 - conditional_mean[j] - conditional_Cov[0]) / (conditional_mean[j] + (exposure_number - 1) * (conditional_Cov[0] - 1));
+
+                    std::random_device rd;
+                    std::mt19937 gen(rd());
+                    boost::random::beta_distribution<> dist(alpha[j], beta[j]);
+                    simulated_probability[j] = dist(gen);
+                    number_of_fire_spreads[j] = 1 + randBin(exposure_number - 1, simulated_probability[j]);
+                    fire_spreads_rings_list[j] = sample_vec(ring_exposure_list, number_of_fire_spreads[j]);
+                }
+                else
+                {
+                    conditional_mean[j] = conditional_mean_trend_parameters[0] * std::pow(exposure_number - 1, conditional_mean_trend_parameters[1]);
+                    alpha[j] = conditional_mean[j] * (exposure_number - 1 - conditional_mean[j] - conditional_Cov[1]) / (conditional_mean[j] + (exposure_number - 1) * (conditional_Cov[1] - 1));
+                    beta[j] = (exposure_number - 1 - conditional_mean[j]) * (exposure_number - 1 - conditional_mean[j] - conditional_Cov[1]) / (conditional_mean[j] + (exposure_number - 1) * (conditional_Cov[1] - 1));
+
+                    number_of_fire_spreads[j] = 1 + randBin(exposure_number - 1, simulated_probability[j]);
+                    fire_spreads_rings_list[j] = sample_vec(ring_exposure_list, number_of_fire_spreads[j]);
+                }
+            }
+            if (fire_spreads_rings_list[j].size() > 0)
+            {
+                // std::cout << fire_spreads_rings_list[j].size() << std::endl;
+                for (auto it = std::begin(fire_spreads_rings_list[j]); it != std::end(fire_spreads_rings_list[j]); ++it)
+                {
+                    double wielkosc_pozar_procent;
+                    double wielkosc_pozar_kwota;
+                    wielkosc_pozar_procent = percentage_of_loss(wielkosc_pozaru);
+                    wielkosc_pozar_kwota = wielkosc_pozar_procent * out_exp_sum_pom[*it];
+                    // std::cout << " wartosc minimalna szkody " << wartosc_minimalna_szkody << std::endl;
+                    if (wielkosc_pozar_kwota < wartosc_minimalna_szkody)
+                    {
+                        wielkosc_pozar_kwota = wartosc_minimalna_szkody;
+                    }
+                    out_data[0].push_back(distance_res_pom[*it]);
+                    out_data[1].push_back(out_lat_pom[*it]);
+                    out_data[2].push_back(out_lon_pom[*it]);
+                    out_data[3].push_back(out_insu_pom[*it]);
+                    out_data[4].push_back(out_reas_pom[*it]);
+                    out_data[5].push_back(out_exp_sum_pom[*it]);
+                    out_data[6].push_back(wielkosc_pozar_kwota);
+                }
+            }
+        }
+    }
+    return (out_data);
+}
+
+double haversine_cpp(double lat1, double long1,
+                     double lat2, double long2,
+                     double earth_radius = 6378137)
+{
+
+    double distance;
+
+    if (!((long1 > 360) || (long2 > 360) || (lat1 > 90) || (lat2 > 90)))
+    {
+        double deg_to_rad = 0.0174532925199432957;
+        double delta_phi = (lat2 - lat1) * deg_to_rad;
+        double delta_lambda = (long2 - long1) * deg_to_rad;
+        double phi1 = lat1 * deg_to_rad;
+        double phi2 = lat2 * deg_to_rad;
+        double term1 = pow(sin(delta_phi * .5), 2);
+        double term2 = cos(phi1) * cos(phi2) * pow(sin(delta_lambda * .5), 2);
+        double delta_sigma = 2 * atan2(sqrt(term1 + term2), sqrt(1 - term1 - term2));
+        distance = earth_radius * delta_sigma;
+    }
+    else
+    {
+        distance = NAN;
+    }
+    return distance;
+}
+
+std::vector<std::vector<double>> index_in_ring(
+    long double lat_center,
+    long double lon_center,
+    const std::vector<long double> &lat_sub,
+    const std::vector<long double> &lon_sub,
+    const std::vector<int> &insu_sub,
+    const std::vector<int> &reas_sub,
+    const std::vector<double> &exponsure_sum_value)
+{
+    std::vector<std::vector<double>> distance_res(9);
+    std::vector<std::vector<long double>> lat_ring(9);
+    std::vector<std::vector<long double>> lon_ring(9);
+    std::vector<std::vector<int>> insu_ring(9);
+    std::vector<std::vector<int>> reas_ring(9);
+    std::vector<std::vector<double>> exponsure_sum_ring(9);
+    std::vector<std::vector<double>> ind_after_prob(9);
+    int n1 = lon_sub.size();
+    if (n1 > 0)
+    {
+        for (int i = 0; i < n1; ++i)
+        {
+            double res = haversine_cpp(lat_center, lon_center, lat_sub[i], lon_sub[i]);
+            if (res < 0.005)
+            {
+                distance_res[0].push_back(res);
+                lat_ring[0].push_back(lat_sub[i]);
+                lon_ring[0].push_back(lon_sub[i]);
+                insu_ring[0].push_back(insu_sub[i]);
+                reas_ring[0].push_back(reas_sub[i]);
+                exponsure_sum_ring[0].push_back(exponsure_sum_value[i]);
+            }
+            if (res > 0.005 && res < 25)
+            {
+                distance_res[1].push_back(res);
+                lat_ring[1].push_back(lat_sub[i]);
+                lon_ring[1].push_back(lon_sub[i]);
+                insu_ring[1].push_back(insu_sub[i]);
+                reas_ring[1].push_back(reas_sub[i]);
+                exponsure_sum_ring[1].push_back(exponsure_sum_value[i]);
+            }
+            if (res > 25 && res < 50)
+            {
+                distance_res[2].push_back(res);
+                lat_ring[2].push_back(lat_sub[i]);
+                lon_ring[2].push_back(lon_sub[i]);
+                insu_ring[2].push_back(insu_sub[i]);
+                reas_ring[2].push_back(reas_sub[i]);
+                exponsure_sum_ring[2].push_back(exponsure_sum_value[i]);
+            }
+            if (res > 50 && res < 75)
+            {
+                distance_res[3].push_back(res);
+                lat_ring[3].push_back(lat_sub[i]);
+                lon_ring[3].push_back(lon_sub[i]);
+                insu_ring[3].push_back(insu_sub[i]);
+                reas_ring[3].push_back(reas_sub[i]);
+                exponsure_sum_ring[3].push_back(exponsure_sum_value[i]);
+            }
+            if (res > 75 && res < 100)
+            {
+                distance_res[4].push_back(res);
+                lat_ring[4].push_back(lat_sub[i]);
+                lon_ring[4].push_back(lon_sub[i]);
+                insu_ring[4].push_back(insu_sub[i]);
+                reas_ring[4].push_back(reas_sub[i]);
+                exponsure_sum_ring[4].push_back(exponsure_sum_value[i]);
+            }
+            if (res > 100 && res < 125)
+            {
+                distance_res[5].push_back(res);
+                lat_ring[5].push_back(lat_sub[i]);
+                lon_ring[5].push_back(lon_sub[i]);
+                insu_ring[5].push_back(insu_sub[i]);
+                reas_ring[5].push_back(reas_sub[i]);
+                exponsure_sum_ring[5].push_back(exponsure_sum_value[i]);
+            }
+            if (res > 125 && res < 150)
+            {
+                distance_res[6].push_back(res);
+                lat_ring[6].push_back(lat_sub[i]);
+                lon_ring[6].push_back(lon_sub[i]);
+                insu_ring[6].push_back(insu_sub[i]);
+                reas_ring[6].push_back(reas_sub[i]);
+                exponsure_sum_ring[6].push_back(exponsure_sum_value[i]);
+            }
+            if (res > 150 && res < 175)
+            {
+                distance_res[7].push_back(res);
+                lat_ring[7].push_back(lat_sub[i]);
+                lon_ring[7].push_back(lon_sub[i]);
+                insu_ring[7].push_back(insu_sub[i]);
+                reas_ring[7].push_back(reas_sub[i]);
+                exponsure_sum_ring[7].push_back(exponsure_sum_value[i]);
+            }
+            if (res > 175 && res < 200)
+            {
+                distance_res[8].push_back(res);
+                lat_ring[8].push_back(lat_sub[i]);
+                lon_ring[8].push_back(lon_sub[i]);
+                insu_ring[8].push_back(insu_sub[i]);
+                reas_ring[8].push_back(reas_sub[i]);
+                exponsure_sum_ring[8].push_back(exponsure_sum_value[i]);
+            }
+        }
+    }
+    ind_after_prob = index_spread_build(lat_center, lon_center, distance_res, lat_ring, lon_ring, insu_ring,
+                                        reas_ring, exponsure_sum_ring);
+    return (ind_after_prob);
+}
+
+std::vector<std::vector<double>> haversine_loop_cpp_vec(
+    double radius,
+    int n1, int woj, int mies)
+
+{
+    long double lat_center = exponsure_latitude[woj][mies][n1];
+    long double lon_center = exponsure_longitude[woj][mies][n1];
+    int circumference_earth_in_meters = 40075000;
+    double one_lat_in_meters = circumference_earth_in_meters * 0.002777778;
+    double one_lon_in_meters = circumference_earth_in_meters * cos(lat_center * 0.01745329) * 0.002777778;
+    double south_lat = lat_center - radius / one_lat_in_meters;
+    double north_lat = lat_center + radius / one_lat_in_meters;
+    double west_lon = lon_center - radius / one_lon_in_meters;
+    double east_lon = lon_center + radius / one_lon_in_meters;
+    int n = exponsure_longitude[woj][mies].size();
+
+    std::vector<long double> lat_sub;
+    std::vector<long double> lon_sub;
+    std::vector<int> insu_sub;
+    std::vector<int> reas_sub;
+    std::vector<double> premium_sub;
+    std::vector<int> ind_spread_build;
+    std::vector<std::vector<double>> ind_ring(11);
+    bool logical_value;
+
+    for (int i = 0; i < n; i++)
+    {
+        logical_value = !((exponsure_longitude[woj][mies][i] > east_lon) || (exponsure_longitude[woj][mies][i] < west_lon) || (exponsure_latitude[woj][mies][i] < south_lat) || (exponsure_latitude[woj][mies][i] > north_lat));
+        if (logical_value)
+        {
+            lat_sub.push_back(exponsure_latitude[woj][mies][i]);
+            lon_sub.push_back(exponsure_longitude[woj][mies][i]);
+            insu_sub.push_back(exponsure_insurance[woj][mies][i]);
+            reas_sub.push_back(exponsure_reassurance[woj][mies][i]);
+            premium_sub.push_back(exponsure_sum_value[woj][mies][i]);
+        }
+    }
+
+    if (lat_sub.size() > 0)
+    {
+        ind_ring = index_in_ring(lat_center, lon_center, lat_sub, lon_sub,
+
+                                 insu_sub, reas_sub, premium_sub);
+    }
+    return (ind_ring);
+}
+
+std::vector<std::vector<std::vector<double>>> calc_brutto_ring(std::vector<double> data_input,
+                                                               std::vector<double> insurance, std::vector<double> reas_input, double kat_val, int ilosc_ubezpieczycieli)
+{
+    std::vector<std::vector<std::vector<double>>> out_final(8);
+    std::vector<std::vector<double>> out_brutto(ilosc_ubezpieczycieli);
+    std::vector<std::vector<double>> out_kat_brutto(ilosc_ubezpieczycieli);
+    std::vector<std::vector<double>> ind_brutto(ilosc_ubezpieczycieli);
+    std::vector<std::vector<double>> ind_kat_brutto(ilosc_ubezpieczycieli);
+    std::vector<std::vector<double>> out_sum_brutto(ilosc_ubezpieczycieli);
+    std::vector<std::vector<double>> out_sum_kat_brutto(ilosc_ubezpieczycieli);
+    std::vector<std::vector<double>> out_reas_standard(ilosc_ubezpieczycieli);
+    std::vector<std::vector<double>> out_reas_kat(ilosc_ubezpieczycieli);
+
+    int ind_next = 0;
+
+    for (auto it = std::begin(insurance); it != std::end(insurance); ++it)
+    {
+        out_brutto[*it].push_back(data_input[ind_next]);
+        ind_brutto[*it].push_back(ind_next);
+        out_reas_standard[*it].push_back(reas_input[ind_next]);
+        if (data_input[ind_next] > kat_val)
+        {
+            out_kat_brutto[*it].push_back(data_input[ind_next]);
+            ind_kat_brutto[*it].push_back(ind_next);
+            out_reas_kat[*it].push_back(reas_input[ind_next]);
+        }
+        ind_next += 1;
+    }
+    for (int i = 0; i < ilosc_ubezpieczycieli; i++)
+    {
+        double sum_brutto = accumulate(out_brutto[i].begin(), out_brutto[i].end(), 0.0);
+        double sum_kat_brutto = accumulate(out_kat_brutto[i].begin(), out_kat_brutto[i].end(), 0.0);
+        out_sum_brutto[i].push_back(sum_brutto);
+        out_sum_kat_brutto[i].push_back(sum_kat_brutto);
+    }
+    out_final[0] = out_brutto;
+    out_final[1] = out_kat_brutto;
+    out_final[2] = out_sum_brutto;
+    out_final[3] = out_sum_kat_brutto;
+    out_final[4] = ind_brutto;
+    out_final[5] = ind_kat_brutto;
+    out_final[6] = out_reas_standard;
+    out_final[7] = out_reas_kat;
+    return (out_final);
+}
+
+double calc_res_bligator(std::vector<double> vec_obligat_insur_risk, double sum_prem)
+{
+    double out_obl = 0.0;
+    if (sum_prem < vec_obligat_insur_risk[0])
+    {
+        out_obl = vec_obligat_insur_risk[2] * sum_prem;
+    }
+    else if (sum_prem > vec_obligat_insur_risk[0] && sum_prem < vec_obligat_insur_risk[1])
+    {
+        out_obl = vec_obligat_insur_risk[2] * vec_obligat_insur_risk[0];
+    }
+    else if (sum_prem > vec_obligat_insur_risk[1])
+    {
+        out_obl = sum_prem - (vec_obligat_insur_risk[1] - vec_obligat_insur_risk[0]);
+    }
+    return (out_obl);
+}
+
+std::vector<std::vector<double>> reasurance_risk(std::vector<std::vector<double>> out_exp_sum_kwota_insurancers,
+                                                 std::vector<std::vector<double>> out_reas_insurens,
+                                                 int ilosc_ubezpieczycieli)
+{
+    double exp_fire_pre;
+    double reas_oblig;
+    double b_f;
+    double reas_fakultat;
+    std::vector<double> vec_fakul_insur_num;
+    std::vector<double> vec_obligat_insur_risk;
+    std::vector<std::vector<double>> vec_fakul_insur_val;
+    std::vector<std::vector<double>> sum_prem_out_res(ilosc_ubezpieczycieli);
+    std::vector<std::vector<double>> ind_prem_out_res(ilosc_ubezpieczycieli);
+    std::vector<double> vec_final_premium;
+    for (int kk = 0; kk < ilosc_ubezpieczycieli; kk++)
+    {
+        std::vector<double> out_reas = out_reas_insurens[kk];
+        std::vector<double> input_one_insurance = out_exp_sum_kwota_insurancers[kk];
+        int len_insurance = input_one_insurance.size();
+        for (int i = 0; i < len_insurance; i++)
+        {
+            exp_fire_pre = input_one_insurance[i];
+            vec_obligat_insur_risk = obligatoryjna_input_risk[kk];
+            reas_fakultat = exp_fire_pre;
+            reas_oblig = exp_fire_pre;
+            if ((out_reas[i] < 100))
+            {
+                vec_fakul_insur_num = fakultatywna_input_num[kk];
+                vec_fakul_insur_val = fakultatywna_input_val[kk];
+
+                if (std::find(vec_fakul_insur_num.begin(), vec_fakul_insur_num.end(), out_reas[i]) != vec_fakul_insur_num.end())
+                {
+                    b_f = vec_fakul_insur_val[out_reas[i]][0];
+
+                    reas_fakultat = exp_fire_pre * b_f + std::max(0.0, (1 - b_f) * exp_fire_pre - vec_fakul_insur_val[out_reas[i]][1]);
+                    reas_oblig = reas_fakultat;
+                }
+                else
+                {
+                    reas_fakultat = std::min(exp_fire_pre, vec_fakul_insur_val[out_reas[i]][0]) + std::max(0.0, exp_fire_pre - vec_fakul_insur_val[out_reas[i]][1]);
+                    reas_oblig = reas_fakultat;
+                }
+            }
+            if (floor(vec_obligat_insur_risk[0]) >= 0)
+            {
+                reas_oblig = calc_res_bligator(vec_obligat_insur_risk, reas_fakultat);
+            }
+            sum_prem_out_res[kk].push_back(reas_oblig);
+            ind_prem_out_res[kk].push_back(i);
+        }
+    }
+    return (sum_prem_out_res);
+}
+
+std::vector<std::vector<double>> calc_reas_obliga_event(int ins_ind,
+                                                        double fire_prem,
+                                                        std::vector<std::vector<double>> num_reas_insurances,
+                                                        std::vector<std::vector<double>> val_reas_insurances,
+                                                        int size_vec, int ilosc_ubezpieczycieli)
+{
+    std::vector<std::vector<double>> vec_reas_final(3);
+    std::vector<double> reas_spread(size_vec);
+    std::vector<double> val_reas_insurance;
+    std::vector<double> num_reas_insurance;
+    std::vector<double> vec_obligat;
+    std::vector<double> val_sums_insur;
+
+    double reas_oblig;
+    double sum_of_elems;
+    double sum_of_elems_fire_el;
+    for (int i = 0; i < ilosc_ubezpieczycieli; i++)
+    {
+        double sum_value = 0;
+        val_reas_insurance = val_reas_insurances[i];
+        num_reas_insurance = num_reas_insurances[i];
+        vec_obligat = obligatoryjna_input_event[i];
+        sum_of_elems = std::accumulate(val_reas_insurance.begin(), val_reas_insurance.end(), 0);
+        int size_vec_reas;
+        size_vec_reas = num_reas_insurance.size();
+        if ((size_vec_reas == 0) && (ins_ind == i))
+        {
+            vec_reas_final[0].push_back(fire_prem);
+        }
+        else if ((size_vec_reas >= 1) && (ins_ind == i))
+        {
+            sum_of_elems_fire_el = sum_of_elems + fire_prem;
+            reas_oblig = calc_reas_bligator(vec_obligat, sum_of_elems_fire_el);
+            if (sum_of_elems_fire_el != reas_oblig)
+            {
+                for (auto it = std::begin(num_reas_insurance); it != std::end(num_reas_insurance); ++it)
+                {
+                    reas_spread[*it] = sum_of_elems_fire_el / (size_vec_reas + 1);
+                    sum_value += sum_of_elems_fire_el / (size_vec_reas + 1);
+                }
+                vec_reas_final[0].push_back(sum_of_elems_fire_el / (size_vec_reas + 1));
+            }
+            else
+            {
+                int kk = 0;
+                for (auto it = std::begin(num_reas_insurance); it != std::end(num_reas_insurance); ++it)
+                {
+                    reas_spread[*it] = val_reas_insurance[kk];
+                    sum_value += val_reas_insurance[kk];
+                    kk = kk + 1;
+                }
+                vec_reas_final[0].push_back(fire_prem);
+            }
+        }
+        else if ((size_vec_reas > 1) && (ins_ind != 1))
+        {
+            reas_oblig = calc_reas_bligator(vec_obligat, sum_of_elems);
+            if (sum_of_elems != reas_oblig)
+            {
+                int kk = 0;
+                for (auto it = std::begin(num_reas_insurance); it != std::end(num_reas_insurance); ++it)
+                {
+                    reas_spread[*it] = sum_of_elems / size_vec_reas;
+                    kk = kk + 1;
+                }
+                vec_reas_final[0].push_back(sum_of_elems / size_vec_reas);
+            }
+            else
+            {
+                int kk = 0;
+                for (auto it = std::begin(num_reas_insurance); it != std::end(num_reas_insurance); ++it)
+                {
+                    reas_spread[*it] = val_reas_insurance[kk];
+                    sum_value += val_reas_insurance[kk];
+                    kk = kk + 1;
+                }
+            }
+        }
+        else
+        {
+            int kk = 0;
+            for (auto it = std::begin(num_reas_insurance); it != std::end(num_reas_insurance); ++it)
+            {
+                reas_spread[*it] = val_reas_insurance[kk];
+                kk = kk + 1;
+            }
+        }
+        val_sums_insur.push_back(sum_value);
+    }
+    vec_reas_final[1] = reas_spread;
+    vec_reas_final[2] = val_sums_insur;
+
+    return (vec_reas_final);
+}
+
+static int wybrany_rok = 2023;
+static float f = 0.0f;
+static char sciezka_input[512] = "";
+static bool disable_mouse_wheel = false;
+static int czy_wlaczyc_odnowienia = 0;
+static float pasek_postepu_wczytywania_danych = 0.0f;
+static int liczba_symulacji = 100;
+static int promien = 200;
+static int liczba_dzialajacych_watkow = 1;
+static int liczba_watkow_do_zapisu = 2;
+static double wartosc_katastrof_szkody = 0;
+static float ogolnyprogress = 0.0f;
+static char gdzie_zapisac[512] = "";
+std::vector<float> progressbar(1);
+
+// std::mutex g_num_mutex;
+VectorSim out_brutto_kat_final;
+VectorSim out_netto_kat_final;
+VectorSim out_netto_final;
+
+std::mutex mtx;
+
+std::vector<std::vector<std::vector<double>>> generateRandomData(int numRegions, int numMonths, std::mt19937 &gen, std::uniform_real_distribution<> &dist)
+{
+    std::vector<std::vector<std::vector<double>>> data(numRegions, std::vector<std::vector<double>>(numMonths));
+    for (int i = 0; i < numRegions; ++i)
+    {
+        for (int j = 0; j < numMonths; ++j)
+        {
+            int n_num = static_cast<int>(dist(gen) * 10000);
+            data[i][j].resize(n_num);
+            for (int k = 0; k < n_num; ++k)
+            {
+                data[i][j][k] = dist(gen);
+            }
+        }
+    }
+    return data;
+}
+
+std::vector<double> generateSingleVector(std::mt19937 &gen, std::uniform_real_distribution<> &dist, int size)
+{
+    std::vector<double> v(size);
+    for (auto &elem : v)
+    {
+        elem = dist(gen);
+    }
+    return v;
+}
+
+std::vector<double> generateRandomDoubles(int count, double min, double max)
+{
+    std::random_device rd;
+
+    std::uniform_real_distribution<> dist(min, max);
+    std::vector<double> values(count);
+    for (auto &val : values)
+    {
+        val = dist(gen);
+    }
+    return values;
+}
+
+std::vector<int> generateRandomInts(int count, int min, int max)
+{
+    std::random_device rd;
+
+    std::uniform_int_distribution<> dist(min, max);
+    std::vector<int> values(count);
+    for (auto &val : values)
+    {
+        val = dist(gen);
+    }
+    return values;
+}
+
+std::vector<long double> generateRandomLongDoubles(int count, long double min, long double max)
+{
+    std::random_device rd;
+
+    std::uniform_real_distribution<long double> dist(min, max);
+    std::vector<long double> values(count);
+    for (auto &val : values)
+    {
+        val = dist(gen);
+    }
+    return values;
+}
+
+void processPrPozaru(const std::string &filename)
+{
+    csvstream csvin(filename);
+
+    std::map<std::string, std::string> row;
+
+    try
+    {
+        while (csvin >> row)
+        {
+            list_list_wyb[0].emplace_back(std::stod(row["1"]));
+            list_list_wyb[1].emplace_back(std::stod(row["2"]));
+            list_list_wyb[2].emplace_back(std::stod(row["3"]));
+            list_list_wyb[3].emplace_back(std::stod(row["4"]));
+            list_list_wyb[4].emplace_back(std::stod(row["5"]));
+            list_list_wyb[5].emplace_back(std::stod(row["6"]));
+            list_list_wyb[6].emplace_back(std::stod(row["7"]));
+            list_list_wyb[7].emplace_back(std::stod(row["8"]));
+            list_list_wyb[8].emplace_back(std::stod(row["9"]));
+            list_list_wyb[9].emplace_back(std::stod(row["10"]));
+            list_list_wyb[10].emplace_back(std::stod(row["11"]));
+            list_list_wyb[11].emplace_back(std::stod(row["12"]));
+            list_list_wyb[12].emplace_back(std::stod(row["13"]));
+            list_list_wyb[13].emplace_back(std::stod(row["14"]));
+            list_list_wyb[14].emplace_back(std::stod(row["15"]));
+            list_list_wyb[15].emplace_back(std::stod(row["16"]));
+            list_list_wyb[16].emplace_back(std::stod(row["17"]));
+        }
+    }
+    catch (const std::invalid_argument &e)
+    {
+        std::cerr << "Error: Invalid argument for stoi or stod conversion 2." << std::endl;
+    }
+}
+
+void processPrRozprzestrzenienia(const std::string &filename)
+{
+    csvstream csvin(filename);
+
+    std::map<std::string, std::string> row;
+
+    try
+    {
+        int cnt = 0;
+        while (csvin >> row)
+        {
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["0"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(0,25]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(25,50]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(50,75]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(75,100]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(100,125]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(125,150]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(150,175]"]));
+            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(175,200]"]));
+
+            if (cnt == 0)
+            {
+                conditional_mean_trend_parameters[0] = (std::stod(row["a1"]));
+                conditional_mean_trend_parameters[1] = (std::stod(row["b1"]));
+
+                conditional_Cov[0] = (std::stod(row["a2"]));
+                conditional_Cov[1] = (std::stod(row["b2"]));
+            }
+            cnt++;
+        }
+    }
+
+    catch (const std::invalid_argument &e)
+    {
+        std::cerr << "Error: Invalid argument for stoi or stod conversion 2." << std::endl;
+    }
+}
+
+void processPrWielkoscPozaru(const std::string &filename)
+{
+
+    csvstream csvin(filename);
+
+    std::map<std::string, std::string> row;
+
+    while (csvin >> row)
+    {
+        wielkosc_pozaru[0].emplace_back(std::stod(row["Rozmiar"]));
+        wielkosc_pozaru[1].emplace_back(std::stod(row["Prawdopodobienstwo"]));
+    }
+}
+
+void processOblig(const std::string &FOLDER_REAS, const std::vector<std::string> &filename)
+{
+
+    for (int i = 0; i < filename.size(); i++)
+    {
+        obligatoryjna_input_risk.push_back(std::vector<double>());
+        obligatoryjna_input_event.push_back(std::vector<double>());
+
+        for (int j = 0; j < 4; j++)
+        {
+            obligatoryjna_input_risk[i].push_back(0);
+            obligatoryjna_input_event[i].push_back(0);
+        }
+    }
+
+    for (int i = 0; i < filename.size(); i++)
+    {
+        csvstream csvin(FOLDER_REAS + filename[i] + ".csv");
+
+        std::map<std::string, std::string> row;
+
+        int cnt = 0;
+        while (csvin >> row)
+        {
+            if (cnt == 0)
+            {
+                obligatoryjna_input_risk[i][3] = std::stod(row["Udzial(ryzyko)"]);
+                obligatoryjna_input_event[i][3] = std::stod(row["Udzial(zdarzenie)"]);
+            }
+            else
+            {
+                obligatoryjna_input_risk[i][2] = std::stod(row["Udzial(ryzyko)"]);
+                obligatoryjna_input_event[i][2] = std::stod(row["Udzial(zdarzenie)"]);
+            }
+            obligatoryjna_input_risk[i][0] = std::stod(row["Od(ryzyko)"]);
+            obligatoryjna_input_risk[i][1] = std::stod(row["Do(ryzyko)"]);
+
+            obligatoryjna_input_event[i][0] = std::stod(row["Od(zdarzenie)"]);
+            obligatoryjna_input_event[i][1] = std::stod(row["Do(zdarzenie)"]);
+            cnt++;
+            if (cnt == 2)
+                break;
+        }
+    }
+}
+
+int extractMonth(const std::string &date)
+{
+    std::istringstream dateStream(date);
+    std::string segment;
+    std::getline(dateStream, segment, '.');
+    std::getline(dateStream, segment, '.');
+    return std::stoi(segment);
+}
+
+void processRow(const std::string &startDate, const std::string &endDate, int region, double latitude, double longitude, int reassurance, double sumValue, int insurance)
+{
+    int startMonth = extractMonth(startDate) - 1;
+    int endMonth = extractMonth(endDate) - 1;
+
+    for (int month = startMonth; month <= endMonth; ++month)
+    {
+        exponsure_latitude[region][month].push_back(latitude);
+        exponsure_longitude[region][month].push_back(longitude);
+        exponsure_insurance[region][month].push_back(insurance);
+        exponsure_reassurance[region][month].push_back(reassurance);
+        exponsure_sum_value[region][month].push_back(sumValue);
+    }
+}
+
+bool is_date_in_year(const std::string &date_str, int year)
+{
+    int date_year = std::stoi(date_str.substr(6, 4));
+    return date_year == year;
+}
+
+void get_dates_within_year(std::string &date_str_a, std::string &date_str_b, int year)
+{
+    std::string start_of_year = "01.01." + std::to_string(year);
+    std::string end_of_year = "31.12." + std::to_string(year);
+
+    bool date_a_in_year = is_date_in_year(date_str_a, year);
+    bool date_b_in_year = is_date_in_year(date_str_b, year);
+
+    if (date_a_in_year && date_b_in_year)
+    {
+        return;
+    }
+    else if (date_a_in_year)
+    {
+        date_str_b = end_of_year;
+        return;
+    }
+    else if (date_b_in_year)
+    {
+        date_str_a = start_of_year;
+        return;
+    }
+    else
+    {
+        date_str_a = start_of_year;
+        date_str_b = end_of_year;
+        return;
+    }
+}
+
+long double find_prob_odnowienie(std::vector<std::vector<double>> odnowienia_vec_data,
+                                 long double odnowienia_exp_val,
+                                 long double sum_ub_val)
+{
+
+    std::vector<double> SU_dolna = odnowienia_vec_data[0];
+    std::vector<double> SU_gorna = odnowienia_vec_data[1];
+    std::vector<double> vec_odn = odnowienia_vec_data[2];
+    std::vector<double> vec_pra = odnowienia_vec_data[3];
+    int ind = 0;
+    long double pr_odn = 0.00;
+    int len_sub = SU_dolna.size();
+
+    for (int i = 0; i < len_sub; i++)
+    {
+
+        if ((vec_odn[i] == odnowienia_exp_val) && (SU_dolna[i] <= sum_ub_val) && (SU_gorna[i] > sum_ub_val))
+        {
+            ind = i;
+            pr_odn = vec_pra[ind];
+            break;
+        }
+    }
+    return (pr_odn);
+}
+int calc_odnowienia(int polic_end_year,
+                    std::vector<std::vector<double>> odnowienia_vec_data,
+                    int odnowienia_exponsure,
+                    double sum_ub)
+{
+    int ind_pom = 0;
+    int policy_end_year_cop;
+    long double prob_unif = randZeroToOne(0, 1);
+
+    long double find_prob_odn = find_prob_odnowienie(odnowienia_vec_data,
+                                                     odnowienia_exponsure,
+                                                     sum_ub);
+
+    if (prob_unif <= find_prob_odn)
+    {
+        ind_pom += 1;
+        policy_end_year_cop = polic_end_year + 1;
+    }
+    else
+    {
+        policy_end_year_cop = polic_end_year;
+    }
+    return (policy_end_year_cop);
+}
+
+std::vector<std::vector<double>> read_odnowienia(const std::string filename)
+{
+    std::vector<std::vector<double>> odnowienia_vect;
+
+    csvstream csvin("M:/Program ostateczny/tetsty_czytanie/tetsty_czytanie/csv/Input_all/Parametryzacja/Odnowienia/UNIQA.csv");
+
+    std::map<std::string, std::string> row;
+    std::vector<double> pom_SU_dol_vec;
+    std::vector<double> pom_SU_gor_vec;
+    std::vector<double> pom_odn_vec;
+    std::vector<double> pom_pr_odn_vec;
+
+    while (csvin >> row)
+    {
+        pom_SU_dol_vec.push_back(std::stod(row["SU_dolnaGranica"]));
+        pom_SU_gor_vec.push_back(std::stod(row["SU_gornaGranica"]));
+        pom_odn_vec.push_back(std::stod(row["Odnowienie"]));
+        pom_pr_odn_vec.push_back(std::stod(row["PrawdopodobienstwoOdnowienia"]));
+    }
+
+    odnowienia_vect.push_back(pom_SU_dol_vec);
+    odnowienia_vect.push_back(pom_SU_gor_vec);
+    odnowienia_vect.push_back(pom_odn_vec);
+    odnowienia_vect.push_back(pom_pr_odn_vec);
+
+    return (odnowienia_vect);
+}
+
+void processBudynki(const std::string FOLDER_UBEZP, const std::string ubezp, const std::vector<std::string> &filename, std::string year, std::string odnowienia)
+{
+
+    for (int i = 0; i < filename.size(); i++)
+    {
+        std::cout << FOLDER_UBEZP + ubezp + filename[i] + ".csv" << std::endl;
+        csvstream csvin(FOLDER_UBEZP + ubezp + filename[i] + ".csv");
+
+        std::map<std::string, std::string> row;
+        std::vector<std::vector<double>> odnowienia_vec_data = read_odnowienia(FOLDER_UBEZP + "/Parametryzacja/Odnowienia/" + filename[i]);
+
+        int id_ubezp = i;
+        try
+        {
+            while (csvin >> row)
+            {
+
+                if (row["Szerokosc"].empty() || row["Dlugosc"].empty())
+                {
+                    continue;
+                }
+
+                std::string dataPoczatku = row["DataPoczatku"];
+                std::string dataKonca = row["DataKonca"];
+                int reasekuracjaf = 99999;
+                try
+                {
+                    reasekuracjaf = std::stoi(row["ReasekuracjaF"]);
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    reasekuracjaf = 99999;
+                }
+
+                if (odnowienia == "tak")
+                {
+                    std::string StartlastFour = dataPoczatku.substr(dataPoczatku.length() - 4);
+                    std::string EndlastFour = dataKonca.substr(dataKonca.length() - 4);
+
+                    // konwersja na int
+                    int StartYearnum = std::stoi(StartlastFour);
+                    int EndYearnum = std::stoi(EndlastFour);
+                    int policy_end_year_cop = calc_odnowienia(EndYearnum, odnowienia_vec_data, std::stoi(row["Odnowione"]), std::stod(row["SumaUbezpieczenia"]));
+                    dataKonca = dataKonca.replace(dataKonca.length() - 4, 4, std::to_string(policy_end_year_cop)); // zastąpienie ostatnich 4 znaków
+                }
+
+                get_dates_within_year(dataPoczatku, dataKonca, std::stoi(year));
+                processRow(
+                    dataPoczatku,
+                    dataKonca,
+                    std::stoi(row["WojUjednolicone"]),
+                    std::stod(row["Szerokosc"]),
+                    std::stod(row["Dlugosc"]),
+                    reasekuracjaf,
+                    std::stod(row["SumaUbezpieczenia"]),
+                    id_ubezp);
+            }
+        }
+        catch (const std::invalid_argument &e)
+        {
+            std::cerr << "Error: Invalid argument for stoi or stod conversion 1." << std::endl;
+        }
+    }
+}
+
+void print3DVector(const std::vector<std::vector<std::vector<double>>> &vec)
+{
+    for (const auto &matrix : vec)
+    {
+        for (const auto &row : matrix)
+        {
+            for (double element : row)
+            {
+                std::cout << element << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "----" << std::endl;
+    }
+}
+
+void processReas(const std::string FOLDER_REAS, const std::vector<std::string> &filename)
+{
+
+    fakultatywna_input_num.resize(filename.size());
+    for (int i = 0; i < filename.size(); i++)
+    {
+        csvstream csvin(FOLDER_REAS + filename[i] + ".csv");
+
+        std::map<std::string, std::string> row;
+
+        std::vector<std::vector<double>> first_outer_vector;
+
+        while (csvin >> row)
+        {
+            if ((row["ZachowekKwota"]) == "")
+            {
+
+                fakultatywna_input_num[i].push_back(std::stoi(row["Lp"]));
+                first_outer_vector.push_back({std::stod(row["ZachowekProcent"]), std::stod(row["Pojemnosc"])});
+            }
+            else
+            {
+                first_outer_vector.push_back({std::stod(row["ZachowekKwota"]), std::stod(row["Pojemnosc"])});
+            }
+        }
+
+        fakultatywna_input_val.push_back(first_outer_vector);
+    }
+}
+
+using namespace std;
+
+std::string generujNazwePliku(std::string fileNames)
+{
+    return fileNames + ".csv";
+}
+
+void zapiszDoCSV(std::string fileNames, const string &sciezka, int index, const vector<vector<double>> &output_brutto_final,
+                 const vector<vector<double>> &output_brutto_kat_final,
+                 const vector<vector<double>> &output_netto_final,
+                 const vector<vector<double>> &output_netto_kat_final)
+{
+    std::cout << "Komunikat start" << std::endl;
+
+    std::cout << sciezka + "/" + generujNazwePliku(fileNames) << std::endl;
+    std::cout << "Komunikat stop" << std::endl;
+
+    ofstream plik(sciezka + "/" + generujNazwePliku(fileNames));
+    // if (!plik) {
+    //   cerr << "Nie można otworzyć pliku do zapisu." << endl;
+    //  return;
+    //}
+    std::cout << "dlugosc  output_brutto_final" << std::endl;
+
+    std::cout << output_brutto_final[index].size() << std::endl;
+    plik << "Brutto,Brutto_Katastroficzny,Netto,Netto_Katastroficzny" << endl;
+    for (size_t i = 0; i < output_brutto_final[index].size(); ++i)
+    {
+        plik << fixed << setprecision(2) << output_brutto_final[index][i] << ","
+             << output_brutto_kat_final[index][i] << ","
+             << output_netto_final[index][i] << ","
+             << output_netto_kat_final[index][i] << endl;
+    }
+
+    plik.close();
+}
+
+std::string createFolder(const string &sciezka)
+{
+    // Tworzenie folderu Wyniki z datą i godziną
+    time_t czas_teraz;
+    struct tm czas;
+    time(&czas_teraz);
+    localtime_s(&czas, &czas_teraz);
+    char data_czas[80];
+    strftime(data_czas, 80, "%Y-%m-%d %H.%M.%S", &czas);
+    string nazwa_katalogu = sciezka + "/Wyniki " + string(data_czas);
+    if (_mkdir(nazwa_katalogu.c_str()) != 0)
+    {
+        cerr << "Nie można utworzyć folderu Wyniki." << endl;
+    }
+
+    // Tworzenie folderu Symulacje
+    string sciezka_symulacje = nazwa_katalogu + "/Symulacje";
+    if (_mkdir(sciezka_symulacje.c_str()) != 0)
+    {
+        cerr << "Nie można utworzyć folderu Symulacje." << endl;
+    }
+
+    // Tworzenie folderu Symulacje
+    string sciezka_Pierwotny = nazwa_katalogu + "/Pierwotny";
+    if (_mkdir(sciezka_Pierwotny.c_str()) != 0)
+    {
+        cerr << "Nie można utworzyć folderu Symulacje." << endl;
+    }
+
+    // Tworzenie folderu Symulacje
+    string sciezka_rozp = nazwa_katalogu + "/Rozprzestrzeniony";
+    if (_mkdir(sciezka_rozp.c_str()) != 0)
+    {
+        cerr << "Nie można utworzyć folderu Symulacje." << endl;
+    }
+
+    // Tworzenie folderu Pożary
+    string sciezka_symulacje_pozary = nazwa_katalogu + "/Pożary";
+    if (_mkdir(sciezka_symulacje_pozary.c_str()) != 0)
+    {
+        cerr << "Nie można utworzyć folderu Symulacje." << endl;
+    }
+
+    // Tworzenie folderu Rozprzestrzennione
+    string sciezka_symulacje_roz = nazwa_katalogu + "/Pożary/Rozprzestrzennione";
+    if (_mkdir(sciezka_symulacje_roz.c_str()) != 0)
+    {
+        cerr << "Nie można utworzyć folderu Symulacje." << endl;
+    }
+
+    // Tworzenie folderu Pierwotne
+    string sciezka_symulacje_pier = nazwa_katalogu + "/Pożary/Pierwotne";
+    if (_mkdir(sciezka_symulacje_pier.c_str()) != 0)
+    {
+        cerr << "Nie można utworzyć folderu Symulacje." << endl;
+    }
+
+    return (nazwa_katalogu);
+}
+
+namespace fs = std::filesystem;
+
+void create_directory(const fs::path &path)
+{
+    if (!fs::exists(path))
+    {
+        if (fs::create_directories(path))
+        {
+            std::cout << "Utworzono folder : " << path << std::endl;
+        }
+        else
+        {
+            std::cout << "Blad tworzenia folderu : " << path << std::endl;
+        }
+    }
+}
+
+void create_csv_files(const fs::path &folder_path, const std::string &prefix, int values, bool czyPierwotny)
+{
+    Ubezpieczyciel u = ubezpieczyciele[values];
+
+    if (czyPierwotny == true)
+    {
+        if (prefix == "Brutto")
+        {
+            for (int i = 0; i < u.sum_vec_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildPierwotny_brutto_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Brutto_Kat")
+        {
+            for (int i = 0; i < u.sum_vec_kat_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_kat_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildPierwotny_brutto_kat_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Netto")
+        {
+            for (int i = 0; i < u.sum_vec_netto_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_netto_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildPierwotny_netto_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Netto_kat")
+        {
+            for (int i = 0; i < u.sum_vec_netto_kat_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_netto_kat_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildPierwotny_netto_kat_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+    }
+    else
+    {
+        if (prefix == "Brutto")
+        {
+            for (int i = 0; i < u.sum_vec_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildRozprzestrzeniony_brutto_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Brutto_Kat")
+        {
+            for (int i = 0; i < u.sum_vec_kat_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_kat_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildRozprzestrzeniony_brutto_kat_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Netto")
+        {
+            for (int i = 0; i < u.sum_vec_netto_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_netto_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildRozprzestrzeniony_netto_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+        else if (prefix == "Netto_kat")
+        {
+            for (int i = 0; i < u.sum_vec_netto_kat_out_vec.size(); ++i)
+            {
+                std::string filename = std::to_string(u.sum_vec_netto_kat_out_vec[i]) + ".csv";
+                fs::path file_path = folder_path / filename;
+                std::ofstream file(file_path);
+                if (file.is_open())
+                {
+                    u.buildRozprzestrzeniony_netto_kat_vec[i].writeCSV(file);
+                    file.close();
+                }
+            }
+        }
+    }
+}
+
+void create_custom_directory(const fs::path &path)
+{
+    if (!fs::exists(path))
+    {
+        if (fs::create_directories(path))
+        {
+            std::cout << "Utworzono folder: " << path << std::endl;
+        }
+        else
+        {
+            std::cout << "Błąd: " << path << std::endl;
+        }
+    }
+}
+
+std::vector<std::string> ubezp_nazwy;
+std::vector<ImGuiComboFlags> flagi;
+
+static void glfw_error_callback(int error, const char *description)
+{
+    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
+}
+
+namespace fs = std::filesystem;
+
+std::vector<std::string> getFiles(const std::string &directoryPath)
+{
+    std::vector<std::string> fileNames;
+
+    for (const auto &entry : fs::directory_iterator(directoryPath))
+    {
+        if (entry.is_regular_file())
+        {
+            std::string fileName = entry.path().filename().string();
+            if (fileName.size() > 4)
+            {
+                fileName = fileName.substr(0, fileName.size() - 4);
+            }
+            fileNames.push_back(fileName);
+        }
+    }
+
+    return fileNames;
+}
+
+void setup_imgui_style(ImGuiIO &io)
+{
+    ImFont *arialFont = io.Fonts->AddFontFromFileTTF("M:/Program ostateczny/tetsty_czytanie/tetsty_czytanie/Arial.ttf", 15.0f);
+    io.FontGlobalScale = 1.0f;
+
+    ImGuiStyle &style = ImGui::GetStyle();
+    style.ScaleAllSizes(1.0f);
+
+    io.Fonts->AddFontDefault();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+
+    ImGui::StyleColorsLight();
+}
+
+void simulateExponsureTEST(std::string nazwakatalogu, int sim, int numer_symulacji, double kat_val, int ilosc_ubezpieczycieli, int num_watku)
+{
+    float step_size = 1.0 / (17 * 12 + ilosc_ubezpieczycieli);
+    double bar_step = (1.0 / ((17 + ilosc_ubezpieczycieli) * sim));
+
+    progressbar[num_watku] = 0.0f;
+    int exposure_number;
+    int binom_fire;
+    double wielkosc_pozar_procent;
+    double wielkosc_pozar_kwota;
+    double reas_fire;
+    int insurancer;
+    double reas_fire_kat;
+    int len_spread;
+    double sum_vec_out;
+    double sum_vec_kat_out;
+    double sum_netto_out;
+    double sum_netto_kat_out;
+
+    VectorSim sim_brutto_final;
+    VectorSim sim_brutto_kat_final;
+    VectorSim sim_netto_final;
+    VectorSim sim_netto_kat_final;
+    VectorPozarPierwotny buildPierwotny;
+    VectorPozarRozprzestrzeniony buildRozprzestrzeniony;
+    int cnt_jedynek = 0;
+    int index_table = 0;
+    for (size_t woj = 0; woj < 17; woj++)
+    {
+        for (int mies = 0; mies < 12; mies++)
+        {
+            exposure_number = exponsure_longitude[woj][mies].size();
+            if (exposure_number > 0)
+            {
+                binom_fire = randBin(exposure_number, list_list_wyb[woj][mies]);
+                if (binom_fire > 0)
+                {
+                    std::vector<int> fire_sources_list(binom_fire);
+
+                    std::vector<int> pom_index_fire(exposure_number);
+                    std::iota(std::begin(pom_index_fire), std::end(pom_index_fire), 0);
+
+                    fire_sources_list = sample_vec(pom_index_fire, binom_fire);
+
+                    for (size_t itx = 0; itx < fire_sources_list.size(); itx++)
+                    {
+                        index_table += 1;
+                        auto nr_budynku = fire_sources_list[itx];
+
+                        std::vector<std::vector<double>> spread_one_building(11);
+
+                        spread_one_building = haversine_loop_cpp_vec(promien,
+                                                                     nr_budynku,
+                                                                     woj, mies);
+
+                        wielkosc_pozar_procent = percentage_of_loss(wielkosc_pozaru);
+                        wielkosc_pozar_kwota = wielkosc_pozar_procent * exponsure_sum_value[woj][mies][nr_budynku];
+
+                        if (wielkosc_pozar_kwota < 500.0)
+                            wielkosc_pozar_kwota = 500.0;
+
+                        reas_fire = reasecuration_build_fire(wielkosc_pozar_kwota, woj, mies, nr_budynku);
+
+                        insurancer = exponsure_insurance[woj][mies][nr_budynku];
+                        buildPierwotny.addPozarPierwotny(insurancer, nr_budynku,
+                                                         woj + 1, mies + 1, index_table,
+                                                         wielkosc_pozar_kwota, reas_fire);
+                        sim_brutto_final.addDataVec(insurancer, wielkosc_pozar_kwota);
+                        // sim_netto_final.addDataVec(insurancer, wielkosc_pozar_kwota);
+                        reas_fire_kat = 0.0;
+                        if (wielkosc_pozar_kwota > kat_val)
+                        {
+                            sim_brutto_kat_final.addDataVec(insurancer, wielkosc_pozar_kwota);
+                            reas_fire_kat = reas_fire;
+                        }
+
+                        len_spread = 0;
+                        len_spread = spread_one_building[4].size();
+
+                        if (len_spread > 0)
+                        {
+                            cnt_jedynek++;
+                            std::vector<std::vector<std::vector<double>>> out_vec_brutto(8);
+                            out_vec_brutto = calc_brutto_ring(spread_one_building[6], spread_one_building[3], spread_one_building[4], kat_val,
+                                                              ilosc_ubezpieczycieli);
+                            std::vector<std::vector<double>> reas_risk = reasurance_risk(out_vec_brutto[0],
+                                                                                         out_vec_brutto[6],
+                                                                                         ilosc_ubezpieczycieli);
+                            std::vector<std::vector<double>> reas_event = calc_reas_obliga_event(insurancer, reas_fire,
+                                                                                                 out_vec_brutto[4],
+                                                                                                 reas_risk, len_spread,
+                                                                                                 ilosc_ubezpieczycieli);
+                            sim_netto_final.addDataVec(insurancer, reas_event[0][0]);
+                            std::vector<std::vector<double>> reas_risk_kat = reasurance_risk(out_vec_brutto[1],
+                                                                                             out_vec_brutto[7],
+                                                                                             ilosc_ubezpieczycieli);
+                            std::vector<std::vector<double>> reas_event_kat = calc_reas_obliga_event(insurancer,
+                                                                                                     reas_fire_kat,
+                                                                                                     out_vec_brutto[5],
+                                                                                                     reas_risk_kat,
+                                                                                                     len_spread,
+                                                                                                     ilosc_ubezpieczycieli);
+                            sim_netto_kat_final.addDataVec(insurancer, reas_event_kat[0][0]);
+                            for (int pp = 0; pp < ilosc_ubezpieczycieli; pp++)
+                            {
+
+                                sim_brutto_final.addDataVec(pp, out_vec_brutto[2][pp][0]);
+                                sim_brutto_kat_final.addDataVec(pp, out_vec_brutto[3][pp][0]);
+                                sim_netto_final.addDataVec(pp, reas_event[2][pp]);
+                                sim_netto_kat_final.addDataVec(pp, reas_event_kat[2][pp]);
+                            }
+                            spread_one_building[10].insert(
+                                spread_one_building[10].begin(),
+                                reas_event[1].begin(),
+                                reas_event[1].end());
+                            spread_one_building[7].insert(spread_one_building[7].end(), len_spread, index_table);
+                            spread_one_building[8].insert(spread_one_building[8].end(), len_spread, woj + 1);
+                            spread_one_building[9].insert(spread_one_building[9].end(), len_spread, mies + 1);
+                            buildRozprzestrzeniony.addPozarRozprzestrzeniony(spread_one_building);
+                        }
+                    }
+                }
+            }
+            progressbar[num_watku] += step_size;
+        }
+        stanSymulacji.fetch_add(bar_step);
+    }
+
+    if (forma_zapisu_budynkow == 0)
+    {
+        // buildRozprzestrzeniony.wypiszRozmiar();
+        // buildPierwotny.writeCSV(nazwakatalogu + "/Pierwotny/", std::to_string(numer_symulacji) + ".csv");
+        // buildRozprzestrzeniony.writeCSV(nazwakatalogu + "/Rozprzestrzeniony/", std::to_string(numer_symulacji) + ".csv");
+
+        // buildPierwotny.writeCSV(nazwakatalogu + "/Pierwotny/", std::to_string(numer_symulacji) + ".csv");
+        // buildRozprzestrzeniony.writeCSV(nazwakatalogu + "/Rozprzestrzeniony/", std::to_string(numer_symulacji) + ".csv");
+
+
+        przeniesDoBuforPierwotny(std::move(buildPierwotny), nazwakatalogu + "/Pierwotny/", std::to_string(numer_symulacji) + ".csv");
+        przeniesDoBuforRozprz(std::move(buildRozprzestrzeniony), nazwakatalogu + "/Rozprzestrzeniony/", std::to_string(numer_symulacji) + ".csv");
+
+        // std::cout << global_buffer_pierwotny.size() << " " << global_buffer_rozprz.size() << std::endl;
+    }
+
+    std::vector<std::vector<double>> out_sum_vec_out = sim_brutto_final.returnVectorSim();
+    std::vector<std::vector<double>> sim_brutto_kat_final_out = sim_brutto_kat_final.returnVectorSim();
+    std::vector<std::vector<double>> sim_netto_final_out = sim_netto_final.returnVectorSim();
+    std::vector<std::vector<double>> sim_netto_kat_final_out = sim_netto_kat_final.returnVectorSim();
+
+    std::lock_guard<std::mutex> lock(mtx);
+    // g_num_mutex.lock();
+    for (int kk = 0; kk < ilosc_ubezpieczycieli; kk++)
+    {
+        sum_vec_out = accumulate(out_sum_vec_out[kk].begin(), out_sum_vec_out[kk].end(), 0.0);
+
+        sim_brutto_final.clearVector(kk);
+
+        out_brutto_final.addDataVec(kk, sum_vec_out); // 4 dodaje * ilosc symulacji bo nie czyszcze tego wektora jak innych!!!
+        // std::cout << "Ksum" << sum_vec_out << std::endl;
+
+        sum_vec_kat_out = accumulate(sim_brutto_kat_final_out[kk].begin(),
+                                     sim_brutto_kat_final_out[kk].end(), 0.0);
+        sim_brutto_kat_final.clearVector(kk);
+        // to
+        out_brutto_kat_final.addDataVec(kk, sum_vec_kat_out);
+        sum_netto_out = accumulate(sim_netto_final_out[kk].begin(), sim_netto_final_out[kk].end(), 0.0);
+        sim_netto_final.clearVector(kk);
+        out_netto_final.addDataVec(kk, sum_netto_out);
+        sum_netto_kat_out = accumulate(sim_netto_kat_final_out[kk].begin(),
+                                       sim_netto_kat_final_out[kk].end(), 0.0);
+        sim_netto_kat_final.clearVector(kk);
+
+        // to
+        out_netto_kat_final.addDataVec(kk, sum_netto_kat_out);
+
+        // #podmieniamy na podstawie sum_vec_out
+        // buildPierwotny_brutto_vec = []
+        // buildRozprzestrzeniony_brutto_vec = []
+        // sum_vec_out_vec = []
+
+        // podmieniamy na podstawie sum_vec_kat_out
+        // buildPierwotny_brutto_kat_vec = []
+        // buildRozprzestrzeniony_brutto_kat_vec = []
+        // sum_vec__kat_out_vec = []
+
+        // #podmieniamy na podstawie sum_netto_kat_out
+        // buildPierwotny_netto_kat_vec = []
+        // buildRozprzestrzeniony_netto_kat_vec = []
+        // sum_vec_netto_kat_out_vec = []
+
+        // #podmieniamy na podstawie sum_netto_out
+        // buildPierwotny_netto_vec = []
+        // buildRozprzestrzeniony_netto_vec = []
+        // sum_vec_netto_out_vec = []
+
+        // if (forma_zapisu_budynkow == 1)
+        //{
+        // std::cout << "TEST WYBRANYCH BUDYKOW (MUSI BYC 1) = " << forma_zapisu_budynkow << std::endl;
+        if (forma_zapisu_budynkow == 1) // wybrane budynki
+        {
+            if (ubezpieczyciele[kk].buildPierwotny_brutto_kat_vec.size() > ilosc_budynkow_do_zapisania)
+            {
+                // znajdowanie najmniejszej wartości i indeksów w odpowiednich wektorach
+                auto min_sum_vec_out = std::min_element(ubezpieczyciele[kk].sum_vec_out_vec.begin(), ubezpieczyciele[kk].sum_vec_out_vec.end());
+                int index_min_sum_vec_out = std::distance(ubezpieczyciele[kk].sum_vec_out_vec.begin(), min_sum_vec_out);
+
+                auto min_sum_vec_kat_out = std::min_element(ubezpieczyciele[kk].sum_vec_kat_out_vec.begin(), ubezpieczyciele[kk].sum_vec_kat_out_vec.end());
+                int index_min_sum_vec_kat_out = std::distance(ubezpieczyciele[kk].sum_vec_kat_out_vec.begin(), min_sum_vec_kat_out);
+
+                auto min_sum_vec_netto_kat_out = std::min_element(ubezpieczyciele[kk].sum_vec_netto_kat_out_vec.begin(), ubezpieczyciele[kk].sum_vec_netto_kat_out_vec.end());
+                int index_min_sum_vec_netto_kat_out = std::distance(ubezpieczyciele[kk].sum_vec_netto_kat_out_vec.begin(), min_sum_vec_netto_kat_out);
+
+                auto min_sum_vec_netto_out = std::min_element(ubezpieczyciele[kk].sum_vec_netto_out_vec.begin(), ubezpieczyciele[kk].sum_vec_netto_out_vec.end());
+                int index_min_sum_vec_netto_out = std::distance(ubezpieczyciele[kk].sum_vec_netto_out_vec.begin(), min_sum_vec_netto_out);
+
+                if (*min_sum_vec_out < sum_vec_out)
+                {
+                    ubezpieczyciele[kk].buildPierwotny_brutto_vec[index_min_sum_vec_out] = buildPierwotny;
+                    ubezpieczyciele[kk].buildRozprzestrzeniony_brutto_vec[index_min_sum_vec_out] = buildRozprzestrzeniony;
+                }
+
+                if (*min_sum_vec_kat_out < sum_vec_kat_out)
+                {
+                    ubezpieczyciele[kk].buildPierwotny_brutto_kat_vec[index_min_sum_vec_kat_out] = buildPierwotny;
+                    ubezpieczyciele[kk].buildRozprzestrzeniony_brutto_kat_vec[index_min_sum_vec_kat_out] = buildRozprzestrzeniony;
+                }
+
+                if (*min_sum_vec_netto_kat_out < sum_netto_kat_out)
+                {
+                    ubezpieczyciele[kk].buildPierwotny_netto_kat_vec[index_min_sum_vec_netto_kat_out] = buildPierwotny;
+                    ubezpieczyciele[kk].buildRozprzestrzeniony_netto_kat_vec[index_min_sum_vec_netto_kat_out] = buildRozprzestrzeniony;
+                }
+
+                if (*min_sum_vec_netto_out < sum_netto_out)
+                {
+                    ubezpieczyciele[kk].buildPierwotny_brutto_kat_vec[index_min_sum_vec_netto_out] = buildPierwotny;
+                    ubezpieczyciele[kk].buildRozprzestrzeniony_brutto_kat_vec[index_min_sum_vec_netto_out] = buildRozprzestrzeniony;
+                }
+            }
+            else
+            {
+                ubezpieczyciele[kk].buildPierwotny_brutto_kat_vec.push_back(buildPierwotny);
+                ubezpieczyciele[kk].buildPierwotny_brutto_vec.push_back(buildPierwotny);
+                ubezpieczyciele[kk].buildRozprzestrzeniony_brutto_kat_vec.push_back(buildRozprzestrzeniony);
+                ubezpieczyciele[kk].buildRozprzestrzeniony_brutto_vec.push_back(buildRozprzestrzeniony);
+                ubezpieczyciele[kk].sum_vec_kat_out_vec.push_back(sum_vec_kat_out);
+                ubezpieczyciele[kk].sum_vec_out_vec.push_back(sum_vec_out);
+                ubezpieczyciele[kk].buildPierwotny_netto_kat_vec.push_back(buildPierwotny);
+                ubezpieczyciele[kk].buildPierwotny_netto_vec.push_back(buildPierwotny);
+                ubezpieczyciele[kk].buildRozprzestrzeniony_netto_kat_vec.push_back(buildRozprzestrzeniony);
+                ubezpieczyciele[kk].buildRozprzestrzeniony_netto_vec.push_back(buildRozprzestrzeniony);
+                ubezpieczyciele[kk].sum_vec_netto_kat_out_vec.push_back(sum_netto_kat_out);
+                ubezpieczyciele[kk].sum_vec_netto_out_vec.push_back(sum_netto_out);
+            }
+        }
+        //  }
+        progressbar[num_watku] += step_size;
+        stanSymulacji.fetch_add(bar_step);
+    }
+
+    /// g_num_mutex.unlock();
+}
+
+void testALL(int choice)
+{
+    pool.reset(liczba_dzialajacych_watkow);
+    poolFiles.reset(4);
+
+    std::vector<std::string> testVec;
+
+    for (int i = 0; i < ubezp_nazwy.size(); i++)
+    {
+        if (flagi[i] != 0)
+        {
+            testVec.push_back(ubezp_nazwy[i]);
+        }
+    }
+
+    for (int i = 0; i < testVec.size(); i++)
+    {
+        std::cout << testVec[i] << std::endl;
+    }
+
+    std::random_device rd;
+
+    std::setlocale(LC_ALL, "nb_NO.UTF-8");
+    std::vector<std::string> fileNames = testVec;
+    if (choice == 1)
+    {
+        for (int woj = 0; woj < 17; ++woj)
+        {
+            exponsure_longitude[woj].resize(12);
+            exponsure_latitude[woj].resize(12);
+            exponsure_insurance[woj].resize(12);
+            exponsure_reassurance[woj].resize(12);
+            exponsure_sum_value[woj].resize(12);
+        }
+
+        //{ "Allianz","Aviva","Compensa","CREDIT_AGRICOLE","Generali_SA","Inter_Polska","InterRisk","Link4","NN","PKO_SA","Polski_Gaz","PZU_SA","Saltus","Santander","TU_EUROPA_SA","TUW_CUPRUM","TUW_TUW","TUZ_TUW","UNIQA","Warta", "Wiener" };
+        std::string dane_wejsciowe = std::string(sciezka_input);
+        std::string odnowienia = (czy_wlaczyc_odnowienia == 1) ? "tak" : "nie";
+        std::string year = std::to_string(wybrany_rok);
+        // std::string line = "UNIQA";
+        // fileNames.push_back(line);
+        std::cout << "Wczytywani Ubezpieczyciele: ";
+        for (int i = 0; i < fileNames.size(); ++i)
+        {
+            std::cout << fileNames[i] << ", ";
+            ubezpieczyciele.push_back({});
+        }
+
+        auto startf = std::chrono::high_resolution_clock::now();
+        pasek_postepu_wczytywania_danych = 0.0f;
+        processReas(dane_wejsciowe + "/Parametryzacja/Reasekuracja/", fileNames);
+        pasek_postepu_wczytywania_danych += 0.16f;
+        processOblig(dane_wejsciowe + "/Parametryzacja/Reasekuracja/", fileNames);
+        pasek_postepu_wczytywania_danych += 0.16f;
+        processBudynki(dane_wejsciowe, "/Ubezpieczyciele/", fileNames, year, odnowienia);
+        pasek_postepu_wczytywania_danych += 0.16f;
+        processPrPozaru(dane_wejsciowe + "/Parametryzacja/Pr_pozaru.csv");
+        pasek_postepu_wczytywania_danych += 0.16f;
+        processPrRozprzestrzenienia(dane_wejsciowe + "/Parametryzacja/pr_rozprzestrzenienia.csv");
+        pasek_postepu_wczytywania_danych += 0.16f;
+        processPrWielkoscPozaru(dane_wejsciowe + "/Parametryzacja/pr_wielkosc_pozaru.csv");
+        pasek_postepu_wczytywania_danych += 0.20f;
+
+        auto stopf = std::chrono::high_resolution_clock::now();
+        auto durationf = std::chrono::duration_cast<std::chrono::seconds>(stopf - startf);
+        std::cout << "Czas wczytania: " << durationf.count() << " sekund." << std::endl;
+
+        std::cout << "Dane wczytane prawidlowo" << std::endl;
+    }
+    else if (choice == 2)
+    {
+        stanSymulacji.store(0.0);
+        stanSymulacjiZapisu.store(0.0);
+
+        int sim = liczba_symulacji;
+        save_step = (1.0 / (sim*2));
+        licznik_sym.store(sim * 2);
+        
+        int kat_val = wartosc_katastrof_szkody;
+        std:: cout << "TEST: " << kat_val << " : " << wartosc_katastrof_szkody;
+        int ilosc_ubezpieczycieli = ubezpieczyciele.size();
+        std::cout << ilosc_ubezpieczycieli << std::endl;
+
+        auto start = std::chrono::high_resolution_clock::now();
+
+        std::string dane_wyjsciowe = std::string(gdzie_zapisac);
+        std::string nazwakatalogu = createFolder(dane_wyjsciowe);
+
+        std::cout << " WATKI ON " << std::endl;
+        for (int i = 0; i < liczba_watkow_do_zapisu; ++i)
+            std::thread(watekZapisPierwotny).detach(); // wątek działa w tle po zakończeniu funkcji
+
+        for (int i = 0; i < liczba_watkow_do_zapisu; ++i)
+            std::thread(watekZapisRozprz).detach(); // wątek działa w tle po zakończeniu funkcji
+
+        std::cout << " WATKI OFF " << std::endl;
+
+        for (int sim_num = 0; sim_num < sim; sim_num++)
+        {
+
+            pool.detach_task([nazwakatalogu, sim, kat_val, ilosc_ubezpieczycieli, sim_num](BS::concurrency_t idx)
+                             { simulateExponsureTEST(nazwakatalogu, sim, sim_num, kat_val, ilosc_ubezpieczycieli, idx); });
+        }
+        pool.wait();
+
+        auto stop = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+        std::cout << "Symulacje zakonczone." << std::endl;
+        std::cout << "Czas symulacji: " << duration.count() << " sekund." << std::endl;
+        fs::path pat_buil = nazwakatalogu;
+        // Zapisywanie danych do plików CSV
+        for (int i = 0; i < ilosc_ubezpieczycieli; ++i)
+        {
+            zapiszDoCSV(fileNames[i], nazwakatalogu + "/Symulacje", i, out_brutto_final.returnVectorSim(), out_brutto_kat_final.returnVectorSim(), out_netto_final.returnVectorSim(), out_netto_kat_final.returnVectorSim());
+        }
+        std::cout << "Symulacje zostaly zapisane." << std::endl;
+        if (forma_zapisu_budynkow == 1)
+        {
+            for (int insurerIndex = 0; insurerIndex < ubezpieczyciele.size(); ++insurerIndex)
+            {
+                std::string insurer = fileNames[insurerIndex];
+
+                fs::path base_path = pat_buil / "Pierwotne" / insurer;
+                std::vector<std::string> subfolders = {"Brutto", "Brutto_Kat", "Netto", "Netto_kat"};
+
+                {
+                    fs::path full_path = base_path / subfolders[0];
+                    create_custom_directory(full_path);
+                    create_csv_files(full_path, subfolders[0], insurerIndex, true);
+                }
+
+                {
+                    fs::path full_path = base_path / subfolders[1];
+                    create_custom_directory(full_path);
+                    create_csv_files(full_path, subfolders[1], insurerIndex, true);
+                }
+
+                {
+                    fs::path full_path = base_path / subfolders[2];
+                    create_custom_directory(full_path);
+                    create_csv_files(full_path, subfolders[2], insurerIndex, true);
+                }
+
+                {
+                    fs::path full_path = base_path / subfolders[3];
+                    create_custom_directory(full_path);
+                    create_csv_files(full_path, subfolders[3], insurerIndex, true);
+                }
+            }
+
+            for (int insurerIndex = 0; insurerIndex < ubezpieczyciele.size(); ++insurerIndex)
+            {
+                std::string insurer = fileNames[insurerIndex];
+
+                fs::path base_path = pat_buil / "Rozprzestrzeniony" / insurer;
+                std::vector<std::string> subfolders = {"Brutto", "Brutto_Kat", "Netto", "Netto_kat"};
+
+                {
+                    fs::path full_path = base_path / subfolders[0];
+                    create_custom_directory(full_path);
+                    create_csv_files(full_path, subfolders[0], insurerIndex, false);
+                }
+
+                {
+                    fs::path full_path = base_path / subfolders[1];
+                    create_custom_directory(full_path);
+                    create_csv_files(full_path, subfolders[1], insurerIndex, false);
+                }
+
+                {
+                    fs::path full_path = base_path / subfolders[2];
+                    create_custom_directory(full_path);
+                    create_csv_files(full_path, subfolders[2], insurerIndex, false);
+                }
+
+                {
+                    fs::path full_path = base_path / subfolders[3];
+                    create_custom_directory(full_path);
+                    create_csv_files(full_path, subfolders[3], insurerIndex, false);
+                }
+            }
+        }
+
+        // wyczyść wektory po zapisaniu dla kolejnej serii symulacji
+        out_brutto_final.clear();
+        out_brutto_kat_final.clear();
+        out_netto_final.clear();
+        out_netto_kat_final.clear();
+    }
+}
+
+void render_gui()
+{
+    std::vector<std::string> fileNames;
+
+    ImGui::SetNextWindowPos(ImVec2(10, 10));
+    ImGui::SetNextWindowSize(ImVec2(750, 1076 - 120));
+    ImGui::Begin("SYMULATOR POZAROW");
+
+    ImGui::SeparatorText("Przygotowanie danych");
+    ImGui::InputInt("Podaj rok, ktory brac pod uwage", &wybrany_rok);
+    ImGui::InputText("Podaj sciezke do folderu input", sciezka_input, 512);
+
+    if (ImGui::Button("Wczytaj liste ubezpieczycieli", ImVec2(ImGui::GetContentRegionAvail().x, 25)))
+    {
+        ubezp_nazwy.clear();
+        flagi.clear();
+        std::string sciezka(sciezka_input);
+        sciezka = sciezka + "\\Ubezpieczyciele";
+        ubezp_nazwy = getFiles(sciezka);
+        flagi.resize(ubezp_nazwy.size());
+    }
+
+    ImGui::Columns(1, "word-wrapping");
+    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0.0f, 5.f));
+
+    ImGui::BeginChild("ChildR", ImVec2(0, 140), ImGuiChildFlags_Border, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_MenuBar);
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("Wybierz ubezpieczycieli ktorzy maja brac udzial w symulacji"))
+        {
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }
+    if (ImGui::BeginTable("split", 1, ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings))
+    {
+        ImGui::TableNextColumn();
+        for (int i = 0; i < ubezp_nazwy.size(); i++)
+        {
+            ImGui::CheckboxFlags(ubezp_nazwy[i].c_str(), &flagi[i], ImGuiComboFlags_PopupAlignLeft);
+        }
+        ImGui::EndTable();
+    }
+    ImGui::EndChild();
+    ImGui::Dummy(ImVec2(0.0f, 2.f));
+    if (ImGui::Button("Wybierz wszystkich", ImVec2(ImGui::GetContentRegionAvail().x, 30)))
+    {
+        fileNames.clear();
+        for (int i = 0; i < ubezp_nazwy.size(); i++)
+        {
+            flagi[i] = 1;
+            if (flagi[i] != 0)
+            {
+                fileNames.push_back(ubezp_nazwy[i]);
+            }
+        }
+    }
+    ImGui::Columns(1);
+    ImGui::Dummy(ImVec2(0.0f, 5.f));
+    ImGui::SeparatorText("Odnowienia");
+    ImGui::RadioButton("Wylacz", &czy_wlaczyc_odnowienia, 0);
+    ImGui::SameLine();
+    ImGui::RadioButton("Wlacz", &czy_wlaczyc_odnowienia, 1);
+
+    ImGui::Dummy(ImVec2(0.0f, 5.f));
+    ImGui::SeparatorText("Uruchamianie i sledzenie wczytywania danych");
+
+    if (ImGui::Button("Wczytaj dane", ImVec2(ImGui::GetContentRegionAvail().x, 30)))
+    {
+
+        std::thread sim_thread(testALL, 1);
+        sim_thread.detach();
+    }
+    ImGui::ProgressBar(pasek_postepu_wczytywania_danych, ImVec2(0.0f, 0.0f));
+    ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
+    ImGui::Text("Pasek postepu wczytywania danych");
+    ImGui::Dummy(ImVec2(0.0f, 6.0f));
+    ImGui::SeparatorText("Parametry symulacji");
+
+    ImGui::InputInt("Liczba symulacji", &liczba_symulacji);
+    if (ImGui::InputInt("Liczba watkow do obliczen", &liczba_dzialajacych_watkow))
+    {
+        progressbar.resize(liczba_dzialajacych_watkow);
+    }
+    ImGui::InputInt("Liczba watkow do zapisu", &liczba_watkow_do_zapisu);
+    ImGui::InputDouble("Wartosc katastroficzna szkody", &wartosc_katastrof_szkody, 0.01f, 1.0f, "%.8f");
+    ImGui::InputDouble("Wartosc minimalna szkody", &wartosc_minimalna_szkody, 0.01f, 1.0f, "%.8f");
+    ImGui::InputInt("Ilosc budynkow do zapisania", &ilosc_budynkow_do_zapisania);
+    ImGui::InputInt("Promien", &promien);
+
+    // ImGui::Combo("Wybierz rok", &wybrany_rok, lata, IM_ARRAYSIZE(lata));
+
+    ImGui::InputText("Podaj sciezke gdzie zapisac", gdzie_zapisac, 512);
+    ImGui::SeparatorText("Wybor zapisu budynow");
+    ImGui::RadioButton("Wszystkie budynki", &forma_zapisu_budynkow, 0);
+    ImGui::SameLine();
+    ImGui::RadioButton("Wybrane budynki", &forma_zapisu_budynkow, 1);
+    ImGui::Dummy(ImVec2(0.0f, 6.f));
+    ImGui::SeparatorText("Uruchamianie i sledzenie symulacji");
+
+    ImVec4 buttonColor = ImVec4(0.8f, 0.5f, 0.5f, 0.7f);       // kolor (R, G, B, A)
+    ImVec4 buttonHoverColor = ImVec4(0.9f, 0.5f, 0.6f, 1.0f);  // kolor po najechaniu
+    ImVec4 buttonActiveColor = ImVec4(0.7f, 0.1f, 0.4f, 1.0f); // kolor po kliknięciu
+
+    ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, buttonHoverColor);
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, buttonActiveColor);
+    if (ImGui::Button("Wlacz symulacje", ImVec2(ImGui::GetContentRegionAvail().x, 30)))
+    {
+        ImGui::OpenPopup("Krok wymaga potwierdzenia");
+    }
+    bool open = true;
+    if (ImGui::BeginPopupModal("Krok wymaga potwierdzenia", &open))
+    {
+        ImGui::SetNextWindowSize(ImVec2(750, 1076 - 120));
+        ImGui::Text("Czy na pewno chcesz uruchomic symulacje?");
+        if (ImGui::Button("Tak", ImVec2(ImGui::GetContentRegionAvail().x / 2.0, 25)))
+        {
+            ImGui::CloseCurrentPopup();
+            // std::thread sim_thread(start_sim);
+            // sim_thread.detach();
+            std::thread sim_thread(testALL, 2);
+            sim_thread.detach();
+        }
+        ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
+
+        if (ImGui::Button("Nie", ImVec2(ImGui::GetContentRegionAvail().x, 25)))
+        {
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+    ImGui::PopStyleColor(3); // usuń ustawione kolory
+
+    ImGui::ProgressBar(stanSymulacji, ImVec2(ImGui::GetContentRegionAvail().x - 170, 25));
+    ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
+    ImGui::Text("Ogolny pasek postepu");
+    ImGui::Dummy(ImVec2(0.0f, 7.f));
+
+    ImGui::ProgressBar(stanSymulacjiZapisu, ImVec2(ImGui::GetContentRegionAvail().x - 170, 25));
+    ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
+    ImGui::Text("Pasek postepu zapisu");
+    ImGui::Dummy(ImVec2(0.0f, 7.f));
+
+
+    ImGui::BeginChild("ChildL", ImVec2(0, 156), ImGuiChildFlags_Border, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_MenuBar);
+
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("Paski postepu pracy poszczegolnych watkow"))
+        {
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }
+    if (ImGui::BeginTable("split", 1, ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings))
+    {
+        ImGui::TableNextColumn();
+        for (int i = 1; i <= liczba_dzialajacych_watkow; i++)
+        {
+            ImGui::ProgressBar(progressbar[i - 1], ImVec2(0.f, 0.f));
+            ImGui::SameLine();
+            ImGui::Text("Watek %02d", i);
+        }
+        ImGui::EndTable();
+    }
+    ImGui::EndChild();
+
+    ImGui::End();
+}
+
+int main(int, char **)
+{
+
+    glfwSetErrorCallback(glfw_error_callback);
+    if (!glfwInit())
+        return 1;
+
+    GLFWwindow *window = glfwCreateWindow(770, 1098 - 120, "Program", nullptr, nullptr);
+    if (window == nullptr)
+        return 1;
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    (void)io;
+    setup_imgui_style(io);
+
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL2_Init();
+
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+    while (!glfwWindowShouldClose(window))
+    {
+        glfwPollEvents();
+
+        ImGui_ImplOpenGL2_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        render_gui();
+
+        ImGui::Render();
+        int display_w, display_h;
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
+        glfwMakeContextCurrent(window);
+        glfwSwapBuffers(window);
+    }
+
+    ImGui_ImplOpenGL2_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
+
+    return 0;
+}
