@@ -4,8 +4,14 @@ import numpy as np
 # Lista z liczbami i pustymi miejscami
 data = [1, 2, np.nan, 4, 5]
 
-# Tworzenie DataFrame z typem nullable integer
-df = pd.DataFrame({'numbers': data}, dtype=pd.Int64Dtype())
+# Tworzenie DataFrame
+df = pd.DataFrame({'numbers': data})
+
+# Zamiana NaN na puste stringi
+df['numbers'] = df['numbers'].apply(lambda x: '' if pd.isna(x) else int(x))
+
+# Dodanie 1 do każdej wartości liczbowej w kolumnie 'numbers'
+df['numbers'] = df['numbers'].apply(lambda x: x + 1 if x != '' else '')
 
 # Sprawdzenie wyników
 print(df)
