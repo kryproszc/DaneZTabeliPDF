@@ -1,7 +1,21 @@
-Proszę o instalację oprogramowania WSL (Windows Subsystem for Linux) z systemem Ubuntu w wersji 22.04.3 LTS w WSL (https://learn.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions), uprawnieniami sudo oraz kompilatorem g++. Potrzebujemy też uprawnień do samodzielnej instalacji pakietów programistycznych na komputerze DRFG-01.
-
-Zwracam się z prośbą o instalację oprogramowania zgodnie z powyższym opisem oraz udostępnienie uprawnień sudo. Wszelkie wymagane oprogramowanie jest dostępne do użytku komercyjnego bez dodatkowych opłat. Preferujemy jądro Linuxa, najlepiej w wersji Ubuntu, a nie dystrybucji typu Debian czy Arch.
-
-Jeśli instalacja za pomocą WSL okaże się niemożliwa, proszę rozważyć zainstalowanie systemu Ubuntu (https://ubuntu.com/download/server) na DRFG-01 jako osobnego kontenera. Kluczowe jest, abym miał dostęp do systemu, możliwość logowania się oraz dostęp do uprawnień sudo.
-
-Około dwóch miesięcy temu podjęliśmy próbę przeprowadzenia tej instalacji ręcznie za pomocą WSL, ale bez powodzenia. Proszę o możliwie najszybsze wykonanie instalacji.
+create_pattern_matrix <- function(df_paid_l, pattern_number) {
+  # Replace non-NA values with 1 and NA values with NaN
+  reduced_df <- df_paid_l
+  reduced_df[!is.na(reduced_df)] <- 1
+  reduced_df[is.na(reduced_df)] <- NaN
+  
+  # Get the number of rows (assuming a square matrix)
+  size <- nrow(reduced_df)
+  reduced_df_copy <- reduced_df
+  
+  # Loop to set specific elements to 0
+  for (j in 1:size) {
+    for (i in 1:(size - pattern_number)) {
+      if (i <= (size - pattern_number - j + 1)) {
+        reduced_df_copy[i, j] <- 0
+      }
+    }
+  }
+  
+  return(reduced_df_copy)
+}
