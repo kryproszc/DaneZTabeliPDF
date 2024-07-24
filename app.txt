@@ -1,14 +1,7 @@
+Proszę o instalację oprogramowania WSL (Windows Subsystem for Linux) z systemem Ubuntu w wersji 22.04.3 LTS w WSL (https://learn.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions), uprawnieniami sudo oraz kompilatorem g++. Potrzebujemy też uprawnień do samodzielnej instalacji pakietów programistycznych na komputerze DRFG-01.
 
-Proszę o zainstalowanie oprogramowania: wsl + uprawnienia sudo ponieważ chcemy mieć kompilator g++ ponieważ chcemy instalować paczki komp, ilator      
+Zwracam się z prośbą o instalację oprogramowania zgodnie z powyższym opisem oraz udostępnienie uprawnień sudo. Wszelkie wymagane oprogramowanie jest dostępne do użytku komercyjnego bez dodatkowych opłat. Preferujemy jądro Linuxa, najlepiej w wersji Ubuntu, a nie dystrybucji typu Debian czy Arch.
 
-Na komputerze nr: DRFG-01
+Jeśli instalacja za pomocą WSL okaże się niemożliwa, proszę rozważyć zainstalowanie systemu Ubuntu (https://ubuntu.com/download/server) na DRFG-01 jako osobnego kontenera. Kluczowe jest, abym miał dostęp do systemu, możliwość logowania się oraz dostęp do uprawnień sudo.
 
-
-
-Zwracam się z prośbą o zainstalowanie oprogramowania jak w opisie.
-Wszystko jest darmowe do uzytku komercyjnego.
-Zależy nam na jądrze linuxa i najlepiej Ubuntu a nie dystrybucji typu debian czy arch.
-Jeśli nie uda się z wsl może być zainstalowany system Ubuntu na DRFG-01 jako osobny kontener.
-Najważniejszą kwestią jest to bym miał dostepy u mógł sie logowac
-Około dwóch miesięcy temu, podejmowaliśmy próbe tej instalacji.
-Proszę o mozliwie jak najszybszą instalacje.
+Około dwóch miesięcy temu podjęliśmy próbę przeprowadzenia tej instalacji ręcznie za pomocą WSL, ale bez powodzenia. Proszę o możliwie najszybsze wykonanie instalacji.
