@@ -4,21 +4,12 @@ import numpy as np
 # Lista z liczbami i pustymi miejscami
 data = [1, 2, np.nan, 4, 5]
 
-# Tworzenie DataFrame
-df = pd.DataFrame({'numbers': data})
+# Tworzenie DataFrame z typem nullable integer
+df = pd.DataFrame({'numbers': data}, dtype=pd.Int64Dtype())
 
-# Zamiana NaN na puste stringi
-df['numbers'] = df['numbers'].apply(lambda x: '' if pd.isna(x) else int(x))
-
-# Dodanie 1 do każdej wartości liczbowej w kolumnie 'numbers'
-df['numbers'] = df['numbers'].apply(lambda x: x + 1 if x != '' else '')
-
-# Sprawdzenie, czy kolumna zawiera tylko liczby całkowite lub puste stringi
-df['is_int_or_empty'] = df['numbers'].apply(lambda x: isinstance(x, int) or x == '')
-
-# Wynik sprawdzenia
-all_valid = df['is_int_or_empty'].all()
+# Dodanie 1 do każdej wartości w kolumnie 'numbers'
+df['numbers'] = df['numbers'] + 1
 
 # Sprawdzenie wyników
-print("Czy kolumna zawiera tylko liczby całkowite lub puste miejsca?", all_valid)
-print(df[['numbers', 'is_int_or_empty']])
+print(df)
+print(df.dtypes)
