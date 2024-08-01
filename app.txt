@@ -17,3 +17,12 @@ $gateway_ip = $gateway_ips[1].IPAddress
 Write-Output "Gateway (local WSL adapter) IP is: $gateway_ip"
 bash -c "sudo ip a add 192.168.0.1/255.255.240.0 dev eth0"
 bash -c "sudo ip route add default via $gateway_ip"
+
+
+$guest_ip = bash -c "ip a show eth0 | egrep -o 'inet [0-9.]+' | cut -d ' ' -f2"
+Write-Output "Guest IP IS: $guest_ip"
+$gateway_ips = Get-NetIPAddress -InterfaceAlias "vEthernet (WSL)" | select IPAddress
+$gateway_ip = $gateway_ips[1].IPAddress
+Write-Output "Gateway (local WSL adapter) IP is: $gateway_ip"
+bash -c "sudo ip a add 192.168.0.1/255.255.240.0 dev eth0"
+bash -c "sudo ip route add default via $gateway_ip"
