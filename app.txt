@@ -26,3 +26,55 @@ $gateway_ip = $gateway_ips[1].IPAddress
 Write-Output "Gateway (local WSL adapter) IP is: $gateway_ip"
 bash -c "sudo ip a add 192.168.0.1/255.255.240.0 dev eth0"
 bash -c "sudo ip route add default via $gateway_ip"
+
+
+
+
+przekatne <- c(5:34)
+Ultimate <- rnorm(30, 444, 22)
+podane <- 456
+
+# Tworzenie wykresu
+plot(przekatne, Ultimate, main="Wykres przekatne vs Ultimate", xlab="Przekatne", ylab="Ultimate", pch=19, col="blue")
+
+# Dodanie poziomej linii
+abline(h=podane, col="red", lwd=2, lty=2)
+
+# Opcjonalnie, dodanie legendy
+legend("topright", legend=c("Ultimate", "Podane"), col=c("blue", "red"), pch=c(19, NA), lty=c(NA, 2), lwd=c(1, 2))
+
+
+
+
+
+
+set.seed(123)
+wektory <- replicate(28, runif(34, min=8, max=10), simplify=FALSE)
+
+# Funkcja do sprawdzania, gdzie wartości rosną
+find_increasing_indices <- function(vec) {
+  which(diff(vec) > 0)
+}
+
+# Zastosowanie funkcji do każdego wektora
+increasing_indices <- lapply(wektory, find_increasing_indices)
+
+# Nadanie nazw wektorom
+names(increasing_indices) <- paste0("Vector_", 1:28)
+
+# Znajdź maksymalną długość wektora
+max_length <- max(sapply(increasing_indices, length))
+
+# Funkcja do uzupełniania wektorów NA
+pad_vector <- function(vec, length_out) {
+  c(vec, rep(NA, length_out - length(vec)))
+}
+
+# Uzupełnianie wektorów
+padded_indices <- lapply(increasing_indices, pad_vector, length_out = max_length)
+
+# Konwersja do dataframe
+df <- as.data.frame(padded_indices)
+
+# Wyświetlenie dataframe
+print(df)
