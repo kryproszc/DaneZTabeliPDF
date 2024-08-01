@@ -78,3 +78,13 @@ df <- as.data.frame(padded_indices)
 
 # Wyświetlenie dataframe
 print(df)
+
+# Tworzenie pustej dataframe z kolumnami ponumerowanymi od 5 do 34
+column_names <- as.character(5:34)
+empty_df <- data.frame(matrix(ncol=length(column_names), nrow=34))
+
+# Nadanie nazw kolumnom
+colnames(empty_df) <- column_names
+
+# Wyświetlenie pustej dataframe
+print(empty_df)
