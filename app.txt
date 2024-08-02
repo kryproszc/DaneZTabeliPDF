@@ -88,3 +88,29 @@ colnames(empty_df) <- column_names
 
 # Wyświetlenie pustej dataframe
 print(empty_df)
+
+
+create_plot <- function(data_vector, input_values, title) {
+  quantiles <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
+  quantile_values <- quantile(data_vector, probs = quantiles)
+  df <- data.frame(Quantiles = quantiles, Values = quantile_values)
+  input_quantiles <- sapply(input_values, function(value) ecdf(data_vector)(value))
+  plot <- ggplot(df, aes(x = Quantiles, y = Values)) +
+    geom_line(aes(color = "Bootstrap"), size = 1.2) +
+    geom_point(aes(color = "Bootstrap"), size = 3) +
+    geom_vline(aes(xintercept = input_quantiles["PZU"], color = "PZU"), linetype = "dashed", size = 1) +
+    geom_vline(aes(xintercept = input_quantiles["Pięć przek."], color = "Pięć przek."), linetype = "dashed", size = 1) +
+    geom_vline(aes(xintercept = input_quantiles["Wszystkie przek."], color = "Wszystkie przek."), linetype = "dashed", size = 1) +
+    scale_x_continuous(breaks = quantiles) +
+    scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue", "PZU" = "green", "Pięć przek." = "orange", "Wszystkie przek." = "purple")) +
+    labs(
+      x = "Kwantyle",
+      y = "Wartości kwantyli") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+          plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+          axis.title = element_text(size = 12, face = "bold"),
+          legend.position = "top")
+  return(plot)
+}
+
