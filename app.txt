@@ -29,144 +29,39 @@ bash -c "sudo ip route add default via $gateway_ip"
 
 
 
+library(dplyr)
 
-przekatne <- c(5:34)
-Ultimate <- rnorm(30, 444, 22)
-podane <- 456
-
-# Tworzenie wykresu
-plot(przekatne, Ultimate, main="Wykres przekatne vs Ultimate", xlab="Przekatne", ylab="Ultimate", pch=19, col="blue")
-
-# Dodanie poziomej linii
-abline(h=podane, col="red", lwd=2, lty=2)
-
-# Opcjonalnie, dodanie legendy
-legend("topright", legend=c("Ultimate", "Podane"), col=c("blue", "red"), pch=c(19, NA), lty=c(NA, 2), lwd=c(1, 2))
-
-
-
-
-
-
-set.seed(123)
-wektory <- replicate(28, runif(34, min=8, max=10), simplify=FALSE)
-
-# Funkcja do sprawdzania, gdzie wartości rosną
-find_increasing_indices <- function(vec) {
-  which(diff(vec) > 0)
+# Funkcja do obliczenia kwantyla 0.99 dla każdego pliku CSV
+process_csv_files <- function(folder_path) {
+  # Lista plików CSV w folderze
+  csv_files <- list.files(folder_path, pattern="*.csv", full.names=TRUE)
+  
+  # Inicjalizacja pustej listy do przechowywania wyników
+  result_list <- list()
+  
+  # Przetwarzanie każdego pliku CSV
+  for (csv_file in csv_files) {
+    # Wczytanie danych z pliku CSV
+    data <- read.csv(csv_file)
+    
+    # Obliczenie kwantyla 0.99 dla każdej kolumny
+    quantiles <- sapply(data, function(column) quantile(column, probs=0.99, na.rm=TRUE))
+    
+    # Utworzenie data frame z nazwą pliku i kwantylami
+    df <- data.frame(File=basename(csv_file), t(quantiles))
+    
+    # Dodanie wyników do listy
+    result_list[[basename(csv_file)]] <- df
+  }
+  
+  # Połączenie wszystkich wyników w jeden data frame
+  final_df <- bind_rows(result_list)
+  return(final_df)
 }
 
-# Zastosowanie funkcji do każdego wektora
-increasing_indices <- lapply(wektory, find_increasing_indices)
+# Użycie funkcji
+folder_path <- "path/to/your/folder" # Zastąp swoją ścieżką do folderu
+summary_df <- process_csv_files(folder_path)
 
-# Nadanie nazw wektorom
-names(increasing_indices) <- paste0("Vector_", 1:28)
-
-# Znajdź maksymalną długość wektora
-max_length <- max(sapply(increasing_indices, length))
-
-# Funkcja do uzupełniania wektorów NA
-pad_vector <- function(vec, length_out) {
-  c(vec, rep(NA, length_out - length(vec)))
-}
-
-# Uzupełnianie wektorów
-padded_indices <- lapply(increasing_indices, pad_vector, length_out = max_length)
-
-# Konwersja do dataframe
-df <- as.data.frame(padded_indices)
-
-# Wyświetlenie dataframe
-print(df)
-
-# Tworzenie pustej dataframe z kolumnami ponumerowanymi od 5 do 34
-column_names <- as.character(5:34)
-empty_df <- data.frame(matrix(ncol=length(column_names), nrow=34))
-
-# Nadanie nazw kolumnom
-colnames(empty_df) <- column_names
-
-# Wyświetlenie pustej dataframe
-print(empty_df)
-
-
-create_plot <- function(data_vector, input_values, title) {
-  quantiles <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
-  quantile_values <- quantile(data_vector, probs = quantiles)
-  df <- data.frame(Quantiles = quantiles, Values = quantile_values)
-  input_quantiles <- sapply(input_values, function(value) ecdf(data_vector)(value))
-  plot <- ggplot(df, aes(x = Quantiles, y = Values)) +
-    geom_line(aes(color = "Bootstrap"), size = 1.2) +
-    geom_point(aes(color = "Bootstrap"), size = 3) +
-    geom_vline(aes(xintercept = input_quantiles["PZU"], color = "PZU"), linetype = "dashed", size = 1) +
-    geom_vline(aes(xintercept = input_quantiles["Pięć przek."], color = "Pięć przek."), linetype = "dashed", size = 1) +
-    geom_vline(aes(xintercept = input_quantiles["Wszystkie przek."], color = "Wszystkie przek."), linetype = "dashed", size = 1) +
-    scale_x_continuous(breaks = quantiles) +
-    scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue", "PZU" = "green", "Pięć przek." = "orange", "Wszystkie przek." = "purple")) +
-    labs(
-      x = "Kwantyle",
-      y = "Wartości kwantyli") +
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
-          plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
-          axis.title = element_text(size = 12, face = "bold"),
-          legend.position = "top")
-  return(plot)
-
-}
-
-
-library(ggplot2)
-
-create_plot <- function(data_vector, input_values, input_legend, title) {
-  # Definiowanie kwantyli
-  quantiles <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
-  quantile_values <- quantile(data_vector, probs = quantiles)
-  df <- data.frame(Quantiles = quantiles, Values = quantile_values)
-  
-  # Obliczanie kwantyli dla wartości wejściowych
-  input_quantiles <- sapply(input_values, function(value) ecdf(data_vector)(value))
-  
-  # Tworzenie dataframe dla linii pionowych
-  line_df <- data.frame(Quantiles = input_quantiles, Labels = as.factor(input_legend))
-  
-  # Tworzenie podstawowego wykresu
-  plot <- ggplot(df, aes(x = Quantiles, y = Values)) +
-    geom_line(aes(color = "Bootstrap"), size = 1.2) +
-    geom_point(aes(color = "Bootstrap"), size = 3) +
-    scale_x_continuous(breaks = quantiles) +
-    scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue")) +
-    labs(
-      x = "Kwantyle",
-      y = "Wartości kwantyli",
-      title = title
-    ) +
-    theme_minimal() +
-    theme(
-      axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
-      plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
-      axis.title = element_text(size = 12, face = "bold"),
-      legend.position = "right"
-    )
-  
-  # Dodanie linii pionowych dla każdej wartości wejściowej
-  plot <- plot + geom_vline(data = line_df, aes(xintercept = Quantiles, color = Labels), linetype = "dashed", size = 1)
-  
-  # Dodanie dynamicznej legendy
-  line_colors <- scales::hue_pal()(length(input_values))
-  legend_labels <- setNames(line_colors, as.character(input_legend))
-  plot <- plot + scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue", legend_labels))
-  
-  return(plot)
-}
-
-# Przykład użycia funkcji
-set.seed(123)
-data_vector <- rnorm(10000, mean = 100, sd = 15)
-input_values <- c(90, 105, 110, 120) # Przykładowe wartości wejściowe
-input_legend <- c(1, 2, 3, 4) # Przykładowe wartości do legendy
-title <- "Wykres Kwantyli z Pionowymi Liniami"
-
-plot <- create_plot(data_vector, input_values, input_legend, title)
-print(plot)
-
+# Wyświetlenie wyników
+print(summary_df)
