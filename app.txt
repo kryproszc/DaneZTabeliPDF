@@ -112,5 +112,61 @@ create_plot <- function(data_vector, input_values, title) {
           axis.title = element_text(size = 12, face = "bold"),
           legend.position = "top")
   return(plot)
+
 }
+
+
+library(ggplot2)
+
+create_plot <- function(data_vector, input_values, input_legend, title) {
+  # Definiowanie kwantyli
+  quantiles <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
+  quantile_values <- quantile(data_vector, probs = quantiles)
+  df <- data.frame(Quantiles = quantiles, Values = quantile_values)
+  
+  # Obliczanie kwantyli dla wartości wejściowych
+  input_quantiles <- sapply(input_values, function(value) ecdf(data_vector)(value))
+  
+  # Tworzenie dataframe dla linii pionowych
+  line_df <- data.frame(Quantiles = input_quantiles, Labels = as.factor(input_legend))
+  
+  # Tworzenie podstawowego wykresu
+  plot <- ggplot(df, aes(x = Quantiles, y = Values)) +
+    geom_line(aes(color = "Bootstrap"), size = 1.2) +
+    geom_point(aes(color = "Bootstrap"), size = 3) +
+    scale_x_continuous(breaks = quantiles) +
+    scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue")) +
+    labs(
+      x = "Kwantyle",
+      y = "Wartości kwantyli",
+      title = title
+    ) +
+    theme_minimal() +
+    theme(
+      axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+      plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+      axis.title = element_text(size = 12, face = "bold"),
+      legend.position = "right"
+    )
+  
+  # Dodanie linii pionowych dla każdej wartości wejściowej
+  plot <- plot + geom_vline(data = line_df, aes(xintercept = Quantiles, color = Labels), linetype = "dashed", size = 1)
+  
+  # Dodanie dynamicznej legendy
+  line_colors <- scales::hue_pal()(length(input_values))
+  legend_labels <- setNames(line_colors, as.character(input_legend))
+  plot <- plot + scale_color_manual(name = "Legenda", values = c("Bootstrap" = "blue", legend_labels))
+  
+  return(plot)
+}
+
+# Przykład użycia funkcji
+set.seed(123)
+data_vector <- rnorm(10000, mean = 100, sd = 15)
+input_values <- c(90, 105, 110, 120) # Przykładowe wartości wejściowe
+input_legend <- c(1, 2, 3, 4) # Przykładowe wartości do legendy
+title <- "Wykres Kwantyli z Pionowymi Liniami"
+
+plot <- create_plot(data_vector, input_values, input_legend, title)
+print(plot)
 
