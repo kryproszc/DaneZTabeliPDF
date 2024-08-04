@@ -72,3 +72,4 @@ New-VMSwitch -Name "External Switch" -NetAdapterName wslnet
 
 netsh interface ipv4 show interfaces
 
+netsh interface ipv4 add route 172.25.210.0/24 "Ethernet 0 2" 172.25.210.254
