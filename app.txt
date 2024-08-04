@@ -1,8 +1,1 @@
-New-VMSwitch -Name "MyVMSwitch2" -NetAdapterInterfaceDescription "vmxnet3 Ethernet Adapter" -AllowManagementOS $true
-
-
-
-Get-VMSwitch
-
-
-New-VMSwitch -Name "MyVMSwitch" -NetAdapterName "Ethernet" -AllowManagementOS $true
+Enable-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V -All
