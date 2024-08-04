@@ -1,1 +1,28 @@
-Enable-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V -All
+wchodzimy do WSL ubuntu poprzez polecenie
+wsl -d Ubuntu-24.04
+
+---- 
+w powershell (administrator) zezwolimy ICMP gdyby było zablokowane
+netsh advfirewall firewall add rule name="ICMP Allow incoming V4 echo request" protocol=icmpv4:8,any  dir=in action=allow
+---
+w windows cmd.exe
+ping 172.25.210.87
+
+sprawdzamy czy jest polaczenie windows->linux (wsl)
+ 
+---
+w WSL (sprawdzamy ping z bramką)
+ping 172.25.210.254
+
+sprawdzamy połączenie linux->windows
+---
+usun w WSL trase domyślną
+sudo ip route del default
+sudo ip route del 172.28.64.0/20 dev eth0
+ip route show
+
+(musi byc puste)
+---
+resetujemy interfejs sieciowy (musimy zaktualizowac trasy)
+sudo ip link set eth0 down
+sudo ip link set eth0 up
