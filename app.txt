@@ -1,5 +1,8 @@
-New-VMSwitch
+New-VMSwitch -Name "MyVMSwitch2" -NetAdapterInterfaceDescription "vmxnet3 Ethernet Adapter" -AllowManagementOS $true
 
-New-VMSwitch -Name "MyVMSwitch" -NetAdapterName "Ethernet 0 2" -AllowManagementOS $true
 
-Get-NetAdapter
+
+Get-VMSwitch
+
+
+New-VMSwitch -Name "MyVMSwitch" -NetAdapterName "Ethernet" -AllowManagementOS $true
