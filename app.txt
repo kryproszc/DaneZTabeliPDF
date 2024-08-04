@@ -65,3 +65,6 @@ summary_df <- process_csv_files(folder_path)
 
 # Wyświetlenie wyników
 print(summary_df)
+
+
+New-VMSwitch -Name "External Switch" -NetAdapterName wslnet
