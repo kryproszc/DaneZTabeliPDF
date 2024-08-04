@@ -68,3 +68,7 @@ print(summary_df)
 
 
 New-VMSwitch -Name "External Switch" -NetAdapterName wslnet
+
+
+netsh interface ipv4 show interfaces
+
