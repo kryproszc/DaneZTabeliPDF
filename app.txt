@@ -1,1 +1,1 @@
-New-NetNat -Name "WSLNat2" -InternalIPInterfaceAddressPrefix "172.25.210.0/24"
+Get-NetAdapter | Format-List -Property *
