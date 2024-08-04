@@ -1,1 +1,1 @@
-New-NetIPAddress -IPAddress 192.168.0.1 -PrefixLength 24 -InterfaceIndex 12
+New-NetNat -Name "WSLNat" -InternalIPInterfaceAddressPrefix "172.25.210.0/24"
