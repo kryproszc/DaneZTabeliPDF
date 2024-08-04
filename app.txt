@@ -1,1 +1,5 @@
-https://www.microsoft.com/en-us/download/details.aspx?id=45520
+New-VMSwitch
+
+New-VMSwitch -Name "MyVMSwitch" -NetAdapterName "Ethernet 0 2" -AllowManagementOS $true
+
+Get-NetAdapter
