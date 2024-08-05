@@ -1,4 +1,1 @@
 sudo ip route del default via 172.25.210.254 dev eth0
-sudo ip route del 172.25.210.0/24 via 172.25.210.254 dev eth0
-sudo ip route del 172.25.210.87 dev eth0
-sudo ip route del 172.27.112.1 dev eth1
