@@ -25,3 +25,5 @@ sudo ip route del 192.168.137.0/24 dev eth3
 sudo ip route del 192.168.137.1 dev eth3
 
 ip route show
+
+$route; done && sudo ip route del default
