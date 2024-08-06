@@ -1,26 +1,2 @@
-sudo ip route del default via 172.25.210.254 dev eth0 proto unspec metric 256
-sudo ip route del default via 172.25.210.254 dev eth0
-sudo ip route del 172.25.210.0/24 via 172.25.210.254 dev eth0
-sudo ip route del 172.25.210.87/24 dev eth0
-sudo ip route del 224.0.0.0/4 dev eth0
-sudo ip route del 255.255.255.255 dev eth0
-sudo ip route del 172.27.112.0/20 dev eth1
-sudo ip route del 172.27.127.1 dev eth1
-sudo ip route del 172.27.127.255 dev eth1
-sudo ip route del 224.0.0.0/4 dev eth1
-sudo ip route del 255.255.255.255 dev eth1
-sudo ip route del 172.19.48.0/20 dev eth2
-sudo ip route del 172.19.48.1 dev eth2
-sudo ip route del 172.19.63.255 dev eth2
-sudo ip route del 224.0.0.0/4 dev eth2
-sudo ip route del 255.255.255.255 dev eth2
-sudo ip route del 127.0.0.0/8 dev lo
-sudo ip route del 127.0.0.1 dev lo
-sudo ip route del 127.255.255.255 dev lo
-sudo ip route del 224.0.0.0/4 dev lo
-sudo ip route del 255.255.255.255 dev lo
-sudo ip route del 224.0.0.0/4 dev eth3
-sudo ip route del 255.255.255.255 dev eth3
-sudo ip route del 192.168.137.255 dev eth3
-sudo ip route del 192.168.137.0/24 dev eth3
-sudo ip route del 192.168.137.1 dev eth3
+sudo ip route del default via 172.25.210.254 dev eth2
+sudo route del default gw 172.25.210.254 dev eth2
