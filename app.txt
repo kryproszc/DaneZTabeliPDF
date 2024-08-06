@@ -1,1 +1,1 @@
-New-NetNat -Name WSLNat -InternalIPInterfaceAddressPrefix 172.27.160.0/20
+sudo ip route add default via 172.27.160.1
