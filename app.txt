@@ -1,1 +1,5 @@
+sudo ip route del default
+sudo route del default
+sudo ip route del default dev eth2 
+sudo route del default dev eth2 
 sudo ip route add default via 172.25.210.254 dev eth2
