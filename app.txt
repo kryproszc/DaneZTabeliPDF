@@ -1,3 +1,2 @@
-sudo ip addr add 192.168.137.2/24 dev eth0
-sudo ip link set eth0 up
-sudo ip route add default via 192.168.137.1
+sudo ip route add default via 172.25.210.254 dev eth0
+
