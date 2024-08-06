@@ -1,2 +1,1 @@
-sudo ip route add default via 172.25.210.254 dev eth0
-
+Get-NetAdapter | Where-Object {$_.InterfaceDescription -Match "vEthernet (WSLSwitch)"}
