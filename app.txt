@@ -1,1 +1,1 @@
-wsl --install -d Ubuntu-24.04
+wsl --install -d Ubuntu-24.04 --web-download
