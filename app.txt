@@ -1,1 +1,1 @@
-Get-NetIPInterface | where {$_.InterfaceAlias -eq 'vEthernet (WSLSwitch)' -or $_.InterfaceAlias -eq 'vEthernet (Default Switch)'} | Set-NetIPInterface -Forwarding Enabled
+ip route add 192.168.137.0/24 via 172.25.210.254
