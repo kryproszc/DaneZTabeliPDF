@@ -1,1 +1,1 @@
-sudo ip route add default via 172.25.210.254
+sudo ip route add default via 172.25.210.254 dev eth2
