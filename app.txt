@@ -1,1 +1,1 @@
-New-NetNat -Name WSLNat2 -InternalIPInterfaceAddressPrefix 172.27.160.0/20
+wsl --install -d Ubuntu-24.04
