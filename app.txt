@@ -1,7 +1,1 @@
-# Funkcja do sprawdzania formatu daty
-is_date_format <- function(column) {
-  all(grepl("^\\d{4}-\\d{2}-\\d{2}$", column))
-}
-
-# Sprawdzenie, czy wszystkie elementy w kolumnie 'kolumna1' są w formacie daty
-is_date_format(df$kolumna1)
+sudo ip route add default via 172.25.210.254
