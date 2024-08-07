@@ -1,8 +1,8 @@
 import os
 import pandas as pd
 
-# Funkcja do wczytywania i wyświetlania plików CSV oraz sprawdzania warunku
-def check_and_display_csv_file(file_path):
+# Funkcja do wczytywania i zapisywania plików CSV oraz sprawdzania warunku
+def check_and_save_csv_file(file_path, output_dir):
     try:
         # Wczytanie pliku CSV do DataFrame z odpowiednimi parametrami
         df = pd.read_csv(file_path, sep=";", decimal='.')
@@ -12,8 +12,15 @@ def check_and_display_csv_file(file_path):
             # Sprawdzenie warunku
             mask = df['Suma ubezpieczenia na umowę ubezpieczenia'] <= df['PML na obiekt']
             if mask.any():
-                print(f"W pliku {file_path} znaleziono rekordy, gdzie 'Suma ubezpieczenia na umowę ubezpieczenia' nie jest większa niż 'PML na obiekt':")
-                print(df[mask])
+                print(f"W pliku {file_path} znaleziono rekordy, gdzie 'Suma ubezpieczenia na umowę ubezpieczenia' nie jest większa niż 'PML na obiekt'.")
+                
+                # Tworzenie folderu wyjściowego
+                os.makedirs(output_dir, exist_ok=True)
+                
+                # Zapisywanie wierszy do pliku CSV
+                output_file_path = os.path.join(output_dir, 'SU_u<PM.csv')
+                df[mask].to_csv(output_file_path, sep=";", decimal='.', index=False)
+                print(f"Zapisano wynik do pliku {output_file_path}")
             else:
                 print(f"W pliku {file_path} wszystkie wartości w 'Suma ubezpieczenia na umowę ubezpieczenia' są większe niż 'PML na obiekt'.")
         else:
@@ -25,6 +32,8 @@ def check_and_display_csv_file(file_path):
 def main():
     # Ścieżka do folderu "wyniki"
     wyniki_path = 'sciezka/do/folderu/wyniki'  # Upewnij się, że podajesz poprawną ścieżkę
+    # Ścieżka do folderu wyjściowego
+    output_base_path = 'sciezka/do/folderu/output'  # Podaj odpowiednią ścieżkę
 
     # Pobieranie listy podfolderów w folderze "wyniki"
     try:
@@ -57,7 +66,10 @@ def main():
         for csv_file in csv_files:
             file_path = os.path.join(standaryzacja_path, csv_file)
             print(f"Próba wczytania pliku: {file_path}")
-            check_and_display_csv_file(file_path)
+            
+            # Ścieżka do folderu wyjściowego dla bieżącego podfolderu i pliku CSV
+            output_dir = os.path.join(output_base_path, subfolder, os.path.splitext(csv_file)[0])
+            check_and_save_csv_file(file_path, output_dir)
 
 if __name__ == "__main__":
     main()
