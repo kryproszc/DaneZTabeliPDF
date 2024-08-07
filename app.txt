@@ -1,2 +1,33 @@
-route add 255.255.255.255 mask 255.255.255.255 172.29.160.1
-route add 224.0.0.0 mask 240.0.0.0 172.29.160.1
+import os
+
+# Główna funkcja programu
+def main():
+    # Ścieżka do folderu "wyniki"
+    wyniki_path = 'sciezka/do/folderu/wyniki'  # Upewnij się, że podajesz poprawną ścieżkę
+
+    # Lista podfolderów (a, b, c, d)
+    subfolders = ['a', 'b', 'c', 'd']
+
+    # Pętla po każdym podfolderze
+    for subfolder in subfolders:
+        # Ścieżka do folderu "standaryzacja v3" w bieżącym podfolderze
+        standaryzacja_path = os.path.join(wyniki_path, subfolder, 'standaryzacja v3')
+        
+        # Sprawdzenie, czy folder "standaryzacja v3" istnieje
+        if not os.path.exists(standaryzacja_path):
+            print(f"Folder {standaryzacja_path} nie istnieje!")
+            continue
+        
+        # Lista plików w folderze "standaryzacja v3"
+        files = os.listdir(standaryzacja_path)
+        
+        # Filtracja plików CSV
+        csv_files = [f for f in files if f.endswith('.csv')]
+        
+        # Wypisanie nazw plików CSV
+        for csv_file in csv_files:
+            file_path = os.path.join(standaryzacja_path, csv_file)
+            print(f"Znaleziono plik: {file_path}")
+
+if __name__ == "__main__":
+    main()
