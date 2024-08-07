@@ -1,1 +1,1 @@
-sudo ip route add 172.25.210.0/24 dev eth2 proto kernel scope link src 172.25.210.87
+ip route add 192.168.0.0/16 via 172.25.210.254
