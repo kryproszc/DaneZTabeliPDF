@@ -5,8 +5,12 @@ def main():
     # Ścieżka do folderu "wyniki"
     wyniki_path = 'sciezka/do/folderu/wyniki'  # Upewnij się, że podajesz poprawną ścieżkę
 
-    # Lista podfolderów (a, b, c, d)
-    subfolders = ['a', 'b', 'c', 'd']
+    # Pobieranie listy podfolderów w folderze "wyniki"
+    try:
+        subfolders = [f for f in os.listdir(wyniki_path) if os.path.isdir(os.path.join(wyniki_path, f))]
+    except FileNotFoundError:
+        print(f"Folder {wyniki_path} nie istnieje!")
+        return
 
     # Pętla po każdym podfolderze
     for subfolder in subfolders:
@@ -15,7 +19,7 @@ def main():
         
         # Sprawdzenie, czy folder "standaryzacja v3" istnieje
         if not os.path.exists(standaryzacja_path):
-            print(f"Folder {standaryzacja_path} nie istnieje!")
+            print(f"Folder {standaryzacja_path} nie istnieje w {subfolder}!")
             continue
         
         # Lista plików w folderze "standaryzacja v3"
