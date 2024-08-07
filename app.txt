@@ -1,1 +1,1 @@
-ip route add 192.168.0.0/16 via 172.25.210.254
+sudo service networking restart
