@@ -1,16 +1,2 @@
-C:\Windows\system32> route add 172.25.210.87 mask 255.255.255.255 172.25.210.87
- OK!
-
-C:\Windows\system32> route add 172.25.210.255 mask 255.255.255.255 172.25.210.87
- OK!
-
-C:\Windows\system32> route add 172.29.160.0 mask 255.255.240.0 172.29.160.1
- OK!
-
-C:\Windows\system32> route add 172.29.160.1 mask 255.255.255.255 172.29.160.1
- OK!
-
-C:\Windows\system32> route add 172.29.175.255 mask 255.255.255.255 172.29.160.1
- OK!
-
-C:\Windows\system32> route print
+route add 255.255.255.255 mask 255.255.255.255 172.29.160.1
+route add 224.0.0.0 mask 240.0.0.0 172.29.160.1
