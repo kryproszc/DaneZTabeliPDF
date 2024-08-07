@@ -30,9 +30,9 @@ def check_and_save_csv_file(file_path, output_dir):
 
 # Główna funkcja programu
 def main():
-    # Ścieżka do folderu "wyniki"
+    # Ścieżka do folderu "wyniki" (dane wejściowe)
     wyniki_path = 'sciezka/do/folderu/wyniki'  # Upewnij się, że podajesz poprawną ścieżkę
-    # Ścieżka do folderu wyjściowego
+    # Ścieżka do folderu wyjściowego (dane wyjściowe)
     output_base_path = 'sciezka/do/folderu/output'  # Podaj odpowiednią ścieżkę
 
     # Pobieranie listy podfolderów w folderze "wyniki"
@@ -55,8 +55,8 @@ def main():
         # Lista plików w folderze "standaryzacja v3"
         files = os.listdir(standaryzacja_path)
         
-        # Filtracja plików CSV
-        csv_files = [f for f in files if f.endswith('.csv')]
+        # Filtracja plików CSV, pomijanie plików wynikowych
+        csv_files = [f for f in files if f.endswith('.csv') and f != 'SU_u<PM.csv']
         
         if not csv_files:
             print(f"W folderze {standaryzacja_path} nie znaleziono plików CSV.")
