@@ -1,274 +1,140 @@
-#include <filesystem>
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl2.h"
 #include <iostream>
-#include <future>
+#include <vector>
 #include <thread>
-#include <stdio.h>
-#ifdef __APPLE__
-#define GL_SILENCE_DEPRECATION
-#endif
-#include <GLFW/glfw3.h>
+#include <sys/epoll.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <cstring>
+#include <fstream>
+#include <chrono>
+#include <memory>
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
-#pragma comment(lib, "legacy_stdio_definitions")
-#endif
-
-#define IM_CLAMP(V, MN, MX) ((V) < (MN) ? (MN) : (V) > (MX) ? (MX) : (V))
-
-static float f = 0.0f;
-static char sciezka_input[512] = "";
-static bool disable_mouse_wheel = false;
-static int czy_wlaczyc_odnowienia = 0;
-static float pasek_postepu_wczytywania_danych = 0.0f;
-static int liczba_symulacji = 123;
-static int promien = 200;
-static int liczba_dzialajacych_watkow = 1;
-static double wartosc_katastrof_szkody = 0;
-static double wartosc_minimalna_szkody = 0;
-static float ogolnyprogress = 0.0f;
-static char gdzie_zapisac[512] = "";
-std::vector<float> progressbar (1);
-std::vector<std::string> fileNames;
-
-const char* lata[] = { "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024" };
-static int wybrany_rok = 2024;
+const int NUM_REQUESTS = 100000;
+const int NUM_THREADS = 24;
+const char* HOST = "172.25.9.44";
+const char* PORT = "8080";
+const char* REQUEST = "GET /search.php?q=WANDY%20RUTKIEWICZ%20A%20Wrocław HTTP/1.1\r\nHost: dft-everace:8080\r\nConnection: close\r\n\r\n";
 
 
-static void glfw_error_callback(int error, const char* description)
-{
-    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
+int create_socket(const char* host, const char* port) {
+    struct addrinfo hints, *res;
+    int sockfd;
+
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+
+    if (getaddrinfo(host, port, &hints, &res) != 0) {
+        perror("getaddrinfo");
+        exit(1);
+    }
+
+    sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if (sockfd == -1) {
+        perror("socket");
+        exit(1);
+    }
+
+    if (connect(sockfd, res->ai_addr, res->ai_addrlen) == -1) {
+        perror("connect");
+        close(sockfd);
+        exit(1);
+    }
+
+    freeaddrinfo(res);
+    return sockfd;
 }
 
+void set_nonblocking(int sockfd) {
+    int flags = fcntl(sockfd, F_GETFL, 0);
+    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
+}
 
-namespace fs = std::filesystem;
+void perform_requests(int thread_id, int num_requests, std::shared_ptr<std::vector<std::string>>& data) {
+    int epoll_fd = epoll_create1(0);
+    if (epoll_fd == -1) {
+        perror("epoll_create1");
+        exit(1);
+    }
 
-std::vector<std::string> getFolders(const std::string& directoryPath) {
-    std::vector<std::string> folderNames;
+    std::vector<int> sockets(num_requests);
+    epoll_event ev, events[num_requests];
 
-    for (const auto& entry : fs::directory_iterator(directoryPath)) {
-        if (entry.is_directory()) {
-            folderNames.push_back(entry.path().filename().string());
+    for (int i = 0; i < num_requests; ++i) {
+        int sockfd = create_socket(HOST, PORT);
+        set_nonblocking(sockfd);
+
+        sockets[i] = sockfd;
+
+        ev.events = EPOLLOUT;
+        ev.data.fd = sockfd;
+        if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sockfd, &ev) == -1) {
+            perror("epoll_ctl: EPOLLOUT");
+            exit(1);
         }
     }
 
-    return folderNames;
-}
-
-std::vector<std::string> ubezp_nazwy;
-std::vector<ImGuiComboFlags> flagi;
-
-void setup_imgui_style(ImGuiIO& io) {
-    ImFont* arialFont = io.Fonts->AddFontFromFileTTF("C:/Users/infor/Downloads/Projekt Symulacji2/Projekt Symulacji/Projekt GUI/projekt_gui/GUI/Debug/Arial.ttf", 15.0f);
-    io.FontGlobalScale = 1.0f;
-
-    ImGuiStyle& style = ImGui::GetStyle();
-    style.ScaleAllSizes(1.0f);
-
-    io.Fonts->AddFontDefault();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
-
-    ImGui::StyleColorsLight();
-}
-
-std::atomic<int> nr_watku = 1;
-void start_sim()
-{
-    std::cout << "ROZPOCZETO NOWY WATEK NR " << nr_watku++ << std::endl;
-    while(1) {}
-}
-
-void render_gui() {
-    ImGui::SetNextWindowPos(ImVec2(10,10));
-    ImGui::SetNextWindowSize(ImVec2(750, 1076-120));
-    ImGui::Begin("SYMULATOR POZAROW");
-
-    ImGui::SeparatorText("Przygotowanie danych");
-    ImGui::InputInt("Podaj rok, ktory brac pod uwage", &wybrany_rok);
-    ImGui::InputText("Podaj sciezke do folderu input", sciezka_input, 512);
- 
-    if (ImGui::Button("Wczytaj liste ubezpieczycieli", ImVec2(ImGui::GetContentRegionAvail().x, 25))) {
-        ubezp_nazwy.clear();
-        flagi.clear();
-        ubezp_nazwy = getFolders(sciezka_input);
-        flagi.resize(ubezp_nazwy.size());
-    }
-
-    ImGui::Columns(1, "word-wrapping");
-    ImGui::Separator();
-    ImGui::Dummy(ImVec2(0.0f, 5.f));
-
-    ImGui::BeginChild("ChildR", ImVec2(0, 140), ImGuiChildFlags_Border, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_MenuBar);
-    if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("Wybierz ubezpieczycieli ktorzy maja brac udzial w symulacji")) {
-            ImGui::EndMenu();
+    while (!sockets.empty()) {
+        int nfds = epoll_wait(epoll_fd, events, num_requests, -1);
+        if (nfds == -1) {
+            perror("epoll_wait");
+            exit(1);
         }
-        ImGui::EndMenuBar();
-    }
-    if (ImGui::BeginTable("split", 1, ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings)) {
-        ImGui::TableNextColumn();
-        for(int i = 0 ; i < ubezp_nazwy.size(); i++) {
-            ImGui::CheckboxFlags(ubezp_nazwy[i].c_str(), &flagi[i], ImGuiComboFlags_PopupAlignLeft);
-        }
-        ImGui::EndTable();
-    }
-    ImGui::EndChild();
-    ImGui::Dummy(ImVec2(0.0f, 2.f));
-    if (ImGui::Button("Wybierz wszystkich", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
-        fileNames.clear();
-        for (int i = 0; i < ubezp_nazwy.size(); i++)
-        {
-            if (flagi[i] != 0)
-            {
-                fileNames.push_back(ubezp_nazwy[i]);
+
+        for (int n = 0; n < nfds; ++n) {
+            int sockfd = events[n].data.fd;
+            if (events[n].events & EPOLLOUT) {
+                send(sockfd, REQUEST, strlen(REQUEST), 0);
+
+                ev.events = EPOLLIN;
+                ev.data.fd = sockfd;
+                if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1) {
+                    perror("epoll_ctl: EPOLLIN");
+                    exit(1);
+                }
+            } else if (events[n].events & EPOLLIN) {
+                char buffer[4096];
+                int bytes_read = read(sockfd, buffer, sizeof(buffer));
+                if (bytes_read > 0) {
+                    (*data)[thread_id] += std::string(buffer, bytes_read);
+                } else {
+                    close(sockfd);
+                    sockets.erase(std::remove(sockets.begin(), sockets.end(), sockfd), sockets.end());
+                }
             }
         }
-
     }
-    ImGui::Columns(1);
-    ImGui::Dummy(ImVec2(0.0f, 5.f));
-    ImGui::SeparatorText("Odnowienia");
-    ImGui::RadioButton("Wylacz", &czy_wlaczyc_odnowienia, 0);
-    ImGui::SameLine();
-    ImGui::RadioButton("Wlacz", &czy_wlaczyc_odnowienia, 1);
 
-    ImGui::Dummy(ImVec2(0.0f, 5.f));
-    ImGui::SeparatorText("Uruchamianie i sledzenie wczytywania danych");
-
-    if (ImGui::Button("Wczytaj dane", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
-    }
-    ImGui::ProgressBar(pasek_postepu_wczytywania_danych, ImVec2(0.0f, 0.0f));
-    ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
-    ImGui::Text("Pasek postepu wczytywania danych");
-    ImGui::Dummy(ImVec2(0.0f, 6.0f));
-    ImGui::SeparatorText("Parametry symulacji");
- 
-    ImGui::InputInt("Liczba symulacji", &liczba_symulacji);
-    if (ImGui::InputInt("Liczba dzialajacych watkow", &liczba_dzialajacych_watkow))
-    {
-        progressbar.resize(liczba_dzialajacych_watkow);
-    }
-    ImGui::InputDouble("Wartosc katastroficzna szkody", &wartosc_katastrof_szkody, 0.01f, 1.0f, "%.8f");
-    ImGui::InputDouble("Wartosc minimalna szkody", &wartosc_minimalna_szkody, 0.01f, 1.0f, "%.8f");
-    ImGui::InputInt("Promien", &promien);
-
-    //ImGui::Combo("Wybierz rok", &wybrany_rok, lata, IM_ARRAYSIZE(lata));
-    
-    ImGui::InputText("Podaj sciezke gdzie zapisac", gdzie_zapisac, 512);
-    ImGui::Dummy(ImVec2(0.0f, 6.f));
-    ImGui::SeparatorText("Uruchamianie i sledzenie symulacji");
-
-    ImVec4 buttonColor = ImVec4(0.8f, 0.5f, 0.5f, 0.7f);  // kolor (R, G, B, A)
-    ImVec4 buttonHoverColor = ImVec4(0.9f, 0.5f, 0.6f, 1.0f);  // kolor po najechaniu
-    ImVec4 buttonActiveColor = ImVec4(0.7f, 0.1f, 0.4f, 1.0f);  // kolor po kliknięciu
-
-    ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
-    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, buttonHoverColor);
-    ImGui::PushStyleColor(ImGuiCol_ButtonActive, buttonActiveColor);
-    if (ImGui::Button("Wlacz symulacje", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
-        ImGui::OpenPopup("Krok wymaga potwierdzenia");
-
-    }
-    bool open = true;
-    if (ImGui::BeginPopupModal("Krok wymaga potwierdzenia", &open))
-    {
-        ImGui::SetNextWindowSize(ImVec2(750, 1076 - 120));
-        ImGui::Text("Czy na pewno chcesz uruchomic symulacje?");
-        if (ImGui::Button("Tak", ImVec2(ImGui::GetContentRegionAvail().x/2.0, 25))) {
-            ImGui::CloseCurrentPopup();
-            std::thread watek(start_sim);
-            watek.detach();
-        }
-        ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
-
-        if (ImGui::Button("Nie", ImVec2(ImGui::GetContentRegionAvail().x, 25))) {
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::EndPopup();
-    }
-    ImGui::PopStyleColor(3);  // usuń ustawione kolory 
-
-    ImGui::ProgressBar(ogolnyprogress, ImVec2(ImGui::GetContentRegionAvail().x - 170, 25));
-    ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
-    ImGui::Text("Ogolny pasek postepu");
-    ImGui::Dummy(ImVec2(0.0f, 7.f));
-
-    ImGui::BeginChild("ChildL", ImVec2(0, 156), ImGuiChildFlags_Border, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_MenuBar);
-
-    if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("Paski postepu pracy poszczegolnych watkow")) {
-            ImGui::EndMenu();
-        }
-        ImGui::EndMenuBar();
-    }
-    if (ImGui::BeginTable("split", 1, ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings)) {
-        ImGui::TableNextColumn();
-        for (int i = 1; i <= liczba_dzialajacych_watkow; i++) {
-            ImGui::ProgressBar(progressbar[i-1], ImVec2(0.f, 0.f));
-            ImGui::SameLine();
-            ImGui::Text("Watek %02d", i);
-        }
-        ImGui::EndTable();
-    }
-    ImGui::EndChild();
-
-    ImGui::End();
+    close(epoll_fd);
 }
 
-int main(int, char**)
-{
-    glfwSetErrorCallback(glfw_error_callback);
-    if (!glfwInit())
-        return 1;
+int main() {
+    auto start_time = std::chrono::high_resolution_clock::now();
 
-    GLFWwindow* window = glfwCreateWindow(770, 1098 - 120, "Program", nullptr, nullptr);
-    if (window == nullptr)
-        return 1;
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
+    std::vector<std::thread> threads;
+    auto data = std::make_shared<std::vector<std::string>>(NUM_THREADS);
+    int requests_per_thread = NUM_REQUESTS / NUM_THREADS;
 
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    (void)io;
-    setup_imgui_style(io);
-
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL2_Init();
-
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-    while (!glfwWindowShouldClose(window))
-    {
-        glfwPollEvents();
-
-        ImGui_ImplOpenGL2_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        render_gui();
-
-        ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-
-        glfwMakeContextCurrent(window);
-        glfwSwapBuffers(window);
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        threads.emplace_back(perform_requests, i, requests_per_thread, std::ref(data));
     }
 
-    ImGui_ImplOpenGL2_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+    for (auto& t : threads) {
+        t.join();
+    }
 
-    glfwDestroyWindow(window);
-    glfwTerminate();
+    std::ofstream output_file("output.txt");
+    for (const auto& thread_data : *data) {
+        output_file << thread_data;
+    }
+    output_file.close();
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end_time - start_time;
+    std::cout << "czas: " << elapsed.count() << " s" << std::endl;
 
     return 0;
 }
