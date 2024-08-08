@@ -1,64 +1,35 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/epoll.h>
-#include <string.h>
 
-#define MAX_EVENTS 10
+W wsl
+sudo nano ~/.bashrc
+export http_proxy=http://192.168.105.6:3128
+export https_proxy=http://192.168.105.6:3128
+export ftp_proxy=http://192.168.105.6:3128
+export no_proxy="localhost,127.0.0.1,::1"
 
-int main() {
-    int epoll_fd, pipe_fd[2];
-    struct epoll_event event, events[MAX_EVENTS];
- 
-    if (pipe(pipe_fd) == -1) {
-        perror("pipe");
-        exit(EXIT_FAILURE);
-    }
-    // tworze epoolla
-    epoll_fd = epoll_create1(0);
-    if (epoll_fd == -1) {
-        perror("epoll_create1");
-        exit(EXIT_FAILURE);
-    }
- 
-    event.events = EPOLLIN;
-    event.data.fd = pipe_fd[0];
-    if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, pipe_fd[0], &event) == -1) {
-        perror("epoll_ctl");
-        exit(EXIT_FAILURE);
-    }
+source ~/.bashrc
 
-    // wysylam dane do pipe
-    const char *msg = "test epolla";
-    if (write(pipe_fd[1], msg, strlen(msg)) == -1) {
-        perror("write");
-        exit(EXIT_FAILURE);
-    }
+otwieramy 
+sudo nano /etc/environment
+wklejamy  tam na dole
+export http_proxy=http://192.168.105.6:3128
+export https_proxy=http://192.168.105.6:3128
+export ftp_proxy=http://192.168.105.6:3128
+export no_proxy="localhost,127.0.0.1,::1"
 
-    // Oczekiwanie na zdarzenia
-    int n = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);
-    if (n == -1) {
-        perror("epoll_wait");
-        exit(EXIT_FAILURE);
-    }
+następnie
+source /etc/environment
+nano /etc/apt/apt.conf.d/proxy.conf
 
-    // obsluguje zdarzenie
-    for (int i = 0; i < n; i++) {
-        if (events[i].events & EPOLLIN) {
-            char buffer[100];
-            ssize_t count = read(events[i].data.fd, buffer, sizeof(buffer) - 1);
-            if (count == -1) {
-                perror("read");
-                exit(EXIT_FAILURE);
-            }
-            buffer[count] = '\0';
-            printf("Odebrano: %s\n", buffer);
-        }
-    }
+wklejamy
+Acquire::http::Proxy "http://192.168.105.6:3128";
+Acquire::httpsa::Proxy "http://192.168.105.6:3128";
+Acquire::ftp::Proxy "http://192.168.105.6:3128";
 
-    close(pipe_fd[0]);
-    close(pipe_fd[1]);
-    close(epoll_fd);
+wpisujemy w wsl reboot
 
-    return 0;
-}
+wyłączamy wsl
+otwieramy cmd i pwpisujemy
+wsl --shutdown
+i nastepnie
+wsl
+
