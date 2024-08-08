@@ -1,75 +1,20 @@
-import os
-import pandas as pd
+export http_proxy=http://192.168.105.6:3128
+export https_proxy=http://192.168.105.6:3128
+export ftp_proxy=http://192.168.105.6:3128
+export no_proxy="localhost,127.0.0.1,::1"
 
-# Funkcja do wczytywania i zapisywania plików CSV oraz sprawdzania warunku
-def check_and_save_csv_file(file_path, output_dir):
-    try:
-        # Wczytanie pliku CSV do DataFrame z odpowiednimi parametrami
-        df = pd.read_csv(file_path, sep=";", decimal='.')
-        
-        # Sprawdzenie, czy kolumny istnieją
-        if 'Suma ubezpieczenia na umowę ubezpieczenia' in df.columns and 'PML na obiekt' in df.columns:
-            # Sprawdzenie warunku
-            mask = df['Suma ubezpieczenia na umowę ubezpieczenia'] <= df['PML na obiekt']
-            if mask.any():
-                print(f"W pliku {file_path} znaleziono rekordy, gdzie 'Suma ubezpieczenia na umowę ubezpieczenia' nie jest większa niż 'PML na obiekt'.")
-                
-                # Tworzenie folderu wyjściowego
-                os.makedirs(output_dir, exist_ok=True)
-                
-                # Zapisywanie wierszy do pliku CSV
-                output_file_path = os.path.join(output_dir, 'SU_u<PM.csv')
-                df[mask].to_csv(output_file_path, sep=";", decimal='.', index=False)
-                print(f"Zapisano wynik do pliku {output_file_path}")
-            else:
-                print(f"W pliku {file_path} wszystkie wartości w 'Suma ubezpieczenia na umowę ubezpieczenia' są większe niż 'PML na obiekt'.")
-        else:
-            print(f"W pliku {file_path} brakuje wymaganych kolumn.")
-    except Exception as e:
-        print(f"Nie udało się wczytać pliku {file_path}: {e}")
 
-# Główna funkcja programu
-def main():
-    # Ścieżka do folderu "wyniki" (dane wejściowe)
-    wyniki_path = 'sciezka/do/folderu/wyniki'  # Upewnij się, że podajesz poprawną ścieżkę
-    # Ścieżka do folderu wyjściowego (dane wyjściowe)
-    output_base_path = 'sciezka/do/folderu/output'  # Podaj odpowiednią ścieżkę
+source ~/.bashrc
 
-    # Pobieranie listy podfolderów w folderze "wyniki"
-    try:
-        subfolders = [f for f in os.listdir(wyniki_path) if os.path.isdir(os.path.join(wyniki_path, f))]
-    except FileNotFoundError:
-        print(f"Folder {wyniki_path} nie istnieje!")
-        return
 
-    # Pętla po każdym podfolderze
-    for subfolder in subfolders:
-        # Ścieżka do folderu "standaryzacja v3" w bieżącym podfolderze
-        standaryzacja_path = os.path.join(wyniki_path, subfolder, 'standaryzacja v3')
-        
-        # Sprawdzenie, czy folder "standaryzacja v3" istnieje
-        if not os.path.exists(standaryzacja_path):
-            print(f"Folder {standaryzacja_path} nie istnieje w {subfolder}!")
-            continue
-        
-        # Lista plików w folderze "standaryzacja v3"
-        files = os.listdir(standaryzacja_path)
-        
-        # Filtracja plików CSV, pomijanie plików wynikowych
-        csv_files = [f for f in files if f.endswith('.csv') and f != 'SU_u<PM.csv']
-        
-        if not csv_files:
-            print(f"W folderze {standaryzacja_path} nie znaleziono plików CSV.")
-            continue
-        
-        # Wczytanie i sprawdzenie każdego pliku CSV
-        for csv_file in csv_files:
-            file_path = os.path.join(standaryzacja_path, csv_file)
-            print(f"Próba wczytania pliku: {file_path}")
-            
-            # Ścieżka do folderu wyjściowego dla bieżącego podfolderu i pliku CSV
-            output_dir = os.path.join(output_base_path, subfolder, os.path.splitext(csv_file)[0])
-            check_and_save_csv_file(file_path, output_dir)
+nano /etc/environment
+wklej tam
+na dole
+export http_proxy=http://192.168.105.6:3128
+export https_proxy=http://192.168.105.6:3128
+export ftp_proxy=http://192.168.105.6:3128
+export no_proxy="localhost,127.0.0.1,::1"
 
-if __name__ == "__main__":
-    main()
+source /etc/environment
+
+nano /etc/apt/apt.conf.d/proxy.conf
