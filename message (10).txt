@@ -1,116 +1,175 @@
-#ifndef BS_THREAD_POOL_UTILS_HPP
-#define BS_THREAD_POOL_UTILS_HPP
+#include <iostream>
+#include <vector>
+#include <thread>
+#include <sys/epoll.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <cstring>
+#include <fstream>
+#include <chrono>
+#include <memory>
+#include <algorithm>
 
-#include <chrono>           
-#include <future>           
-#include <initializer_list> 
-#include <iostream>         
-#include <memory>           
-#include <mutex>            
-#include <ostream>          
-#include <utility>          
+const int NUM_REQUESTS = 1000;
+const int NUM_THREADS = 24;
+const char* HOST = "172.25.9.44";
+const char* PORT = "8080";
+const char* REQUEST = "GET /search.php?q=WANDY%20RUTKIEWICZ%20A%20Wrocław HTTP/1.1\r\nHost: dft-everace:8080\r\nConnection: close\r\n\r\n";
 
-namespace BS {
+int create_nonblocking_socket(const char* host, const char* port) {
+    struct addrinfo hints, *res;
+    int sockfd;
 
-#define BS_THREAD_POOL_UTILS_VERSION_MAJOR 4
-#define BS_THREAD_POOL_UTILS_VERSION_MINOR 1
-#define BS_THREAD_POOL_UTILS_VERSION_PATCH 0
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
 
-    class [[nodiscard]] signaller
-    {
-    public:
+    if (getaddrinfo(host, port, &hints, &res) != 0) {
+        perror("getaddrinfo");
+        return -1;
+    }
 
-        signaller() : promise(), future(promise.get_future()) {}
+    sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if (sockfd == -1) {
+        perror("socket");
+        freeaddrinfo(res);
+        return -1;
+    }
 
-        signaller(const signaller&) = delete;
-        signaller& operator=(const signaller&) = delete;
+    int flags = fcntl(sockfd, F_GETFL, 0);
+    if (fcntl(sockfd, F_SETFL, flags | O_NONBLOCK) == -1) {
+        perror("fcntl");
+        close(sockfd);
+        freeaddrinfo(res);
+        return -1;
+    }
 
-        signaller(signaller&&) = default;
-        signaller& operator=(signaller&&) = default;
+    if (connect(sockfd, res->ai_addr, res->ai_addrlen) == -1) {
+        if (errno != EINPROGRESS) {
+            perror("connect");
+            close(sockfd);
+            freeaddrinfo(res);
+            return -1;
+        }
+    }
 
-        void ready()
-        {
-            promise.set_value();
+    freeaddrinfo(res);
+    return sockfd;
+}
+
+void perform_requests(int thread_id, int num_requests, std::shared_ptr<std::vector<std::string>>& data) {
+    int epoll_fd = epoll_create1(0);
+    if (epoll_fd == -1) {
+        perror("epoll_create1");
+        exit(1);
+    }
+
+    std::vector<int> sockets;
+    epoll_event ev, events[num_requests];
+
+    for (int i = 0; i < num_requests; ++i) {
+        int sockfd = create_nonblocking_socket(HOST, PORT);
+        if (sockfd == -1) {
+            continue;
         }
 
-        void wait()
-        {
-            future.wait();
+        sockets.push_back(sockfd);
+
+        ev.events = EPOLLOUT | EPOLLET;
+        ev.data.fd = sockfd;
+        if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sockfd, &ev) == -1) {
+            perror("epoll_ctl: EPOLLOUT");
+            close(sockfd);
+            sockets.pop_back();
+        }
+    }
+
+    while (!sockets.empty()) {
+        int nfds = epoll_wait(epoll_fd, events, num_requests, -1);
+        if (nfds == -1) {
+            perror("epoll_wait");
+            exit(1);
         }
 
-    private:
+        for (int n = 0; n < nfds; ++n) {
+            int sockfd = events[n].data.fd;
+            if (events[n].events & EPOLLOUT) {
+                ssize_t bytes_sent = send(sockfd, REQUEST, strlen(REQUEST), 0);
+                if (bytes_sent == -1) {
+                    if (errno != EAGAIN && errno != EWOULDBLOCK) {
+                        perror("send");
+                        close(sockfd);
+                        sockets.erase(std::remove(sockets.begin(), sockets.end(), sockfd), sockets.end());
+                    }
+                } else {
+                    ev.events = EPOLLIN | EPOLLET;
+                    ev.data.fd = sockfd;
+                    if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1) {
+                        perror("epoll_ctl: EPOLLIN");
+                        close(sockfd);
+                        sockets.erase(std::remove(sockets.begin(), sockets.end(), sockfd), sockets.end());
+                    }
+                }
+            } else if (events[n].events & EPOLLIN) {
+                char buffer[4096];
+                ssize_t bytes_read;
+                std::string response;
 
-        std::promise<void> promise;
+                while ((bytes_read = read(sockfd, buffer, sizeof(buffer))) > 0) {
+                    response.append(buffer, bytes_read);
+                }
 
-        std::shared_future<void> future;
-    }; 
-
-    class [[nodiscard]] synced_stream
-    {
-    public:
-
-        explicit synced_stream(std::ostream& stream = std::cout) : out_stream(stream) {}
-
-        synced_stream(const synced_stream&) = delete;
-        synced_stream(synced_stream&&) = delete;
-        synced_stream& operator=(const synced_stream&) = delete;
-        synced_stream& operator=(synced_stream&&) = delete;
-
-        template <typename... T>
-        void print(T&&... items)
-        {
-            const std::scoped_lock stream_lock(stream_mutex);
-            (out_stream << ... << std::forward<T>(items));
+       if (bytes_read == -1) {
+                    if (errno != EAGAIN && errno != EWOULDBLOCK) {
+                        perror("read");
+                        close(sockfd);
+                        sockets.erase(std::remove(sockets.begin(), sockets.end(), sockfd), sockets.end());
+                    }
+                } else if (bytes_read == 0) {
+                    // Gniazdo zamknięte przez serwer
+                    (*data)[thread_id] += response;
+                    close(sockfd);
+                    sockets.erase(std::remove(sockets.begin(), sockets.end(), sockfd), sockets.end());
+                }
+            } else {
+                // Obsługa błędnych zdarzeń
+                perror("epoll event error");
+                close(sockfd);
+                sockets.erase(std::remove(sockets.begin(), sockets.end(), sockfd), sockets.end());
+            }
         }
+    }
 
-        template <typename... T>
-        void println(T&&... items)
-        {
-            print(std::forward<T>(items)..., '\n');
-        }
+    close(epoll_fd);
+}
 
-        inline static std::ostream& (&endl)(std::ostream&) = static_cast<std::ostream & (&)(std::ostream&)>(std::endl);
+int main() {
+    auto start_time = std::chrono::high_resolution_clock::now();
 
-        inline static std::ostream& (&flush)(std::ostream&) = static_cast<std::ostream & (&)(std::ostream&)>(std::flush);
+    std::vector<std::thread> threads;
+    auto data = std::make_shared<std::vector<std::string>>(NUM_THREADS);
+    int requests_per_thread = NUM_REQUESTS / NUM_THREADS;
 
-    private:
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        threads.emplace_back(perform_requests, i, requests_per_thread, std::ref(data));
+    }
 
-        std::ostream& out_stream;
+    for (auto& t : threads) {
+        t.join();
+    }
 
-        mutable std::mutex stream_mutex = {};
-    }; 
+    std::ofstream output_file("outputt.txt");
+    for (const auto& thread_data : *data) {
+        output_file << thread_data;
+    }
+    output_file.close();
 
-    class [[nodiscard]] timer
-    {
-    public:
+    auto end_time = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end_time - start_time;
+    std::cout << "czas: " << elapsed.count() << " s" << std::endl;
 
-        timer() = default;
-
-        [[nodiscard]] std::chrono::milliseconds::rep current_ms() const
-        {
-            return (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time)).count();
-        }
-
-        void start()
-        {
-            start_time = std::chrono::steady_clock::now();
-        }
-
-        void stop()
-        {
-            elapsed_time = std::chrono::steady_clock::now() - start_time;
-        }
-
-        [[nodiscard]] std::chrono::milliseconds::rep ms() const
-        {
-            return (std::chrono::duration_cast<std::chrono::milliseconds>(elapsed_time)).count();
-        }
-
-    private:
-
-        std::chrono::time_point<std::chrono::steady_clock> start_time = std::chrono::steady_clock::now();
-
-        std::chrono::duration<double> elapsed_time = std::chrono::duration<double>::zero();
-    }; 
-} 
-#endif
+    return 0;
+}
