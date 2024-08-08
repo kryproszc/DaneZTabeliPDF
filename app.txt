@@ -18,3 +18,9 @@ export no_proxy="localhost,127.0.0.1,::1"
 source /etc/environment
 
 nano /etc/apt/apt.conf.d/proxy.conf
+
+
+Acquire::http::Proxy "http://192.168.105.6:3128";
+Acquire::httpsa::Proxy "http://192.168.105.6:3128";
+Acquire::ftp::Proxy "http://192.168.105.6:3128";
+
