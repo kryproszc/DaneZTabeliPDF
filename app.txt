@@ -1,1 +1,20 @@
-combined_text <- apply(df, 1, function(row) paste(row, collapse = " "))
+
+# Sklejanie tekstu z wszystkich kolumn w jeden ciąg dla każdego wiersza
+combined_text <- apply(df, 1, function(row) {
+  # Usunięcie pustych elementów w wierszu
+  row <- row[row != ""]
+  
+  # Jeśli wiersz nie jest pusty, połącz go
+  if (length(row) > 0) {
+    return(paste(row, collapse = " "))
+  } else {
+    return(NULL)
+  }
+})
+
+# Sklejanie wszystkich wierszy w jeden długi tekst, gdzie każdy wiersz jest w nowej linii
+# Puste wiersze są pomijane
+final_text <- paste(na.omit(combined_text), collapse = "\n")
+
+# Wyświetlenie wyniku
+cat(final_text)
