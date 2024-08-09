@@ -1,5 +1,30 @@
-# Instalacja RDCOMClient z GitHub
-if (!require(devtools)) {
-  install.packages("devtools")
+generate_email <- function(recipient, subject, intro, points, closing) {
+  email_body <- paste0(intro, points, closing)
+  return(email_body)
 }
-devtools::install_github("omegahat/RDCOMClient")
+
+# Utwórz obiekt Outlooka
+outlook_app <- COMCreate("Outlook.Application")
+
+# Iteracja przez każdy wiersz data.frame
+for (i in 1:nrow(df)) {
+  recipient <- df$Recipient[i]
+  subject <- df$Subject[i]
+  intro <- df$Intro[i]
+  points <- df$Points[i]
+  closing <- df$Closing[i]
+  
+  # Generowanie treści e-maila
+  email_body <- generate_email(recipient, subject, intro, points, closing)
+  
+  # Utwórz nową wiadomość e-mail
+  email <- outlook_app$CreateItem(0)
+  
+  # Ustawienia e-maila
+  email[["To"]] <- recipient
+  email[["Subject"]] <- subject
+  email[["Body"]] <- email_body
+  
+  # Wyświetl e-mail w Outlooku do przeglądu przed wysłaniem
+  email$Display()
+}
