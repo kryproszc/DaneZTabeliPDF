@@ -1,1 +1,31 @@
-cd /mnt/M/Nowe_GEokodowanie
+# Wektory z nazwami województw i miesięcy
+wojewodztwa <- c(
+  "Dolnośląskie", "Kujawsko-Pomorskie", "Lubelskie", "Lubuskie", "Łódzkie", 
+  "Małopolskie", "Mazowieckie", "Opolskie", "Podkarpackie", "Podlaskie", 
+  "Pomorskie", "Śląskie", "Świętokrzyskie", "Warmińsko-Mazurskie", "Wielkopolskie", 
+  "Zachodniopomorskie", "Brak województwa"
+)
+
+miesiace <- c(
+  "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", 
+  "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"
+)
+zamien_na_nazwy <- function(df) {
+  df$Region <- wojewodztwa[df$Region + 1]  
+    df$Month <- miesiace[df$Month + 1]  
+  return(df)
+}
+df <- data.frame(
+  Region = c(0, 5, 10, 2, 11),
+  Month = c(0, 4, 6, 10, 11),
+  Wartosc = c(100, 200, 150, 300, 250)
+)
+
+df <- zamien_na_nazwy(df)
+
+# Wyświetlenie wyniku
+print(df)
+
+
+
+####################################################
