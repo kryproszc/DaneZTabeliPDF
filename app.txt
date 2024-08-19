@@ -1,31 +1,38 @@
-# Wektory z nazwami województw i miesięcy
-wojewodztwa <- c(
-  "Dolnośląskie", "Kujawsko-Pomorskie", "Lubelskie", "Lubuskie", "Łódzkie", 
-  "Małopolskie", "Mazowieckie", "Opolskie", "Podkarpackie", "Podlaskie", 
-  "Pomorskie", "Śląskie", "Świętokrzyskie", "Warmińsko-Mazurskie", "Wielkopolskie", 
-  "Zachodniopomorskie", "Brak województwa"
+with claim_cf as(
+select year, month, insurance_type, cf_period_type, cf_period, event_year, cf_group_type, cf_group, cf_name, cf_base_currency, sum(amount) amount
+  from GLOBAL.cashflows c
+ where year = 2024 and month = 3 and cf_version = 'SOLVENCY' and cf_name in ('CLAIM_RES','ALAE_RES')
+   and insurance_type = 'STANDARD'
+group by year, month, insurance_type, cf_period_type, cf_period, event_year, cf_group_type, cf_group, cf_name, cf_base_currency),
+
+claim_cf_agg as(
+select cf_group, event_year, sum(amount) amount
+  from claim_cf
+group by cf_group, event_year
+),
+
+erp as(
+select p.hrg, a.event_year,
+       sum(CASE WHEN a.operation in('IBNR','ALAE_IBNR') THEN amount ELSE 0 END) ibnr,
+       sum(decode(a.operation,'ULAE_RES',amount,0)) ulae_res,
+       sum(CASE WHEN a.operation in('RBNS','ALAE_RBNS') THEN amount ELSE 0 END) rbns
+  from erp_account a
+  JOIN GLOBAL.V_DICT_PRODUCT P ON A.PRODUCT = P.PRODUCT AND GREATEST(TO_DATE(A.YEAR||A.MONTH,'YYYYMM'),'2020-01-01') BETWEEN P.DATE_FROM AND P.DATE_TO
+ where year=2024 and month=3 and a.insurance_type = 'STANDARD' and a.period_type='B'
+   and a.operation in('RBNS','ALAE_RBNS','IBNR','ALAE_IBNR','ULAE_RES')
+group by p.hrg, a.event_year
+),
+
+erp_lob as(
+select hrg cf_group, event_year, sum(ibnr) ibnr, sum(ulae_res) ulae_res, sum(rbns) rbns
+  from erp 
+group by hrg, event_year having sum(ibnr) + sum(rbns) > 0
 )
-
-miesiace <- c(
-  "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", 
-  "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"
-)
-zamien_na_nazwy <- function(df) {
-  df$Region <- wojewodztwa[df$Region + 1]  
-    df$Month <- miesiace[df$Month + 1]  
-  return(df)
-}
-df <- data.frame(
-  Region = c(0, 5, 10, 2, 11),
-  Month = c(0, 4, 6, 10, 11),
-  Wartosc = c(100, 200, 150, 300, 250)
-)
-
-df <- zamien_na_nazwy(df)
-
-# Wyświetlenie wyniku
-print(df)
-
-
-
-####################################################
+--wynik
+select * from (
+select c.year, c.month, c.insurance_type, c.cf_period_type, c.cf_period, c.event_year, c.cf_group_type, c.cf_group,'ULAE_RES' cf_name, 'PLN' cf_base_currency,
+       sum(c.amount*l.ulae_res/(l.rbns+l.ibnr)) amount, ‘SOLVENCY_REP’ cf_version, 'PROC_CF_REPLICATION' cf_source
+  from claim_cf c
+  join erp_lob l on c.cf_group = l.cf_group and c.event_year = l.event_year
+group by c.year, c.month, c.insurance_type, c.cf_period_type, c.cf_period, c.event_year, c.cf_group_type, c.cf_group)
+where abs(amount) > 1000;
