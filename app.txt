@@ -4,40 +4,21 @@ library(reshape2)
 
 # Przykład dla szkód osobowych
 
-# Przekształcenie dataframe na format długi
-# W tym przykładzie df_osobowe to Twoja macierz szkód osobowych
-# Zamiast "Rok_poczatkowy" będziemy używać indeksów wierszy jako identyfikatorów
-df_osobowe_long <- melt(df_osobowe, id.vars = rownames(df_osobowe))
+# Załóżmy, że Twoje dane nazywają się df_osobowe
 
-# Ponieważ Twoje kolumny są nazwane jako liczby (np. 3, 15, 27), upewnij się, że są traktowane jako zmienne kategoryczne
+# Przekształcenie indeksów w nową kolumnę
+df_osobowe$Rok_poczatkowy <- rownames(df_osobowe)
+
+# Przekształcenie dataframe na format długi
+df_osobowe_long <- melt(df_osobowe, id.vars = "Rok_poczatkowy")
+
+# Upewnienie się, że zmienne (kolumny) są traktowane jako zmienne kategoryczne
 df_osobowe_long$variable <- as.factor(df_osobowe_long$variable)
 
 # Tworzenie wykresu dla szkód osobowych
-ggplot(df_osobowe_long, aes(x = variable, y = value, group = Var1, color = as.factor(Var1))) +
+ggplot(df_osobowe_long, aes(x = variable, y = value, group = Rok_poczatkowy, color = as.factor(Rok_poczatkowy))) +
   geom_line() +
   labs(x = "Okres rozwoju (miesiące)", y = "Wartość szkód", title = "Rozwój szkód osobowych w czasie") +
   theme_minimal()
 
-# Przykład dla szkód majątkowych z zadośćuczynieniami
-
-# Przekształcenie dataframe na format długi
-df_majatkowe_long <- melt(df_majatkowe, id.vars = rownames(df_majatkowe))
-df_majatkowe_long$variable <- as.factor(df_majatkowe_long$variable)
-
-# Tworzenie wykresu dla szkód majątkowych
-ggplot(df_majatkowe_long, aes(x = variable, y = value, group = Var1, color = as.factor(Var1))) +
-  geom_line() +
-  labs(x = "Okres rozwoju (miesiące)", y = "Wartość szkód", title = "Rozwój szkód majątkowych w czasie") +
-  theme_minimal()
-
-# Przykład dla trójkąta łącznego
-
-# Przekształcenie dataframe na format długi
-df_laczne_long <- melt(df_laczne, id.vars = rownames(df_laczne))
-df_laczne_long$variable <- as.factor(df_laczne_long$variable)
-
-# Tworzenie wykresu dla szkód łącznych
-ggplot(df_laczne_long, aes(x = variable, y = value, group = Var1, color = as.factor(Var1))) +
-  geom_line() +
-  labs(x = "Okres rozwoju (miesiące)", y = "Wartość szkód", title = "Rozwój szkód łącznych w czasie") +
-  theme_minimal()
+# Analogiczne podejście można zastosować dla szkód majątkowych i trójkąta łącznego
