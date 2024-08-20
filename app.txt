@@ -1,1 +1,35 @@
-osobowe_increments <- c(na.omit(as.vector(as.matrix(osobowe_increments))))
+library(ggplot2)
+
+# Zakładamy, że masz już przekształcone wartości inkrementalne w formie dataframe
+# np. osobowe_increments, majatkowe_increments, majatkowe_osobowe_increments
+
+# Tworzymy dataframe do wizualizacji
+data <- data.frame(
+  osobowe = as.vector(osobowe_increments),
+  majatkowe = as.vector(majatkowe_increments),
+  majatkowe_osobowe = as.vector(majatkowe_osobowe_increments)
+)
+
+# Wykres rozrzutu: osobowe vs. majatkowe
+ggplot(data, aes(x = osobowe, y = majatkowe)) +
+  geom_point(color = "blue") +
+  labs(title = "Wykres rozrzutu: Szkody osobowe vs Szkody majątkowe", 
+       x = "Szkody osobowe (inkrementy)", 
+       y = "Szkody majątkowe (inkrementy)") +
+  theme_minimal()
+
+# Wykres rozrzutu: osobowe vs. majatkowe_osobowe
+ggplot(data, aes(x = osobowe, y = majatkowe_osobowe)) +
+  geom_point(color = "green") +
+  labs(title = "Wykres rozrzutu: Szkody osobowe vs Szkody majątkowe + osobowe", 
+       x = "Szkody osobowe (inkrementy)", 
+       y = "Szkody majątkowe + osobowe (inkrementy)") +
+  theme_minimal()
+
+# Wykres rozrzutu: majatkowe vs. majatkowe_osobowe
+ggplot(data, aes(x = majatkowe, y = majatkowe_osobowe)) +
+  geom_point(color = "red") +
+  labs(title = "Wykres rozrzutu: Szkody majątkowe vs Szkody majątkowe + osobowe", 
+       x = "Szkody majątkowe (inkrementy)", 
+       y = "Szkody majątkowe + osobowe (inkrementy)") +
+  theme_minimal()
