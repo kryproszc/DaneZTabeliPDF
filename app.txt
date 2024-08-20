@@ -1,16 +1,1 @@
-# Załóżmy, że mamy trzy dataframes: df_osobowe, df_majatkowe, df_majatkowe_osobowe
-
-# Obliczenie wartości inkrementalnych dla każdego trójkąta
-osobowe_increments <- df_osobowe[, -1] - df_osobowe[, -ncol(df_osobowe)]
-majatkowe_increments <- df_majatkowe[, -1] - df_majatkowe[, -ncol(df_majatkowe)]
-majatkowe_osobowe_increments <- df_majatkowe_osobowe[, -1] - df_majatkowe_osobowe[, -ncol(df_majatkowe_osobowe)]
-
-# Obliczenie korelacji między wartościami inkrementalnymi
-cor_osobowe_majatkowe <- cor(as.vector(osobowe_increments), as.vector(majatkowe_increments))
-cor_osobowe_majatkowe_osobowe <- cor(as.vector(osobowe_increments), as.vector(majatkowe_osobowe_increments))
-cor_majatkowe_majatkowe_osobowe <- cor(as.vector(majatkowe_increments), as.vector(majatkowe_osobowe_increments))
-
-# Wyświetlenie wyników korelacji
-cor_osobowe_majatkowe
-cor_osobowe_majatkowe_osobowe
-cor_majatkowe_majatkowe_osobowe
+osobowe_increments <- c(na.omit(as.vector(as.matrix(osobowe_increments))))
