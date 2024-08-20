@@ -1,20 +1,37 @@
+# Załaduj biblioteki ggplot2 i gridExtra
+library(ggplot2)
+library(gridExtra)
+
+# Tworzymy dataframe do wizualizacji z odpowiednimi nazwami kolumn
 data <- data.frame(
   osobowe = as.vector(osobowe_increments),
   majatkowe = as.vector(majatkowe_increments),
   paid6 = as.vector(majatkowe_osobowe_increments)
 )
 
-# Przekształcamy dane na format długi (long format), aby móc łatwo użyć facetowania
-data_long <- reshape2::melt(data, id.vars = NULL)
+# Wykres 1: Szkody osobowe vs Paid (6)
+p1 <- ggplot(data, aes(x = osobowe, y = paid6)) +
+  geom_point(color = "blue") +
+  labs(title = "Szkody osobowe vs Paid (6)", 
+       x = "Szkody osobowe (inkrementy)", 
+       y = "Paid (6) (inkrementy)") +
+  theme_minimal()
 
-# Tworzymy wykresy rozrzutu dla wszystkich trzech zależności obok siebie
-ggplot(data_long, aes(x = value, y = paid6, color = variable)) +
-  geom_point() +
-  facet_wrap(~variable, scales = "free", labeller = labeller(variable = c("osobowe" = "Szkody osobowe vs Paid (6)", 
-                                                                          "majatkowe" = "Szkody majątkowe vs Paid (6)", 
-                                                                          "paid6" = "Paid (6)"))) +
-  labs(title = "Wykresy rozrzutu dla różnych typów szkód", 
-       x = "Inkrementy szkód", 
-       y = "Paid (6) (Inkrementy)") +
-  theme_minimal() +
-  theme(legend.position = "none")
+# Wykres 2: Szkody majątkowe vs Paid (6)
+p2 <- ggplot(data, aes(x = majatkowe, y = paid6)) +
+  geom_point(color = "red") +
+  labs(title = "Szkody majątkowe vs Paid (6)", 
+       x = "Szkody majątkowe (inkrementy)", 
+       y = "Paid (6) (inkrementy)") +
+  theme_minimal()
+
+# Wykres 3: Szkody osobowe vs Szkody majątkowe
+p3 <- ggplot(data, aes(x = osobowe, y = majatkowe)) +
+  geom_point(color = "green") +
+  labs(title = "Szkody osobowe vs Szkody majątkowe", 
+       x = "Szkody osobowe (inkrementy)", 
+       y = "Szkody majątkowe (inkrementy)") +
+  theme_minimal()
+
+# Układanie wykresów obok siebie
+grid.arrange(p1, p2, p3, ncol = 3)
