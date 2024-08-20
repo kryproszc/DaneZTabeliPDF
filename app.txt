@@ -1,24 +1,16 @@
-# Załaduj potrzebne biblioteki
-library(ggplot2)
-library(reshape2)
+# Załóżmy, że mamy trzy dataframes: df_osobowe, df_majatkowe, df_majatkowe_osobowe
 
-# Przykład dla szkód osobowych
+# Obliczenie wartości inkrementalnych dla każdego trójkąta
+osobowe_increments <- df_osobowe[, -1] - df_osobowe[, -ncol(df_osobowe)]
+majatkowe_increments <- df_majatkowe[, -1] - df_majatkowe[, -ncol(df_majatkowe)]
+majatkowe_osobowe_increments <- df_majatkowe_osobowe[, -1] - df_majatkowe_osobowe[, -ncol(df_majatkowe_osobowe)]
 
-# Załóżmy, że Twoje dane nazywają się df_osobowe
+# Obliczenie korelacji między wartościami inkrementalnymi
+cor_osobowe_majatkowe <- cor(as.vector(osobowe_increments), as.vector(majatkowe_increments))
+cor_osobowe_majatkowe_osobowe <- cor(as.vector(osobowe_increments), as.vector(majatkowe_osobowe_increments))
+cor_majatkowe_majatkowe_osobowe <- cor(as.vector(majatkowe_increments), as.vector(majatkowe_osobowe_increments))
 
-# Przekształcenie indeksów w nową kolumnę
-df_osobowe$Rok_poczatkowy <- rownames(df_osobowe)
-
-# Przekształcenie dataframe na format długi
-df_osobowe_long <- melt(df_osobowe, id.vars = "Rok_poczatkowy")
-
-# Upewnienie się, że zmienne (kolumny) są traktowane jako zmienne kategoryczne
-df_osobowe_long$variable <- as.factor(df_osobowe_long$variable)
-
-# Tworzenie wykresu dla szkód osobowych
-ggplot(df_osobowe_long, aes(x = variable, y = value, group = Rok_poczatkowy, color = as.factor(Rok_poczatkowy))) +
-  geom_line() +
-  labs(x = "Okres rozwoju (miesiące)", y = "Wartość szkód", title = "Rozwój szkód osobowych w czasie") +
-  theme_minimal()
-
-# Analogiczne podejście można zastosować dla szkód majątkowych i trójkąta łącznego
+# Wyświetlenie wyników korelacji
+cor_osobowe_majatkowe
+cor_osobowe_majatkowe_osobowe
+cor_majatkowe_majatkowe_osobowe
