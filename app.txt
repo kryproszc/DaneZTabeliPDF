@@ -1,40 +1,10 @@
-# Załaduj potrzebne biblioteki
-library(ggplot2)
-library(reshape2)
+Na przedstawionych wykresach, szczególnie tych pokazujących zależność między szkód osobowych a modelem Paid (6) (kolor niebieski) oraz między szkód osobowych a majątkowych (kolor zielony), można zauważyć interesujący wzorzec. W dolnej części wykresów punkty są ułożone bardzo ściśle, tworząc niemal liniowy „wężyk”, podczas gdy w górnej części punkty stają się bardziej rozproszone.
 
-# Sprawdzenie struktury danych
-head(paid_triangle)
+W przypadku wykresu przedstawiającego zależność między szkód osobowych a modelem Paid (6), ściśle ułożone punkty w dolnej części wykresu, gdzie wartości inkrementalne są stosunkowo niskie, mogą wynikać z tego, że na wczesnych etapach rozwoju szkód (lub dla mniejszych szkód) procesy likwidacji szkód osobowych (w tym zadośćuczynień) oraz majątkowych przebiegają bardziej systematycznie i przewidywalnie. W efekcie dynamika szkód osobowych, które zawierają zadośćuczynienia, oraz modelu Paid (6), który obejmuje szkody osobowe, majątkowe i dodatkowe elementy, może być zbliżona w tych okresach, co prowadzi do bardziej ściśle ułożonych punktów. To wyjaśnia umiarkowaną korelację (0.631) między tymi zmiennymi, gdzie początkowo podobne procesy dają bardziej spójne wyniki.
 
-# Krok 2: Ekstrakcja danych sprzed 2008 roku (zakładając, że dane przed 2008 to pierwsze 17 wierszy)
-pre_2008 <- paid_triangle[1:17, ]
+Natomiast w górnej części wykresu, gdzie wartości inkrementalne są wyższe, punkty stają się bardziej rozproszone. To rozproszenie może być spowodowane kilkoma czynnikami. Po pierwsze, w miarę wzrostu wartości szkód pojawia się więcej zmiennych wpływających na proces likwidacji, co zwiększa zmienność wyników. Po drugie, model Paid (6) zawiera dodatkowe elementy, które mogą wprowadzać większe różnice w późniejszych etapach, gdy wartości inkrementalne są wyższe. Po trzecie, zróżnicowanie w obsłudze bardziej skomplikowanych szkód, szczególnie zadośćuczynień, może prowadzić do większego rozproszenia punktów na wykresie. Wysoka korelacja (0.996) między szkód majątkowych a modelem Paid (6) potwierdza, że to właśnie inne elementy zawarte w Paid (6) są głównym czynnikiem rozproszenia, które obserwujemy przy wyższych wartościach.
 
-# Krok 3: Analiza trendów sprzed 2008 roku
-# Obliczanie wartości inkrementalnych dla każdej kolumny
-pre_2008_increments <- diff(as.matrix(pre_2008), lag = 1)
+Podobny wzorzec można zaobserwować na wykresie przedstawiającym zależność między szkód osobowych a majątkowych (z zadośćuczynieniami). W dolnej części wykresu punkty są ułożone ściśle, co może wynikać z bardziej przewidywalnego i jednolitego przebiegu likwidacji szkód na wczesnych etapach. Jednak w górnej części, gdzie wartości inkrementalne są wyższe, punkty stają się bardziej rozproszone. Może to być wynikiem różnych dynamik rozwoju szkód osobowych, w tym zadośćuczynień, oraz majątkowych. Zadośćuczynienia, które są częścią szkód osobowych, mogą wprowadzać dodatkową zmienność, szczególnie w późniejszych etapach, kiedy kwoty te mogą znacząco wzrastać i różnić się od bardziej przewidywalnych szkód majątkowych. Umiarkowana korelacja (0.565) między szkód osobowych a majątkowych sugeruje, że chociaż istnieje pewna współzależność, to różne czynniki wpływają na rozwój tych szkód w różnych momentach, co prowadzi do większego rozproszenia w późniejszych etapach.
 
-# Sprawdzenie, czy istnieją wartości nie-NA w danych przed 2008
-if (sum(!is.na(pre_2008_increments)) > 0) {
-  # Krok 4: Ekstrapolacja trendów na lata po 2008 roku
-  # Proste modelowanie liniowe na podstawie danych sprzed 2008 roku
-  rownames(pre_2008_increments) <- 2:nrow(pre_2008)  # Dodanie nazw wierszy do modelu
-  model <- lm(pre_2008_increments ~ as.numeric(rownames(pre_2008_increments)))
-  
-  # Prognozowanie wartości dla lat po 2008 roku
-  predicted_increments <- predict(model, newdata = data.frame(rownames(paid_triangle[18:nrow(paid_triangle), ])))
-  
-  # Krok 5: Porównanie alternatywnego trójkąta z rzeczywistymi danymi
-  # Wyciągnięcie rzeczywistych danych po 2008 roku
-  post_2008_real <- as.matrix(paid_triangle[18:nrow(paid_triangle), ])
-  
-  # Obliczenie różnic między prognozowanymi a rzeczywistymi wartościami
-  differences <- post_2008_real - predicted_increments
-  
-  # Wizualizacja różnic
-  matplot(differences, type = "l", main = "Różnice między prognozowanymi a rzeczywistymi wartościami po 2008 roku")
-  
-  # Krok 6: Analiza wyników i wnioski
-  summary(differences)
-  
-} else {
-  print("Brak danych do dopasowania modelu.")
-}
+Podsumowanie:
+Wzorzec ściśle ułożonych punktów w dolnej części wykresów, który następnie przechodzi w większe rozproszenie, może wskazywać na to, że w początkowych fazach likwidacji szkód (szczególnie mniejszych) procesy są bardziej przewidywalne i jednolite. Natomiast w miarę wzrostu wartości szkód oraz ich złożoności, w tym wprowadzenia zadośćuczynień, pojawia się większa zmienność, co skutkuje rozproszeniem punktów. W modelu Paid (6), który obejmuje zarówno szkody osobowe z zadośćuczynieniami, jak i majątkowe, rozproszenie to może być bardziej widoczne, sugerując, że różne komponenty tego modelu zaczynają w większym stopniu wpływać na wyniki w późniejszych etapach rozwoju szkód.
