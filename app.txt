@@ -1,37 +1,30 @@
-# Załaduj biblioteki ggplot2 i gridExtra
+# Załaduj potrzebne biblioteki
 library(ggplot2)
-library(gridExtra)
+library(reshape2)
 
-# Tworzymy dataframe do wizualizacji z odpowiednimi nazwami kolumn
-data <- data.frame(
-  osobowe = as.vector(osobowe_increments),
-  majatkowe = as.vector(majatkowe_increments),
-  paid6 = as.vector(majatkowe_osobowe_increments)
-)
+# Załóżmy, że trójkąt Paid (6) jest zapisany w dataframe 'paid_triangle'
+# Kolumny to lata rozwoju, a wiersze to kolejne lata (np. 1991, 1992, ..., 2024)
+head(paid_triangle)
 
-# Wykres 1: Szkody osobowe vs Paid (6)
-p1 <- ggplot(data, aes(x = osobowe, y = paid6)) +
-  geom_point(color = "blue") +
-  labs(title = "Szkody osobowe vs Paid (6)", 
-       x = "Szkody osobowe (inkrementy)", 
-       y = "Paid (6) (inkrementy)") +
-  theme_minimal()
+# Krok 2: Ekstrakcja danych przed 2008 rokiem
+pre_2008 <- paid_triangle[paid_triangle$Year < 2008, ]
 
-# Wykres 2: Szkody majątkowe vs Paid (6)
-p2 <- ggplot(data, aes(x = majatkowe, y = paid6)) +
-  geom_point(color = "red") +
-  labs(title = "Szkody majątkowe vs Paid (6)", 
-       x = "Szkody majątkowe (inkrementy)", 
-       y = "Paid (6) (inkrementy)") +
-  theme_minimal()
+# Krok 3: Analiza trendów sprzed 2008 roku
+pre_2008_increments <- diff(as.matrix(pre_2008), lag = 1)
 
-# Wykres 3: Szkody osobowe vs Szkody majątkowe
-p3 <- ggplot(data, aes(x = osobowe, y = majatkowe)) +
-  geom_point(color = "green") +
-  labs(title = "Szkody osobowe vs Szkody majątkowe", 
-       x = "Szkody osobowe (inkrementy)", 
-       y = "Szkody majątkowe (inkrementy)") +
-  theme_minimal()
+# Krok 4: Ekstrapolacja trendów na lata po 2008 roku
+model <- lm(pre_2008_increments ~ rownames(pre_2008))
+predicted_increments <- predict(model, newdata = data.frame(rownames(paid_triangle[paid_triangle$Year >= 2008, ])))
 
-# Układanie wykresów obok siebie
-grid.arrange(p1, p2, p3, ncol = 3)
+# Zastosowanie prognozowanych wartości do lat po 2008 roku
+predicted_triangle <- rbind(pre_2008, predicted_increments)
+
+# Krok 5: Porównanie alternatywnego trójkąta z rzeczywistymi danymi
+post_2008_real <- paid_triangle[paid_triangle$Year >= 2008, ]
+differences <- post_2008_real - predicted_increments
+
+# Wizualizacja różnic
+plot(differences, main = "Różnice między prognozowanymi a rzeczywistymi wartościami po 2008 roku")
+
+# Krok 6: Analiza wyników i wnioski
+summary(differences)
