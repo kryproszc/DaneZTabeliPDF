@@ -1,35 +1,20 @@
-library(ggplot2)
-
-# Zakładamy, że masz już przekształcone wartości inkrementalne w formie dataframe
-# np. osobowe_increments, majatkowe_increments, majatkowe_osobowe_increments
-
-# Tworzymy dataframe do wizualizacji
 data <- data.frame(
   osobowe = as.vector(osobowe_increments),
   majatkowe = as.vector(majatkowe_increments),
-  majatkowe_osobowe = as.vector(majatkowe_osobowe_increments)
+  paid6 = as.vector(majatkowe_osobowe_increments)
 )
 
-# Wykres rozrzutu: osobowe vs. majatkowe
-ggplot(data, aes(x = osobowe, y = majatkowe)) +
-  geom_point(color = "blue") +
-  labs(title = "Wykres rozrzutu: Szkody osobowe vs Szkody majątkowe", 
-       x = "Szkody osobowe (inkrementy)", 
-       y = "Szkody majątkowe (inkrementy)") +
-  theme_minimal()
+# Przekształcamy dane na format długi (long format), aby móc łatwo użyć facetowania
+data_long <- reshape2::melt(data, id.vars = NULL)
 
-# Wykres rozrzutu: osobowe vs. majatkowe_osobowe
-ggplot(data, aes(x = osobowe, y = majatkowe_osobowe)) +
-  geom_point(color = "green") +
-  labs(title = "Wykres rozrzutu: Szkody osobowe vs Szkody majątkowe + osobowe", 
-       x = "Szkody osobowe (inkrementy)", 
-       y = "Szkody majątkowe + osobowe (inkrementy)") +
-  theme_minimal()
-
-# Wykres rozrzutu: majatkowe vs. majatkowe_osobowe
-ggplot(data, aes(x = majatkowe, y = majatkowe_osobowe)) +
-  geom_point(color = "red") +
-  labs(title = "Wykres rozrzutu: Szkody majątkowe vs Szkody majątkowe + osobowe", 
-       x = "Szkody majątkowe (inkrementy)", 
-       y = "Szkody majątkowe + osobowe (inkrementy)") +
-  theme_minimal()
+# Tworzymy wykresy rozrzutu dla wszystkich trzech zależności obok siebie
+ggplot(data_long, aes(x = value, y = paid6, color = variable)) +
+  geom_point() +
+  facet_wrap(~variable, scales = "free", labeller = labeller(variable = c("osobowe" = "Szkody osobowe vs Paid (6)", 
+                                                                          "majatkowe" = "Szkody majątkowe vs Paid (6)", 
+                                                                          "paid6" = "Paid (6)"))) +
+  labs(title = "Wykresy rozrzutu dla różnych typów szkód", 
+       x = "Inkrementy szkód", 
+       y = "Paid (6) (Inkrementy)") +
+  theme_minimal() +
+  theme(legend.position = "none")
