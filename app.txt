@@ -3,28 +3,36 @@ library(ggplot2)
 library(reshape2)
 
 # Załóżmy, że trójkąt Paid (6) jest zapisany w dataframe 'paid_triangle'
-# Kolumny to lata rozwoju, a wiersze to kolejne lata (np. 1991, 1992, ..., 2024)
+# Kolumny to lata rozwoju (X3, X4, X5, ...), a wiersze to kolejne roczniki
+
+# Sprawdź pierwsze kilka wierszy, aby upewnić się, że dane są prawidłowo wczytane
 head(paid_triangle)
 
-# Krok 2: Ekstrakcja danych przed 2008 rokiem
-pre_2008 <- paid_triangle[paid_triangle$Year < 2008, ]
+# Krok 2: Ekstrakcja danych sprzed 2008 roku (zakładając, że dane przed 2008 to pierwsze 17 wierszy)
+pre_2008 <- paid_triangle[1:17, ]
 
 # Krok 3: Analiza trendów sprzed 2008 roku
+# Obliczanie wartości inkrementalnych dla każdej kolumny
 pre_2008_increments <- diff(as.matrix(pre_2008), lag = 1)
 
 # Krok 4: Ekstrapolacja trendów na lata po 2008 roku
-model <- lm(pre_2008_increments ~ rownames(pre_2008))
-predicted_increments <- predict(model, newdata = data.frame(rownames(paid_triangle[paid_triangle$Year >= 2008, ])))
+# Proste modelowanie liniowe na podstawie danych sprzed 2008 roku
+rownames(pre_2008_increments) <- 2:nrow(pre_2008)  # Dodanie nazw wierszy do modelu
+model <- lm(pre_2008_increments ~ as.numeric(rownames(pre_2008_increments)))
+predicted_increments <- predict(model, newdata = data.frame(rownames(paid_triangle[18:nrow(paid_triangle), ])))
 
-# Zastosowanie prognozowanych wartości do lat po 2008 roku
-predicted_triangle <- rbind(pre_2008, predicted_increments)
+# Połączenie danych sprzed 2008 z prognozowanymi wartościami dla lat po 2008 roku
+predicted_triangle <- rbind(pre_2008_increments, predicted_increments)
 
 # Krok 5: Porównanie alternatywnego trójkąta z rzeczywistymi danymi
-post_2008_real <- paid_triangle[paid_triangle$Year >= 2008, ]
+# Wyciągnięcie rzeczywistych danych po 2008 roku
+post_2008_real <- as.matrix(paid_triangle[18:nrow(paid_triangle), ])
+
+# Obliczenie różnic między prognozowanymi a rzeczywistymi wartościami
 differences <- post_2008_real - predicted_increments
 
 # Wizualizacja różnic
-plot(differences, main = "Różnice między prognozowanymi a rzeczywistymi wartościami po 2008 roku")
+matplot(differences, type = "l", main = "Różnice między prognozowanymi a rzeczywistymi wartościami po 2008 roku")
 
 # Krok 6: Analiza wyników i wnioski
 summary(differences)
