@@ -1,15 +1,23 @@
-library(dplyr)
+# Inicjalizacja pliku Excel
+wb <- createWorkbook()
 
-# Krok 1: Filtrowanie wierszy, gdzie druga kolumna zawiera "PZU SA"
-wynik <- df_st_sum6 %>% filter(`...3` == "PZU SA")
+# Symulacja pętli z 4 iteracjami
+for (i in 1:4) {
+  # Tworzenie przykładowej tabeli danych
+  tabela <- data.frame(
+    ID = 1:5,
+    Wartość = rnorm(5)
+  )
+  
+  # Nazwa arkusza na podstawie iteracji
+  sheet_name <- paste("Iteracja", i)
+  
+  # Dodanie nowego arkusza
+  addWorksheet(wb, sheet_name)
+  
+  # Zapisanie tabeli do odpowiedniego arkusza
+  writeData(wb, sheet_name, tabela)
+}
 
-# Krok 2: Przekształcenie odpowiednich kolumn na typ numeryczny
-# Zakładam, że chcesz, aby wszystkie kolumny oprócz pierwszej i drugiej były numeryczne
-# Używamy mutate_at, aby przekształcić wybrane kolumny
-
-# Poniższy kod zakłada, że od 4 kolumny wzwyż mają być liczby
-# (zamiast tego możesz wybrać specyficzne kolumny np. 4:10)
-wynik <- wynik %>% mutate_at(vars(-V1, -`...3`), as.numeric)
-
-# Krok 3: Wyświetlenie wyniku
-print(wynik)
+# Zapisz plik Excel na dysku
+saveWorkbook(wb, "wynik_symulacji.xlsx", overwrite = TRUE)
