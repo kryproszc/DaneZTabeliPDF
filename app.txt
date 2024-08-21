@@ -4,36 +4,49 @@ library(webshot2)
 library(officer)
 library(magrittr)
 
-# Tworzenie nowego dokumentu Word
+# Tworzenie nowego dokumentu Word z orientacją poziomą
 doc <- read_docx()
 
-# Zakładam, że masz listę dataframe'ów lub inny sposób na generowanie danych do map
+# Ustawienie orientacji poziomej dla całego dokumentu
+doc <- doc %>% 
+  body_add_par("", style = "Normal") %>%
+  body_end_section_continuous() %>%
+  body_add_par("", style = "Normal") %>%
+  body_end_section_landscape()
+
+# Przykładowe dane
+n <- 5  # Zakładam, że chcesz wygenerować 5 map
+jednostki_data <- lapply(1:n, function(i) {
+  data.frame(lng = runif(10, 18, 20), lat = runif(10, 50, 52), Value = sample(1:10, 10))
+})
+
+pal <- colorNumeric(palette = "viridis", domain = c(1, 10))
+
+# Generowanie map i dodawanie ich do dokumentu
 for (i in 1:n) {
   # Tworzenie mapy (przykład dla każdej iteracji)
   map <- leaflet(jednostki_data[[i]]) %>%
     addTiles() %>%
     setView(lng = 19.1451, lat = 51.9194, zoom = 6) %>%
-    addPolygons(fillColor = ~ifelse(Value == 0, "transparent", pal(Value)), color = "#BDBDC3", weight = 1,
-                fillOpacity = 0.7, smoothFactor = 0.5,
-                popup = ~paste(JPT_NAZWA_, "<br>", "dddd", ": ", Value)) %>%
-    addLegend(pal = pal, values = ~Value, opacity = 0.7, title = "Skala", position = "bottomright")
+    addCircles(lng = ~lng, lat = ~lat, color = ~pal(Value), radius = 10000,
+               popup = ~paste("Wartość:", Value))
   
-  # Renderowanie mapy jako plik HTML do pamięci
+  # Zapisz mapę jako tymczasowy plik HTML
   html_file <- tempfile(fileext = ".html")
   saveWidget(map, file = html_file, selfcontained = TRUE)
   
-  # Konwersja HTML na obraz PNG
-  img_file <- tempfile(fileext = ".png")
-  webshot2::webshot(html_file, file = img_file, cliprect = "viewport", vwidth = 800, vheight = 600)
-
+  # Konwersja HTML na obraz PNG z użyciem webshot2
+  png_file <- tempfile(fileext = ".png")
+  webshot2::webshot(html_file, file = png_file, cliprect = "viewport", vwidth = 800, vheight = 600)
+  
   # Dodanie obrazu do dokumentu Word
   doc <- doc %>% 
     body_add_par(paste("Mapa jednostek", i), style = "heading 1") %>%
-    body_add_img(src = img_file, width = 6, height = 4)
-
+    body_add_img(src = png_file, width = 7.5, height = 5)
+  
   # Usunięcie tymczasowych plików
   unlink(html_file)
-  unlink(img_file)
+  unlink(png_file)
 }
 
 # Zapisanie dokumentu Word
