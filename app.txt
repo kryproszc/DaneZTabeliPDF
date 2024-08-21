@@ -1,8 +1,9 @@
 library(leaflet)
-library(webshot)
 library(htmlwidgets)
 library(officer)
 library(magrittr)
+library(webshot)
+library(magick)
 
 # Tworzenie nowego dokumentu Word
 doc <- read_docx()
@@ -18,16 +19,19 @@ for (i in 1:n) {
                 popup = ~paste(JPT_NAZWA_, "<br>", "dddd", ": ", Value)) %>%
     addLegend(pal = pal, values = ~Value, opacity = 0.7, title = "Skala", position = "bottomright")
   
-  # Zapisz mapę jako obiekt HTML w pamięci
-  html_obj <- htmltools::as.tags(map)
+  # Zapisz mapę jako obiekt HTML do zmiennej
+  temp_html <- htmlwidgets::saveWidget(map, file = NULL, selfcontained = TRUE)
   
-  # Użyj webshot do konwersji obiektu HTML do obrazka bez zapisywania go na dysku
-  img <- webshot::webshot(html_obj, cliprect = "viewport", vwidth = 800, vheight = 600, file = NULL)
+  # Użyj webshot do konwersji obiektu HTML bez zapisu na dysk
+  img <- webshot::webshot(temp_html, selector = "body", vwidth = 800, vheight = 600, delay = 0.5)
 
-  # Dodanie mapy do dokumentu Word bezpośrednio z obiektu
+  # Przetwarzanie obrazu do formatu magick
+  img_magick <- magick::image_read(img)
+  
+  # Dodanie obrazu do dokumentu Word
   doc <- doc %>% 
     body_add_par(paste("Mapa jednostek", i), style = "heading 1") %>%
-    body_add_img(src = img, width = 6, height = 4)
+    body_add_img(src = img_magick, width = 6, height = 4, style = "centered")
 }
 
 # Zapisanie dokumentu Word
