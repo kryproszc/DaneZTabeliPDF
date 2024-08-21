@@ -1,10 +1,8 @@
 library(leaflet)
 library(htmlwidgets)
-library(webshot)
+library(webshot2)
 library(officer)
 library(magrittr)
-library(png)
-library(grid)
 
 # Tworzenie nowego dokumentu Word
 doc <- read_docx()
@@ -20,28 +18,22 @@ for (i in 1:n) {
                 popup = ~paste(JPT_NAZWA_, "<br>", "dddd", ": ", Value)) %>%
     addLegend(pal = pal, values = ~Value, opacity = 0.7, title = "Skala", position = "bottomright")
   
-  # Zapisz mapę jako tymczasowy plik HTML
+  # Renderowanie mapy jako plik HTML do pamięci
   html_file <- tempfile(fileext = ".html")
   saveWidget(map, file = html_file, selfcontained = TRUE)
   
-  # Zapisz mapę jako obrazek PNG w pamięci
-  png_file <- tempfile(fileext = ".png")
-  webshot(html_file, file = png_file, cliprect = "viewport", vwidth = 800, vheight = 600)
+  # Konwersja HTML na obraz PNG
+  img_file <- tempfile(fileext = ".png")
+  webshot2::webshot(html_file, file = img_file, cliprect = "viewport", vwidth = 800, vheight = 600)
 
-  # Odczytaj obrazek PNG z pliku do obiektu R
-  img <- readPNG(png_file)
-  
-  # Utwórz rasterGrob z obrazka
-  img_grob <- rasterGrob(img, interpolate = TRUE)
-
-  # Dodanie mapy do dokumentu Word jako obraz
+  # Dodanie obrazu do dokumentu Word
   doc <- doc %>% 
     body_add_par(paste("Mapa jednostek", i), style = "heading 1") %>%
-    body_add_img(src = png_file, width = 6, height = 4, style = "centered")
+    body_add_img(src = img_file, width = 6, height = 4)
 
   # Usunięcie tymczasowych plików
   unlink(html_file)
-  unlink(png_file)
+  unlink(img_file)
 }
 
 # Zapisanie dokumentu Word
