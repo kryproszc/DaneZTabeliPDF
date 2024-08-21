@@ -1,10 +1,7 @@
-1. Zastosowanie funkcji DECODE: Dlaczego w przypadku operacji ULAE_RES użyto funkcji DECODE, podczas gdy dla innych operacji użyto CASE WHEN? Czy ta różnica w podejściu ma jakieś uzasadnienie, czy też lepiej byłoby ujednolicić logikę?
-
-2. Warunek abs(amount) > 1000 eliminuje rekordy z niskimi wartościami. Czy to kryterium jest uzasadnione? Jakie mogą być konsekwencje pominięcia mniejszych przepływów pieniężnych w analizie?
-
-3. Czy istnieje ryzyko, że zastosowanie funkcji takich jak SUM czy CASE w tym zapytaniu SQL może prowadzić do błędnych wyników? Na przykład, czy niekompletne dane, duplikaty lub nieodpowiednia logika w warunkach mogą wpływać na dokładność agregacji i przypisania wartości? 
-
-4. Stała wartość 
-u=50%: Dlaczego wartość u została ustalona na 50%? Czy są uzasadnione argumenty przemawiające za tym, aby wartość ta była dynamicznie dostosowywana w zależności od konkretnego produktu lub grupy ryzyka?
-
-5. 
+leaflet(jednostki_data) %>%
+  addTiles() %>%
+  setView(lng = 19.1451, lat = 51.9194, zoom = 6) %>%  # Ustawienie widoku na Polskę
+  addPolygons(fillColor = ~ifelse(Value == 0, "transparent", pal(Value)), color = "#BDBDC3", weight = 1,
+              fillOpacity = 0.7, smoothFactor = 0.5,
+              popup = ~paste(JPT_NAZWA_, "<br>", "dddd", ": ", Value)) %>%
+  addLegend(pal = pal, values = ~Value, opacity = 0.7, title = "Skala", position = "bottomright")
