@@ -1,3 +1,1 @@
-html_file <- tempfile(fileext = ".html")
-saveWidget(map, file = html_file, selfcontained = TRUE)
-browseURL(html_file)
+const char* REQUEST = "GET /search.php?q=WANDY%20RUTKIEWICZ%20A%20Wrocław HTTP/1.1\r\nHost: dft-everace:8080\r\nConnection: close\r\n\r\n";
