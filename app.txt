@@ -1,1 +1,10 @@
 AL. TADEUSZA KOŚCIUSZKI 17;90-418;ŁÓDŹ;łódzkie;Polska
+15A;86-302;ROZGARTY;kujawsko-pomorskie;Polska
+LUDWIKA ZAMENHOFA 5/10;31-025;KRAKÓW;małopolskie;Polska
+UL. SPACEROWA 11;09-500;GOSTYNIN;mazowieckie;Polska
+WIŚNIOWA 38/1A;02-520;WARSZAWA;mazowieckie;Polska
+Aleja Solidarności 63;00-240;Warszawa;mazowieckie;Polska
+BRAK 0;77-207;PIASZCZYNA;pomorskie;Polska;
+GEN. DE GAULLE'A CHARLESA 33;43-100;TYCHY;śląskie
+Os. Stefana Batorego 33;60-687;Poznań;wielkopolskie;Polska
+LOMPY JÓZEFA 15E;40-038;KATOWICE;śląskie;Polska
