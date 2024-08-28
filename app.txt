@@ -1,7 +1,1 @@
-W nawiązaniu do odpowiedzi z X prosimy o wyjaśnienie, dlaczego inflacja nie została uwzględniona w wyliczeniach rezerw ALAE. W poprzedniej metodzie opartej na c*IBNR_Szkodowy inflacja była uwzględniana w ramach IBNR_Szkodowy. Po zmianie metody obliczeniowej opartej na trójkątach Paid i Incurred, inflacja nie jest uwzględniana w żadnym HRG.
-
-Prosimy o uzasadnienie, dlaczego w nowej metodzie pominięto inflację. Czy przeprowadzono analizy potwierdzające zasadność takiego podejścia? Jeśli tak, prosimy o ich udostępnienie. Jeśli nie, prosimy o uzasadnienie, dlaczego takie analizy nie zostały wykonane.
-
-____________
-
-Czy przeprowadzono analizy dotyczące zastosowania alternatywnych metod do wyznaczania rezerw szkodowych (Claims Reserves) i rezerw ALAE, takich jak Generalized Additive Models (GAM), metoda Bornhuetter-Ferguson, czy metody symulacyjne (np. bootstrap, Monte Carlo)? Czy oceniono zasadność stosowania metody Chain Ladder w porównaniu do tych podejść? Jeśli takie analizy zostały wykonane, prosimy o udostępnienie wyników porównawczych. Jeśli nie, prosimy o uzasadnienie decyzji o stosowaniu wyłącznie metody Chain Ladder.
+Dlaczego nie dla wszystkich HRG została uwzględniona inflacja w wyliczeniach rezerw szkodowych Claim_res. Jakie były przesłanki nie uwzględnienia inflacji w poszczególnych HRG. Czy zostały przeprowadzone analizy porównujące rezerwy z uwzględnieniem inflacji i bez jej uwzględnienia. Prosimy o ustosunkowanie się do każdego HRG z osobna
