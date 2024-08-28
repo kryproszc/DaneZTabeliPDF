@@ -1,10 +1,26 @@
-AL. TADEUSZA KOŚCIUSZKI 17;90-418;ŁÓDŹ;łódzkie;Polska
-15A;86-302;ROZGARTY;kujawsko-pomorskie;Polska
-LUDWIKA ZAMENHOFA 5/10;31-025;KRAKÓW;małopolskie;Polska
-UL. SPACEROWA 11;09-500;GOSTYNIN;mazowieckie;Polska
-WIŚNIOWA 38/1A;02-520;WARSZAWA;mazowieckie;Polska
-Aleja Solidarności 63;00-240;Warszawa;mazowieckie;Polska
-BRAK 0;77-207;PIASZCZYNA;pomorskie;Polska;
-GEN. DE GAULLE'A CHARLESA 33;43-100;TYCHY;śląskie
-Os. Stefana Batorego 33;60-687;Poznań;wielkopolskie;Polska
-LOMPY JÓZEFA 15E;40-038;KATOWICE;śląskie;Polska
+SZOSA CHEŁMIŃSKA 84/86;87-100;TORUŃ;kujawsko-pomorskie;Polska
+UL. PARAFIALNA 32/34;52-233;WROCŁAW;dolnośląskie;Polska
+OS. PÓŁNOC 10;26-060;CHĘCINY;świętokrzyskie;Polska
+PARTYNICKA 27C;53-031;WROCŁAW;dolnośląskie;Polska
+1 MAJA 7;62-510;KONIN;wielkopolskie;Polska
+ROŹDZIEŃSKIEGO 188B;40-203;KATOWICE;śląskie;Polska
+UL. GRANICZNA 25A;40-017;KATOWICE;śląskie;Polska
+ŚW. TRÓJCY 28/5;85-224;BYDGOSZCZ;kujawsko-pomorskie;Polska
+UL. ŚWIĘTOCHOWSKIEGO 16;78-200;BIAŁOGARD;zachodniopomorskie;Polska
+AL. 1000-LECIA 17;32-300;OLKUSZ;małopolskie;Polska
+AL. DYGASIŃSKIEGO ADOLFA 5B;30-820;KRAKÓW;małopolskie;Polska
+PL. PIASTOWSKI 23;89-600;CHOJNICE;pomorskie;Polska
+TRAKT ŚW. WOJCIECHA 29;80-044;GDAŃSK;pomorskie;Polska
+OS. PARDAŁÓWKA 1;34-500;ZAKOPANE;małopolskie
+POd LIPAMI 1B;41-940;PIEKARY ŚLĄSKIE;śląskie
+487;34-231;JUSZCZYN;małopolskie;Polska
+KARD. STEFANA WYSZYŃSKIEGO 8;89-600;CHOJNICE;pomorskie;Polska
+rtm. w. pileckiego 4/13;18-300;ZAMBRÓW;podlaskie;Polska
+PL. KONSTYTUCJI 3 MAJA 2A;32-300;OLKUSZ;małopolskie
+ADM. K. ARCISZEWSKIEGO 1;05-825;GRODZISK MAZOWIECKI;mazowieckie;Polska
+PL. KACZY RYNEK 32;68-200;ŻARY;lubuskie;Polska
+PL. 11 LISTOPADA 2;27-100;IŁŻA;mazowieckie;Polska
+49E;26-052;BOLECHOWICE;świętokrzyskie;Polska
+ŚW.BARBARY 46;32-020;WIELICZKA;małopolskie;Polska
+Pl. I. Daszyńskiego 5;45-059;Opole;opolskie;Polska
+Gen. Hallera;41-709;Ruda Śląska;śląskie;Polska
