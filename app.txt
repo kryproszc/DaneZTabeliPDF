@@ -1,3 +1,7 @@
-Czy zmiana metodologii liczenia rezerw ALAE z podejścia opartego na c*IBNR_Szkodowy na metodę opartą na trójkątach Paid i Incurred miała wpływ na adekwatność rezerw? Jakie różnice zaobserwowano w wynikach po zastosowaniu nowej metody?
+W nawiązaniu do odpowiedzi z X prosimy o wyjaśnienie, dlaczego inflacja nie została uwzględniona w wyliczeniach rezerw ALAE. W poprzedniej metodzie opartej na c*IBNR_Szkodowy inflacja była uwzględniana w ramach IBNR_Szkodowy. Po zmianie metody obliczeniowej opartej na trójkątach Paid i Incurred, inflacja nie jest uwzględniana w żadnym HRG.
 
-Czy zostały przeprowadzone testy wpływu tej zmiany metodologii na adekwatność rezerw na danych z lat poprzednich w celu porównania wyników? Jeśli tak, proszę o udostępnienie wyników tych analiz. Jeśli takich testów nie przeprowadzono, proszę o uzasadnienie.
+Prosimy o uzasadnienie, dlaczego w nowej metodzie pominięto inflację. Czy przeprowadzono analizy potwierdzające zasadność takiego podejścia? Jeśli tak, prosimy o ich udostępnienie. Jeśli nie, prosimy o uzasadnienie, dlaczego takie analizy nie zostały wykonane.
+
+____________
+
+Czy przeprowadzono analizy dotyczące zastosowania alternatywnych metod do wyznaczania rezerw szkodowych (Claims Reserves) i rezerw ALAE, takich jak Generalized Additive Models (GAM), metoda Bornhuetter-Ferguson, czy metody symulacyjne (np. bootstrap, Monte Carlo)? Czy oceniono zasadność stosowania metody Chain Ladder w porównaniu do tych podejść? Jeśli takie analizy zostały wykonane, prosimy o udostępnienie wyników porównawczych. Jeśli nie, prosimy o uzasadnienie decyzji o stosowaniu wyłącznie metody Chain Ladder.
