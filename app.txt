@@ -1,5 +1,1 @@
-Adres ubezpieczonego obiektu - Ulica i numer
-Adres ubezpieczonego obiektu - Kod pocztowy
-Adres ubezpieczonego obiektu - Miasto
-Adres ubezpieczonego obiektu - Województwo
-Adres ubezpieczonego obiektu - Kraj
+https://www.docker.com/products/docker-desktop/
