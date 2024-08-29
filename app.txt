@@ -23,4 +23,9 @@ PL. 11 LISTOPADA 2;27-100;IŁŻA;mazowieckie;Polska
 49E;26-052;BOLECHOWICE;świętokrzyskie;Polska
 ŚW.BARBARY 46;32-020;WIELICZKA;małopolskie;Polska
 Pl. I. Daszyńskiego 5;45-059;Opole;opolskie;Polska
+
+pokazalo ulice o nie ma numeru
 Gen. Hallera;41-709;Ruda Śląska;śląskie;Polska
+
+
+W odpowiedzi Zakładu na pkt 8 wezwania zespołu inspekcyjnego z 1 sierpnia 2024 roku Zakład wskazał przyczyny wpływające na brak adekwatności w danych liniach biznesowych (tj. brak adekwatności występujący w kolumnie L („Run-off”) zakładki „Razem” pliku „Badanie adekwatności_szk_standard.xlsx”). Proszę o informacje, czy Zakład przeprowadził analizy weryfikujące podane przyczyny – analiz, w których wyeliminował powyższe przyczyny w badaniu adekwatności, tj. najbardziej wpływowe szkody w danej linii biznesowej, mające negatywny wpływ na wyniki adekwatności. Jeśli tak, proszę o przedstawienie dokumentacji tych analiz
