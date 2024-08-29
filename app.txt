@@ -101,3 +101,32 @@ Pl. I. Daszyńskiego 5;45-059;Opole;opolskie;Polska
 
 pokazalo ulice o nie ma numeru
 Gen. Hallera;41-709;Ruda Śląska;śląskie;Polska
+
+
+--------
+po usunieciu /7 pokazuje okej
+JANA PAWŁA II 4/7;41-100;SIEMIANOWICE ŚLĄSKIE;ŚLĄSKIE;POLSKA
+
+po usunięciu /134 jest ok
+Witolińska 5/134;04-185;WARSZAWA;MAZOWIECKIE;POLSKA
+
+po usunieciu /13 jest ok
+po usunieciu os. tez jest ok
+OS.JAGIELLOŃSKIE 10/13;62-200;GNIEZNO;WIELKOPOLSKIE;POLSKA
+
+są budynki szeregowe i pokazuje budynek obok w szeregu
+ks. Henryka Renka 63;42-603;TARNOWSKIE GÓRY;ŚLĄSKIE;POLSKA
+
+jest okey, nawet jak usuniuemy kpt.
+KPT. JÓZEFA KURKA-HALNEGO 6;28-300;JĘDRZEJÓW;ŚWIĘTOKRZYSKIE;POLSKA
+
+pokazuje znow autostrade
+aleja Walentego Roździeńskiego 86A/161;40-203;KATOWICE
+a po usunieciu kodu pocztowego jest ok
+aleja Walentego Roździeńskiego 86A/161;KATOWICE
+
+Nasz pokazuje jak jest ok a google zle pokazuje
+DR. JUDYMA 18;58-309;WAŁBRZYCH;DOLNOŚLĄSKIE;POLSKA
+
+PRZETESTUJ TEN ADRES
+WĘGRZCE WIELKIE 614;32-002;WĘGRZCE WIELKIE;MAŁOPOLSKIE;POLSKA
