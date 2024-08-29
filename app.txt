@@ -27,5 +27,4 @@ Pl. I. Daszyńskiego 5;45-059;Opole;opolskie;Polska
 pokazalo ulice o nie ma numeru
 Gen. Hallera;41-709;Ruda Śląska;śląskie;Polska
 
-
-W odpowiedzi Zakładu na pkt 8 wezwania zespołu inspekcyjnego z 1 sierpnia 2024 roku Zakład wskazał przyczyny wpływające na brak adekwatności w danych liniach biznesowych (tj. brak adekwatności występujący w kolumnie L („Run-off”) zakładki „Razem” pliku „Badanie adekwatności_szk_standard.xlsx”). Proszę o informacje, czy Zakład przeprowadził analizy weryfikujące podane przyczyny – analiz, w których wyeliminował powyższe przyczyny w badaniu adekwatności, tj. najbardziej wpływowe szkody w danej linii biznesowej, mające negatywny wpływ na wyniki adekwatności. Jeśli tak, proszę o przedstawienie dokumentacji tych analiz
+Proszę o informację, czy Zakład przeprowadził analizy weryfikujące przyczyny braku adekwatności wskazane w odpowiedzi na pkt 8 wezwania zespołu inspekcyjnego z 1 sierpnia 2024 roku. Chodzi o analizy, w których wyeliminowano te przyczyny, poprzez wyłączenie z badania adekwatności najbardziej wpływowych szkód w danej linii biznesowej, które miały negatywny wpływ na wyniki adekwatności w kolumnie L („Run-off”) zakładki „Razem” pliku „Badanie adekwatności_szk_standard.xlsx”. Jeśli takie analizy zostały przeprowadzone, proszę o przedstawienie dokumentacji tych analiz.
