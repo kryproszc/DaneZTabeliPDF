@@ -1,1 +1,1 @@
-https://www.docker.com/products/docker-desktop/
+https://github.com/docker-archive/toolbox/releases/download/v19.03.1/DockerToolbox-19.03.1.exe
