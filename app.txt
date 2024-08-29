@@ -25,8 +25,8 @@ ale zmieniajac na
 ROŹDZIEŃSKIEGO 188B;KATOWICE
 pokazuje budynek po przeciwnej stronie tego co pokazuje nam google
 
-
-
+czy wg istnieje
+ks. Andrzeja Kordeckiego 10a;99-300;Kutno;łódzkie;Polska
 jest ok
 UL. GRANICZNA 25A;40-017;KATOWICE;śląskie;Polska
 
@@ -141,3 +141,15 @@ tylko trzeba przestawic kod pocztowy i jest ok
 14;GNIAZDOWICE;32-100;MAŁOPOLSKIE;POLSKA
 
 Klimontów 73;28-340;Klimontów;świętokrzyskie;Polska
+
+MAKOCICE 1C;MAKOCICE 1C;32-100;małopolskie;PL
+OPATKOWICE 202;OPATKOWICE 202;32-100;małopolskie;pl
+
+to jest ok
+PRZEZWODY 33;PROSZOWICE;32-100;małopolskie;PL
+WOLWANOWICE;WOLWANOWICE;32-100;małopolskie;PL
+
+problemy
+PRZEZWODY 51;PRZEZWODY 51;32-100;małopolskie;PL
+dopiero jest ok gdy wezme
+PRZEZWODY 51;32-100;małopolskie;PL
