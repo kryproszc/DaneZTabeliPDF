@@ -1,1 +1,3 @@
-https://www.docker.com/products/docker-desktop/
+c.	w nawiązaniu do odpowiedzi Zakładu na pkt 1.b. wezwania zespołu inspekcyjnego z 5 sierpnia 2024 roku, wyjaśnienia czy w Zakładzie zostały przeprowadzone analizy potwierdzające zasadność podejścia nieuwzględniającego??? oczekiwanego wzrostu roszczeń obie? ubezpieczeniowych w przypadku przepływu CLAIM_RES dla grup 8K_OTHER, 9_BONDS, 8K_MED i 7M_AGRO, biorąc pod uwagę ww. negatywne wartości „Run-off” dla tych grup. W przypadku odpowiedzi: 
+•	twierdzącej, proszę o przekazanie dokumentacji tych analiz, 
+•	przeczącej, proszę o przekazanie wyjaśnienia dlaczego takie analizy nie zostały wykonane,
