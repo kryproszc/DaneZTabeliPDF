@@ -1,3 +1,5 @@
-sudo nano /etc/wsl.conf
-[boot]
-systemd=true
+sudo service docker status
+
+sudo service docker restart
+sudo usermod -aG docker $USER
+sudo journalctl -u docker
