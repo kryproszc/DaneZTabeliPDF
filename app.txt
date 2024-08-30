@@ -1,1 +1,44 @@
-W nawiązaniu do odpowiedzi Zakładu na punkt 1.b. wezwania zespołu inspekcyjnego z dnia 5 sierpnia 2024 roku, prosimy o wyjaśnienia dotyczące grup CLAIM_RES, 8K_OTHER, 9_BONDS, 8K_MED oraz 7M_AGRO. Mając na uwadze wspomniane negatywne wartości "Run-off" dla tych grup, uprzejmie prosimy o potwierdzenie, czy przeprowadzono weryfikację, że brak adekwatności wynika z przyjętego założenia, iż oczekiwany wzrost roszczeń jest w pełni uwzględniony w trójkątach szkód. Jeśli takie założenie zostało zweryfikowane, prosimy o przekazanie dokumentacji z przeprowadzonych analiz. W przeciwnym razie prosimy o uzasadnienie braku takich analiz.
+# Odczytanie danych z pliku CSV
+setwd("~/Desktop/BootChainladder/analiza danych")
+data_input <- read.csv2("dane_p.csv")
+
+# Sprawdzenie i poprawienie nazw kolumn - usuwanie zbędnych spacji
+names(data_input) <- trimws(names(data_input))
+data_input[1,10]<-"IŁŻECKA 2/3"
+# Tworzenie nowej kolumny 'łączna' na podstawie logiki sprawdzania zawartości
+data_input$łączna <- NA  # Inicjalizacja kolumny
+
+# Iterowanie przez każdy wiersz dataframe
+for (i in 1:nrow(data_input)) {
+  ulica <- data_input[i, 10] # Zakładamy, że kolumna 10 to "Adres ubezpieczonego obiektu...Ulica.i.numer"
+  
+  # Usuwanie części po ukośniku, jeśli taka istnieje
+  ulica <- sub("\\/.*$", "", ulica)
+  
+  miasto <- data_input[i, 12] # Zakładamy, że kolumna 12 to "Adres ubezpieczonego obiektu...Miasto"
+  kod <- data_input[i, 11] # Zakładamy, że kolumna 11 to "Adres ubezpieczonego obiektu...Kod.pocztowy"
+  wojewodztwo <- data_input[i, 13] # Zakładamy, że kolumna 13 to "Adres ubezpieczonego obiektu...Województwo"
+  kraj <- data_input[i, 14] # Zakładamy, że kolumna 14 to "Adres ubezpieczonego obiektu...Kraj"
+  
+  # Sprawdzenie, czy miasto oraz ulica nie są NA
+  if (!is.na(miasto) && !is.na(ulica) && grepl(miasto, ulica, ignore.case = TRUE)) {
+    # Jeśli miasto jest w ulicy, łączymy wszystkie poza miastem
+    data_input$łączna[i] <- paste(ulica, kod, wojewodztwo, kraj, sep = ";")
+  } else {
+    # Jeśli miasto nie jest w ulicy, łączymy wszystkie
+    data_input$łączna[i] <- paste(ulica, miasto, kod, wojewodztwo, kraj, sep = ";")
+  }
+}
+
+# Tworzenie nowego dataframe z oryginalnymi kolumnami i nową kolumną "łączna"
+result <- data_input[, c(
+  10,  # "Adres ubezpieczonego obiektu...Ulica.i.numer"
+  12,  # "Adres ubezpieczonego obiektu...Miasto"
+  11,  # "Adres ubezpieczonego obiektu...Kod.pocztowy"
+  13,  # "Adres ubezpieczonego obiektu...Województwo"
+  14,  # "Adres ubezpieczonego obiektu...Kraj"
+  ncol(data_input) # Kolumna 'łączna', zakładając że jest na końcu
+)]
+
+# Wyświetlenie wynikowego dataframe
+print(result)
