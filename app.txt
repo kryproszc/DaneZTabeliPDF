@@ -1,2 +1,4 @@
+sudo service docker status
 sudo service docker start
-sudo docker run hello-world 
+sudo chmod 666 /var/run/docker.sock
+sudo usermod -aG docker $USER
