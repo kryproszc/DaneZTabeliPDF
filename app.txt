@@ -1,4 +1,2 @@
-sudo service docker status
 sudo service docker start
-sudo chmod 666 /var/run/docker.sock
-sudo usermod -aG docker $USER
+sudo service docker status
