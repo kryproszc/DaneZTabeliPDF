@@ -1,5 +1,5 @@
-sudo service docker status
-
-sudo service docker restart
-sudo usermod -aG docker $USER
-sudo journalctl -u docker
+sudo dmesg | grep -i docker
+sudo tail -n 100 /var/log/syslog | grep -i docker
+docker run hello-world
+ls -l /var/run/docker.sock
+sudo chmod 666 /var/run/docker.sock
