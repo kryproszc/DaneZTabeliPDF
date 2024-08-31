@@ -3,3 +3,5 @@ sudo service docker start
 sudo docker run hello-world
 
 cat /var/log/docker.log
+
+sudo update-alternatives --config iptables
