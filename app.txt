@@ -5,3 +5,11 @@ sudo docker run hello-world
 cat /var/log/docker.log
 
 sudo update-alternatives --config iptables
+
+####
+sudo iptables -t filter -N DOCKER
+sudo systemctl restart docker
+sudo service docker status 
+sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+sudo systemctl restart docker
