@@ -52,3 +52,5 @@ newgrp docker
 docker run hello-world
 ps aux | grep dockerd
 
+sudo dockerd --iptables=false &
+
