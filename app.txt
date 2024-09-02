@@ -1,13 +1,2 @@
-sudo apt update
-
-sudo apt install -y iptables iproute2
-sudo nano /etc/sysctl.conf
-net.ipv6.conf.all.disable_ipv6 = 1
-net.ipv6.conf.default.disable_ipv6 = 1
-sudo sysctl -p
-sudo dockerd --debug
-dmesg | grep docker
-
-sudo rm /var/lib/docker/network/files/local-kv.db
-sudo service docker restart
-sudo dockerd --experimental
+DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V
+bcdedit /set hypervisorlaunchtype auto
