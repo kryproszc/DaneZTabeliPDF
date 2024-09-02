@@ -1,5 +1,2 @@
-netsh interface portproxy add v4tov4 listenport=3128 listenaddress=0.0.0.0 connectport=3128 connectaddress=192.168.105.6
-
-sudo nano /etc/resolv.conf
-
-nameserver 8.8.8.8
+[network]
+generateResolvConf = false
