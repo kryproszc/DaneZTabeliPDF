@@ -1,3 +1,1 @@
-DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V
-bcdedit /set hypervisorlaunchtype auto
-bcdedit /set hypervisorlaunchtype auto
+curl -I -x http://192.168.105.6:3128 http://google.com -v
