@@ -4,8 +4,5 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 wslacza wirtualizacja
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 
-pobieranie jadra wsl 2
-curl.exe -L -o wsl_update_x64.msi https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
-
 istalowanie
-msiexec /i wsl_update_x64.msi /quiet /norestart
+msiexec /i "%HOMEPATH%\Downloads\wsl_update_x64.msi" /quiet /norestart
