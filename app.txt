@@ -5,6 +5,7 @@ wslacza wirtualizacja
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 
 pobieranie jadra wsl 2
-curl -L -o wsl_update_x64.msi https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
+curl.exe -L -o wsl_update_x64.msi https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
+
 istalowanie
 msiexec /i wsl_update_x64.msi /quiet /norestart
