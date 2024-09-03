@@ -1,8 +1,11 @@
-sudo nano /etc/apt/apt.conf.d/proxy.conf
+W kontenerze dockerowym (obrazie) z ktorego korzystamy, w którym jest baza danych, trzeba:
+
+postgressql.conf wędruje w miejscce
+/etc/postgresql/14/main
+
+drugi zaś w /etc/apache2/
 
 
-Acquire::http::Proxy "http://192.168.105.6:3128";
-Acquire::https::Proxy "http://192.168.105.6:3128";
-Acquire::ftp::Proxy "http://192.168.105.6:3128";
-
-curl -x http://192.168.105.6:3128 -I http://google.com
+po podmianie plikow nalezy wykonac restart dzialajacych uslug czyli bazy danych i serwera apache:
+sudo systemctl restart postgresql
+sudo systemctl restart apache2
