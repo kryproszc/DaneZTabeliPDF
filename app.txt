@@ -1,22 +1,2 @@
-sudo docker pull mysql
-
-curl -x http://192.168.105.6:3128 -I https://registry-1.docker.io/v2/
-
-
-sudo nano /etc/docker/daemon.json
-{
-  "proxies": {
-    "default": {
-      "httpProxy": "http://192.168.105.6:3128",
-      "httpsProxy": "http://192.168.105.6:3128",
-      "noProxy": "localhost,127.0.0.1"
-    }
-  }
-}
-
-sudo service docker restart
-
-sudo docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:latest
-
-
-sudo journalctl -u docker.service
+sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+sudo update-alternatives --set ip6tables
