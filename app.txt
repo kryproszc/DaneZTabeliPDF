@@ -1,1 +1,5 @@
-sudo usermod -aG docker $USER
+netsh winsock reset
+netsh int ip reset
+ipconfig /release
+ipconfig /renew
+ipconfig /flushdns
