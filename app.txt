@@ -1,6 +1,8 @@
-restart postgressql po wprowadzeniu pliku:
-sudo service postgresql restart
+echo $http_proxy
+echo $https_proxy
+echo $ftp_proxy
+echo $no_proxy
 
 
-restart serwera apache2 po modyfikacji pliku
-sudo service apache2 restart
+nano ~/.bashrc
+sudo nano /etc/apt/apt.conf.d/proxy.conf
