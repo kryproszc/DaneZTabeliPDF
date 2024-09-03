@@ -1,4 +1,16 @@
-sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+sudo chown -R $USER:$USER /var/run/docker/
+sudo chown -R $USER:$USER /var/lib/docker/
 
 
-docker --version
+sudo service docker restart
+
+sudo docker run hello-world
+
+
+/etc/docker/daemon.json
+
+{
+  "seccomp": false
+}
+
+sudo service docker restart
