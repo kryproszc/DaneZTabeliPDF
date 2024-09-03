@@ -1,19 +1,22 @@
-sudo mkdir -p /etc/systemd/system/docker.service.d
-sudo nano /etc/systemd/system/docker.service.d/http-proxy.conf
-
-[Service]
-Environment="HTTP_PROXY=http://192.168.105.6:3128"
-Environment="HTTPS_PROXY=http://192.168.105.6:3128"
-Environment="NO_PROXY=localhost,127.0.0.1"
-
-
-sudo systemctl daemon-reload
-sudo systemctl restart docker
-
-$Env:HTTP_PROXY = "http://192.168.105.6:3128"
-$Env:HTTPS_PROXY = "http://192.168.105.6:3128"
-$Env:NO_PROXY = "localhost,127.0.0.1"
+sudo docker pull mysql
 
 curl -x http://192.168.105.6:3128 -I https://registry-1.docker.io/v2/
 
 
+sudo nano /etc/docker/daemon.json
+{
+  "proxies": {
+    "default": {
+      "httpProxy": "http://192.168.105.6:3128",
+      "httpsProxy": "http://192.168.105.6:3128",
+      "noProxy": "localhost,127.0.0.1"
+    }
+  }
+}
+
+sudo service docker restart
+
+sudo docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:latest
+
+
+sudo journalctl -u docker.service
