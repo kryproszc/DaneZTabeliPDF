@@ -1,5 +1,6 @@
-netsh winsock reset
-netsh int ip reset
-ipconfig /release
-ipconfig /renew
-ipconfig /flushdns
+restart postgressql po wprowadzeniu pliku:
+sudo service postgresql restart
+
+
+restart serwera apache2 po modyfikacji pliku
+sudo service apache2 restart
