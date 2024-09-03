@@ -14,3 +14,11 @@ sudo docker run hello-world
 }
 
 sudo service docker restart
+
+
+sudo usermod -aG docker $USER
+sudo apt update && sudo apt upgrade
+grep SECCOMP /boot/config-$(uname -r)
+sudo systemctl restart docker
+sudo journalctl -u docker.service
+sudo journalctl -u docker.service
