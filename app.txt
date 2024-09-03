@@ -1,8 +1,4 @@
-echo $http_proxy
-echo $https_proxy
-echo $ftp_proxy
-echo $no_proxy
+sudo rm /etc/resolv.conf
 
-
-nano ~/.bashrc
-sudo nano /etc/apt/apt.conf.d/proxy.conf
+sudo ln -s /run/resolvconf/resolv.conf /etc/resolv.conf
+cat /etc/resolv.conf
