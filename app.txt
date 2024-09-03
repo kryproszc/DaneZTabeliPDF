@@ -5,6 +5,8 @@ sudo docker ps
 
 ########
 sudo systemctl status docker
+sudo nano /etc/docker/daemon.json
+
 
 sudo systemctl start docker
 sudo journalctl -xeu docker.service
