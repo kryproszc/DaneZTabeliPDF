@@ -1,24 +1,15 @@
-sudo chown -R $USER:$USER /var/run/docker/
-sudo chown -R $USER:$USER /var/lib/docker/
+sudo nano /etc/docker/daemon.json
 
 
-sudo service docker restart
-
-sudo docker run hello-world
-
-
-/etc/docker/daemon.json
 
 {
-  "seccomp": false
+  "proxies": {
+    "default": {
+      "httpProxy": "http://192.168.105.6:3128",
+      "httpsProxy": "http://192.168.105.6:3128",
+      "noProxy": "localhost,127.0.0.1,.example.com"
+    }
+  }
 }
 
-sudo service docker restart
 
-
-sudo usermod -aG docker $USER
-sudo apt update && sudo apt upgrade
-grep SECCOMP /boot/config-$(uname -r)
-sudo systemctl restart docker
-sudo journalctl -u docker.service
-sudo journalctl -u docker.service
