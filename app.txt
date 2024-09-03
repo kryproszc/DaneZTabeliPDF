@@ -1,2 +1,4 @@
-C:\Windows\System32\wsl.exe --list --verbose
+wsl --set-version Ubuntu 2
 
+
+wsl --list --verbose
