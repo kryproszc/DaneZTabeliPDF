@@ -4,36 +4,7 @@ sudo docker ps
 
 
 ########
-W wsl
-sudo nano ~/.bashrc
-export http_proxy=http://192.168.105.6:3128
-export https_proxy=http://192.168.105.6:3128
-export ftp_proxy=http://192.168.105.6:3128
-export no_proxy="localhost,127.0.0.1,::1"
-
-source ~/.bashrc
-
-otwieramy 
-sudo nano /etc/environment
-wklejamy  tam na dole
-export http_proxy=http://192.168.105.6:3128
-export https_proxy=http://192.168.105.6:3128
-export ftp_proxy=http://192.168.105.6:3128
-export no_proxy="localhost,127.0.0.1,::1"
-
-następnie
-source /etc/environment
-nano /etc/apt/apt.conf.d/proxy.conf
-
-wklejamy
-Acquire::http::Proxy "http://192.168.105.6:3128";
-Acquire::httpsa::Proxy "http://192.168.105.6:3128";
-Acquire::ftp::Proxy "http://192.168.105.6:3128";
-
-wpisujemy w wsl reboot
-
-wyłączamy wsl
-otwieramy cmd i pwpisujemy
-wsl --shutdown
-i nastepnie
-wsl
+export HTTP_PROXY="http://192.168.105.6:3128"
+export HTTPS_PROXY="http://192.168.105.6:3128"
+export FTP_PROXY="http://192.168.105.6:3128"
+export NO_PROXY="localhost,127.0.0.1,::1"
