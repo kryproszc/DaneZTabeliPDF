@@ -1,1 +1,1 @@
-ping registry-1.docker.io
+sudo apt get install gcc
