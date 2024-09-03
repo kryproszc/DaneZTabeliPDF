@@ -1,14 +1,31 @@
-sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
-sudo systemctl restart docker
-
-sudo systemctl restart docker
-
-
-sudo rm /var/run/docker/containerd/containerd.sock
-sudo systemctl restart docker
-
-sudo journalctl -u docker.service
+ sudo service docker start
+wsl --list --verbose
+sudo docker ps
 
 
-sudo mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
-sudo systemctl restart docker
+[‎03.‎09.‎2024 15:25]  Świętochowski Mateusz:  
+Brak tytułu 
+
+--> Nominatim is ready to accept requests
+
+==> /var/log/apache2/access.log <==
+172.16.16.182 - - [03/Sep/2024:13:21:29 +0000] "GET /search.php?q=zajaczka%209a%20marki HTTP/1.1" 200 743 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+172.16.16.182 - - [03/Sep/2024:13:21:29 +0000] "GET /favicon.ico HTTP/1.1" 404 483 "http://dft-everace:8080/search.php?q=zajaczka%209a%20marki" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+
+==> /var/log/apache2/error.log <==
+[Tue Sep 03 13:21:29.872638 2024] [core:info] [pid 1300] [client 172.16.16.182:52167] AH00128: File does not exist: /nominatim/website/favicon.ico, referer: http://dft-everace:8080/search.php?q=zajaczka%209a%20marki
+^C * Stopping Apache httpd web server apache2                                                                     [Tue Sep 03 13:21:34.917208 2024] [mpm_prefork:notice] [pid 1290] AH00169: caught SIGTERM, shutting down
+ *
+ * Stopping PostgreSQL 14 database server
+==> /var/log/postgresql/postgresql-14-main.log <==
+2024-09-03 13:21:36.041 UTC [1234] LOG:  received fast shutdown request
+2024-09-03 13:21:36.048 UTC [1234] LOG:  aborting any active transactions
+2024-09-03 13:21:36.058 UTC [1234] LOG:  background worker "logical replication launcher" (PID 1241) exited with exit code 1
+2024-09-03 13:21:36.060 UTC [1236] LOG:  shutting down
+                                                                                                           [ OK ]
+[mswie_adm@dft-everace nominatim]$ docker start nominatim 
+ 
+
+mam taki błąd, to musi być z konfiguracji apache
+
+coś jest nie tak z konfiguracją apache, na razie działa
