@@ -1,1 +1,6 @@
 wsl --terminate Ubuntu-24.04
+source /etc/environment
+source ~/.bashrc
+sudo apt-get update
+
+##
