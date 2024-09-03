@@ -1,4 +1,8 @@
-export http_proxy="http://192.168.105.6:3128"
-export https_proxy="http://192.168.105.6:3128"
-export ftp_proxy="http://192.168.105.6:3128"
-export no_proxy="localhost,127.0.0.1,::1"
+sudo nano /etc/apt/apt.conf.d/proxy.conf
+
+
+Acquire::http::Proxy "http://192.168.105.6:3128";
+Acquire::https::Proxy "http://192.168.105.6:3128";
+Acquire::ftp::Proxy "http://192.168.105.6:3128";
+
+curl -x http://192.168.105.6:3128 -I http://google.com
