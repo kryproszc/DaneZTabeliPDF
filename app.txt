@@ -1,1 +1,6 @@
-nano /etc/apt/apt.conf.d/proxy.conf
+[experimental]
+autoMemoryReclaim=gradual
+networkingMode=mirrored
+dnsTunneling=true
+firewall=true
+autoProxy=true
