@@ -4,8 +4,6 @@ sudo docker ps
 
 
 ########
-curl -v -x http://192.168.105.6:3128 https://registry-1.docker.io/v2/
-
-sudo nano /etc/resolv.conf
-nameserver 8.8.8.8
-ping registry-1.docker.io
+echo $HTTP_PROXY
+echo $HTTPS_PROXY
+echo $NO_PROXY
