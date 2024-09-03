@@ -1,11 +1,1 @@
-W kontenerze dockerowym (obrazie) z ktorego korzystamy, w którym jest baza danych, trzeba:
-
-postgressql.conf wędruje w miejscce
-/etc/postgresql/14/main
-
-drugi zaś w /etc/apache2/
-
-
-po podmianie plikow nalezy wykonac restart dzialajacych uslug czyli bazy danych i serwera apache:
-sudo systemctl restart postgresql
-sudo systemctl restart apache2
+sudo usermod -aG docker $USER
