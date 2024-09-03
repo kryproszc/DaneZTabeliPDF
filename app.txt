@@ -1,2 +1,14 @@
 sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
 sudo systemctl restart docker
+
+sudo systemctl restart docker
+
+
+sudo rm /var/run/docker/containerd/containerd.sock
+sudo systemctl restart docker
+
+sudo journalctl -u docker.service
+
+
+sudo mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
+sudo systemctl restart docker
