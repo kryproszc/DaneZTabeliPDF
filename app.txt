@@ -4,14 +4,8 @@ sudo docker ps
 
 
 ########
-sudo nano /etc/systemd/system/docker.service.d/http-proxy.conf
-sudo systemctl daemon-reload
-sudo systemctl restart docker
+curl -v -x http://192.168.105.6:3128 https://registry-1.docker.io/v2/
 
-
-sudo systemctl status docker
-
-
-sudo docker pull mysql
-
-sudo docker pull postgres
+sudo nano /etc/resolv.conf
+nameserver 8.8.8.8
+ping registry-1.docker.io
