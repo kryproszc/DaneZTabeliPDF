@@ -5,28 +5,30 @@ sudo docker ps
 
 ########
 
-sudo nano ~/.bashrc
+echo $http_proxy
+echo $https_proxy
+echo $ftp_proxy
+echo $no_proxy
+
+curl -x http://192.168.105.6:3128 -I https://registry-1.docker.io/v2/
 
 
-export HTTP_PROXY="http://192.168.105.6:3128"
-export HTTPS_PROXY="http://192.168.105.6:3128"
-export FTP_PROXY="http://192.168.105.6:3128"
-export NO_PROXY="localhost,127.0.0.1,::1"
-
-source ~/.bashrc
+/etc/docker/daemon.json
 
 
-sudo nano /etc/environment
+{
+  "proxies": {
+    "default": {
+      "httpProxy": "http://192.168.105.6:3128",
+      "httpsProxy": "http://192.168.105.6:3128",
+      "noProxy": "localhost,127.0.0.1"
+    }
+  }
+}
 
-
-HTTP_PROXY="http://192.168.105.6:3128"
-HTTPS_PROXY="http://192.168.105.6:3128"
-FTP_PROXY="http://192.168.105.6:3128"
-NO_PROXY="localhost,127.0.0.1,::1"
-
-source /etc/environment
 
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 
-sudo docker pull mysql
+
+sudo journalctl -u docker.service
