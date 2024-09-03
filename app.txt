@@ -1,6 +1,1 @@
-[experimental]
-autoMemoryReclaim=gradual
-networkingMode=mirrored
-dnsTunneling=true
-firewall=true
-autoProxy=true
+wsl --terminate Ubuntu-24.04
