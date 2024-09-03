@@ -1,7 +1,1 @@
-cat ~/.zshrc
-nano /etc/environment
-
-export http_proxy=http://192.168.105.6:3128/
-export https_proxy=http://192.168.105.6:3128/
-export ftp_proxy=http://192.168.105.6:3128/
-export no_proxy="localhost,127.0.0.1,::1"
+nano /etc/apt/apt.conf.d/proxy.conf
