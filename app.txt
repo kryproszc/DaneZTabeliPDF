@@ -12,3 +12,4 @@ Acquire::https::Proxy "http://192.168.105.6:3128/";
 curl -I http://www.google.com/ --proxy http://192.168.105.6:3128/
 
 Defaults env_keep = "http_proxy"
+a czy ping 192.168.105.6
