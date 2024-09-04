@@ -1,6 +1,10 @@
 sudo ip link set dev eth0 up
 sudo dhclient eth0
 
+Get-NetAdapter | Where-Object {$_.Name -like "*WSL*"}
+Enable-NetAdapter -Name "vEthernet (WSL) 2"
+
+
 [network]
 generateResolvConf = false
 sudo rm /etc/resolv.conf
