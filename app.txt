@@ -1,3 +1,7 @@
+sudo ip addr add 172.18.80.2/20 dev eth0
+sudo ip link set dev eth0 up
+sudo ip route add default via 172.18.80.1
+
 sudo ip link set dev eth0 up
 sudo dhclient eth0
 
