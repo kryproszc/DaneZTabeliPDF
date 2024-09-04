@@ -37,3 +37,5 @@ cat /etc/resolv.conf
 nslookup archive.ubuntu.com
 
 nano /etc/resolv.conf
+sudo nano /etc/environment
+
