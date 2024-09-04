@@ -51,4 +51,5 @@ generateResolvConf=false
 localhostForwarding=true
 
 sudo nano /etc/resolv.conf
+nameserver 192.168.105.6
 
