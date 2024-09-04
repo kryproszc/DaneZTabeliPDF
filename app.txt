@@ -67,3 +67,12 @@ sudo apt-get update
 curl -x http://192.168.105.6:3128 -I https://google.com
 sudo nano /etc/apt/apt.conf.d/proxy.conf
 
+
+@#####
+sudo nano /etc/apt/apt.conf.d/proxy.conf
+Acquire::http::Proxy "http://192.168.105.6:3128";
+Acquire::https::Proxy "http://192.168.105.6:3128";
+Acquire::ftp::Proxy "http://192.168.105.6:3128";
+
+sudo nano /etc/resolv.conf
+
