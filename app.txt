@@ -6,7 +6,10 @@ sudo nano /etc/resolv.conf
 nameserver 192.168.105.6
 
 
-
+[wsl2]
+generateResolvConf=false
+localhostForwarding=true
+networkingMode=bridged
 
 ####
 wsl --terminate Ubuntu-24.04
