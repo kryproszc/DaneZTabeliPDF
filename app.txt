@@ -49,3 +49,6 @@ echo $no_proxy
 networkingMode=bridged
 generateResolvConf=false
 localhostForwarding=true
+
+sudo nano /etc/resolv.conf
+
