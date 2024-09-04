@@ -1,3 +1,15 @@
+
+[network]
+generateResolvConf = false
+sudo rm /etc/resolv.conf
+sudo nano /etc/resolv.conf
+
+nameserver 192.168.105.6
+
+wsl --shutdown
+sudo apt-get update
+#
+
 sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 
