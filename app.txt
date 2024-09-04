@@ -31,4 +31,8 @@ Expose hardware assisted virtualization to the guest OS
 hostname = DemoHost
 generateHosts = false
 generateResolvConf = false
- 
+
+cat /etc/resolv.conf
+
+nslookup archive.ubuntu.com
+
