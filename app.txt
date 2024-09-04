@@ -43,3 +43,9 @@ echo $http_proxy
 echo $https_proxy
 echo $ftp_proxy
 echo $no_proxy
+
+
+[wsl2]
+networkingMode=bridged
+generateResolvConf=false
+localhostForwarding=true
