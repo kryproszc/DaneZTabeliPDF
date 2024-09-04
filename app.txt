@@ -26,4 +26,9 @@ pierwsza to podniesienie compatibility level
 na nowszy i dopiero potem włączenie opcji 
  
 Expose hardware assisted virtualization to the guest OS 
+
+[network]
+hostname = DemoHost
+generateHosts = false
+generateResolvConf = false
  
