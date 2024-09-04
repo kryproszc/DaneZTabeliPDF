@@ -1,5 +1,8 @@
 sudo cat /var/log/apt/term.log
 
+networkingMode=bridged
+generateResolvConf=false
+localhostForwarding=true
 ####
 wsl --terminate Ubuntu-24.04
 source /etc/environment
