@@ -39,3 +39,7 @@ nslookup archive.ubuntu.com
 nano /etc/resolv.conf
 sudo nano /etc/environment
 
+echo $http_proxy
+echo $https_proxy
+echo $ftp_proxy
+echo $no_proxy
