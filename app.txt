@@ -1,6 +1,5 @@
-Get-NetAdapter | Where-Object {$_.Name -like "*WSL*"}
-Enable-NetAdapter -Name "vEthernet (WSL)"
-
+sudo ip link set dev eth0 up
+sudo dhclient eth0
 
 [network]
 generateResolvConf = false
