@@ -1,20 +1,4 @@
-netsh interface portproxy add v4tov4 listenport=3128 listenaddress=0.0.0.0 connectport=3128 connectaddress=192.168.105.6
-New-VMSwitch -Name "ExternalSwitch" -NetAdapterName "<nazwa_adaptera_sieciowego>" -AllowManagementOS $true
-
-[wsl2]
-networkingMode=bridged
-vmSwitch=ExternalSwitch
-localhostForwarding=true
-
-sudo rm /etc/resolv.conf
-sudo nano /etc/resolv.conf
-nameserver 192.168.105.6
-
-
-[wsl2]
-generateResolvConf=false
-localhostForwarding=true
-networkingMode=bridged
+sudo cat /var/log/apt/term.log
 
 ####
 wsl --terminate Ubuntu-24.04
