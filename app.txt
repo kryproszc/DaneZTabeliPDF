@@ -1,3 +1,6 @@
+
+New-NetFirewallRule -DisplayName "WSL" -Direction Inbound -InterfaceAlias "vEthernet (WSL)" -Action Allow
+
 sudo cat /var/log/apt/term.log
 
 networkingMode=bridged
