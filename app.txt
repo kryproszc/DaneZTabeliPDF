@@ -76,3 +76,5 @@ Acquire::ftp::Proxy "http://192.168.105.6:3128";
 
 sudo nano /etc/resolv.conf
 
+sudo nano /etc/apt/apt.conf.d/95proxies
+
