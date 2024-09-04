@@ -1,41 +1,5 @@
-
-Windows IP Configuration
-
-
-Ethernet adapter Ethernet0 2:
-
-   Connection-specific DNS Suffix  . :
-   Link-local IPv6 Address . . . . . : fe80::3632:4258:435d:9e59%17
-   IPv4 Address. . . . . . . . . . . : 172.25.210.87
-   Subnet Mask . . . . . . . . . . . : 255.255.255.0
-   Default Gateway . . . . . . . . . : 172.25.210.254
-
-Ethernet adapter vEthernet (WSL) 2:
-
-   Connection-specific DNS Suffix  . :
-   Link-local IPv6 Address . . . . . : fe80::c2dc:4d48:1854:e312%18
-   Autoconfiguration IPv4 Address. . : 169.254.208.3
-   Subnet Mask . . . . . . . . . . . : 255.255.0.0
-   Default Gateway . . . . . . . . . :
-
-Ethernet adapter vEthernet (Default Switch):
-
-   Connection-specific DNS Suffix  . :
-   Link-local IPv6 Address . . . . . : fe80::93a2:2ec0:7977:90a9%7
-   IPv4 Address. . . . . . . . . . . : 172.30.96.1
-   Subnet Mask . . . . . . . . . . . : 255.255.240.0
-   Default Gateway . . . . . . . . . :
-
-Ethernet adapter vEthernet (nat):
-
-   Connection-specific DNS Suffix  . :
-   Link-local IPv6 Address . . . . . : fe80::ede9:cc0f:6c8:4d88%26
-   IPv4 Address. . . . . . . . . . . : 172.18.80.1
-   Subnet Mask . . . . . . . . . . . : 255.255.240.0
-   Default Gateway . . . . . . . . . :
-
-
-
+Get-NetAdapter | Where-Object {$_.Name -like "*WSL*"}
+Enable-NetAdapter -Name "vEthernet (WSL)"
 
 
 [network]
