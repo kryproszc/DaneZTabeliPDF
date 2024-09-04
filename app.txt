@@ -1,2 +1,1 @@
-Nie można skonfigurować sieci (networkingMode Nat). Aby wyłączyć sieć, ustaw opcję "wsl2.networkingMode=None" w C:\Users\szczkr\.wslconfig
-Error code: Wsl/Service/CreateInstance/CreateVm/ConfigureNetworking/HNS/0x803b0001
+https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module
