@@ -1,4 +1,4 @@
-szczkr@DIU-01:/mnt/c/WINDOWS/system32$
-C:\WINDOWS\system32>wsl -d Ubuntu
-Nie można skonfigurować sieci (networkingMode Nat). Aby wyłączyć sieć, ustaw opcję "wsl2.networkingMode=None" w C:\Users\szczkr\.wslconfig
-Error code: Wsl/Service/CreateInstance/CreateVm/ConfigureNetworking/HNS/0x803b0001
+network
+[network]
+networkingMode=NAT
+netowrkinode nat
