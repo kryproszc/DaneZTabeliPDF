@@ -167,3 +167,6 @@ STRAŻACKA 3;DĘBE WIELKIE;05-311;mazowieckie;PL
 ###
 jak bylo 52.550401260401316;19.691506055971388;ulica Bielska 51, 09-400, Płock, Mazowieckie
 
+przykład, że wyższe     "importance": 0.92001 daje lepszy wynikk, jak google. dodatkowo zageokodowane
+lepiej niż w pythonie
+52.40132621089264;20.9369847975082;aleja 3 Maja 6, 05-120, Legionowo, Powiat Legionowski, Woj. Mazowieckie
