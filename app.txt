@@ -1,10 +1,3 @@
-C:\WINDOWS\system32>docker version
-Client:
- Version:           27.1.1
- API version:       1.46
- Go version:        go1.21.12
- Git commit:        6312585
- Built:             Tue Jul 23 19:57:57 2024
- OS/Arch:           windows/amd64
- Context:           desktop-linux
-request returned Internal Server Error for API route and version http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.46/version, check if the server supports the requested API version
+http://192.168.105.6:3128
+
+https://192.168.105.6:3128
