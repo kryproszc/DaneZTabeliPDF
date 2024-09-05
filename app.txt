@@ -18,3 +18,8 @@
     "importance": 0.81001
   }
 ]
+
+
+sudo service postgresql restart
+wpisz i enter
+nastepnie sudo service apache2 restart
