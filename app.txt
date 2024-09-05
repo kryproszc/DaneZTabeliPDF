@@ -118,3 +118,48 @@ STRAŻACKA 3;DĘBE WIELKIE;05-311;mazowieckie;PL
     "importance": 0.70001
   }
 ]
+
+
+#####
+100-LECIA ODZYSKANIA NIEPODLEGŁOŚCI 2;MOSZCZENICA;97-310;łódzkie;PL
+
+[
+  {
+    "place_id": 7784172,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 848449809,
+    "boundingbox": [
+      "51.5026187",
+      "51.5029661",
+      "19.7032175",
+      "19.7038783"
+    ],
+    "lat": "51.502769900000004",
+    "lon": "19.703556531809074",
+    "display_name": "Gminny Ośrodek Kultury i Sportu im. Jana Justyny w Moszczenicy, 2, 100-lecia Odzyskania Niepodległości, Osiedle Batory, Moszczenica Poduchowna, Moszczenica, gmina Moszczenica, powiat piotrkowski, województwo łódzkie, 97-310, Polska",
+    "place_rank": 30,
+    "category": "amenity",
+    "type": "community_centre",
+    "importance": 0.91001
+  },
+  {
+    "place_id": 7802793,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 7941859127,
+    "boundingbox": [
+      "51.502739",
+      "51.502839",
+      "19.7032808",
+      "19.7033808"
+    ],
+    "lat": "51.502789",
+    "lon": "19.7033308",
+    "display_name": "2, 100-lecia Odzyskania Niepodległości, Osiedle Batory, Moszczenica Poduchowna, Moszczenica, gmina Moszczenica, powiat piotrkowski, województwo łódzkie, 97-310, Polska",
+    "place_rank": 30,
+    "category": "place",
+    "type": "house",
+    "importance": 0.91001
+  }
+]
