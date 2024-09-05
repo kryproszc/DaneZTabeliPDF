@@ -1,7 +1,7 @@
 
 http://dft-everace:8080/search.php?q=STRA%C5%BBACKA%203;D%C4%98BE%20WIELKIE;05-311;mazowieckie;PL
 
-
+STRAŻACKA 3;DĘBE WIELKIE;05-311;mazowieckie;PL
 [
   {
     "place_id": 4183316,
