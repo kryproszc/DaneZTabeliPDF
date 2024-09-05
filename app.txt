@@ -1,25 +1,20 @@
-[
-  {
-    "place_id": 7597757,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "way",
-    "osm_id": 320199649,
-    "boundingbox": [
-      "51.7823039",
-      "51.782645",
-      "21.1877731",
-      "21.1881559"
-    ],
-    "lat": "51.7824722",
-    "lon": "21.18791531458819",
-    "display_name": "Urząd Miejski w Warce, 1, Plac Stefana Czarnieckiego, Ostrówek, Warka, gmina Warka, powiat grójecki, województwo mazowieckie, 05-660, Polska",
-    "class": "amenity",
-    "type": "townhall",
-    "importance": 0.81001
-  }
-]
-
-
-sudo service postgresql restart
-wpisz i enter
-nastepnie sudo service apache2 restart
+C:\WINDOWS\system32>wsl
+szczkr@DIU-01:/mnt/c/WINDOWS/system32$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:15:5d:28:95:96 brd ff:ff:ff:ff:ff:ff
+    inet 172.28.166.86/20 brd 172.28.175.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::215:5dff:fe28:9596/64 scope link
+       valid_lft forever preferred_lft forever
+3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:ad:3d:d9:e0 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+szczkr@DIU-01:/mnt/c/WINDOWS/system32$ ping google.com
+PING google.com (142.250.203.206) 56(84) bytes of data.
