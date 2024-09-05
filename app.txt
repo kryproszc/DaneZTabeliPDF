@@ -1,1 +1,20 @@
-docker run -it -e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf -e REPLICATION_URL=https://download.geofabrik.de/europe/poland-updates/ -p 8080:8080 --name nominatim mediagis/nominatim:4.4
+[
+  {
+    "place_id": 7597757,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 320199649,
+    "boundingbox": [
+      "51.7823039",
+      "51.782645",
+      "21.1877731",
+      "21.1881559"
+    ],
+    "lat": "51.7824722",
+    "lon": "21.18791531458819",
+    "display_name": "Urząd Miejski w Warce, 1, Plac Stefana Czarnieckiego, Ostrówek, Warka, gmina Warka, powiat grójecki, województwo mazowieckie, 05-660, Polska",
+    "class": "amenity",
+    "type": "townhall",
+    "importance": 0.81001
+  }
+]
