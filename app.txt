@@ -163,3 +163,7 @@ STRAŻACKA 3;DĘBE WIELKIE;05-311;mazowieckie;PL
     "importance": 0.91001
   }
 ]
+
+###
+jak bylo 52.550401260401316;19.691506055971388;ulica Bielska 51, 09-400, Płock, Mazowieckie
+
