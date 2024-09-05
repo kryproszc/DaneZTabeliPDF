@@ -1,8 +1,2 @@
-
-C:\WINDOWS\system32>echo %DOCKER_HOST%
-%DOCKER_HOST%
-
 C:\WINDOWS\system32>docker ps
 error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.46/containers/json": open //./pipe/dockerDesktopLinuxEngine: Nie można odnaleźć określonego pliku.
-
-C:\WINDOWS\system32>
