@@ -1,93 +1,131 @@
-Windows IP Configuration
+Dane z wątku 0
 
-   Host Name . . . . . . . . . . . . : DIU-01
-   Primary Dns Suffix  . . . . . . . : it.local
-   Node Type . . . . . . . . . . . . : Hybrid
-   IP Routing Enabled. . . . . . . . : No
-   WINS Proxy Enabled. . . . . . . . : No
-   DNS Suffix Search List. . . . . . : it.local
+HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:09 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
-Ethernet adapter Ethernet0 2:
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:10 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
-   Connection-specific DNS Suffix  . :
-   Description . . . . . . . . . . . : vmxnet3 Ethernet Adapter
-   Physical Address. . . . . . . . . : 00-50-56-B7-E6-3E
-   DHCP Enabled. . . . . . . . . . . : No
-   Autoconfiguration Enabled . . . . : Yes
-   Link-local IPv6 Address . . . . . : fe80::3632:4258:435d:9e59%13(Preferred)
-   IPv4 Address. . . . . . . . . . . : 172.25.210.87(Preferred)
-   Subnet Mask . . . . . . . . . . . : 255.255.255.0
-   Default Gateway . . . . . . . . . : 172.25.210.254
-   DHCPv6 IAID . . . . . . . . . . . : 234901590
-   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2D-7A-19-0B-00-50-56-B7-E6-3E
-   DNS Servers . . . . . . . . . . . : 172.25.1.2
-                                       172.25.1.99
-   NetBIOS over Tcpip. . . . . . . . : Enabled
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:10 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
-Ethernet adapter vEthernet (Default Switch):
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:10 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
-   Connection-specific DNS Suffix  . :
-   Description . . . . . . . . . . . : Hyper-V Virtual Ethernet Adapter
-   Physical Address. . . . . . . . . : 00-15-5D-4A-8F-F6
-   DHCP Enabled. . . . . . . . . . . : No
-   Autoconfiguration Enabled . . . . : Yes
-   Link-local IPv6 Address . . . . . : fe80::e646:12e:6fea:d4e9%19(Preferred)
-   IPv4 Address. . . . . . . . . . . : 172.29.0.1(Preferred)
-   Subnet Mask . . . . . . . . . . . : 255.255.240.0
-   Default Gateway . . . . . . . . . :
-   DHCPv6 IAID . . . . . . . . . . . : 318772573
-   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2D-7A-19-0B-00-50-56-B7-E6-3E
-   DNS Servers . . . . . . . . . . . : fec0:0:0:ffff::1%1
-                                       fec0:0:0:ffff::2%1
-                                       fec0:0:0:ffff::3%1
-   NetBIOS over Tcpip. . . . . . . . : Enabled
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:10 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
-Ethernet adapter vEthernet (WSL):
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:10 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
-   Connection-specific DNS Suffix  . :
-   Description . . . . . . . . . . . : Hyper-V Virtual Ethernet Adapter #2
-   Physical Address. . . . . . . . . : 00-15-5D-7E-DE-D9
-   DHCP Enabled. . . . . . . . . . . : No
-   Autoconfiguration Enabled . . . . : Yes
-   Link-local IPv6 Address . . . . . : fe80::946d:bf:41c3:8de6%39(Preferred)
-   IPv4 Address. . . . . . . . . . . : 172.28.160.1(Preferred)
-   Subnet Mask . . . . . . . . . . . : 255.255.240.0
-   Default Gateway . . . . . . . . . :
-   DHCPv6 IAID . . . . . . . . . . . : 654316893
-   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2D-7A-19-0B-00-50-56-B7-E6-3E
-   DNS Servers . . . . . . . . . . . : fec0:0:0:ffff::1%1
-                                       fec0:0:0:ffff::2%1
-                                       fec0:0:0:ffff::3%1
-   NetBIOS over Tcpip. . . . . . . . : Enabled
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:10 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
-C:\WINDOWS\system32>
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:10 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:11 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:11 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:11 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:11 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[{"place_id":7742324,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":390998131,"boundingbox":["51.7652176","51.7653179","19.4545414","19.4545651"],"lat":"51.7652176","lon":"19.4545651","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.8633433333333334},{"place_id":7688852,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":246291408,"boundingbox":["51.7655122","51.7660377","19.4541007","19.4542119"],"lat":"51.7656093","lon":"19.4541913","display_name":"Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-418, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334},{"place_id":7688606,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":107347650,"boundingbox":["51.7678215","51.7680317","19.4530799","19.453619"],"lat":"51.767888850000006","lon":"19.453493964565368","display_name":"17, Aleja Tadeusza Kościuszki, Katedralna, Centrum, Łódź-Śródmieście, Łódź, województwo łódzkie, 90-419, Polska","place_rank":30,"category":"building","type":"yes","importance":0.8200099999999999},{"place_id":8089579,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":449583664,"boundingbox":["51.2147329","51.2149478","18.5857862","18.5860069"],"lat":"51.2148339","lon":"18.585899010291353","display_name":"17, Aleja Tadeusza Kościuszki, Berlinek, Wieluń, gmina Wieluń, powiat wieluński, województwo łódzkie, 98-300, Polska","place_rank":30,"category":"building","type":"house","importance":0.62001}]HTTP/1.1 200 OK
+Date: Thu, 05 Sep 2024 14:47:11 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 1906
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
