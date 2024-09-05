@@ -175,3 +175,5 @@ tutaj i openstreat i python zle geokoduje
 Sugajenko 9A, 13-306, Sugajenko, Kurzętnik, Powiat Nowomiejski, Woj. Warmińsko-Mazurskie
 trafiamy  w budynek a python nie
 54.32920879548127;18.599508060185396;ulica Rogalińska 5C, 80-809, Gdańsk, Woj. Pomorskie
+nasz sb nie radzi z M. ale jak wpisze Marii to jest ok
+M. Curie-Skłodowskiej 8, 43-100, Tychy
