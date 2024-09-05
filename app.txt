@@ -1,2 +1,8 @@
-C:\WINDOWS\system32>docker run hello-world
-docker: error during connect: this error may indicate that the docker daemon is not running: Head "http://%2F%2F.%2Fpipe%2Fdocker_engine/_ping": open //./pipe/docker_engine: Nie można odnaleźć określonego pliku.See 'docker run --help'.
+
+C:\WINDOWS\system32>echo %DOCKER_HOST%
+%DOCKER_HOST%
+
+C:\WINDOWS\system32>docker ps
+error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.46/containers/json": open //./pipe/dockerDesktopLinuxEngine: Nie można odnaleźć określonego pliku.
+
+C:\WINDOWS\system32>
