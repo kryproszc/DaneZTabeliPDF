@@ -1,4 +1,120 @@
-const int NUM_REQUESTS = 1000;
-const int NUM_THREADS = 10;
-const char* HOST = "127.0.0.1";
-const char* PORT = "8080";
+
+http://dft-everace:8080/search.php?q=STRA%C5%BBACKA%203;D%C4%98BE%20WIELKIE;05-311;mazowieckie;PL
+
+
+[
+  {
+    "place_id": 4183316,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 660477426,
+    "boundingbox": [
+      "52.1977628",
+      "52.1979441",
+      "21.4439061",
+      "21.4441077"
+    ],
+    "lat": "52.197853949999995",
+    "lon": "21.44400643844642",
+    "display_name": "3, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
+    "place_rank": 30,
+    "category": "building",
+    "type": "commercial",
+    "importance": 0.71001
+  },
+  {
+    "place_id": 4195688,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 406080673,
+    "boundingbox": [
+      "52.1979023",
+      "52.1983647",
+      "21.4440821",
+      "21.4446121"
+    ],
+    "lat": "52.1981201",
+    "lon": "21.444282393677526",
+    "display_name": "Urząd Gminy Dębe Wielkie, 3, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
+    "place_rank": 30,
+    "category": "office",
+    "type": "government",
+    "importance": 0.71001
+  },
+  {
+    "place_id": 4151322,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 4350953690,
+    "boundingbox": [
+      "52.1979227",
+      "52.1980227",
+      "21.4441852",
+      "21.4442852"
+    ],
+    "lat": "52.1979727",
+    "lon": "21.4442352",
+    "display_name": "3, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
+    "place_rank": 30,
+    "category": "amenity",
+    "type": "atm",
+    "importance": 0.71001
+  },
+  {
+    "place_id": 4195703,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 660477427,
+    "boundingbox": [
+      "52.1980548",
+      "52.1982353",
+      "21.443784",
+      "21.4439815"
+    ],
+    "lat": "52.19814505",
+    "lon": "21.44388275",
+    "display_name": "He-Man, 3A, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
+    "place_rank": 30,
+    "category": "shop",
+    "type": "convenience",
+    "importance": 0.70001
+  },
+  {
+    "place_id": 4151324,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 11625817358,
+    "boundingbox": [
+      "52.1978447",
+      "52.1979447",
+      "21.4439424",
+      "21.4440424"
+    ],
+    "lat": "52.1978947",
+    "lon": "21.4439924",
+    "display_name": "Megma, 3A, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
+    "place_rank": 30,
+    "category": "shop",
+    "type": "bakery",
+    "importance": 0.70001
+  },
+  {
+    "place_id": 4195700,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 11625817357,
+    "boundingbox": [
+      "52.1977805",
+      "52.1978805",
+      "21.4439708",
+      "21.4440708"
+    ],
+    "lat": "52.1978305",
+    "lon": "21.4440208",
+    "display_name": "Benek, 3B, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
+    "place_rank": 30,
+    "category": "shop",
+    "type": "alcohol",
+    "importance": 0.70001
+  }
+]
