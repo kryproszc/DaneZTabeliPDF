@@ -1,2 +1,2 @@
-C:\WINDOWS\system32>docker ps
-error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.46/containers/json": open //./pipe/dockerDesktopLinuxEngine: Nie można odnaleźć określonego pliku.
+initializing backend: doing migrations: fatal: reading actual settings: fatal: reading C:\Users\szczkr\AppData\Roaming\Docker\settings.json: invalid character '"' after object key:value pair
+getting startup settings: getting settings: getting settings: deserializing settings file: parsing JSON: invalid character '"' after object key:value pair
