@@ -1,1 +1,2 @@
-https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module
+C:\WINDOWS\system32>docker run hello-world
+docker: error during connect: this error may indicate that the docker daemon is not running: Head "http://%2F%2F.%2Fpipe%2Fdocker_engine/_ping": open //./pipe/docker_engine: Nie można odnaleźć określonego pliku.See 'docker run --help'.
