@@ -1,966 +1,6 @@
-Dane z wątku 7
+Dane z wątku 27
 
 HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:31 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:35 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -2421,7 +1461,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:40 GMT
+Date: Fri, 06 Sep 2024 09:34:39 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -2431,7 +1471,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:40 GMT
+Date: Fri, 06 Sep 2024 09:34:39 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -3401,7 +2441,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:43 GMT
+Date: Fri, 06 Sep 2024 09:34:42 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -3721,7 +2761,27 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:44 GMT
+Date: Fri, 06 Sep 2024 09:34:43 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:43 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:43 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -4381,7 +3441,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:45 GMT
+Date: Fri, 06 Sep 2024 09:34:46 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -4391,7 +3451,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:45 GMT
+Date: Fri, 06 Sep 2024 09:34:46 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:46 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -5371,7 +4441,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:49 GMT
+Date: Fri, 06 Sep 2024 09:34:48 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:48 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -5701,7 +4781,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:50 GMT
+Date: Fri, 06 Sep 2024 09:34:49 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:49 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -6041,17 +5131,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:51 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:51 GMT
+Date: Fri, 06 Sep 2024 09:34:50 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -6711,7 +5791,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:53 GMT
+Date: Fri, 06 Sep 2024 09:34:52 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -7361,7 +6441,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:55 GMT
+Date: Fri, 06 Sep 2024 09:34:54 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -7681,7 +6761,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:56 GMT
+Date: Fri, 06 Sep 2024 09:34:55 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:55 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -8351,17 +7441,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:58 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 501
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:58 GMT
+Date: Fri, 06 Sep 2024 09:34:57 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9342,6 +8422,16 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:00 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:01 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9992,6 +9082,916 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:02 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:02 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:02 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:02 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:02 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:03 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 501
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10746276,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2254651037,"boundingbox":["50.1085351","50.1086351","19.0041396","19.0042396"],"lat":"50.1085851","lon":"19.0041896","display_name":"33, Generała Charlesa de Gaulle'a, Osiedle G, Śródmieście, Tychy, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 43-100, Polska","place_rank":30,"category":"place","type":"house","importance":1.0100099999999999}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET

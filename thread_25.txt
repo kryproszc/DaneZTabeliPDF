@@ -1,4 +1,4 @@
-Dane z wątku 5
+Dane z wątku 25
 
 HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:31 GMT
@@ -601,16 +601,6 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 939
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:36 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -781,7 +771,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:37 GMT
+Date: Fri, 06 Sep 2024 09:34:36 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -4221,7 +4211,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:56 GMT
+Date: Fri, 06 Sep 2024 09:34:55 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -4392,6 +4382,26 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:56 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 939
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:56 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 939
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:57 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -4932,16 +4942,6 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:59 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 939
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:00 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -6562,16 +6562,6 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:08 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 939
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:09 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -7271,7 +7261,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:13 GMT
+Date: Fri, 06 Sep 2024 09:35:12 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -7801,7 +7791,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:16 GMT
+Date: Fri, 06 Sep 2024 09:35:15 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -7981,7 +7971,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:17 GMT
+Date: Fri, 06 Sep 2024 09:35:16 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9042,16 +9032,6 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:22 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 939
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:23 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9862,6 +9842,26 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:27 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 939
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:28 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 939
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4079975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":459570445,"boundingbox":["52.2451393","52.2454229","21.0044137","21.0049765"],"lat":"52.2453027","lon":"21.0047237","display_name":"Aleja \"Solidarności\", Śródmieście Północne, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333},{"place_id":4093067,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":781070408,"boundingbox":["52.2458216","52.2459832","21.0045808","21.0062967"],"lat":"52.2459337","lon":"21.0053994","display_name":"Aleja \"Solidarności\", Muranów II, Muranów, Śródmieście, Warszawa, województwo mazowieckie, 00-240, Polska","place_rank":26,"category":"highway","type":"secondary","importance":0.7733433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:28 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET

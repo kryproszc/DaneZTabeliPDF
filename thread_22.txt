@@ -1,376 +1,6 @@
-Dane z wątku 2
+Dane z wątku 22
 
 HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:35 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:35 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -611,7 +241,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:37 GMT
+Date: Fri, 06 Sep 2024 09:34:36 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -1071,7 +701,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:40 GMT
+Date: Fri, 06 Sep 2024 09:34:39 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -1231,7 +861,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:41 GMT
+Date: Fri, 06 Sep 2024 09:34:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:40 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -2501,6 +2141,26 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:48 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:49 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:49 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -3461,7 +3121,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:55 GMT
+Date: Fri, 06 Sep 2024 09:34:54 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -3932,26 +3592,6 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:57 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:57 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:58 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -4752,16 +4392,6 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:02 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:03 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -5081,7 +4711,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:05 GMT
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -5821,16 +5461,6 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:09 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 457
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:10 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -5971,6 +5601,16 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:10 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:11 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -6421,7 +6061,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:14 GMT
+Date: Fri, 06 Sep 2024 09:35:13 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -6571,7 +6211,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:15 GMT
+Date: Fri, 06 Sep 2024 09:35:14 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -8921,7 +8561,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:32 GMT
+Date: Fri, 06 Sep 2024 09:35:31 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9191,7 +8831,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:34 GMT
+Date: Fri, 06 Sep 2024 09:35:33 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9331,7 +8971,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:35 GMT
+Date: Fri, 06 Sep 2024 09:35:34 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9992,6 +9632,366 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:39 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:39 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:40 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:42 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:42 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:42 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:42 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:42 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:42 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 457
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10708592,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":26344197,"boundingbox":["50.063541","50.0635908","19.9467724","19.9473311"],"lat":"50.0635486","lon":"19.9468574","display_name":"Doktora Ludwika Zamenhofa, Wesoła I, Stare Miasto, Kraków, województwo małopolskie, 31-025, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.8633433333333334}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:42 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET

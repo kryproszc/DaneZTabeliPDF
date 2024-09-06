@@ -1,4 +1,4 @@
-Dane z wątku 4
+Dane z wątku 14
 
 HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:36 GMT
@@ -71,7 +71,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:37 GMT
+Date: Fri, 06 Sep 2024 09:34:36 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -641,7 +641,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:42 GMT
+Date: Fri, 06 Sep 2024 09:34:41 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -871,7 +871,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:44 GMT
+Date: Fri, 06 Sep 2024 09:34:43 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -991,7 +991,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:45 GMT
+Date: Fri, 06 Sep 2024 09:34:44 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -2511,7 +2511,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:58 GMT
+Date: Fri, 06 Sep 2024 09:34:57 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -2631,7 +2631,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:59 GMT
+Date: Fri, 06 Sep 2024 09:34:58 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -3221,7 +3221,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:04 GMT
+Date: Fri, 06 Sep 2024 09:35:03 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -3332,6 +3332,16 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 918
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -3882,16 +3892,6 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:09 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 918
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:10 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -4221,7 +4221,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:13 GMT
+Date: Fri, 06 Sep 2024 09:35:12 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -4442,6 +4442,16 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:14 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 918
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:15 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -5092,16 +5102,6 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:20 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 918
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:21 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -6021,16 +6021,6 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:29 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 918
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:30 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -6121,7 +6111,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:31 GMT
+Date: Fri, 06 Sep 2024 09:35:30 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -8121,16 +8111,6 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:49 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 918
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:50 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -8451,7 +8431,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:53 GMT
+Date: Fri, 06 Sep 2024 09:35:52 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -8561,7 +8541,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:54 GMT
+Date: Fri, 06 Sep 2024 09:35:53 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -8782,16 +8762,6 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:55 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 918
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:56 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9251,16 +9221,6 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:59 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 918
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:36:00 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -9362,16 +9322,6 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:36:00 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 918
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:36:01 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9831,16 +9781,6 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:36:04 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 918
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:36:05 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -9942,6 +9882,66 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:36:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 918
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:36:06 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 918
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:36:06 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 918
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:36:06 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 918
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:36:06 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 918
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:36:06 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 918
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":4027805,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1110828273,"boundingbox":["52.2079491","52.2084884","21.01421","21.0144501"],"lat":"52.2081888","lon":"21.0143526","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"residential","importance":0.6633433333333333},{"place_id":4041847,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":1304401769,"boundingbox":["52.2084884","52.2086169","21.0141488","21.01421"],"lat":"52.2084884","lon":"21.01421","display_name":"Wiśniowa, Osiedle Batorego, Stary Mokotów, Mokotów, Warszawa, województwo mazowieckie, 02-520, Polska","place_rank":26,"category":"highway","type":"construction","importance":0.6633433333333333}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:36:06 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET

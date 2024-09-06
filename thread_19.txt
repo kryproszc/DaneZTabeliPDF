@@ -1,396 +1,6 @@
-Dane z wątku 9
+Dane z wątku 19
 
 HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:31 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:32 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:33 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:34 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:34 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -921,16 +531,6 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:36 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:37 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -1151,7 +751,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:38 GMT
+Date: Fri, 06 Sep 2024 09:34:37 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -1381,7 +981,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:39 GMT
+Date: Fri, 06 Sep 2024 09:34:38 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -2081,7 +1681,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:42 GMT
+Date: Fri, 06 Sep 2024 09:34:41 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:41 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -2541,7 +2151,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:44 GMT
+Date: Fri, 06 Sep 2024 09:34:43 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -2771,6 +2381,36 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:44 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:44 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:45 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:45 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -3251,7 +2891,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:47 GMT
+Date: Fri, 06 Sep 2024 09:34:46 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -3721,7 +3361,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:49 GMT
+Date: Fri, 06 Sep 2024 09:34:48 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:48 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -3961,7 +3611,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:50 GMT
+Date: Fri, 06 Sep 2024 09:34:49 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:49 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -4441,16 +4101,6 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:51 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:52 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -4682,6 +4332,26 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:52 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:52 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:53 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -5131,7 +4801,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:34:55 GMT
+Date: Fri, 06 Sep 2024 09:34:54 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -5351,6 +5021,16 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:55 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:56 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -6071,6 +5751,16 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:34:58 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:34:59 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
@@ -6542,6 +6232,16 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:00 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:01 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -7021,17 +6721,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:03 GMT
-Server: Apache/2.4.52 (Ubuntu)
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: OPTIONS,GET
-Content-Length: 488
-Keep-Alive: timeout=5
-Connection: Keep-Alive
-Content-Type: application/json; charset=UTF-8
-
-[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:03 GMT
+Date: Fri, 06 Sep 2024 09:35:02 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -7472,6 +7162,36 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:04 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:05 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -7901,7 +7621,7 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:06 GMT
+Date: Fri, 06 Sep 2024 09:35:07 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -8301,7 +8021,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:09 GMT
+Date: Fri, 06 Sep 2024 09:35:08 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:08 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -8701,7 +8431,17 @@ Connection: Keep-Alive
 Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
-Date: Fri, 06 Sep 2024 09:35:11 GMT
+Date: Fri, 06 Sep 2024 09:35:10 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:10 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9312,6 +9052,16 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:13 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:14 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
@@ -9992,6 +9742,256 @@ Content-Type: application/json; charset=UTF-8
 
 [{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
 Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:17 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: OPTIONS,GET
+Content-Length: 488
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: application/json; charset=UTF-8
+
+[{"place_id":10456946,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":202150579,"boundingbox":["50.2508373","50.2510674","19.0229031","19.0230963"],"lat":"50.251001","lon":"19.023006603691506","display_name":"15e, Józefa Lompy, Karbowa, Śródmieście, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-038, Polska","place_rank":30,"category":"building","type":"apartments","importance":0.81001}]HTTP/1.1 200 OK
+Date: Fri, 06 Sep 2024 09:35:18 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: OPTIONS,GET
