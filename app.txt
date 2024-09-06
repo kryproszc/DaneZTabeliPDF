@@ -1,1 +1,1 @@
-error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.46/containers/json": open //./pipe/dockerDesktopLinuxEngine: Nie można odnaleźć określonego pliku.
+bootstrapping in the main distro: listing WSL distros: running WSL command wsl.exe C:\WINDOWS\System32\wsl.exe -l -v --all: context deadline exceeded
