@@ -1,1 +1,9 @@
 cd /mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx
+
+
+szczkr@DIU-01:/mnt/c/WINDOWS/system32$ cd /mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx
+szczkr@DIU-01:/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx$ ls -l
+total 24
+drwxr-xr-x 11 root root  4096 Sep  6 14:27 data
+drwxr-xr-x  3 root root  4096 Sep  5 13:12 isocache
+drwx------  2 root root 16384 Sep  5 13:12 lost+found
