@@ -1,9 +1,10 @@
-C:\WINDOWS\system32>docker image ls
+C:\WINDOWS\system32>docker container ls -a
+CONTAINER ID   IMAGE                    COMMAND           CREATED       STATUS                   PORTS     NAMES
+7be2ad39e71f   mediagis/nominatim:4.4   "/app/start.sh"   5 hours ago   Exited (1) 3 hours ago             nominatim
+
+C:\WINDOWS\system32>docker image ls -a
 REPOSITORY           TAG       IMAGE ID       CREATED         SIZE
 mediagis/nominatim   4.4       45cc2a01b8ce   8 days ago      1.61GB
 hello-world          latest    53cc4d415d83   16 months ago   24.4kB
-
-C:\WINDOWS\system32>docker container ls
-CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 C:\WINDOWS\system32>
