@@ -1,4 +1,4 @@
-wsl --mount C:\Users\szczkr\AppData\Local\Docker\wsl\main\ext4.vhdx
+wsl --mount C:\Users\szczkr\AppData\Local\Docker\wsl\main\ext4.vhdx --type ext4
 
 docker run -d -p 8080:8080 --name nominatim -v "C:\Users\szczkr\AppData\Local\Docker\wsl\disk\docker_data.vhdx:/var/lib/postgresql/14/main" mediagis/nominatim:4.4
 
