@@ -1,1 +1,7 @@
-docker commit nominatim nominatim2
+Microsoft Windows [Version 10.0.19045.4780]
+(c) Microsoft Corporation. Wszelkie prawa zastrzeżone.
+
+C:\WINDOWS\system32>docker commit nominatim nominatim2
+sha256:fe63b1fba47a79adca2d6c15bb16dc224bb5193c7ab00a59e53d42452aedbeb1
+
+C:\WINDOWS\system32>
