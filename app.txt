@@ -1,2 +1,1 @@
-ocker commit nominatim nominatim_clone
-docker run -d -p 9090:8080 --name nominatim_clone nominatim_clone
+error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.46/containers/json": open //./pipe/dockerDesktopLinuxEngine: Nie można odnaleźć określonego pliku.
