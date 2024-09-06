@@ -1,1 +1,191 @@
-docker run -d -p 8080:8080 --name nominatim -e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf -v "/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx/data/docker/overlay2/b46e7a395fd62202e9b2e8ae18377f553fc9abd89e2be2c6540ae6c25434d204/diff/nominatim:/var/lib/postgresql/14/main" mediagis/nominatim:4.4
+
+C:\WINDOWS\system32>docker logs -f nominatim
++ tailpid=0
++ replicationpid=0
++ trap stopServices SIGTERM TERM INT
++ /app/config.sh
++ id nominatim
++ useradd -m -p qaIACxO6wMR3 nominatim
++ IMPORT_FINISHED=/var/lib/postgresql/14/main/import-finished
++ '[' '!' -f /var/lib/postgresql/14/main/import-finished ']'
++ /app/init.sh
++ OSMFILE=/nominatim/data.osm.pbf
++ CURL=("curl" "-L" "-A" "${USER_AGENT}" "--fail-with-body")
++ SCP='sshpass -p DMg5bmLPY7npHL2Q scp -o StrictHostKeyChecking=no u355874-sub1@u355874-sub1.your-storagebox.de'
++ '[' -z '' ']'
+++ nproc
++ THREADS=32
++ '[' '' = true ']'
++ '[' -f '' ']'
++ echo 'Skipping optional Wikipedia importance import'
++ '[' '' = true ']'
++ '[' -f '' ']'
++ echo 'Skipping optional GB postcode import'
++ '[' '' = true ']'
++ '[' -f '' ']'
++ echo 'Skipping optional US postcode import'
++ '[' '' = true ']'
++ '[' -f '' ']'
++ echo 'Skipping optional Tiger addresses import'
++ '[' https://download.geofabrik.de/europe/poland-latest.osm.pbf '!=' '' ']'
++ echo Downloading OSM extract from https://download.geofabrik.de/europe/poland-latest.osm.pbf
++ curl -L -A mediagis/nominatim-docker:4.4.1 --fail-with-body https://download.geofabrik.de/europe/poland-latest.osm.pbf -C - --create-dirs -o /nominatim/data.osm.pbf
+Skipping optional Wikipedia importance import
+Skipping optional GB postcode import
+Skipping optional US postcode import
+Skipping optional Tiger addresses import
+Downloading OSM extract from https://download.geofabrik.de/europe/poland-latest.osm.pbf
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1760M  100 1760M    0     0  5131k      0  0:05:51  0:05:51 --:--:-- 9446k
++ '[' '' '!=' '' ']'
++ '[' '!' -f /var/lib/postgresql/14/main/PG_VERSION ']'
++ chown postgres:postgres /var/lib/postgresql/14/main
++ sudo -u postgres /usr/lib/postgresql/14/bin/initdb -D /var/lib/postgresql/14/main
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/14/main ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+initdb: warning: enabling "trust" authentication for local connections
+You can change this by editing pg_hba.conf or using the option -A, or
+syncing data to disk ... ok
+
+--auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    /usr/lib/postgresql/14/bin/pg_ctl -D /var/lib/postgresql/14/main -l logfile start
+
++ cp /etc/postgresql/14/main/conf.d/postgres-import.conf.disabled /etc/postgresql/14/main/conf.d/postgres-import.conf
++ sudo service postgresql start
+ * Starting PostgreSQL 14 database server
+   ...done.
++ sudo -E -u postgres psql postgres -tAc 'SELECT 1 FROM pg_roles WHERE rolname='\''nominatim'\'''
++ grep -q 1
++ sudo -E -u postgres createuser -s nominatim
++ sudo -E -u postgres psql postgres -tAc 'SELECT 1 FROM pg_roles WHERE rolname='\''www-data'\'''
++ grep -q 1
++ sudo -E -u postgres createuser -SDR www-data
++ sudo -E -u postgres psql postgres -tAc 'ALTER USER nominatim WITH ENCRYPTED PASSWORD '\''qaIACxO6wMR3'\'''
+ALTER ROLE
++ sudo -E -u postgres psql postgres -tAc 'ALTER USER "www-data" WITH ENCRYPTED PASSWORD '\''qaIACxO6wMR3'\'''
+ALTER ROLE
++ sudo -E -u postgres psql postgres -c 'DROP DATABASE IF EXISTS nominatim'
+DROP DATABASE
+NOTICE:  database "nominatim" does not exist, skipping
++ chown -R nominatim:nominatim /nominatim
++ cd /nominatim
++ '[' '' = true ']'
++ sudo -E -u nominatim nominatim import --osm-file /nominatim/data.osm.pbf --threads 32
+2024-09-06 14:12:31: Using project directory: /nominatim
+2024-09-06 14:12:34: Creating database
+2024-09-06 14:12:35: Setting up country tables
+2024-09-06 14:12:36: Importing OSM data file
+2024-09-06 14:12:36  osm2pgsql version 1.11.0
+2024-09-06 14:12:36  Database version: 14.13 (Ubuntu 14.13-0ubuntu0.22.04.1)
+2024-09-06 14:12:36  PostGIS version: 3.2
+2024-09-06 14:12:36  Storing properties to table '"public"."osm2pgsql_properties"'.
+Processing: Node(216972k 769.4k/s) Way(30095k 53.74k/s) Relation(0 0.0/s)
+2024-09-06 14:26:38  ERROR: DB copy thread failed: Ending COPY mode for 'planet_osm_ways' failed: ERROR:  could not extend file "base/16386/19429.4": No space left on device
+HINT:  Check free disk space.
+CONTEXT:  COPY planet_osm_ways, line 23019040
+.
+Traceback (most recent call last):
+  File "/usr/local/bin/nominatim", line 12, in <module>
+    exit(cli.nominatim(module_dir='/usr/local/lib/nominatim/module',
+  File "/usr/local/lib/nominatim/lib-python/nominatim/cli.py", line 228, in nominatim
+    return get_set_parser().run(**kwargs)
+  File "/usr/local/lib/nominatim/lib-python/nominatim/cli.py", line 121, in run
+    return args.command.run(args)
+  File "/usr/local/lib/nominatim/lib-python/nominatim/clicmd/setup.py", line 115, in run
+    database_import.import_osm_data(files,
+  File "/usr/local/lib/nominatim/lib-python/nominatim/tools/database_import.py", line 133, in import_osm_data
+    run_osm2pgsql(options)
+  File "/usr/local/lib/nominatim/lib-python/nominatim/tools/exec_utils.py", line 76, in run_osm2pgsql
+    subprocess.run(cmd, cwd=options.get('cwd', '.'),
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/usr/local/lib/nominatim/osm2pgsql', '--slim', '--log-progress', 'true', '--number-processes', '1', '--cache', '3521', '--style', '/usr/local/etc/nominatim/import-full.lua', '--output', 'flex', '--create', '/nominatim/data.osm.pbf']' returned non-zero exit status 2.
++ tailpid=0
++ replicationpid=0
++ trap stopServices SIGTERM TERM INT
++ /app/config.sh
++ id nominatim
+user nominatim already exists
++ echo 'user nominatim already exists'
++ IMPORT_FINISHED=/var/lib/postgresql/14/main/import-finished
++ '[' '!' -f /var/lib/postgresql/14/main/import-finished ']'
++ /app/init.sh
++ OSMFILE=/nominatim/data.osm.pbf
++ CURL=("curl" "-L" "-A" "${USER_AGENT}" "--fail-with-body")
++ SCP='sshpass -p DMg5bmLPY7npHL2Q scp -o StrictHostKeyChecking=no u355874-sub1@u355874-sub1.your-storagebox.de'
++ '[' -z '' ']'
+++ nproc
++ THREADS=32
++ '[' '' = true ']'
++ '[' -f '' ']'
++ echo 'Skipping optional Wikipedia importance import'
++ '[' '' = true ']'
++ '[' -f '' ']'
++ echo 'Skipping optional GB postcode import'
++ '[' '' = true ']'
++ '[' -f '' ']'
++ echo 'Skipping optional US postcode import'
++ '[' '' = true ']'
++ '[' -f '' ']'
++ echo 'Skipping optional Tiger addresses import'
++ '[' https://download.geofabrik.de/europe/poland-latest.osm.pbf '!=' '' ']'
+Skipping optional Wikipedia importance import
+Skipping optional GB postcode import
+Skipping optional US postcode import
+Skipping optional Tiger addresses import
+Downloading OSM extract from https://download.geofabrik.de/europe/poland-latest.osm.pbf
++ echo Downloading OSM extract from https://download.geofabrik.de/europe/poland-latest.osm.pbf
++ curl -L -A mediagis/nominatim-docker:4.4.1 --fail-with-body https://download.geofabrik.de/europe/poland-latest.osm.pbf -C - --create-dirs -o /nominatim/data.osm.pbf
+** Resuming transfer from byte position 1845847737
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0 1760M    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
++ '[' '' '!=' '' ']'
++ '[' '!' -f /var/lib/postgresql/14/main/PG_VERSION ']'
++ cp /etc/postgresql/14/main/conf.d/postgres-import.conf.disabled /etc/postgresql/14/main/conf.d/postgres-import.conf
++ sudo service postgresql start
+ * Starting PostgreSQL 14 database server
+   ...done.
++ sudo -E -u postgres psql postgres -tAc 'SELECT 1 FROM pg_roles WHERE rolname='\''nominatim'\'''
++ grep -q 1
++ sudo -E -u postgres psql postgres -tAc 'SELECT 1 FROM pg_roles WHERE rolname='\''www-data'\'''
++ grep -q 1
++ sudo -E -u postgres psql postgres -tAc 'ALTER USER nominatim WITH ENCRYPTED PASSWORD '\''qaIACxO6wMR3'\'''
+ALTER ROLE
++ sudo -E -u postgres psql postgres -tAc 'ALTER USER "www-data" WITH ENCRYPTED PASSWORD '\''qaIACxO6wMR3'\'''
+ALTER ROLE
++ sudo -E -u postgres psql postgres -c 'DROP DATABASE IF EXISTS nominatim'
+DROP DATABASE
++ chown -R nominatim:nominatim /nominatim
++ cd /nominatim
++ '[' '' = true ']'
++ sudo -E -u nominatim nominatim import --osm-file /nominatim/data.osm.pbf --threads 32
+2024-09-06 14:27:08: Using project directory: /nominatim
+2024-09-06 14:27:11: Creating database
+2024-09-06 14:27:12: Setting up country tables
+2024-09-06 14:27:13: Importing OSM data file
+2024-09-06 14:27:13  osm2pgsql version 1.11.0
+2024-09-06 14:27:13  Database version: 14.13 (Ubuntu 14.13-0ubuntu0.22.04.1)
+2024-09-06 14:27:13  PostGIS version: 3.2
+2024-09-06 14:27:13  Storing properties to table '"public"."osm2pgsql_properties"'.
+Processing: Node(216972k 772.1k/s) Way(7645k 40.45k/s) Relation(0 0.0/s)
