@@ -1,181 +1,215 @@
+#include <iostream>
+#include <vector>
+#include <thread>
+#include <sys/epoll.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <cstring>
+#include <fstream>
+#include <chrono>
+#include <memory>
+#include <algorithm>
+#include <iomanip>
+#include <sstream>
 
-http://dft-everace:8080/search.php?q=STRA%C5%BBACKA%203;D%C4%98BE%20WIELKIE;05-311;mazowieckie;PL
+const int NUM_REQUESTS = 100;
+const int NUM_THREADS = 10;
+const char* HOST = "127.0.0.1";
+const char* PORT = "8080";
 
-STRAŻACKA 3;DĘBE WIELKIE;05-311;mazowieckie;PL
-[
-  {
-    "place_id": 4183316,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "way",
-    "osm_id": 660477426,
-    "boundingbox": [
-      "52.1977628",
-      "52.1979441",
-      "21.4439061",
-      "21.4441077"
-    ],
-    "lat": "52.197853949999995",
-    "lon": "21.44400643844642",
-    "display_name": "3, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
-    "place_rank": 30,
-    "category": "building",
-    "type": "commercial",
-    "importance": 0.71001
-  },
-  {
-    "place_id": 4195688,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "way",
-    "osm_id": 406080673,
-    "boundingbox": [
-      "52.1979023",
-      "52.1983647",
-      "21.4440821",
-      "21.4446121"
-    ],
-    "lat": "52.1981201",
-    "lon": "21.444282393677526",
-    "display_name": "Urząd Gminy Dębe Wielkie, 3, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
-    "place_rank": 30,
-    "category": "office",
-    "type": "government",
-    "importance": 0.71001
-  },
-  {
-    "place_id": 4151322,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "node",
-    "osm_id": 4350953690,
-    "boundingbox": [
-      "52.1979227",
-      "52.1980227",
-      "21.4441852",
-      "21.4442852"
-    ],
-    "lat": "52.1979727",
-    "lon": "21.4442352",
-    "display_name": "3, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
-    "place_rank": 30,
-    "category": "amenity",
-    "type": "atm",
-    "importance": 0.71001
-  },
-  {
-    "place_id": 4195703,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "way",
-    "osm_id": 660477427,
-    "boundingbox": [
-      "52.1980548",
-      "52.1982353",
-      "21.443784",
-      "21.4439815"
-    ],
-    "lat": "52.19814505",
-    "lon": "21.44388275",
-    "display_name": "He-Man, 3A, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
-    "place_rank": 30,
-    "category": "shop",
-    "type": "convenience",
-    "importance": 0.70001
-  },
-  {
-    "place_id": 4151324,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "node",
-    "osm_id": 11625817358,
-    "boundingbox": [
-      "52.1978447",
-      "52.1979447",
-      "21.4439424",
-      "21.4440424"
-    ],
-    "lat": "52.1978947",
-    "lon": "21.4439924",
-    "display_name": "Megma, 3A, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
-    "place_rank": 30,
-    "category": "shop",
-    "type": "bakery",
-    "importance": 0.70001
-  },
-  {
-    "place_id": 4195700,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "node",
-    "osm_id": 11625817357,
-    "boundingbox": [
-      "52.1977805",
-      "52.1978805",
-      "21.4439708",
-      "21.4440708"
-    ],
-    "lat": "52.1978305",
-    "lon": "21.4440208",
-    "display_name": "Benek, 3B, Strażacka, Dębe Wielkie, gmina Dębe Wielkie, powiat miński, województwo mazowieckie, 05-311, Polska",
-    "place_rank": 30,
-    "category": "shop",
-    "type": "alcohol",
-    "importance": 0.70001
-  }
-]
+const std::vector<std::string> ADDRESSES = {
+    "AL. TADEUSZA KOŚCIUSZKI 17;90-418;ŁÓDŹ;łódzkie;Polska",
+    "15A;86-302;ROZGARTY;kujawsko-pomorskie;Polska",
+    "LUDWIKA ZAMENHOFA 5/10;31-025;KRAKÓW;małopolskie;Polska",
+    "UL. SPACEROWA 11;09-500;GOSTYNIN;mazowieckie;Polska",
+    "WIŚNIOWA 38/1A;02-520;WARSZAWA;mazowieckie;Polska",
+    "Aleja Solidarności 63;00-240;Warszawa;mazowieckie;Polska",
+    "BRAK 0;77-207;PIASZCZYNA;pomorskie;Polska;",
+    "GEN. DE GAULLE'A CHARLESA 33;43-100;TYCHY;śląskie",
+    "Os. Stefana Batorego 33;60-687;Poznań;wielkopolskie;Polska",
+    "LOMPY JÓZEFA 15E;40-038;KATOWICE;śląskie;Polska"
+};
 
+std::string url_encode(const std::string &value) {
+    std::ostringstream escaped;
+    escaped.fill('0');
+    escaped << std::hex;
 
-#####
-100-LECIA ODZYSKANIA NIEPODLEGŁOŚCI 2;MOSZCZENICA;97-310;łódzkie;PL
+    for (char c : value) {
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+            escaped << c;
+        } else {
+            escaped << '%' << std::setw(2) << std::uppercase << int((unsigned char) c);
+        }
+    }
 
-[
-  {
-    "place_id": 7784172,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "way",
-    "osm_id": 848449809,
-    "boundingbox": [
-      "51.5026187",
-      "51.5029661",
-      "19.7032175",
-      "19.7038783"
-    ],
-    "lat": "51.502769900000004",
-    "lon": "19.703556531809074",
-    "display_name": "Gminny Ośrodek Kultury i Sportu im. Jana Justyny w Moszczenicy, 2, 100-lecia Odzyskania Niepodległości, Osiedle Batory, Moszczenica Poduchowna, Moszczenica, gmina Moszczenica, powiat piotrkowski, województwo łódzkie, 97-310, Polska",
-    "place_rank": 30,
-    "category": "amenity",
-    "type": "community_centre",
-    "importance": 0.91001
-  },
-  {
-    "place_id": 7802793,
-    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "node",
-    "osm_id": 7941859127,
-    "boundingbox": [
-      "51.502739",
-      "51.502839",
-      "19.7032808",
-      "19.7033808"
-    ],
-    "lat": "51.502789",
-    "lon": "19.7033308",
-    "display_name": "2, 100-lecia Odzyskania Niepodległości, Osiedle Batory, Moszczenica Poduchowna, Moszczenica, gmina Moszczenica, powiat piotrkowski, województwo łódzkie, 97-310, Polska",
-    "place_rank": 30,
-    "category": "place",
-    "type": "house",
-    "importance": 0.91001
-  }
-]
+    return escaped.str();
+}
 
-###
-jak bylo 52.550401260401316;19.691506055971388;ulica Bielska 51, 09-400, Płock, Mazowieckie
+int create_nonblocking_socket(const char* host, const char* port) {
+    struct addrinfo hints, *res;
+    int sockfd;
 
-przykład, że wyższe     "importance": 0.92001 daje lepszy wynikk, jak google. dodatkowo zageokodowane
-lepiej niż w pythonie
-52.40132621089264;20.9369847975082;aleja 3 Maja 6, 05-120, Legionowo, Powiat Legionowski, Woj. Mazowieckie
-52.3000057331752;21.10407148539278;ulica ks. Jerzego Popiełuszki 16, 05-091, Ząbki, Wołomiński, Mazowieckie
-tutaj i openstreat i python zle geokoduje
-Sugajenko 9A, 13-306, Sugajenko, Kurzętnik, Powiat Nowomiejski, Woj. Warmińsko-Mazurskie
-trafiamy  w budynek a python nie
-54.32920879548127;18.599508060185396;ulica Rogalińska 5C, 80-809, Gdańsk, Woj. Pomorskie
-nasz sb nie radzi z M. ale jak wpisze Marii to jest ok
-M. Curie-Skłodowskiej 8, 43-100, Tychy
-obydwa maja pomylke
-51.9352612291899;15.48990876974018;ulica II Armii 2, 65-936, Zielona Góra, Woj. Lubuskie
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+
+    if (getaddrinfo(host, port, &hints, &res) != 0) {
+        perror("getaddrinfo");
+        return -1;
+    }
+
+    sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if (sockfd == -1) {
+        perror("socket");
+        freeaddrinfo(res);
+        return -1;
+    }
+
+    int flags = fcntl(sockfd, F_GETFL, 0);
+    if (fcntl(sockfd, F_SETFL, flags | O_NONBLOCK) == -1) {
+        perror("fcntl");
+        close(sockfd);
+        freeaddrinfo(res);
+        return -1;
+    }
+
+    if (connect(sockfd, res->ai_addr, res->ai_addrlen) == -1) {
+        if (errno != EINPROGRESS) {
+            perror("connect");
+            close(sockfd);
+            freeaddrinfo(res);
+            return -1;
+        }
+    }
+
+    freeaddrinfo(res);
+    return sockfd;
+}
+
+void perform_requests(int thread_id, std::shared_ptr<std::vector<std::string>>& data) {
+    std::string address = url_encode(ADDRESSES[thread_id]);
+    std::string request = "GET /search.php?q=" + address + " HTTP/1.1\r\nHost: 127.0.0.1:8080\r\nConnection: keep-alive\r\n\r\n";
+
+    (*data)[thread_id] = "Dane z wątku " + std::to_string(thread_id) + "\n\n";
+
+    int epoll_fd = epoll_create1(0);
+    if (epoll_fd == -1) {
+        perror("epoll_create1");
+        exit(1);
+    }
+
+    int sockfd = create_nonblocking_socket(HOST, PORT);
+    if (sockfd == -1) {
+        exit(1);
+    }
+
+    epoll_event ev, events[NUM_REQUESTS];
+
+    ev.events = EPOLLOUT | EPOLLET;
+    ev.data.fd = sockfd;
+    if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sockfd, &ev) == -1) {
+        perror("epoll_ctl: EPOLLOUT");
+        close(sockfd);
+        exit(1);
+    }
+
+    int requests_sent = 0;
+    bool keep_going = true;
+
+    while (keep_going) {
+        int nfds = epoll_wait(epoll_fd, events, NUM_REQUESTS, -1);
+        if (nfds == -1) {
+            perror("epoll_wait");
+            exit(1);
+        }
+
+        for (int n = 0; n < nfds; ++n) {
+            if (events[n].events & EPOLLOUT && requests_sent < NUM_REQUESTS) {
+                ssize_t bytes_sent = send(sockfd, request.c_str(), request.length(), 0);
+                if (bytes_sent == -1) {
+                    perror("send");
+                    keep_going = false;
+                    break;
+                }
+                requests_sent++;
+                ev.events = EPOLLIN | EPOLLET;
+                ev.data.fd = sockfd;
+                if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1) {
+                    perror("epoll_ctl: EPOLLIN");
+                    keep_going = false;
+                    break;
+                }
+            } else if (events[n].events & EPOLLIN) {
+                char buffer[4096];
+                std::string response;
+                ssize_t bytes_read;
+                while ((bytes_read = read(sockfd, buffer, sizeof(buffer))) > 0) {
+                    response.append(buffer, bytes_read);
+                }
+
+                if (bytes_read == -1 && errno != EAGAIN && errno != EWOULDBLOCK) {
+                    perror("read");
+                    keep_going = false;
+                } else if (bytes_read == 0) {
+                    keep_going = false;
+                } else {
+                    if (requests_sent < NUM_REQUESTS) {
+                        ev.events = EPOLLOUT | EPOLLET;
+                        ev.data.fd = sockfd;
+                        if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1) {
+                            perror("epoll_ctl: EPOLLOUT");
+                            keep_going = false;
+                        }
+                    } else {
+                        keep_going = false;
+                    }
+                }
+
+                if (!response.empty()) {
+                    (*data)[thread_id] += response;
+                }
+            }
+        }
+    }
+
+    close(sockfd);
+    close(epoll_fd);
+}
+
+int main() {
+    auto start_time = std::chrono::high_resolution_clock::now();
+
+    std::vector<std::thread> threads;
+    auto data = std::make_shared<std::vector<std::string>>(NUM_THREADS);
+
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        threads.emplace_back(perform_requests, i, std::ref(data));
+    }
+
+    for (auto& t : threads) {
+        t.join();
+    }
+
+    for (size_t i = 0; i < data->size(); ++i) {
+        std::string filename = "thread_" + std::to_string(i) + ".txt";
+        std::ofstream output_file(filename);
+
+        if (!output_file.is_open()) {
+            std::cerr << "Nie można otworzyć pliku: " << filename << std::endl;
+            continue;
+        }
+
+        output_file << (*data)[i];
+        output_file.close();
+    }
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end_time - start_time;
+    std::cout << "czas: " << elapsed.count() << " s" << std::endl;
+
+    return 0;
+}
