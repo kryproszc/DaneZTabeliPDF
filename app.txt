@@ -1,6 +1,1 @@
-C:\Users\szczkr\AppData\Local\Docker\wsl>bash
-szczkr@DIU-01:/mnt/c/Users/szczkr/AppData/Local/Docker/wsl$ ls -l
-total 0
-drwxrwxrwx 1 szczkr szczkr 512 Sep  5 13:11 disk
-drwxrwxrwx 1 szczkr szczkr 512 Sep  5 13:11 main
-szczkr@DIU-01:/mnt/c/Users/szczkr/AppData/Local/Docker/wsl$
+C:\Users\szczkr\AppData\Local\Docker\wsl\disk
