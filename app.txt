@@ -1,14 +1,3 @@
 cd /mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx
-
-
-total 40
-drwxr-xr-x  3 root root 4096 Sep  5 13:12 cni
-drwxr-xr-x  2 root root 4096 Sep  5 13:12 containerd
-drwx------  4 root root 4096 Sep  6 14:27 containerd-stargz-grpc
-drwx--x--x  3 root root 4096 Sep  5 13:12 desktop-containerd
-drwx--x--- 14 root root 4096 Sep  6 15:18 docker
-drwxr-xr-x  2 root root 4096 Sep  5 13:12 kubeadm
-drwxr-xr-x  2 root root 4096 Sep  5 13:12 kubelet-plugins
--rw-r--r--  1 root root   37 Sep  5 13:12 machine-id
-drwxr-xr-x  4 root root 4096 Sep  5 13:12 nfs
-drwxr-xr-x  3 root root 4096 Sep  5 13:12 wasm
+find . -type d -name "*nominatim*"
+grep -r "nominatim" .
