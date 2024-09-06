@@ -1,18 +1,1 @@
-szczkr@DIU-01:/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx$ sudo find . -type d -name "nominatim*"
-[sudo] password for szczkr:
-./data/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/snapshots/2/fs/usr/local/etc/nominatim
-./data/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/snapshots/2/fs/usr/local/lib/nominatim
-./data/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/snapshots/2/fs/usr/local/lib/nominatim/lib-python/nominatim
-./data/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/snapshots/2/fs/usr/local/share/nominatim
-./data/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/snapshots/4/fs/nominatim
-./data/docker/overlay2/b46e7a395fd62202e9b2e8ae18377f553fc9abd89e2be2c6540ae6c25434d204/diff/nominatim
-./data/docker/overlay2/b54317c173a7f6c837a2007b29a11b72b0669b63cb55a27622254167dfeddabe/diff/nominatim
-./data/docker/overlay2/b5642c4635a4472c1920bca574dbdd8077511f3f06aa55ca21e4a8e1fedf6006/diff/nominatim
-./data/docker/overlay2/b5642c4635a4472c1920bca574dbdd8077511f3f06aa55ca21e4a8e1fedf6006/diff/home/nominatim
-./data/docker/overlay2/42caa5f690ae8fb4acda10fb9b606a352bea482bac7c47628fd323f20752afbe/diff/usr/local/etc/nominatim
-./data/docker/overlay2/42caa5f690ae8fb4acda10fb9b606a352bea482bac7c47628fd323f20752afbe/diff/usr/local/lib/nominatim
-./data/docker/overlay2/42caa5f690ae8fb4acda10fb9b606a352bea482bac7c47628fd323f20752afbe/diff/usr/local/lib/nominatim/lib-python/nominatim
-./data/docker/overlay2/42caa5f690ae8fb4acda10fb9b606a352bea482bac7c47628fd323f20752afbe/diff/usr/local/share/nominatim
-./data/docker/overlay2/58e47a08dd6965eb2c5416a621367a67177fee17a981b405d6057ff7f1c05808/diff/nominatim
-./data/docker/overlay2/58e47a08dd6965eb2c5416a621367a67177fee17a981b405d6057ff7f1c05808/diff/home/nominatim
-szczkr@DIU-01:/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx$
+docker run -d -p 8080:8080 --name nominatim -v "/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx/data/docker/overlay2/b46e7a395fd62202e9b2e8ae18377f553fc9abd89e2be2c6540ae6c25434d204/diff/nominatim:/var/lib/postgresql/14/main" mediagis/nominatim:4.4
