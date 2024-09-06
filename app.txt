@@ -1,1 +1,3 @@
-bootstrapping in the main distro: listing WSL distros: running WSL command wsl.exe C:\WINDOWS\System32\wsl.exe -l -v --all: context deadline exceeded
+docker run -d -p 8080:8080 --name nominatim \
+  -v "C:\Users\szczkr\AppData\Local\Docker\wsl:/var/lib/postgresql/14/main" \
+  mediagis/nominatim:4.4
