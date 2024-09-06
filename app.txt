@@ -1,1 +1,23 @@
 docker run -it -e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf -e REPLICATION_URL=https://download.geofabrik.de/europe/poland-updates/ -p 10101:8080 --name nominatim3 nominatim2
+
+
+C:\WINDOWS\system32>docker run -it -e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf -e REPLICATION_URL=https://download.geofabrik.de/europe/poland-updates/ -p 10101:8080 --name nominatim3 nominatim2
++ tailpid=0
++ replicationpid=0
++ trap stopServices SIGTERM TERM INT
++ /app/config.sh
++ id nominatim
++ echo 'user nominatim already exists'
+user nominatim already exists
++ IMPORT_FINISHED=/var/lib/postgresql/14/main/import-finished
++ '[' '!' -f /var/lib/postgresql/14/main/import-finished ']'
++ chown -R nominatim:nominatim /nominatim
++ service postgresql start
+ * Starting PostgreSQL 14 database server                                                                                * Removed stale pid file.
+Error: /usr/lib/postgresql/14/bin/pg_ctl /usr/lib/postgresql/14/bin/pg_ctl start -D /var/lib/postgresql/14/main -l /var/log/postgresql/postgresql-14-main.log -s -o  -c config_file="/etc/postgresql/14/main/postgresql.conf"  exited with status 1:
+2024-09-06 11:11:06.774 UTC [34] LOG:  starting PostgreSQL 14.13 (Ubuntu 14.13-0ubuntu0.22.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, 64-bit
+2024-09-06 11:11:06.775 UTC [34] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2024-09-06 11:11:06.775 UTC [34] LOG:  listening on IPv6 address "::", port 5432
+2024-09-06 11:11:06.794 UTC [34] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2024-09-06 11:11:06.839 UTC [35] LOG:  database system was interrupted; last known up at 2024-09-06 09:42:13 UTC
+pg_ctl: server did not start in time
