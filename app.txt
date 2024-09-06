@@ -177,3 +177,5 @@ trafiamy  w budynek a python nie
 54.32920879548127;18.599508060185396;ulica Rogalińska 5C, 80-809, Gdańsk, Woj. Pomorskie
 nasz sb nie radzi z M. ale jak wpisze Marii to jest ok
 M. Curie-Skłodowskiej 8, 43-100, Tychy
+obydwa maja pomylke
+51.9352612291899;15.48990876974018;ulica II Armii 2, 65-936, Zielona Góra, Woj. Lubuskie
