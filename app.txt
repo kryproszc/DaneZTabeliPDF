@@ -5,6 +5,6 @@ docker run -d -p 8080:8080 --name nominatim -v "C:\Users\szczkr\AppData\Local\Do
 
 docker run -d -p 8080:8080 --name nominatim -v "C:\Users\szczkr\AppData\Local\Docker\wsl\main\ext4.vhdx:/var/lib/postgresql/14/main" mediagis/nominatim:4.4
 
-C:\WINDOWS\system32>wsl --mount C:\Users\szczkr\AppData\Local\Docker\wsl\main\ext4.vhdx
-Proces nie może uzyskać dostępu do pliku, ponieważ jest on używany przez inny proces.
-Error code: Wsl/Service/AttachDisk/ERROR_SHARING_VIOLATION
+wsl --mount C:\Users\szczkr\AppData\Local\Docker\wsl\main\ext4.vhdx
+Parametr jest niepoprawny.
+Error code: Wsl/Service/AttachDisk/E_INVALIDARG
