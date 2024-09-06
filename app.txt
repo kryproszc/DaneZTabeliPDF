@@ -1,9 +1,14 @@
 cd /mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx
 
 
-szczkr@DIU-01:/mnt/c/WINDOWS/system32$ cd /mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx
-szczkr@DIU-01:/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx$ ls -l
-total 24
-drwxr-xr-x 11 root root  4096 Sep  6 14:27 data
-drwxr-xr-x  3 root root  4096 Sep  5 13:12 isocache
-drwx------  2 root root 16384 Sep  5 13:12 lost+found
+total 40
+drwxr-xr-x  3 root root 4096 Sep  5 13:12 cni
+drwxr-xr-x  2 root root 4096 Sep  5 13:12 containerd
+drwx------  4 root root 4096 Sep  6 14:27 containerd-stargz-grpc
+drwx--x--x  3 root root 4096 Sep  5 13:12 desktop-containerd
+drwx--x--- 14 root root 4096 Sep  6 15:18 docker
+drwxr-xr-x  2 root root 4096 Sep  5 13:12 kubeadm
+drwxr-xr-x  2 root root 4096 Sep  5 13:12 kubelet-plugins
+-rw-r--r--  1 root root   37 Sep  5 13:12 machine-id
+drwxr-xr-x  4 root root 4096 Sep  5 13:12 nfs
+drwxr-xr-x  3 root root 4096 Sep  5 13:12 wasm
