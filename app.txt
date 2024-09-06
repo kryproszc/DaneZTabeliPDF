@@ -5,4 +5,8 @@ WARNING! This will remove:
   - all images without at least one container associated to them
   - all build cache
 
-Are you sure you want to continue? [y/N]
+Are you sure you want to continue? [y/N] y
+Deleted Images:
+untagged: hello-world:latest
+
+Total reclaimed space: 0B
