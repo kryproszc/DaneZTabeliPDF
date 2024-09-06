@@ -1,1 +1,1 @@
-(HTTP code 500) server error - failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: write /var/run/desktop-containerd/daemon/io.containerd.runtime.v2.task/moby/7be2ad39e71ff37e13e3b52d99678ed10df48ba976adc08f80d5b2f8f8622a33/.init.pid: no space left on device: unknown
+\wsl$\docker-desktop-data\version-pack-data\community\docker
