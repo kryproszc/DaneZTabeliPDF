@@ -1,1 +1,3 @@
-docker run -d -p 8080:8080 --name nominatim -v "/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx/data/docker/overlay2/b46e7a395fd62202e9b2e8ae18377f553fc9abd89e2be2c6540ae6c25434d204/diff/nominatim:/var/lib/postgresql/14/main" mediagis/nominatim:4.4
+C:\WINDOWS\system32>docker run -d -p 8080:8080 --name nominatim -v "/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx/data/docker/overlay2/b46e7a395fd62202e9b2e8ae18377f553fc9abd89e2be2c6540ae6c25434d204/diff/nominatim:/var/lib/postgresql/14/main" mediagis/nominatim:4.4
+docker: error during connect: Head "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/_ping": open //./pipe/dockerDesktopLinuxEngine: Nie można odnaleźć określonego pliku.
+See 'docker run --help'.
