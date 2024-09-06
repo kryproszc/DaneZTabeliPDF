@@ -1,4 +1,1 @@
-docker run -d -p 8080:8080 --name nominatim \
--e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf \
--v "/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx/data/docker/overlay2/b46e7a395fd62202e9b2e8ae18377f553fc9abd89e2be2c6540ae6c25434d204/diff/nominatim:/var/lib/postgresql/14/main" \
-mediagis/nominatim:4.4
+docker run -d -p 8080:8080 --name nominatim -e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf -v "/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx/data/docker/overlay2/b46e7a395fd62202e9b2e8ae18377f553fc9abd89e2be2c6540ae6c25434d204/diff/nominatim:/var/lib/postgresql/14/main" mediagis/nominatim:4.4
