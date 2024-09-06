@@ -1,3 +1,12 @@
-cd /mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx
-find . -type d -name "*nominatim*"
-grep -r "nominatim" .
+szczkr@DIU-01:~$ cd /mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx
+szczkr@DIU-01:/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx$ find . -type d -name "*nominatim*"
+find: ‘./lost+found’: Permission denied
+find: ‘./data/desktop-containerd’: Permission denied
+find: ‘./data/containerd-stargz-grpc’: Permission denied
+find: ‘./data/docker’: Permission denied
+szczkr@DIU-01:/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx$ grep -r "nominatim" .
+grep: ./lost+found: Permission denied
+grep: ./data/desktop-containerd: Permission denied
+grep: ./data/containerd-stargz-grpc: Permission denied
+grep: ./data/docker: Permission denied
+szczkr@DIU-01:/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx$
