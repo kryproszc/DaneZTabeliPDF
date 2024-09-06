@@ -1,4 +1,11 @@
 
+C:\WINDOWS\system32>wsl -d docker-desktop
+DIU-01:/tmp/docker-desktop-root/run/desktop/mnt/host/c/WINDOWS/system32# cd /tmp
+DIU-01:/tmp# ls -l
+total 8
+drwxr-xr-x    1 root     root          4096 Jul 25 08:11 docker-desktop-root
+drwxr-xr-x    3 root     root          4096 Sep  5 11:12 host
+DIU-01:/tmp# df -h
 Filesystem                Size      Used Available Use% Mounted on
 none                     23.5G      4.0K     23.5G   0% /mnt/host/wsl
 none                     23.5G    620.0K     23.5G   0% /mnt/host/wsl/docker-desktop-bind-mounts/Ubuntu-24.04/71329c4cc6e32171553fa81d044eb31d1a3aac52ba9376c4a99f4505c494cf5b
@@ -90,3 +97,4 @@ none                     23.5G         0     23.5G   0% /tmp/docker-desktop-root
 /dev/sdc               1006.9G    136.6G    819.0G  14% /mnt/docker-desktop-disk/data/wasm/runtimes
 /dev/sdc               1006.9G    136.6G    819.0G  14% /tmp/docker-desktop-root/mnt/docker-desktop-disk/data/wasm/runtimes
 /dev/sdc               1006.9G    136.6G    819.0G  14% /tmp/docker-desktop-root/run/desktop/mnt/docker-desktop-disk/data/wasm/runtimes
+DIU-01:/tmp# cd /var/lib/docker
