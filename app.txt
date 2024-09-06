@@ -1,4 +1,10 @@
-wsl --mount C:\Users\szczkr\AppData\Local\Docker\wsl\disk\docker_data.vhdx --vhd --type ext4
+C:\WINDOWS\system32>wsl --mount C:\Users\szczkr\AppData\Local\Docker\wsl\disk\docker_data.vhdx --vhd --type ext4
+Dysk został pomyślnie zainstalowany jako „/mnt/wsl/CUsersszczkrAppDataLocalDockerwsldiskdockerdatavhdx”.
+Uwaga: Lokalizacja będzie inna, jeśli ustawienie automount.root zostało zmodyfikowane w pliku /etc/wsl.conf.
+Aby odinstalować i odłączyć dysk, uruchom polecenie „wsl.exe --unmount \\?\C:\Users\szczkr\AppData\Local\Docker\wsl\disk\docker_data.vhdx”.
 
+C:\WINDOWS\system32>wsl --mount C:\Users\szczkr\AppData\Local\Docker\wsl\disk\docker_data.vhdx --vhd --type ext4
+Ten wolumin jest już zainstalowany wewnątrz podsystemu WSL2.
+Error code: Wsl/Service/DetachDisk/WSL_E_DISK_ALREADY_MOUNTED
 
-wsl --mount C:\Users\szczkr\AppData\Local\Docker\wsl\main\ext4.vhdx --vhd --type ext4
+C:\WINDOWS\system32>
