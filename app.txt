@@ -1,1 +1,5 @@
-C:\Users\szczkr\AppData\Local\Docker\wsl\disk
+deploying WSL2 distributions
+ensuring data disk is available: exit code: 4294967295: running WSL command wsl.exe C:\WINDOWS\System32\wsl.exe --mount --bare --vhd <HOME>\AppData\Local\Docker\wsl\disk\docker_data.vhdx: Nie można dołączyć dysku "\\?\<HOME>\AppData\Local\Docker\wsl\disk\docker_data.vhdx" do podsystemu WSL2: Proces nie może uzyskać dostępu do pliku, ponieważ jest on używany przez inny proces. 
+Error code: Wsl/Service/AttachDisk/MountVhd/HCS/ERROR_SHARING_VIOLATION
+: exit status 0xffffffff
+checking if isocache exists: CreateFile \\wsl$\docker-desktop-data\isocache\: Nazwa pliku, nazwa katalogu lub składnia etykiety woluminu jest niepoprawna.
