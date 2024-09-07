@@ -1,9 +1,4 @@
-C:\Users\szczkr\AppData\Local\Docker\wsl\disk>rm docker...vhdx
-'rm' is not recognized as an internal or external command,
-operable program or batch file.
-
-C:\Users\szczkr\AppData\Local\Docker\wsl\disk>rm docer...vhdx
-'rm' is not recognized as an internal or external command,
-operable program or batch file.
-
-C:\Users\szczkr\AppData\Local\Docker\wsl\disk>
+/home/szczkr/.hushlogin file.
+szczkr@DIU-01:/mnt/c/Users/szczkr/AppData/Local/Docker/wsl/disk$ rm docker...vhdx
+rm: cannot remove 'docker...vhdx': No such file or directory
+szczkr@DIU-01:/mnt/c/Users/szczkr/AppData/Local/Docker/wsl/disk$
