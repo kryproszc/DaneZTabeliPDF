@@ -6,3 +6,13 @@ docker: error during connect: this error may indicate that the docker daemon is 
 See 'docker run --help'.
 
 C:\WINDOWS\system32>
+
+
+i apache2 w 105 linii na 0
+
+i
+
+restart postgressql po wprowadzeniu pliku:
+sudo service postgresql restart
+restart serwera apache2 po modyfikacji pliku
+sudo service apache2 restart
