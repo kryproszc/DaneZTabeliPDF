@@ -1,6 +1,1 @@
-C:\WINDOWS\system32>wsl -l -v
-  NAME              STATE           VERSION
-* Ubuntu-24.04      Running         2
-  docker-desktop    Stopped         2
-  Ubuntu-22.04      Stopped         2
-  Ubuntu            Stopped         1
+wsl -d docker-desktop du -hd 1 /var/lib/docker/
