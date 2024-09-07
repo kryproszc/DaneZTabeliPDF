@@ -1,1 +1,3 @@
-wsl -d docker-desktop du -hd 1 /var/lib/docker/
+
+C:\WINDOWS\system32>wsl -d docker-desktop du -hd 1 /var/lib/docker/
+du: /var/lib/docker/: No such file or directory
