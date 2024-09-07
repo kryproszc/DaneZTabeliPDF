@@ -1,1 +1,1 @@
-https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module
+docker run -it -e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf -e REPLICATION_URL=https://download.geofabrik.de/europe/poland-updates/ -p 8080:8080 --name nominatim mediagis/nominatim:4.4
