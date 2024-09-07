@@ -16,3 +16,5 @@ restart postgressql po wprowadzeniu pliku:
 sudo service postgresql restart
 restart serwera apache2 po modyfikacji pliku
 sudo service apache2 restart
+
+docker run --log-driver=none <image_name>
