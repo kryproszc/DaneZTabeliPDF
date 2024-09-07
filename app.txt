@@ -1,1 +1,9 @@
-rm docer...vhdx
+C:\Users\szczkr\AppData\Local\Docker\wsl\disk>rm docker...vhdx
+'rm' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\szczkr\AppData\Local\Docker\wsl\disk>rm docer...vhdx
+'rm' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\szczkr\AppData\Local\Docker\wsl\disk>
