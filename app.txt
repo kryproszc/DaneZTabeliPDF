@@ -19,8 +19,12 @@ sudo service apache2 restart
 
 docker run --log-driver=none <image_name>
 
-C:\WINDOWS\system32>docker run --log-driver=none <nominatim>
-The syntax of the command is incorrect.
+C:\WINDOWS\system32>docker run --log-driver=none
+"docker run" requires at least 1 argument.
+See 'docker run --help'.
 
-C:\WINDOWS\system32>docker run --log-driver=none <nominatim>
-The syntax of the command is incorrect.
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Create and run a new container from an image
+
+C:\WINDOWS\system32>
