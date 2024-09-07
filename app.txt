@@ -1,3 +1,1 @@
-szczkr@DIU-01:/mnt/c/Users/szczkr/AppData/Local/Docker/wsl/disk$ rm docker_data.vhdx
-rm: cannot remove 'docker_data.vhdx': Permission denied
-szczkr@DIU-01:/mnt/c/Users/szczkr/AppData/Local/Docker/wsl/disk$
+https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module
