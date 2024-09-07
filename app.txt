@@ -1,3 +1,13 @@
-docker container prune -f
-docker image prune -f
-docker volume prune -f
+Microsoft Windows [Version 10.0.19045.4780]
+(c) Microsoft Corporation. Wszelkie prawa zastrzeżone.
+
+C:\WINDOWS\system32>docker container prune -f
+error during connect: Head "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/_ping": open //./pipe/dockerDesktopLinuxEngine: Nie można odnaleźć określonego pliku.
+
+C:\WINDOWS\system32>docker image prune -f
+error during connect: Head "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/_ping": open //./pipe/dockerDesktopLinuxEngine: Nie można odnaleźć określonego pliku.
+
+C:\WINDOWS\system32>docker volume prune -f
+error during connect: Head "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/_ping": open //./pipe/dockerDesktopLinuxEngine: Nie można odnaleźć określonego pliku.
+
+C:\WINDOWS\system32>
