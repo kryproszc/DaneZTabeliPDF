@@ -1,1 +1,8 @@
 docker run -it -e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf -e REPLICATION_URL=https://download.geofabrik.de/europe/poland-updates/ -p 8080:8080 --name nominatim mediagis/nominatim:4.4
+
+
+C:\WINDOWS\system32>docker run -it -e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf -e REPLICATION_URL=https://download.geofabrik.de/europe/poland-updates/ -p 8080:8080 --name nominatim mediagis/nominatim:4.4
+docker: error during connect: this error may indicate that the docker daemon is not running: Head "http://%2F%2F.%2Fpipe%2Fdocker_engine/_ping": open //./pipe/docker_engine: Nie można odnaleźć określonego pliku.
+See 'docker run --help'.
+
+C:\WINDOWS\system32>
