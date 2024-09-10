@@ -1,1 +1,1 @@
-Mając wyznaczoną rezerwy statutowe na pośrednie koszty likwidacji szkód 〖〖ULAE〗_i〗^z dla roku wypadku oraz każdego produktu agreguje się je do danego HRG po roku wypadku.
+Następnie, uzyskane wartości ULAE_z są grupowane według jednorodnych grup ryzyka (HRG) poprzez agregację danych dotyczących poszczególnych produktów dla danego roku wypadku. W efekcie, dla każdej jednorodnej grupy ryzyka i dla każdego roku, otrzymuje się łączną wartość rezerw statutowych, która uwzględnia wszystkie produkty związane z danym rokiem zdarzenia.
