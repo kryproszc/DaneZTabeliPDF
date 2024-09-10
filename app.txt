@@ -1,28 +1,30 @@
-# Calculate transition factors for each triangle
-calculate_transition_factors <- function(triangle) {
-  factors <- numeric(ncol(triangle) - 1)
-  for (j in 1:(ncol(triangle) - 1)) {
-    factors[j] <- sum(triangle[, j + 1], na.rm = TRUE) / sum(triangle[, j], na.rm = TRUE)
-  }
-  return(factors)
-}
+# Example data: Replace these with your actual data for each triangle
+triangle_majatki <- MackChainLadder(RAA, est.sigma = "Mack")$Triangle # Replace RAA with your data
+triangle_osobowe <- MackChainLadder(RAA, est.sigma = "Mack")$Triangle # Replace RAA with your data
+triangle_zadoscuczynienia <- MackChainLadder(RAA, est.sigma = "Mack")$Triangle # Replace RAA with your data
+triangle_laczone <- MackChainLadder(RAA, est.sigma = "Mack")$Triangle # Replace RAA with your data
 
-# Calculate transition factors for each triangle
-transition_factors_majatki <- calculate_transition_factors(triangle_majatki)
-transition_factors_osobowe <- calculate_transition_factors(triangle_osobowe)
-transition_factors_zadoscuczynienia <- calculate_transition_factors(triangle_zadoscuczynienia)
+# Convert triangles to data frames and flatten them into vectors
+vector_majatki <- as.vector(triangle_majatki)
+vector_osobowe <- as.vector(triangle_osobowe)
+vector_zadoscuczynienia <- as.vector(triangle_zadoscuczynienia)
+vector_laczone <- as.vector(triangle_laczone)
 
-# Create a data frame for plotting
-df <- data.frame(
-  Development_Year = 1:length(transition_factors_majatki),
-  Majatki = transition_factors_majatki,
-  Osobowe = transition_factors_osobowe,
-  Zadoscuczynienia = transition_factors_zadoscuczynienia
+# Combine vectors into a data frame for correlation analysis
+data_correlation <- data.frame(
+  Majatki = vector_majatki,
+  Osobowe = vector_osobowe,
+  Zadoscuczynienia = vector_zadoscuczynienia,
+  Laczone = vector_laczone
 )
 
-# Plot the transition factors
-matplot(df$Development_Year, df[, -1], type = "b", pch = 1, col = c("blue", "red", "green"),
-        xlab = "Rok Rozwoju", ylab = "Współczynniki Przejścia",
-        main = "Współczynniki Przejścia dla Trójkątów Szkód")
-legend("topright", legend = c("Majątki", "Osobowe", "Zadośćuczynienia"),
-       col = c("blue", "red", "green"), pch = 1)
+# Calculate correlation matrix
+correlation_matrix <- cor(data_correlation, use = "complete.obs")
+
+# Print correlation matrix
+print(correlation_matrix)
+
+# Plot a heatmap of the correlation matrix
+install.packages("corrplot")
+library(corrplot)
+corrplot(correlation_matrix, method = "color", type = "upper", tl.col = "black", tl.srt = 45)
