@@ -1,20 +1,28 @@
-majatki <- MackChainLadder(triangle_majatki, est.sigma = "Mack")
-osobowe <- MackChainLadder(triangle_osobowe, est.sigma = "Mack")
-zadoscuczynienia <- MackChainLadder(triangle_zadoscuczynienia, est.sigma = "Mack")
-laczone <- MackChainLadder(triangle_laczone, est.sigma = "Mack")
+# Calculate transition factors for each triangle
+calculate_transition_factors <- function(triangle) {
+  factors <- numeric(ncol(triangle) - 1)
+  for (j in 1:(ncol(triangle) - 1)) {
+    factors[j] <- sum(triangle[, j + 1], na.rm = TRUE) / sum(triangle[, j], na.rm = TRUE)
+  }
+  return(factors)
+}
 
-# Obliczenie wartości ultimate dla każdego trójkąta
-ultimate_majatki <- majatki$Ult
-ultimate_osobowe <- osobowe$Ult
-ultimate_zadoscuczynienia <- zadoscuczynienia$Ult
-ultimate_laczone <- laczone$Ult
+# Calculate transition factors for each triangle
+transition_factors_majatki <- calculate_transition_factors(triangle_majatki)
+transition_factors_osobowe <- calculate_transition_factors(triangle_osobowe)
+transition_factors_zadoscuczynienia <- calculate_transition_factors(triangle_zadoscuczynienia)
 
-# Obliczenie udziału procentowego każdego trójkąta w wartości ultimate łącznego trójkąta
-procent_majatki <- (ultimate_majatki / ultimate_laczone) * 100
-procent_osobowe <- (ultimate_osobowe / ultimate_laczone) * 100
-procent_zadoscuczynienia <- (ultimate_zadoscuczynienia / ultimate_laczone) * 100
+# Create a data frame for plotting
+df <- data.frame(
+  Development_Year = 1:length(transition_factors_majatki),
+  Majatki = transition_factors_majatki,
+  Osobowe = transition_factors_osobowe,
+  Zadoscuczynienia = transition_factors_zadoscuczynienia
+)
 
-# Wyniki
-cat("Udział majątków w wartości ultimate łącznej: ", procent_majatki, "%\n")
-cat("Udział osobowych w wartości ultimate łącznej: ", procent_osobowe, "%\n")
-cat("Udział zadośćuczynienia w wartości ultimate łącznej: ", procent_zadoscuczynienia, "%\n")
+# Plot the transition factors
+matplot(df$Development_Year, df[, -1], type = "b", pch = 1, col = c("blue", "red", "green"),
+        xlab = "Rok Rozwoju", ylab = "Współczynniki Przejścia",
+        main = "Współczynniki Przejścia dla Trójkątów Szkód")
+legend("topright", legend = c("Majątki", "Osobowe", "Zadośćuczynienia"),
+       col = c("blue", "red", "green"), pch = 1)
