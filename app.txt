@@ -1,2 +1,1 @@
-Zespół inspekcyjny ustalił, że rozdział „2.1.2.3 Pośrednie koszty likwidacji szkód” w dokumencie był nieaktualny, a zakład potwierdził, że zawarte w nim reguły obliczeniowe nie odpowiadały metodom stosowanym do wyznaczania najlepszego oszacowania brutto. Ponadto, w rozdziale „Rezerwa na pośrednie koszty likwidacji szkód” w pliku „Szczegółowe zasady tworzenia rezerwy na koszty likwidacji szkód” znajdowały się procedury obliczeniowe, które nie były wykorzystywane w praktyce. W odpowiedzi na te uwagi zakład dokonał odpowiednich aktualizacji dokumentu.
-
+Mając wyznaczoną rezerwy statutowe na pośrednie koszty likwidacji szkód 〖〖ULAE〗_i〗^z dla roku wypadku oraz każdego produktu agreguje się je do danego HRG po roku wypadku.
