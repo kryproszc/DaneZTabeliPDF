@@ -1,1 +1,20 @@
-Następnie, dla każdej jednorodnej grupy ryzyka oraz dla każdego roku zdarzenia, obliczana jest statutowa rezerwa na pośrednie koszty likwidacji szkód (ULAE_i). Proces ten polega na przypisaniu wyznaczonych rezerw ULAE_z, obliczonych dla poszczególnych produktów, do odpowiednich jednorodnych grup ryzyka. Po przyporządkowaniu, wartości te są sumowane w odniesieniu do roku, w którym nastąpiło zdarzenie, co pozwala uzyskać łączną rezerwę na koszty likwidacji szkód dla każdej grupy ryzyka w danym roku.
+majatki <- MackChainLadder(triangle_majatki, est.sigma = "Mack")
+osobowe <- MackChainLadder(triangle_osobowe, est.sigma = "Mack")
+zadoscuczynienia <- MackChainLadder(triangle_zadoscuczynienia, est.sigma = "Mack")
+laczone <- MackChainLadder(triangle_laczone, est.sigma = "Mack")
+
+# Obliczenie wartości ultimate dla każdego trójkąta
+ultimate_majatki <- majatki$Ult
+ultimate_osobowe <- osobowe$Ult
+ultimate_zadoscuczynienia <- zadoscuczynienia$Ult
+ultimate_laczone <- laczone$Ult
+
+# Obliczenie udziału procentowego każdego trójkąta w wartości ultimate łącznego trójkąta
+procent_majatki <- (ultimate_majatki / ultimate_laczone) * 100
+procent_osobowe <- (ultimate_osobowe / ultimate_laczone) * 100
+procent_zadoscuczynienia <- (ultimate_zadoscuczynienia / ultimate_laczone) * 100
+
+# Wyniki
+cat("Udział majątków w wartości ultimate łącznej: ", procent_majatki, "%\n")
+cat("Udział osobowych w wartości ultimate łącznej: ", procent_osobowe, "%\n")
+cat("Udział zadośćuczynienia w wartości ultimate łącznej: ", procent_zadoscuczynienia, "%\n")
