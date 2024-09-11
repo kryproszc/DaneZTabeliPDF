@@ -1,0 +1,61 @@
+import psycopg2
+import time
+
+def execute_query(cursor, query):
+    cursor.execute(query)
+    return cursor.fetchall()
+
+def main():
+    connection = None
+    cursor = None
+
+    try:
+        connection = psycopg2.connect(
+            dbname="nominatim",
+            user="nominatim",
+            password="nominatim",
+            host="127.0.0.1",
+            port="5432"
+        )
+
+        cursor = connection.cursor()
+        query = """
+            SELECT place_id, osm_id, osm_type, ST_Y(ST_Centroid(centroid)) AS lat, ST_X(ST_Centroid(centroid)) AS lon 
+            FROM placex 
+            WHERE class = 'building' 
+            AND address -> 'street' ILIKE '%NIEGOCIŃSKA%' 
+            AND address -> 'city' ILIKE '%WARSZAWA%' 
+            AND postcode = '02-698' 
+            AND address -> 'housenumber' ILIKE '%2A%';
+        """
+
+        all_results = []
+        start_time = time.time()
+
+        for _ in range(100):
+            rows = execute_query(cursor, query)
+            all_results.extend(rows)
+
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+
+        for row in all_results:
+            print(row)
+
+        print(f"Czas: {elapsed_time:.2f} s")
+
+        cursor.execute("SELECT version();")
+        db_version = cursor.fetchone()
+        print(f"Connected to PostgreSQL database, version: {db_version}")
+
+    except Exception as error:
+        print(f"Error connecting to PostgreSQL database: {error}")
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if connection is not None:
+            connection.close()
+
+if __name__ == "__main__":
+    main()
