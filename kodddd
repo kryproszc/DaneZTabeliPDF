@@ -1,1 +1,29 @@
-docker run -it -e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf -e REPLICATION_URL=https://download.geofabrik.de/europe/poland-updates/ -p 8080:8080 -p 5432:5432 --name nominatim mediagis/nominatim:4.4
+import psycopg2
+
+connection = None
+cursor = None
+
+try:
+    connection = psycopg2.connect(
+        dbname="nominatim",
+        user="nominatim",
+        password="nominatim",
+        host="127.0.0.1",
+        port="5432"
+    )
+
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT version();")
+
+    db_version = cursor.fetchone()
+    print(f"Connected to PostgreSQL database, version: {db_version}")
+
+except Exception as error:
+    print(f"Error connecting to PostgreSQL database: {error}")
+
+finally:
+    if cursor is not None:
+        cursor.close()
+    if connection is not None:
+        connection.close()
