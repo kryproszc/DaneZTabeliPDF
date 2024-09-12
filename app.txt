@@ -1,1 +1,5 @@
 Na koniec pierwszego kwartału, przyjęto, że zwiększona o 4,5 p.p. inflacja szkód będzie się utrzymywać jeszcze przez 9 miesięcy, a inflacja szkód zwiększona o 1 p.p. będzie utrzymywać się przez kolejne 12 miesięcy (w pierwszym tenorze o 1,045¾ * 1,01¼ = 1, 0361 i w drugim tenorze o 1,01¾ = 1,075). 
+
+
+a wiesz moze o co chodzi w tym zaznaczonym nizej fragmencie (odpowied Zakladu w sprawie wazenia Ultimate):
+wybór innych wag może być uzasadniony potrzebą utrzymania dodatniej wartości IBNR (tu pierwszeństwo dajemy oszacowaniu rezerwy RBNS) oraz potrzebą stabilizacji oszacowań ostatecznej wartości szkód uzyskanych we wcześniejszych okresach 
