@@ -1,1 +1,3 @@
-Dodatkowo, przyjęto, że historyczne dane uwzględniają długookresową inflację na poziomie 2,5%, zgodną z celem inflacyjnym NBP. W związku z tym, inflacja szkód została obniżona do 4,5% dla wszystkich przepływów w 2023 roku, co wynika z różnicy między przewidywaną inflacją szkód w 2023 roku (7%) a celem inflacyjnym NBP (2,5%). Podobnie, inflacja szkód na rok 2024 została obniżona do 1%, co wynika z różnicy między prognozowaną inflacją szkód na 2024 rok (3,5%) a celem inflacyjnym NBP wynoszącym 2,5%.
+•	• „Annual Inflation Forward Rates” - roczna inflacja zakładana w kolejnych latach 
+
+•	• „Inflation Factor” – skumulowana inflacja w kolejnych latach przy założeniu, że wypłata następuje punktowo połowie roku (odpowiada temu parametr w komórce D52 „Inflation offset”=50%) 
