@@ -1,3 +1,1 @@
-Przy wycenie najlepszego oszacowania odszkodowań nierentowych przyjęto, że inflacja szkód w 2023 r. wyniesie 7%, czyli będzie na podobnym poziomie jak w roku 2022, a w 2024 r. obniży się do 3,5%. 
-
-Przyjęto dodatkowo, że historyczne dane zawierają długookresową inflację w wysokości 2,5% (zbieżną z celem inflacyjnym NBP). Uwzględniona dodatkowo inflacja wyniosła więc odpowiednio 4,5% (do wszystkich przepływów) i 1% (do przepływów przewidywanych na rok 2024 i wszystkie kolejne lata). 
+Zakład, powołując się na prognozy Biura Analiz Makroekonomicznych, zakłada, że średnioroczna inflacja CPI w roku 2023 pozostanie na poziomie zbliżonym do roku 2022, natomiast w roku 2024 powinna ulec istotnemu zmniejszeniu. Z tych przewidywań wynika założenie, że przy wycenie najlepszego oszacowania odszkodowań nierentowych inflacja szkód w 2023 roku wyniesie 7%, czyli będzie na podobnym poziomie jak w roku 2022, a w 2024 roku obniży się do 3,5%.
