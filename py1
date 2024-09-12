@@ -1,10 +1,4 @@
-Zespół inspekcyjny ustalił, że obserwowany wzrost kosztów odszkodowań następuje zgodnie z danymi historycznymi zawartymi w trójkątach rozwoju. Zakład ubezpieczeń wyjaśnił, że dla czterech głównych grup ryzyka — H_07M_OTHER, H_05M, H_05K, H_04M_MTPL — w rezerwach szkodowych uwzględniono dodatkowy narzut, mający na celu przewidywanie wzrostu odszkodowań i świadczeń. Zgodnie z dokumentacją dostarczoną w (zał. nr...), Zakład, opierając się na prognozach Biura Analiz Makroekonomicznych, przyjął następujące założenia:
-•	Średnioroczna inflacja CPI w 2023 roku utrzyma się na poziomie zbliżonym do roku 2022 (13,9% wobec 13,8%), co oznacza, że inflacja pozostanie na wysokim poziomie.
-•	W 2024 roku prognozowana inflacja CPI ma istotnie zmaleć.
-Na podstawie tych prognoz Zakład przyjął inflację szkód w 2023 roku na poziomie 7%, co oznacza utrzymanie poziomu inflacji z 2022 roku, uzasadniając ten wybór niewielką różnicą w inflacji CPI między rokiem 2022 a 2023. Dla roku 2024 przyjęto inflację szkód na poziomie 3,5%, co zostało uzasadnione prognozowanym spadkiem inflacji CPI do 4,4%, czyli o 9,4 punktu procentowego w stosunku do roku 2023. Dodatkowo, Zakład wyjaśnił, że historyczne dane zawarte w trójkątach uwzględniają długookresową inflację na poziomie 2,5%, zgodną z celem inflacyjnym NBP. W związku z tym:
-•	Inflacja na rok 2023 została obniżona do 4,5%, co wynika z różnicy między przewidywaną inflacją w 2023 roku (7%) a celem inflacyjnym NBP (2,5%).
-•	Inflacja na rok 2024 została obniżona o 1%, co wynika z różnicy między prognozowaną inflacją na rok 2024 (3,5%) a celem inflacyjnym NBP wynoszącym 2,5%.
-Zakład uwzględnił narzut na inflację na najbliższe dwa lata, natomiast w kolejnych latach przyjął, że dodatkowy narzut na inflację nie jest potrzebny, ponieważ inflacja zawarta w trójkątach historycznych jest wystarczająca. Argumentem za takim podejściem jest prognoza NBP wskaźnika CPI na rok 2025, który wynosi 2,5%. Zespół inspekcyjny, na podstawie (zał. nr ...), ustalił, że na dzień 31.12.2023 roku Zakład wyznaczył inflację dla przepływów w następujący sposób:
-•	Dla przepływów przypadających na miesiące 1-12 przyjęto wartość inflacji na poziomie 4,5%.
-•	Dla przepływów w miesiącach 13-24 stwierdzono inflację na poziomie 1%.
-Dla tych rocznych stóp inflacyjnych (4,5% i 1%) zostały wyznaczone równoważne kwartalne stopy inflacji gtg_t co pozwala na uwzględnienie analiz dla każdego kwartału w okresie dwóch lat.
+Zakład wyjaśnił (zał…), iż w celu uwzględnienia wzrostu roszczeń ubezpieczeniowych utworzył narzut z tytułu inflacji w jednorodnych grupach ryzyka: 7M_OTHER, 5M, 5K, 4M_MTPL i 4K_MTPL. Zakład, opierając się na prognozach Biura Analiz Makroekonomicznych, przyjął następujące założenia
+
+
+W pozostałych grupach zmiany średniej szkody są bardzo nieregularne, ponadto analiza run-off pokazuje, że szkody w roku 2023 nie przekraczały oszacowań z końca roku 2022.
