@@ -1,17 +1,5 @@
-8.	Wykonanie badania adekwatności / wystarczalności wartości oczekiwanych przyszłych przepływów pieniężnych dla rezerwy na niewypłacone odszkodowania i świadczenia (z wyłączeniem rezerwy dla zgłoszonych roszczeń o wypłatę świadczeń rentowych), dla każdej z jednorodnej grupy ryzyka wyznaczonych na 31 grudnia 2022 roku, według stanu wiedzy na 31 grudnia 2023 roku.
-Przez badanie adekwatności / wystarczalności należy rozumieć porównanie ustalonej na początek okresu obserwacji wartości oczekiwanej przyszłych przepływów pieniężnych dla rezerwy na niewypłacone odszkodowania i świadczenia:
-a.	w 1 rocznym okresie projekcji ze zrealizowanym w tym okresie przepływami pieniężnymi,
-b.	łącznie w 2 i kolejnych okresach projekcji z planowanymi według stanu wiedzy na 31 grudnia 2023 roku przyszłymi przepływami pieniężnymi z tytułu umów uwzględnionych w kalkulacji najlepszego oszacowania brutto dla rezerwy na niewypłacone odszkodowania i świadczenia na 31 grudnia 2022 roku.
-Ww. wielkości winny zostać przedstawione w jednoczesnym podziale na:
-•	jednorodne grupy ryzyka, tj. HRG, dla przepływów: 
-o	bezpośrednie koszty likwidacji szkód (ALAE_RES),
-o	odszkodowania i świadczenia (CLAIM_RES),
-o	przewidywane regresy i odzyski (RECOURSE_RES),
-o	przewidywane koszty dochodzenia regresów (REC_ALAE_RES),
-•	linie biznesowe, dla przepływów: 
-o	pośrednie koszty likwidacji (ULAE_RES),
-o	premie i rabaty (BONUS_RES),
-•	linie biznesowe ubezpieczeń bezpośrednich, dla przepływów:
-o	świadczenia z tytułu zaistniałych i niezgłoszonych rent (składnik ANN_IBNR),
-o	koszty likwidacji szkód dla zaistniałych i niezgłoszonych rent (składnik ANN_IBNR),
-•	waluty przepływu,
+Na prośbę zespołu inspekcyjnego w toku kontroli Spółka wykonała badanie adekwatności wyznaczonych na koniec 2020 r. oraz 2021 r. wartości niezdyskontowanego najlepszego oszacowania dla rezerwy na niewypłacone odszkodowania i świadczenia dla jednorodnej grupy ryzyka MTPL według stanu wiedzy na dzień 30 września 2022 r.
+
+Zgodnie ze specyfikacją z wezwania zespołu inspekcyjnego, przez badanie adekwatności należy rozumieć porównanie wartości oczekiwanych przyszłych przepływów pieniężnych dla rezerwy na niewypłacone odszkodowania i świadczenia na początek okresu obserwacji z oczekiwaną wartością przepływów pieniężnych wyznaczoną na koniec tego okresu (według założeń na dzień 30 września 2022 r.) oraz zrealizowanymi przepływami pieniężnymi w tym okresie, gdzie powyższe wielkości dotyczą zdarzeń szkodowych, które wystąpiły odpowiednio do 31 grudnia 2020 r. oraz do 31 grudnia 2021 r. Wartości badanych wielkości na początek okresu obserwacji, zgodnie ze specyfikacją badania, Spółka winna była wyznaczyć według metod i założeń / parametrów ekonomicznych (inflacja / indeksacja) zastosowanych do wyceny rezerw techniczno-ubezpieczeniowych dla celów wypłacalności na dzień 30 września 2022 r., natomiast współczynniki ubezpieczeniowe (np. współczynniki rozwoju szkód, współczynniki wygrania / przegrania spraw sądowych) powinny zostać wyznaczone na początek okresu zgodnie z metodą ich wyznaczenia na dzień 30 września 2022 r.
+
+Wyniki przedmiotowego badania, w podziale na: portfel, rok zajścia szkody, podgrupy ryzyka, zawiera przekazany przez Spółkę plik „badanie v2.xlsx” (zał. nr 63). W pliku tym w zakładce „ULT” zostało przedstawione porównanie oczekiwanej całkowitej wartości szkód dla poszczególnych lat zajścia szkody („ultimate”) na początek (koniec roku 2020 oraz koniec roku 2021) oraz na koniec okresu obserwacji (koniec września 2022 r.). Dodatkowo zostało przedstawione takie samo porównanie całkowitej wartości szkód niezgłoszonych (zakładka „IBNR”) oraz szkód zgłoszonych (zakładka „INC”) do początku okresu obserwacji.
