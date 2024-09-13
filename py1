@@ -1,32 +1,3 @@
-Zespół inspekcyjny otrzymał dokument pt. "Analiza adekwatności rezerw.doc", opracowany przez zakład w ramach badania sprawozdania finansowego za 2023 rok. Zakład informuje, że biegły rewident przejrzał stosowane metody oceny rezerw techniczno-ubezpieczeniowych i nie wydał żadnych rekomendacji ich zmiany.
-W celu oceny adekwatności rezerw porównano oszacowanie przepływów pieniężnych z końca 2022 roku z ich faktyczną realizacją oraz zaktualizowaną prognozą na koniec 2023 roku. Porównanie to służy walidacji modeli prognostycznych. W przypadku ubezpieczeń z długim okresem zgłaszania, jak OC, jednoroczna obserwacja może nie być w pełni miarodajna. Różnice między przewidywanymi a faktycznymi wypłatami oraz run-off powinny być możliwie niskie.
-W zestawieniu wskazano różnice między wypłatami przewidywanymi na rok 2023 a ich faktyczną realizacją, gdzie oczekiwana wartość run-off powinna wynosić około 0. Niewielkie różnice mogą wynikać z losowości procesu oraz nowych lub odmówionych szkód. Znaczne różnice i wysoki negatywny run-off w liniach 7 i 12 są wynikiem szkody PKN Orlen, a w linii 8 z nowymi roszczeniami w OC medycznym i dużymi szkodami w OC zawodowym (nienależyta obsługa prawna 52,9 mln zł, szkoda Enea D&O 50 mln zł). Negatywny run-off w linii 9 związany jest z wypłatą gwarancji dla Rafako, a korzystny run-off w linii 4 z uwzględnieniem podwyższonej inflacji na koniec 2022 roku.
-Oszacowanie rezerw szkodowych opiera się na modelowaniu i ekstrapolacji historycznego rozwoju szkód, który może się różnić dla każdego roku. Wpływ na te oszacowania mają losowość procesu, zmiany w otoczeniu oraz wewnętrzne zmiany w Spółce. Przyjęto kompromis między stabilnością modelu a dopasowaniem do aktualnych danych, bazując na średniej z ostatnich pięciu lat, z możliwością skrócenia tego okresu do czterech lub trzech lat. Modelowanie przeprowadzane jest niezależnie dla rozwoju wypłat i zgłoszeń szkód.
-Zestawienie prezentuje oszacowanie ostatecznej wartości szkód zaistniałych w 2023 roku w ubezpieczeniach komunikacyjnych dla wariantów bazowego („Wybór”), przesuniętego o jeden rok („Bez 1 roku”) oraz o dwa lata wstecz („Bez 2 lat”). Różnice między oszacowaniami nie przekraczają 1% w przypadkach 5M i 5K oraz 3% w 4M_MTPL, a w 4K_MTPL wynoszą do 3,5% z powodu szkód zagranicznych i różnic kursowych. Zakład nie dostrzega podstaw do kwestionowania wybranej metody modelowania rozwoju szkód.
-Zakład został poproszony o przeprowadzenie badania adekwatności (wystarczalności) wartości oczekiwanych przyszłych przepływów pieniężnych dla rezerwy na niewypłacone odszkodowania i świadczenia (z wyłączeniem rezerwy dla zgłoszonych roszczeń o wypłatę świadczeń rentowych) dla każdej z jednorodnych grup ryzyka wyznaczonych na dzień 31 grudnia 2022 roku, zgodnie ze stanem wiedzy na 31 grudnia 2023 roku.
-Badanie adekwatności obejmuje porównanie ustalonej na początek okresu obserwacji wartości oczekiwanej przyszłych przepływów pieniężnych dla rezerwy na niewypłacone odszkodowania i świadczenia:
-a. W okresie jednorocznym projekcji z faktycznie zrealizowanymi przepływami pieniężnymi w tym okresie,
-b. Łącznie w drugim i kolejnych okresach projekcji z planowanymi przyszłymi przepływami pieniężnymi według stanu wiedzy na dzień 31 grudnia 2023 roku z tytułu umów uwzględnionych w kalkulacji najlepszego oszacowania brutto dla rezerwy na niewypłacone odszkodowania i świadczenia na dzień 31 grudnia 2022 roku.
-Zakład został zobowiązany do przedstawienia tych wielkości w podziale na:
-•	Jednorodne grupy ryzyka (HRG), dla przepływów:
-o	bezpośrednie koszty likwidacji szkód (ALAE_RES),
-o	odszkodowania i świadczenia (CLAIM_RES),
-o	przewidywane regresy i odzyski (RECOURSE_RES),
-o	przewidywane koszty dochodzenia regresów (REC_ALAE_RES).
-•	Linie biznesowe, dla przepływów:
-o	pośrednie koszty likwidacji (ULAE_RES),
-o	premie i rabaty (BONUS_RES).
-•	Linie biznesowe ubezpieczeń bezpośrednich, dla przepływów:
-o	świadczenia z tytułu zaistniałych i niezgłoszonych rent (składnik ANN_IBNR),
-o	koszty likwidacji szkód dla zaistniałych i niezgłoszonych rent (składnik ANN_IBNR).
-•	Waluty przepływu.
-Zakład, zgodnie z prośbą zespołu inspekcyjnego, przeprowadził badanie adekwatności (wystarczalności) wartości oczekiwanych przyszłych przepływów pieniężnych dla rezerwy na niewypłacone odszkodowania i świadczenia, z wyłączeniem rezerwy dla zgłoszonych roszczeń o wypłatę świadczeń rentowych, dla każdej jednorodnej grupy ryzyka (HRG) wyznaczonej na dzień 31 grudnia 2022 roku, zgodnie ze stanem wiedzy na dzień 31 grudnia 2023 roku.
-Wyniki tego badania zostały przedstawione w przekazanym przez Zakład pliku Excel "Badanie adekwatności_szk_standard.xlsx", gdzie w poszczególnych zakładkach dokonano analiz:
-•	W zakładce „odszkodowania” przeprowadzono analizę dla CLAIM_RES z podziałem na waluty, oceniając adekwatność rezerw na odszkodowania i świadczenia.
-•	W zakładce „koszty likwidacji” dokonano badania dla ALAE_RES również z podziałem na waluty, oceniając bezpośrednie koszty likwidacji szkód.
-•	W zakładce „regresy” przeprowadzono analizę dla RECOURSE_RES i REC_ALAE_RES, z podziałem na walutę PLN, oceniając przewidywane regresy, odzyski oraz koszty dochodzenia regresów.
-•	W zakładce „Ulae i bonus” przedstawiono wyniki analizy dla ULAE_RES i BONUS_RES, dotyczące pośrednich kosztów likwidacji oraz premii i rabatów.
-Zakład wyjaśnił w (zał. nr...) przyczyny ujemnych wartości "Run-off" dla poszczególnych zakładek
-
+Etykiety wierszy	Suma z Run-off	Suma z Rezerwa 2022	Suma z wypłaty	Suma z Rezerwa 2023
 
 
