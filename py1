@@ -1,5 +1,17 @@
-W pliku "Badanie adekwatności_szk_standard.xlsx" w zakładce „Razem” przedstawiono analizę adekwatności rezerw na szkody nierentowe dotyczące ubezpieczeń bezpośrednich. Z analizy wynika, że w sumie rezerwy dla wszystkich linii biznesowych (LOB) okazują się być niedoszacowane, ale ten wynik jest spowodowany – jak wyjaśnia Zakład w (zał. nr...) – jednym zdarzeniem, jakim jest szkoda Orlen w liniach 7 i 12 denominowanych w USD. Szkody te są niemal w całości reasekurowane, a ich wartość na udziale własnym wynosi około 25 milionów PLN. Dodatkowo przedstawiono również szacunki adekwatności rezerw bez uwzględnienia tych szkód. Po ich pominięciu rezerwy okazują się być wystarczające w sumie, zarówno dla I, jak i dla pozostałych tenorów.
-
-Jeżeli chodzi o I tenor, lekkie niedoszacowanie występuje w linii 5. Na koniec roku 2023, w tym przypadku oraz w linii 4 i części linii 7, zastosowano dodatkowy narzut na inflację, co wpłynęło na zwiększenie szacunków na kolejne tenory. Niedobór w I tenorze zauważono również w linii 9, co jest wynikiem pojedynczej szkody związanej z Rafako. W linii 8 także pojawiło się kilka dużych szkód. Zakład stwierdza, że mimo tych zróżnicowań, ogólnie rezerwy są ustalane w sposób adekwatny, choć występują różnice między przepływami (gdzie pośrednie koszty wykazały najmniej korzystny run-off), liniami biznesowymi oraz walutami.
-
-Jeśli chodzi o reasekurację czynną, analizowaną w pliku "Badanie adekwatności_szk_indirect.xlsx", charakteryzuje się ona również pozytywnym run-offem. Pierwszy tenor był szacowany z nadwyżką, natomiast pozostałe tenory wymagały doszacowania na koniec roku 2023. Pozytywny run-off oraz ostrożne szacowania dla I tenora pozwalają uznać, że rezerwy są adekwatne, zarówno pod względem wysokości, jak i wpływu dyskonta.
+8.	Wykonanie badania adekwatności / wystarczalności wartości oczekiwanych przyszłych przepływów pieniężnych dla rezerwy na niewypłacone odszkodowania i świadczenia (z wyłączeniem rezerwy dla zgłoszonych roszczeń o wypłatę świadczeń rentowych), dla każdej z jednorodnej grupy ryzyka wyznaczonych na 31 grudnia 2022 roku, według stanu wiedzy na 31 grudnia 2023 roku.
+Przez badanie adekwatności / wystarczalności należy rozumieć porównanie ustalonej na początek okresu obserwacji wartości oczekiwanej przyszłych przepływów pieniężnych dla rezerwy na niewypłacone odszkodowania i świadczenia:
+a.	w 1 rocznym okresie projekcji ze zrealizowanym w tym okresie przepływami pieniężnymi,
+b.	łącznie w 2 i kolejnych okresach projekcji z planowanymi według stanu wiedzy na 31 grudnia 2023 roku przyszłymi przepływami pieniężnymi z tytułu umów uwzględnionych w kalkulacji najlepszego oszacowania brutto dla rezerwy na niewypłacone odszkodowania i świadczenia na 31 grudnia 2022 roku.
+Ww. wielkości winny zostać przedstawione w jednoczesnym podziale na:
+•	jednorodne grupy ryzyka, tj. HRG, dla przepływów: 
+o	bezpośrednie koszty likwidacji szkód (ALAE_RES),
+o	odszkodowania i świadczenia (CLAIM_RES),
+o	przewidywane regresy i odzyski (RECOURSE_RES),
+o	przewidywane koszty dochodzenia regresów (REC_ALAE_RES),
+•	linie biznesowe, dla przepływów: 
+o	pośrednie koszty likwidacji (ULAE_RES),
+o	premie i rabaty (BONUS_RES),
+•	linie biznesowe ubezpieczeń bezpośrednich, dla przepływów:
+o	świadczenia z tytułu zaistniałych i niezgłoszonych rent (składnik ANN_IBNR),
+o	koszty likwidacji szkód dla zaistniałych i niezgłoszonych rent (składnik ANN_IBNR),
+•	waluty przepływu,
