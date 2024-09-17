@@ -1,17 +1,8 @@
-if (!j[0]["lat"].is_null()) {
-            (*data)[thread_id] += "Szerokość geograficzna: " + std::string(j[0]["lat"]) + "\n";
-        } else {
-            (*data)[thread_id] += "Szerokość geograficzna: brak danych\n";
-        }
-
-        if (!j[0]["lon"].is_null()) {
-            (*data)[thread_id] += "Długość geograficzna: " + std::string(j[0]["lon"]) + "\n";
-        } else {
-            (*data)[thread_id] += "Długość geograficzna: brak danych\n";
-        }
-
-        if (!j[0]["display_name"].is_null()) {
-            (*data)[thread_id] += "Nazwa miejsca: " + std::string(j[0]["display_name"]) + "\n\n";
-        } else {
-            (*data)[thread_id] += "Nazwa miejsca: brak danych\n\n";
-        }
+gen. józefa hallera 4b;10-693;olsztyn;warmińsko-mazurskie;polska
+pelikana 19;71-698;szczecin;zachodniopomorskie;polska
+os. inżynierskie 560;32-433;lubień;małopolskie;polska;
+henryka wieniawskiego 63c;35-330;rzeszów;podkarpackie;polska
+konrada duszy 5;59-900;zgorzelec;dolnośląskie;polska
+gen. stanisława maczka 58a;15-691;białystok;podlaskie;polska
+aleja gen. władysława sikorskiego 9a;02-758;warszawa;mazowieckie;polska
+henryka wieniawskiego 20a;68-200;żary;lubuskie;polska
