@@ -1,2 +1,1 @@
-W związku z powyższym przyjęciem IBNR równego 0 dla trzech jednorodnych grup ryzyka
-zdaniem zespołu inspekcyjnego Zakład powinien regularne monitorowanie i weryfikowanie zasadności przyjętej wartości.
+Współczynnik jest wyznaczany w zależności od przynależności produktu do określonej grupy.
