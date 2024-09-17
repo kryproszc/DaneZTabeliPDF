@@ -4,5 +4,50 @@ os. inżynierskie 560;32-433;lubień;małopolskie;polska;
 henryka wieniawskiego 63c;35-330;rzeszów;podkarpackie;polska
 konrada duszy 5;59-900;zgorzelec;dolnośląskie;polska
 gen. stanisława maczka 58a;15-691;białystok;podlaskie;polska
-aleja gen. władysława sikorskiego 9a;02-758;warszawa;mazowieckie;polska
+
+
+
+#nie moze znalexc
+działkowa 45;10-861;olsztyn;warmińsko-mazurskie;polska
+antoniego edwarda odyńca 30;93-150;łódź;łódzkie;polska --- python znalazl
+gen. jankego zygmunta waltera 123a;40-616;katowice;
+centrum a 13;31-925;kraków;małopolskie;polska
+przędzalniana 12;90-034;łódź;łódzkie;polska
+os. inżynierskie 560;32-433;lubień;małopolskie;polska
+ks. piotra ściegiennego 40;70-354;szczecin;zachodniopomorskie;polska
+generała jana karcza 6;32-085;modlnica;małopolskie;polska
+###
+
+henryka sienkiewicza 27;87-100;toruń;kujawsko-pomorskie;polska
+usunelo dr w imieniu
+heyka sienkiewicza 27;87-100;toruń;kujawsko-pomorskie;polska
+tak samo
 henryka wieniawskiego 20a;68-200;żary;lubuskie;polska
+
+##
+w
+gen. grota-roweckiego 11;41-808;zabrze;śląskie;polska
+gen. józefa hallera 4b;10-693;olsztyn;warmińsko-mazurskie;polska
+usunelo gen. i nie znalazlo
+
+grota-roweckiego 11;41-808;zabrze;śląskie;polska
+
+to samo tu
+gen. stanisława maczka 58a;15-691;białystok;podlaskie;polska
+
+##
+konrada duszy 5;59-900;zgorzelec;dolnośląskie;polska
+
+zmienilo na
+koada duszy 5;59-900;zgorzelec;dolnośląskie;polska
+
+##
+henryka wieniawskiego 63c;35-330;rzeszów;podkarpackie;polska 
+
+zm na
+
+heyka wieniawskiego 20a;68-200;żary;lubuskie;polska
+
+#
+dr. henryka jordana 4a;44-193;knurów;śląskie;polska
+usuniete dr
