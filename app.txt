@@ -1,1 +1,9 @@
-Współczynnik jest wyznaczany w zależności od przynależności produktu do określonej grupy.
+W trakcie kontroli zespół inspekcyjny ustalił, że Zakład przyjął założenie, iż koszty likwidacji szkód są "ponoszone praktycznie tylko w Polsce", co oznacza, że występują niemal wyłącznie w walucie PLN. W związku z tym Zakład został poproszony o przedstawienie analiz lub statystyk potwierdzających zasadność takiego założenia, a w przypadku ich braku – o opracowanie i dostarczenie odpowiedniej dokumentacji.
+
+W odpowiedzi Zakład wyjaśnił, że system SLS dostarcza jedynie informacji dotyczących waluty szkody, a nie waluty, w której faktycznie ponoszone są koszty likwidacji. Dodatkowo wskazano, że jakość dostępnych danych w czasie wdrażania systemu Solvency II była niewystarczająca do przeprowadzenia wiarygodnych obliczeń z uwzględnieniem waluty, ze względu na liczne braki danych.
+
+Zakład inspekcyjny stwierdza, że założenie, iż wszystkie koszty likwidacji szkód są realizowane wyłącznie w walucie PLN, jest nieuzasadnione i nierealistyczne. Zakład nie dostarczył dowodów potwierdzających brak bezpośrednich kosztów likwidacji w walutach obcych ani nie przedstawił wystarczającej argumentacji uzasadniającej rezygnację z podziału tych kosztów według walut. Co więcej, z badania adekwatności wynika, że aż 20% kosztów likwidacji jest ponoszonych w walutach innych niż PLN, co dodatkowo podważa zasadność przyjętego przez Zakład założenia.
+
+Zgodnie z art. 33 rozporządzenia delegowanego, najlepsze oszacowanie powinno być obliczane oddzielnie dla przepływów pieniężnych w różnych walutach. Przepisy tego artykułu nie przewidują wyjątków pozwalających na stosowanie alternatywnego podejścia do obliczeń najlepszego oszacowania, nawet jeśli Towarzystwo posiada ograniczoną ilość danych dotyczących wypłat w walutach obcych.
+
+Biorąc pod uwagę, że Zakład wskazał, iż nie dokonuje oddzielnych obliczeń najlepszego oszacowania dla przepływów pieniężnych w walutach obcych, oraz fakt, że posiada zobowiązania w walutach obcych, należy stwierdzić, że na dzień 31 marca 2024 r. Zakład narusza art. 33 rozporządzenia delegowanego.
