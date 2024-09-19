@@ -1,3 +1,7 @@
-W trakcie kontroli zespół inspekcyjny ustalił, że oczekiwany wzrost kosztów został uwzględniony w dwóch przepływach: CLAIM_RES oraz ANN_IBNR.
+Ze względu na materialność szkody powstałej w wyniku wybuchu pieca w instalacji hydroodsiarczania gudronu w zakładach PKN Orlen z 2022 r. (1 760 tys. zł brutto na 31.03.2024 r.) oraz fakt, że jest ona wyrażona w USD, przewidywane przepływy z tej szkody wyznaczone zostały indywidualnie, w następujący sposób: 
+1. Aktualna wartość rezerwy na szkody zgłoszone i nie wypłacone (RBNS) dla tej szkody została ustalona na podstawie zapytania do tabeli Oracle z detalicznymi danymi o szkodach (CLAIMS.CLAIM_DATABASE). Szkoda dotyczy dwóch HRG: 7K i 12. Wyniki zapytania w załączonym pliku „USD_CF”. 
+2. Wartość RBNS została rozterminowana proporcjonalnie do struktury wszystkich przewidywanych wypłat dla danego roku szkody i danego HRG (kolumny R i S załączonego pliku „USD_CF”). Oryginalne przepływy będące bazą rozterminowania znajdują się w załączonym pliku „CLAIM_CF_REPORT.xlsb”. 
+3. Ze względów technicznych wiersze z kwotami wyrażonymi w USD zostały powtórzone jako wartości w PLN z przeciwnym znakiem i uwzględniona w tzw. przepływach bazowych (plik CF_BEL_2024Q1_CLAIM_BASE.xlsb). 
 
-W odniesieniu do przepływu CLAIM_RES, Zakład zakłada, że oczekiwany wzrost roszczeń ubezpieczeniowych został już odzwierciedlony w danych historycznych zawartych w trójkątach (szczegóły w rozdziale X). Dla wybranych grup ryzyka (HRG), w tym H_09_BONDS, H_09_CREDIT oraz H_10, zastosowano narzut wyliczony na podstawie wypłat odszkodowań z poprzednich lat, w połączeniu ze wskaźnikiem inflacji CPI. Po wyznaczeniu współczynnika korekcyjnego, który uwzględnia wpływ inflacji, narzut ten jest następnie nakładany na przepływy finansowe, co umożliwia dokładniejsze oszacowanie wzrostu kosztów w przyszłych okresach.
+
+=SUMA.WARUNKÓW(ORACLE!P:P;ORACLE!E:E;USD!E2;ORACLE!H:H;USD!H2;ORACLE!L:L;USD!L2;ORACLE!O:O;"PLN")
