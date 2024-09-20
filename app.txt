@@ -1,22 +1,11 @@
 
 
 
-27 marca 2018 Sąd Najwyższy w trzech uchwałach (III CZP 36/17, III CZP 69/17, III CZP 60/173) potwierdził, że „Sąd może przyznać zadośćuczynienie za krzywdę osobom najbliższym poszkodowanego, który na skutek czynu niedozwolonego doznał ciężkiego i trwałego uszczerbku na zdrowiu”. Dla PZU SA oznacza to konieczność wypłacenia takich zadośćuczynień na podstawie zawartych umów ubezpieczenia odpowiedzialności cywilnej. . Przepływ CLAIM_VEG_RES został utworzony na koniec I kwartału 2018 roku na pokrycie takich zobowiązań.
+Zakład wyjaśnia, że w ramach swoich działań, na koniec I kwartału 2018 roku, utworzył przepływ CLAIM_VEG_RES, który miał na celu pokrycie zobowiązań wynikających z potencjalnych roszczeń o zadośćuczynienie z tytułu uszczerbku na zdrowiu. Zakład wyjaśnia również, że analiza tych roszczeń została przeprowadzona jeszcze w 2017 roku, przed wydaniem kluczowej decyzji przez Sąd Najwyższy, co znacząco wpłynęło na jej założenia. Zakład uznaje, że za nieprzedawnione szkody przyjęto te, które zaistniały od 1 stycznia 1998 roku, biorąc pod uwagę 20-letni okres przedawnienia.
 
+Zakład przekazał, że mimo początkowych przewidywań, w kolejnych latach nie doszło do masowego pojawienia się roszczeń o zadośćuczynienie z tytułu uszczerbku na zdrowiu, na które zakład się przygotowywał. Zakład podkreśla, że na podstawie analizy przekątnych trójkąta szkód w ubezpieczeniach odpowiedzialności cywilnej, a szczególnie w grupie ustawowej 10, gdzie oczekiwano najwięcej takich roszczeń, nie zaobserwowano wzrostu współczynników rozwoju szkód po 2018 roku. Zakład uznaje, że brak tych oznak wskazuje na to, że nie nastąpił masowy wzrost zgłoszeń roszczeń o zadośćuczynienie, co mogło być przewidywane po decyzji Sądu Najwyższego.
 
-W kolejnych latach roszczenia o zadośćuczynienie z tytułu uszczerbku na zdrowiu nie zaczęły się masowo pojawiać. Jednak ze względu na nadal istniejące ryzyko zdecydowaliśmy się utrzymać rezerwę w niezmienionej wysokości. Z jednej strony należy oczekiwać, że kwota pojedynczego roszczenia obecnie byłaby wyższa, z drugiej strony prawdopodobieństwo pojawienia się roszczeń maleje. Nadal kształtujące się orzecznictwo sądowe oraz brak danych, na których można zweryfikować założenia, spowodowały, że zdecydowaliśmy się, ze względów ostrożnościowych, utrzymać nasze szacunki na dotychczasowym poziomie. 
-
-Analiza była robiona w 2017 przed decyzją sądu najwyższego.
-Za nieprzedawnione przyjęto szkody zaistniałe od 1.01.1998 r. (20 letni okres przedawnienia)
-Szkód jest 1061 i jest kontrolowane przez biuro likwidacji szkód i obserwuje, że się tam nic nie dzieje, mało się zgłasza, pojedyncze szkody. Przewidywana liczba zadośćuczynień to 1061
-
-W brew oczekiwaniom szkody nie zaczęły się pojawiać i zakład podjął decyzję, że nie będzie nowego modelu robić bo nowe szkody nie dojdą a nic się nie działo to ostrożnościowo założyli, że utrzymają tę rezerwę z 31.03..2024. 
-
-Obserwując przekątne trójkąta szkód w ubezpieczeniach odpowiedzialności cywilnej, w szczególności grupy ustawowej 10, w której głównie spodziewaliśmy się zadośćuczynień z tytułu uszczerbku na zdrowiu, nie widać zwiększonych współczynników rozwoju w kolejnych przekątnych po roku 2018, które powinny się pojawić w przypadku masowego zgłaszania się tego typu szkód. W załączonym pliku można zobaczyć, że współczynniki te raczej malały niż rosły. 
-
-
-
-Za nieprzedawnione przyjęto szkody zaistniałe od 1.01.1998 r. (20 letni okres przedawnienia)
+Pomimo braku masowego zgłaszania roszczeń, zakład podjął decyzję o utrzymaniu rezerwy na niezmienionym poziomie, kierując się ostrożnością. Zakład wyjaśnia, że choć prawdopodobieństwo pojawienia się nowych roszczeń stopniowo maleje, to jednocześnie kwoty pojedynczych roszczeń mogłyby być obecnie wyższe. Zakład zaznacza, że ciągle kształtujące się orzecznictwo sądowe oraz brak wystarczających danych, które mogłyby zweryfikować pierwotne założenia, spowodowały, że zdecydowano się na utrzymanie dotychczasowych szacunków.
 
 Opis koncepcji obliczenia metodą chain ladder kolumny „I” (określonej jako „IBNR”) zakładki „Total” pliku „CF_P&S.xlsx”.
 1. Celem wymienionego wyżej obliczenia było oszacowanie ostatecznej liczby rentobiorców, którzy potencjalnie doznali ciężkiego i trwałego uszczerbku na zdrowiu, na skutek wypadku z ubezpieczeń OC (zarówno komunikacyjnych jak i np. OC medycznego), z lat 1998-2017. Wyznaczenie ostatecznej liczby rentobiorców jest równoważne wyznaczeniu liczby ewentualnych rentobiorców, którzy jeszcze nie zgłosili roszczeń o rentę. Dla ułatwienia zrozumienia procesu załączony plik przedstawia odtworzony przybliżony proces obliczeń.
