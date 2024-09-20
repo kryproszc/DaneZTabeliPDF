@@ -1,9 +1,11 @@
 
 
 
-Wszystkie osoby, które doznały ciężkiego i trwałego uszczerbku na zdrowiu, a objętych odpowiedzialnością PZU SA otrzymują lub otrzymywały z PZU SA rentę z tytułu zwiększonych potrzeb, całkowitej utraty zdolności zarobkowej lub utraconych widoków na przyszłość i ich liczba może być ustalona na podstawie zapisów w systemie do obsługi rent eRenty.
-• Przyjęto, że rozważane zadośćuczynienia dotyczą osób poszkodowanych zarejestrowanych w systemie eRenty z wymienionymi wyżej tytułami renty oraz z trwałym uszczerbkiem na zdrowiu w wysokości 100%.
-• Na podstawie trójkąta rozwoju takich rent, wyznaczono liczbę osób, którym przysługuje świadczenie, ale nie zostały jeszcze zgłoszone jako renty (IBNR).
+Zakład wyjaśnia, że rozważane zadośćuczynienia dotyczą osób poszkodowanych, które są zarejestrowane w systemie eRenty i otrzymują rentę na podstawie tytułów: zwiększonych potrzeb, całkowitej utraty zdolności zarobkowej lub utraconych widoków na przyszłość, oraz u których stwierdzono trwały uszczerbek na zdrowiu wynoszący 100%. Na podstawie trójkąta rozwoju takich rent wyznaczono również liczbę osób, którym przysługuje świadczenie, ale które jeszcze nie zgłosiły swoich roszczeń jako renty (IBNR – incurred but not reported).
+
+Zakład dążył do oszacowania ostatecznej liczby rentobiorców, którzy potencjalnie doznali ciężkiego i trwałego uszczerbku na zdrowiu na skutek wypadków związanych z ubezpieczeniami odpowiedzialności cywilnej (zarówno komunikacyjnych, jak i np. OC medycznego) z lat 1998-2017. Wyznaczenie tej liczby jest równoważne z oszacowaniem liczby osób, które jeszcze nie zgłosiły roszczeń o rentę.
+
+Podstawą oszacowania był trójkąt, oparty na danych o 944 rentobiorcach z bazy rentowej, u których stwierdzono uszczerbek na zdrowiu wynoszący 100%. Dane te zostały zagregowane według roku zajścia szkody (1998-2017).
 
 Opis koncepcji obliczenia metodą chain ladder kolumny „I” (określonej jako „IBNR”) zakładki „Total” pliku „CF_P&S.xlsx”.
 1. Celem wymienionego wyżej obliczenia było oszacowanie ostatecznej liczby rentobiorców, którzy potencjalnie doznali ciężkiego i trwałego uszczerbku na zdrowiu, na skutek wypadku z ubezpieczeń OC (zarówno komunikacyjnych jak i np. OC medycznego), z lat 1998-2017. Wyznaczenie ostatecznej liczby rentobiorców jest równoważne wyznaczeniu liczby ewentualnych rentobiorców, którzy jeszcze nie zgłosili roszczeń o rentę. Dla ułatwienia zrozumienia procesu załączony plik przedstawia odtworzony przybliżony proces obliczeń.
