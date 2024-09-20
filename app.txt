@@ -7,7 +7,7 @@
 W kolejnych latach roszczenia o zadośćuczynienie z tytułu uszczerbku na zdrowiu nie zaczęły się masowo pojawiać. Jednak ze względu na nadal istniejące ryzyko zdecydowaliśmy się utrzymać rezerwę w niezmienionej wysokości. Z jednej strony należy oczekiwać, że kwota pojedynczego roszczenia obecnie byłaby wyższa, z drugiej strony prawdopodobieństwo pojawienia się roszczeń maleje. Nadal kształtujące się orzecznictwo sądowe oraz brak danych, na których można zweryfikować założenia, spowodowały, że zdecydowaliśmy się, ze względów ostrożnościowych, utrzymać nasze szacunki na dotychczasowym poziomie. 
 
 Analiza była robiona w 2017 przed decyzją sądu najwyższego.
-
+Za nieprzedawnione przyjęto szkody zaistniałe od 1.01.1998 r. (20 letni okres przedawnienia)
 Szkód jest 1061 i jest kontrolowane przez biuro likwidacji szkód i obserwuje, że się tam nic nie dzieje, mało się zgłasza, pojedyncze szkody. Przewidywana liczba zadośćuczynień to 1061
 
 W brew oczekiwaniom szkody nie zaczęły się pojawiać i zakład podjął decyzję, że nie będzie nowego modelu robić bo nowe szkody nie dojdą a nic się nie działo to ostrożnościowo założyli, że utrzymają tę rezerwę z 31.03..2024. 
