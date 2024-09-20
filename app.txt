@@ -12,6 +12,15 @@ ii.	korekty Bornhuettera-Fergusona (dalej: korekty BF)
 projekcja przyszłych przepływów pieniężnych.
 
 
+3. Na tak opisanym trójkącie oparto model rozwoju typu chain-ladder, bazujący na współczynnikach rozwoju z ostatnich przekątnych trójkąta. Do obserwowanych współczynników rozwoju dopasowano jedną z krzywych predefiniowanych w ResQ, ekstrapolując jednocześnie rozwój zgłoszeń poza obserwowaną historię zgłoszeń (arkusz „DFM_Results”).
+4. Ze względu na skąpą liczbę rent ujawnianych dla najnowszych lat zajścia szkody, a co za tym idzie potencjalnie duże wahania oszacowania ostatecznej liczby rent z tych lat, zastosowano dodatkowo metodę Bornhuettera – Fergusona z następującymi parametrami (arkusz „BF_Data”):
+a. Rozwój szkód jak w modelu z punktu 3. wyżej
+b. Dla lat 2011-2017 za miarę ekspozycji przyjęto liczbę ubezpieczonych przez PZU łącznie w grupach ustawowych 10 i 13 (Arkusz „BF_Data”, kolumna C). Dla lat 2010 i wcześniej analogiczne dane były istotnie trudniej dostępne.
+c. Dla lat szkody 2012-2017 zastosowano korektę rozwoju szkód („Pattern Ratio”), na podstawie średniej ze wskaźników dla roku szkody 2011 i 2012 (arkusz „BF_Data” zakres F32:F37). Iloraz ostatecznej liczby rent i liczby rentobiorców przed korektą („Pattern Ratio”) i po korekcie („Posterior Ratio”) przedstawione są graficznie w arkuszu „BF Graphs”.
+5. Ostateczną liczbę rent wybrano ostrożnościowo oddzielnie dla każdego roku szkody jako większą z wartości otrzymanych w metodzie z punktu 3 i punktu 4. (arkusz „RS Data”, kolumna H=max (kolumna D, kolumna F). W odtworzonym wyliczeniu otrzymano ostateczną wartość liczby rent w wysokości 1063 (zamiast oryginalnie wyliczonych 1061).
+
+
+
 Opis koncepcji obliczenia metodą chain ladder kolumny „I” (określonej jako „IBNR”) zakładki „Total” pliku „CF_P&S.xlsx”.
 1. Celem wymienionego wyżej obliczenia było oszacowanie ostatecznej liczby rentobiorców, którzy potencjalnie doznali ciężkiego i trwałego uszczerbku na zdrowiu, na skutek wypadku z ubezpieczeń OC (zarówno komunikacyjnych jak i np. OC medycznego), z lat 1998-2017. Wyznaczenie ostatecznej liczby rentobiorców jest równoważne wyznaczeniu liczby ewentualnych rentobiorców, którzy jeszcze nie zgłosili roszczeń o rentę. Dla ułatwienia zrozumienia procesu załączony plik przedstawia odtworzony przybliżony proces obliczeń.
 2. Podstawą oszacowania był trójkąt zidentyfikowanych w bazie rentowej 944 rentobiorców, dla których uszczerbek na zdrowiu osiągał 100%, zagregowany do roku zajścia szkody (1998-2017) oraz do roku opóźnienia obliczonego jako (rok zgłoszenia – rok zajścia szkody + 1 )
