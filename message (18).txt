@@ -1,2 +1,1 @@
-
-Zespół inspekcyjny, na podstawie przekazanych podczas kontroli plików „USD_CF.xlsx” oraz „CLAIM_CF_REPORT.xlsb” (zał. nr ...), ustalił, że wartość rezerwy RBNS dla grupy HRG 7K wynosi 412 198 010,02 zł, a dla HRG 12 wynosi 1 347 824 894,99 zł. Zakład poinformował, że aktualne wartości rezerwy RBNS zostały określone na podstawie danych z tabeli Oracle (CLAIMS.CLAIM_DATABASE), a szczegóły dotyczące zapytania znajdują się w pliku „USD_CF”
+Zespół inspekcyjny, na podstawie przekazanych podczas kontroli plików „USD_CF.xlsx” oraz „CLAIM_CF_REPORT.xlsb” (zał. nr ...), ustalił, że wartość rezerwy RBNS dla grupy HRG 7K wynosi 412 198 010,02 zł, a dla HRG 12 wynosi 1 347 824 894,99 zł. 
