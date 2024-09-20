@@ -1,3 +1,6 @@
+Obliczenie liczby rentobiorców mogących jeszcze zgłosić roszczenie o rentę z tytułu zadośćuczynienia:
+
+
 Zakład wyjaśnia, że zadośćuczynienia dotyczą osób poszkodowanych, które są zarejestrowane w systemie eRenty i otrzymują rentę na podstawie tytułów: zwiększonych potrzeb, całkowitej utraty zdolności zarobkowej lub utraconych widoków na przyszłość, oraz u których stwierdzono trwały uszczerbek na zdrowiu wynoszący 100% na skutek wypadku z ubezpieczeń OC (zarówno komunikacyjnych, jak i np. OC medycznego).
 
 Podstawą oszacowania był trójkąt zidentyfikowanych w bazie rentowej 944 rentobiorców, a dane te zostały zagregowane zarówno według roku zajścia szkody (1998-2017) oraz roku opóźnienia.
