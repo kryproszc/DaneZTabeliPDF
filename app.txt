@@ -1,11 +1,16 @@
 
 
 
-Zakład wyjaśnia, że rozważane zadośćuczynienia dotyczą osób poszkodowanych, które są zarejestrowane w systemie eRenty i otrzymują rentę na podstawie tytułów: zwiększonych potrzeb, całkowitej utraty zdolności zarobkowej lub utraconych widoków na przyszłość, oraz u których stwierdzono trwały uszczerbek na zdrowiu wynoszący 100%. Na podstawie trójkąta rozwoju takich rent wyznaczono również liczbę osób, którym przysługuje świadczenie, ale które jeszcze nie zgłosiły swoich roszczeń jako renty (IBNR – incurred but not reported).
+1. zasilenie aplikacji ResQ danymi źródłowymi,
+2. obliczenie niezdyskontowanej wartości najlepszego oszacowania brutto dla rezerwy na niewypłacone odszkodowania i świadczenia, w tym:
+e.	wybór wartości współczynników rozwoju „okres do okresu” z trójkątów współczynników rozwoju,
+f.	wybór metody wykorzystywanej do wyznaczania wartości współczynników rozwoju (ten etap obejmuje m.in. wybór „przekątnych”),
+g.	wygładzenie współczynników rozwoju otrzymanych w pkt. 2.b., tj. dopasowanie krzywych do wybranych wartości współczynników rozwoju,
+h.	wybór metody aktuarialnej wykorzystywanej do obliczenia ostatecznej przewidywanej wartości regresów i odzysków, w tym:
+i.	metody chain-ladder,
+ii.	korekty Bornhuettera-Fergusona (dalej: korekty BF)
+projekcja przyszłych przepływów pieniężnych.
 
-Zakład dążył do oszacowania ostatecznej liczby rentobiorców, którzy potencjalnie doznali ciężkiego i trwałego uszczerbku na zdrowiu na skutek wypadków związanych z ubezpieczeniami odpowiedzialności cywilnej (zarówno komunikacyjnych, jak i np. OC medycznego) z lat 1998-2017. Wyznaczenie tej liczby jest równoważne z oszacowaniem liczby osób, które jeszcze nie zgłosiły roszczeń o rentę.
-
-Podstawą oszacowania był trójkąt, oparty na danych o 944 rentobiorcach z bazy rentowej, u których stwierdzono uszczerbek na zdrowiu wynoszący 100%. Dane te zostały zagregowane według roku zajścia szkody (1998-2017).
 
 Opis koncepcji obliczenia metodą chain ladder kolumny „I” (określonej jako „IBNR”) zakładki „Total” pliku „CF_P&S.xlsx”.
 1. Celem wymienionego wyżej obliczenia było oszacowanie ostatecznej liczby rentobiorców, którzy potencjalnie doznali ciężkiego i trwałego uszczerbku na zdrowiu, na skutek wypadku z ubezpieczeń OC (zarówno komunikacyjnych jak i np. OC medycznego), z lat 1998-2017. Wyznaczenie ostatecznej liczby rentobiorców jest równoważne wyznaczeniu liczby ewentualnych rentobiorców, którzy jeszcze nie zgłosili roszczeń o rentę. Dla ułatwienia zrozumienia procesu załączony plik przedstawia odtworzony przybliżony proces obliczeń.
