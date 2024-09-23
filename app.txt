@@ -1,3 +1,8 @@
+W związku z przyjęciem wartości IBNR równej 0 dla trzech jednorodnych grup ryzyka, zespół inspekcyjny podkreśla konieczność regularnego monitorowania oraz weryfikacji zasadności tego założenia. W razie konieczności, należy rozważyć możliwość odejścia od przyjętego założenia eksperckiego i opracowanie metody umożliwiającej precyzyjne wyznaczanie wartości IBNR.
+
+
+
+####
 Dla trzech jednorodnych grup ryzyka: H_09_BONDS, H_09_CREDIT, H_10 Zakład ustala wartość IBNR w wysokości 0. Zakład uzasadnił (zał. nr ), iż dla tych trzech HRG od co najmniej 2 lat szkodowych nie ma żadnych szkód zgłoszonych, jednakże zakład przekazał informację, że w przeszłości występowały przypadki, gdzie w trójkącie szkód pojawiały się wartości większe od zera, podczas gdy w trójkącie bezpośrednich kosztów likwidacji były to wartości równe 0. Dodatkowo danych w trójkącie jest niewiele, co nie pozwala na zbudowanie sensownego modelu – nawet gdyby taki model próbować zbudować, to i tak daje IBNR w wysokości zero albo nawet ujemną wartość. W związku z powyższym przyjęto, że IBNR nie będzie tworzony (zakładamy IBNR=0), co skutkuje tym, że najlepsze oszacowanie składa się tylko z rezerwy RBNS.
 
 
