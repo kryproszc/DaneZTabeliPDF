@@ -1,3 +1,6 @@
+Dla trzech jednorodnych grup ryzyka: H_09_BONDS, H_09_CREDIT, H_10 Zakład ustala wartość IBNR w wysokości 0. Zakład uzasadnił (zał. nr  ), iż dla tych trzech HRG od co najmniej 2 lat szkodowych nie ma żadnych szkód zgłoszonych. Dodatkowo danych w trójkącie jest niewiele, co nie pozwala na zbudowanie sensownego modelu – nawet gdyby taki model próbować zbudować to i tak daje IBNR w wysokości zero albo nawet ujemną wartość. Z związku z powyższym przyjęto, że IBNR nie będzie tworzony (zakładamy IBNR=0), co skutkuje tym, że najlepsze oszacowanie składa się tylko z rezerwy RBNS. 
+
+
 Zdaniem zespołu inspekcyjnego Zakład powinien regularnie monitorować poziom wykorzystania opcji umownych by weryfikować czy nie należy w modelowaniu przyszłych przepływów pieniężnych uwzględniać – obok opcji braku kontynuacji – opcje kontynuacji przewidziane warunkami ubezpieczenia wchodzące w zakres granicy umowy, powodujące zmianę wysokości składki w trakcie trwania umowy
 
 
