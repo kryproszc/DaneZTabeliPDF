@@ -6,6 +6,7 @@ Zespół inspekcyjny zwraca uwagę, że zakład powinien stale monitorować pozi
 
 W związku z powyższym przyjęciem wartości IBNR równej 0 dla trzech jednorodnych grup ryzyka, zespół inspekcyjny zwraca uwagę, że Zakład powinien regularnie monitorować i weryfikować zasadność przyjętej wartości. W razie potrzeby należy rozważyć odejście od założenia eksperckiego i ustalić metodę wyznaczania IBNR.
 
+Dla trzech jednorodnych grup ryzyka: H_09_BONDS, H_09_CREDIT, H_10 Zakład ustala wartość IBNR w wysokości 0. Zakład uzasadnił (zał. nr  ), iż dla tych trzech HRG od co najmniej 2 lat szkodowych nie ma żadnych szkód zgłoszonych. Dodatkowo danych w trójkącie jest niewiele, co nie pozwala na zbudowanie sensownego modelu – nawet gdyby taki model próbować zbudować to i tak daje IBNR w wysokości zero albo nawet ujemną wartość. Z związku z powyższym przyjęto, że IBNR nie będzie tworzony (zakładamy IBNR=0), co skutkuje tym, że najlepsze oszacowanie składa się tylko z rezerwy RBNS. 
 
 ######
 Obliczenie liczby rentobiorców mogących jeszcze zgłosić roszczenie o rentę z tytułu zadośćuczynienia:
