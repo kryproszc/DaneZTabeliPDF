@@ -1,3 +1,13 @@
+2.	obliczenie niezdyskontowanej wartości najlepszego oszacowania brutto, przyszłych przepływów z tytuły bezpośrednich kosztów likwidacji, w tym:
+a.	wyznaczenie wartości współczynników rozwoju „okres do okresu” z trójkątów współczynników rozwoju,
+b.	wybór metody wykorzystywanej do wyznaczania wartości współczynników rozwoju (ten etap obejmuje m.in. wybór „przekątnych”),
+c.	wygładzenie współczynników rozwoju otrzymanych w pkt. 2.b., tj. dopasowanie krzywych do wybranych wartości współczynników rozwoju,
+d.	obliczenie przewidywanej ostatecznej wartości bezpośrednich kosztów likwidacji szkód poprzez wykorzystanie średniej ważonej dla wyników uzyskanych wskutek zastosowania metody chain-ladder w trójkąch paid oraz incurred,
+
+
+
+
+
 W związku z przyjęciem wartości IBNR równej 0 dla trzech jednorodnych grup ryzyka, zespół inspekcyjny podkreśla konieczność regularnego monitorowania oraz weryfikacji zasadności tego założenia. W razie konieczności, należy rozważyć możliwość odejścia od przyjętego założenia eksperckiego i opracowanie metody umożliwiającej precyzyjne wyznaczanie wartości IBNR.
 
 
