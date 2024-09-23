@@ -1,6 +1,11 @@
 Zdaniem zespołu inspekcyjnego Zakład powinien regularnie monitorować poziom wykorzystania opcji umownych by weryfikować czy nie należy w modelowaniu przyszłych przepływów pieniężnych uwzględniać – obok opcji braku kontynuacji – opcje kontynuacji przewidziane warunkami ubezpieczenia wchodzące w zakres granicy umowy, powodujące zmianę wysokości składki w trakcie trwania umowy
 
 
+Zespół inspekcyjny zwraca uwagę, że zakład powinien stale monitorować poziom wypłat odszkodowań i świadczeń w walutach innych niż PLN dla HRG 6. Biorąc pod uwagę wcześniejsze wahania udziału wypłat w USD, w przypadku ustabilizowania się poziomu tych wypłat, zaleca się rozważenie wydzielenia szkód zagranicznych w celu wyznaczenia rezerwami techniczno-ubezpieczeniowych
+
+
+W związku z powyższym przyjęciem wartości IBNR równej 0 dla trzech jednorodnych grup ryzyka, zespół inspekcyjny zwraca uwagę, że Zakład powinien regularnie monitorować i weryfikować zasadność przyjętej wartości. W razie potrzeby należy rozważyć odejście od założenia eksperckiego i ustalić metodę wyznaczania IBNR.
+
 
 ######
 Obliczenie liczby rentobiorców mogących jeszcze zgłosić roszczenie o rentę z tytułu zadośćuczynienia:
