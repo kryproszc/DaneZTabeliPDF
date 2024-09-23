@@ -1,3 +1,8 @@
+Zdaniem zespołu inspekcyjnego Zakład powinien regularnie monitorować poziom wykorzystania opcji umownych by weryfikować czy nie należy w modelowaniu przyszłych przepływów pieniężnych uwzględniać – obok opcji braku kontynuacji – opcje kontynuacji przewidziane warunkami ubezpieczenia wchodzące w zakres granicy umowy, powodujące zmianę wysokości składki w trakcie trwania umowy
+
+
+
+######
 Obliczenie liczby rentobiorców mogących jeszcze zgłosić roszczenie o rentę z tytułu zadośćuczynienia:
 
 
