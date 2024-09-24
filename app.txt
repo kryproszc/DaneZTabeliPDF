@@ -1,1 +1,1 @@
-Zakład wyjaśnia, że w ramach swoich działań, na 31 marca 2018 roku, utworzył przepływ CLAIM_VEG_RES, który miał na celu pokrycie zobowiązań wynikających z potencjalnych roszczeń o zadośćuczynienie z tytułu uszczerbku na zdrowiu
+Zgodnie z wyjaśnieniami zakładu, na 31 marca 2018 roku utworzono przepływ CLAIM_VEG_RES, który miał na celu pokrycie zobowiązań wynikających z potencjalnych roszczeń o zadośćuczynienie z tytułu uszczerbku na zdrowiu.
