@@ -1,20 +1,34 @@
 library(httr)
+library(jsonlite)
 
-# Ustawienie URL API z kodem pocztowym
-base_url <- "http://dft-everace:8080/search.php"
-postal_code <- "32-100"  # kod pocztowy, który chcesz wyszukać
+# Ustawienia URL API z kodem pocztowym
+adres_bazy <- "http://dft-everace:8080/search.php"
+kod_pocztowy <- "32-100"  # kod pocztowy, który chcesz wyszukać
 
 # Wykonanie zapytania GET do API
-response <- GET(base_url, query = list(q = postal_code))
+odpowiedz <- GET(adres_bazy, query = list(q = kod_pocztowy))
 
-# Sprawdź status odpowiedzi
-if (status_code(response) == 200) {
-  # Pobierz dane w formacie tekstowym (JSON, HTML itp.)
-  content_data <- content(response, as = "text", encoding = "UTF-8")
+# Sprawdzenie statusu odpowiedzi
+if (status_code(odpowiedz) == 200) {
+  # Pobierz dane w formacie tekstowym (zakładamy, że jest to JSON)
+  dane_tekstowe <- content(odpowiedz, as = "text", encoding = "UTF-8")
   
-  # Wyświetl odpowiedź
-  print(content_data)
+  # Konwersja z JSON na listę w R
+  dane_sparsowane <- fromJSON(dane_tekstowe)
+  
+  # Sprawdzenie struktury danych
+  print(dane_sparsowane)
+  
+  # Zakładając, że dane o budynkach są dostępne, wypisujemy wszystkie budynki
+  # Dostosuj do rzeczywistej struktury odpowiedzi
+  if ("address" %in% names(dane_sparsowane)) {
+    budynki <- dane_sparsowane$address
+    
+    # Wyświetlenie wyników (np. nazwy budynków, numery)
+    print(budynki)
+  } else {
+    print("Brak informacji o budynkach w odpowiedzi.")
+  }
 } else {
-  # W przypadku błędu wyświetl komunikat o błędzie
-  print(paste("Błąd podczas połączenia. Status:", status_code(response)))
+  print(paste("Błąd podczas połączenia. Status:", status_code(odpowiedz)))
 }
