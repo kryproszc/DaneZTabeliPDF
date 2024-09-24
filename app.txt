@@ -1,3 +1,5 @@
+Zadośćuczynienia będą wypłacane w dwóch liniach biznesowych: 4 oraz 8. Przepływy finansowe dla tych linii zostały wyznaczone w następujący sposób:
+
 Na podstawie struktury RBNS dla linii biznesowych 4 i 8, IBNR
 𝑌
 Y
