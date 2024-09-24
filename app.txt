@@ -1,2 +1,3 @@
-1.	Na podstawie wyznaczonego trójkąta oblicza się liczbę rentobiorców mogących jeszcze zgłosić roszczenie o rentę z tytułu zadośćuczynienia składa się z następujących etapów: 
-a.	wyznaczenie współczynników rozwoju „okres do okresu”,
+Wyliczenia odbywają się w systemie ResQ w następujących krokach:
+1.	Na podstawie wyznaczonego trójkąta oblicza się liczbę rentobiorców mogących jeszcze zgłosić roszczenie o rentę z tytułu zadośćuczynienia. 
+2.	Zadośćuczynienia będą wypłacane w dwóch liniach biznesowych: 4 oraz 8. Przepływy finansowe dla tych linii zostały wyznaczone w następujący sposób:
