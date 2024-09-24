@@ -1,7 +1,2 @@
-Zadośćuczynienia będą wypłacane w dwóch liniach biznesowych: 4 oraz 8. Przepływy finansowe dla tych linii zostały wyznaczone w następujący sposób:
-
-Na podstawie struktury RBNS dla linii biznesowych 4 i 8, IBNR
-𝑌
-Y
-​
-  zostaje podzielony proporcjonalnie pomiędzy każdą linię biznesową. Obliczenia te są dokonywane zgodnie z następującym wzorem:
+1.	Na podstawie wyznaczonego trójkąta oblicza się liczbę rentobiorców mogących jeszcze zgłosić roszczenie o rentę z tytułu zadośćuczynienia składa się z następujących etapów: 
+a.	wyznaczenie współczynników rozwoju „okres do okresu”,
