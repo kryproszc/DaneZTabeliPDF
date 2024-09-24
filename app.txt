@@ -1,6 +1,3 @@
-library(httr)
-library(jsonlite)
-
 # Ustawienia URL API z kodem pocztowym
 adres_bazy <- "http://dft-everace:8080/search.php"
 kod_pocztowy <- "32-100"  # kod pocztowy, który chcesz wyszukać
@@ -20,14 +17,21 @@ if (status_code(odpowiedz) == 200) {
   print(dane_sparsowane)
   
   # Zakładając, że dane o budynkach są dostępne, wypisujemy wszystkie budynki
-  # Dostosuj do rzeczywistej struktury odpowiedzi
-  if ("address" %in% names(dane_sparsowane)) {
-    budynki <- dane_sparsowane$address
-    
-    # Wyświetlenie wyników (np. nazwy budynków, numery)
+  # Zmieniamy w zależności od struktury odpowiedzi (zakładamy, że informacje o budynkach są w kolumnie 'address')
+  budynki <- list()  # Lista na wszystkie budynki
+  
+  for (i in seq_along(dane_sparsowane)) {
+    if (dane_sparsowane[[i]]$type == "building") {  # Sprawdzamy, czy dany wpis to budynek
+      budynek_info <- dane_sparsowane[[i]]$address
+      budynki[[length(budynki) + 1]] <- budynek_info  # Dodajemy budynek do listy
+    }
+  }
+  
+  # Wyświetlenie wszystkich budynków
+  if (length(budynki) > 0) {
     print(budynki)
   } else {
-    print("Brak informacji o budynkach w odpowiedzi.")
+    print("Brak budynków dla podanego kodu pocztowego.")
   }
 } else {
   print(paste("Błąd podczas połączenia. Status:", status_code(odpowiedz)))
