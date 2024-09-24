@@ -1,3 +1,1 @@
-Wyliczenia odbywają się w systemie ResQ w następujących krokach:
-1.	Na podstawie wyznaczonego trójkąta oblicza się liczbę rentobiorców mogących jeszcze zgłosić roszczenie o rentę z tytułu zadośćuczynienia. 
-2.	Zadośćuczynienia będą wypłacane w dwóch liniach biznesowych: 4 oraz 8. Przepływy finansowe dla tych linii zostały wyznaczone w następujący sposób:
+Zakład wyjaśnia, że w ramach swoich działań, na 31 marca 2018 roku, utworzył przepływ CLAIM_VEG_RES, który miał na celu pokrycie zobowiązań wynikających z potencjalnych roszczeń o zadośćuczynienie z tytułu uszczerbku na zdrowiu
