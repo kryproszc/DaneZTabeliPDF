@@ -1,66 +1,20 @@
-2.	obliczenie niezdyskontowanej wartości najlepszego oszacowania brutto, przyszłych przepływów z tytuły bezpośrednich kosztów likwidacji, w tym:
-a.	wyznaczenie wartości współczynników rozwoju „okres do okresu” z trójkątów współczynników rozwoju,
-b.	wybór metody wykorzystywanej do wyznaczania wartości współczynników rozwoju (ten etap obejmuje m.in. wybór „przekątnych”),
-c.	wygładzenie współczynników rozwoju otrzymanych w pkt. 2.b., tj. dopasowanie krzywych do wybranych wartości współczynników rozwoju,
-d.	obliczenie przewidywanej ostatecznej wartości bezpośrednich kosztów likwidacji szkód poprzez wykorzystanie średniej ważonej dla wyników uzyskanych wskutek zastosowania metody chain-ladder w trójkąch paid oraz incurred,
+library(httr)
 
+# Ustawienie URL API z kodem pocztowym
+base_url <- "http://dft-everace:8080/search.php"
+postal_code <- "32-100"  # kod pocztowy, który chcesz wyszukać
 
+# Wykonanie zapytania GET do API
+response <- GET(base_url, query = list(q = postal_code))
 
-
-
-W związku z przyjęciem wartości IBNR równej 0 dla trzech jednorodnych grup ryzyka, zespół inspekcyjny podkreśla konieczność regularnego monitorowania oraz weryfikacji zasadności tego założenia. W razie konieczności, należy rozważyć możliwość odejścia od przyjętego założenia eksperckiego i opracowanie metody umożliwiającej precyzyjne wyznaczanie wartości IBNR.
-
-
-
-####
-Dla trzech jednorodnych grup ryzyka: H_09_BONDS, H_09_CREDIT, H_10 Zakład ustala wartość IBNR w wysokości 0. Zakład uzasadnił (zał. nr ), iż dla tych trzech HRG od co najmniej 2 lat szkodowych nie ma żadnych szkód zgłoszonych, jednakże zakład przekazał informację, że w przeszłości występowały przypadki, gdzie w trójkącie szkód pojawiały się wartości większe od zera, podczas gdy w trójkącie bezpośrednich kosztów likwidacji były to wartości równe 0. Dodatkowo danych w trójkącie jest niewiele, co nie pozwala na zbudowanie sensownego modelu – nawet gdyby taki model próbować zbudować, to i tak daje IBNR w wysokości zero albo nawet ujemną wartość. W związku z powyższym przyjęto, że IBNR nie będzie tworzony (zakładamy IBNR=0), co skutkuje tym, że najlepsze oszacowanie składa się tylko z rezerwy RBNS.
-
-
-Zdaniem zespołu inspekcyjnego Zakład powinien regularnie monitorować poziom wykorzystania opcji umownych by weryfikować czy nie należy w modelowaniu przyszłych przepływów pieniężnych uwzględniać – obok opcji braku kontynuacji – opcje kontynuacji przewidziane warunkami ubezpieczenia wchodzące w zakres granicy umowy, powodujące zmianę wysokości składki w trakcie trwania umowy
-
-
-Zespół inspekcyjny zwraca uwagę, że zakład powinien stale monitorować poziom wypłat odszkodowań i świadczeń w walutach innych niż PLN dla HRG 6. Biorąc pod uwagę wcześniejsze wahania udziału wypłat w USD, w przypadku ustabilizowania się poziomu tych wypłat, zaleca się rozważenie wydzielenia szkód zagranicznych w celu wyznaczenia rezerwami techniczno-ubezpieczeniowych
-
-
-W związku z powyższym przyjęciem wartości IBNR równej 0 dla trzech jednorodnych grup ryzyka, zespół inspekcyjny zwraca uwagę, że Zakład powinien regularnie monitorować i weryfikować zasadność przyjętej wartości. W razie potrzeby należy rozważyć odejście od założenia eksperckiego i ustalić metodę wyznaczania IBNR.
-
-Dla trzech jednorodnych grup ryzyka: H_09_BONDS, H_09_CREDIT, H_10 Zakład ustala wartość IBNR w wysokości 0. Zakład uzasadnił (zał. nr  ), iż dla tych trzech HRG od co najmniej 2 lat szkodowych nie ma żadnych szkód zgłoszonych. Dodatkowo danych w trójkącie jest niewiele, co nie pozwala na zbudowanie sensownego modelu – nawet gdyby taki model próbować zbudować to i tak daje IBNR w wysokości zero albo nawet ujemną wartość. Z związku z powyższym przyjęto, że IBNR nie będzie tworzony (zakładamy IBNR=0), co skutkuje tym, że najlepsze oszacowanie składa się tylko z rezerwy RBNS. 
-
-######
-Obliczenie liczby rentobiorców mogących jeszcze zgłosić roszczenie o rentę z tytułu zadośćuczynienia:
-
-
-Zakład wyjaśnia, że zadośćuczynienia dotyczą osób poszkodowanych, które są zarejestrowane w systemie eRenty i otrzymują rentę na podstawie tytułów: zwiększonych potrzeb, całkowitej utraty zdolności zarobkowej lub utraconych widoków na przyszłość, oraz u których stwierdzono trwały uszczerbek na zdrowiu wynoszący 100% na skutek wypadku z ubezpieczeń OC (zarówno komunikacyjnych, jak i np. OC medycznego).
-
-Podstawą oszacowania był trójkąt zidentyfikowanych w bazie rentowej 944 rentobiorców, a dane te zostały zagregowane zarówno według roku zajścia szkody (1998-2017) oraz roku opóźnienia.
-
-
-1. zasilenie aplikacji ResQ danymi źródłowymi,
-2. obliczenie niezdyskontowanej wartości najlepszego oszacowania brutto dla rezerwy na niewypłacone odszkodowania i świadczenia, w tym:
-e.	wybór wartości współczynników rozwoju „okres do okresu” z trójkątów współczynników rozwoju,
-f.	wybór metody wykorzystywanej do wyznaczania wartości współczynników rozwoju (ten etap obejmuje m.in. wybór „przekątnych”),
-g.	wygładzenie współczynników rozwoju otrzymanych w pkt. 2.b., tj. dopasowanie krzywych do wybranych wartości współczynników rozwoju,
-h.	wybór metody aktuarialnej wykorzystywanej do obliczenia ostatecznej przewidywanej wartości regresów i odzysków, w tym:
-i.	metody chain-ladder,
-ii.	korekty Bornhuettera-Fergusona (dalej: korekty BF)
-projekcja przyszłych przepływów pieniężnych.
-
-
-3. Na tak opisanym trójkącie oparto model rozwoju typu chain-ladder, bazujący na współczynnikach rozwoju z ostatnich przekątnych trójkąta. Do obserwowanych współczynników rozwoju dopasowano jedną z krzywych predefiniowanych w ResQ, ekstrapolując jednocześnie rozwój zgłoszeń poza obserwowaną historię zgłoszeń (arkusz „DFM_Results”).
-4. Ze względu na skąpą liczbę rent ujawnianych dla najnowszych lat zajścia szkody, a co za tym idzie potencjalnie duże wahania oszacowania ostatecznej liczby rent z tych lat, zastosowano dodatkowo metodę Bornhuettera – Fergusona z następującymi parametrami (arkusz „BF_Data”):
-a. Rozwój szkód jak w modelu z punktu 3. wyżej
-b. Dla lat 2011-2017 za miarę ekspozycji przyjęto liczbę ubezpieczonych przez PZU łącznie w grupach ustawowych 10 i 13 (Arkusz „BF_Data”, kolumna C). Dla lat 2010 i wcześniej analogiczne dane były istotnie trudniej dostępne.
-c. Dla lat szkody 2012-2017 zastosowano korektę rozwoju szkód („Pattern Ratio”), na podstawie średniej ze wskaźników dla roku szkody 2011 i 2012 (arkusz „BF_Data” zakres F32:F37). Iloraz ostatecznej liczby rent i liczby rentobiorców przed korektą („Pattern Ratio”) i po korekcie („Posterior Ratio”) przedstawione są graficznie w arkuszu „BF Graphs”.
-5. Ostateczną liczbę rent wybrano ostrożnościowo oddzielnie dla każdego roku szkody jako większą z wartości otrzymanych w metodzie z punktu 3 i punktu 4. (arkusz „RS Data”, kolumna H=max (kolumna D, kolumna F). W odtworzonym wyliczeniu otrzymano ostateczną wartość liczby rent w wysokości 1063 (zamiast oryginalnie wyliczonych 1061).
-
-
-
-Opis koncepcji obliczenia metodą chain ladder kolumny „I” (określonej jako „IBNR”) zakładki „Total” pliku „CF_P&S.xlsx”.
-1. Celem wymienionego wyżej obliczenia było oszacowanie ostatecznej liczby rentobiorców, którzy potencjalnie doznali ciężkiego i trwałego uszczerbku na zdrowiu, na skutek wypadku z ubezpieczeń OC (zarówno komunikacyjnych jak i np. OC medycznego), z lat 1998-2017. Wyznaczenie ostatecznej liczby rentobiorców jest równoważne wyznaczeniu liczby ewentualnych rentobiorców, którzy jeszcze nie zgłosili roszczeń o rentę. Dla ułatwienia zrozumienia procesu załączony plik przedstawia odtworzony przybliżony proces obliczeń.
-2. Podstawą oszacowania był trójkąt zidentyfikowanych w bazie rentowej 944 rentobiorców, dla których uszczerbek na zdrowiu osiągał 100%, zagregowany do roku zajścia szkody (1998-2017) oraz do roku opóźnienia obliczonego jako (rok zgłoszenia – rok zajścia szkody + 1 )
-3. Na tak opisanym trójkącie oparto model rozwoju typu chain-ladder, bazujący na współczynnikach rozwoju z ostatnich przekątnych trójkąta. Do obserwowanych współczynników rozwoju dopasowano jedną z krzywych predefiniowanych w ResQ, ekstrapolując jednocześnie rozwój zgłoszeń poza obserwowaną historię zgłoszeń (arkusz „DFM_Results”).
-4. Ze względu na skąpą liczbę rent ujawnianych dla najnowszych lat zajścia szkody, a co za tym idzie potencjalnie duże wahania oszacowania ostatecznej liczby rent z tych lat, zastosowano dodatkowo metodę Bornhuettera – Fergusona z następującymi parametrami (arkusz „BF_Data”):
-a. Rozwój szkód jak w modelu z punktu 3. wyżej
-b. Dla lat 2011-2017 za miarę ekspozycji przyjęto liczbę ubezpieczonych przez PZU łącznie w grupach ustawowych 10 i 13 (Arkusz „BF_Data”, kolumna C). Dla lat 2010 i wcześniej analogiczne dane były istotnie trudniej dostępne.
-c. Dla lat szkody 2012-2017 zastosowano korektę rozwoju szkód („Pattern Ratio”), na podstawie średniej ze wskaźników dla roku szkody 2011 i 2012 (arkusz „BF_Data” zakres F32:F37). Iloraz ostatecznej liczby rent i liczby rentobiorców przed korektą („Pattern Ratio”) i po korekcie („Posterior Ratio”) przedstawione są graficznie w arkuszu „BF Graphs”.
-5. Ostateczną liczbę rent wybrano ostrożnościowo oddzielnie dla każdego roku szkody jako większą z wartości otrzymanych w metodzie z punktu 3 i punktu 4. (arkusz „RS Data”, kolumna H=max (kolumna D, kolumna F). W odtworzonym wyliczeniu otrzymano ostateczną wartość liczby rent w wysokości 1063 (zamiast oryginalnie wyliczonych 1061).
+# Sprawdź status odpowiedzi
+if (status_code(response) == 200) {
+  # Pobierz dane w formacie tekstowym (JSON, HTML itp.)
+  content_data <- content(response, as = "text", encoding = "UTF-8")
+  
+  # Wyświetl odpowiedź
+  print(content_data)
+} else {
+  # W przypadku błędu wyświetl komunikat o błędzie
+  print(paste("Błąd podczas połączenia. Status:", status_code(response)))
+}
