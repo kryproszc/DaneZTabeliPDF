@@ -1,1 +1,5 @@
-Zakład wyjaśnia również, że analiza tych roszczeń została przeprowadzona jeszcze w 2017 roku, przed wydaniem kluczowej decyzji przez Sąd Najwyższy, co znacząco wpłynęło na jej założenia. Zakład uznaje, że za nieprzedawnione szkody uznaje się szkody, które zaistniały od 1 stycznia 1998 roku, biorąc pod uwagę 20-letni okres przedawnienia. 
+Na podstawie struktury RBNS dla linii biznesowych 4 i 8, IBNR
+𝑌
+Y
+​
+  zostaje podzielony proporcjonalnie pomiędzy każdą linię biznesową. Obliczenia te są dokonywane zgodnie z następującym wzorem:
