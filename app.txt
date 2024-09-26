@@ -1,12 +1,5 @@
-for (i in 1:nrow(dane_od_zakl)) {
-  lp_value <- dane_od_zakl$Lp.[i]  # Bierzemy wartość Lp z dane_od_zakl
-  
-  # Znajdź wiersz w dane_szkody z takim samym Lp
-  index_in_szkody <- which(dane_szkody$Lp. == lp_value)
-  
-  # Sprawdzamy, czy znaleźliśmy odpowiedni wiersz
-  if (length(index_in_szkody) == 1) {
-    # Aktualizujemy wartości kolumn Q, R, S, T, U w dane_szkody
-    dane_szkody[index_in_szkody, c("Q", "R", "S", "T", "U")] <- dane_od_zakl[i, c("Q", "R", "S", "T", "U")]
-  }
-}
+sudo apt-get update
+sudo apt-get install libpqxx-dev
+sudo add-apt-repository ppa:ubuntu-pg-devs/ppa
+sudo apt-get update
+sudo apt-get install libpqxx-dev
