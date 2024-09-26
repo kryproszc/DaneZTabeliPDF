@@ -1,4 +1,3 @@
-install.packages("openxlsx")
 library(openxlsx)
 
 # Wczytanie pliku Excel
@@ -8,17 +7,27 @@ wb <- loadWorkbook(plik)
 # Wczytanie danych z pierwszego arkusza
 dane <- read.xlsx(wb, sheet = 1)
 
-# Pobranie informacji o stylach komórek
-styles <- getStyles(wb)
+# Pobranie stylów komórek z pierwszego arkusza
+style_komorek <- getStyles(wb)
+arkusz <- wb$worksheets[[1]]
 
-# Sprawdzenie stylów dla komórek (w tym przekreślenia)
-# Zmienimy to na listę, aby uzyskać dostęp do informacji o stylach każdej komórki
-cell_styles <- getCellStyles(wb, sheet = 1)
-
-# Przykład sprawdzania komórek pod kątem przekreślenia (strikethrough)
-# Iterujemy przez style komórek i sprawdzamy, czy któraś ma strikethrough
-for(i in seq_along(cell_styles)) {
-  if(cell_styles[[i]]$font$strike == TRUE) {
-    cat("Komórka", i, "jest przekreślona.\n")
+# Funkcja do sprawdzenia, czy wiersz zawiera przekreśloną komórkę
+czy_wiersz_przekreslony <- function(nr_wiersza) {
+  for (nr_kolumny in seq_along(arkusz$sheet_data$rows[[nr_wiersza]]$c)) {
+    komorka <- arkusz$sheet_data$rows[[nr_wiersza]]$c[[nr_kolumny]]
+    nr_stylu <- komorka$s
+    if (!is.null(nr_stylu) && style_komorek[[as.numeric(nr_stylu)]]$font$strike) {
+      return(TRUE)  # Wiersz ma przekreśloną komórkę
+    }
   }
+  return(FALSE)  # Wiersz nie ma przekreślonej komórki
 }
+
+# Przefiltrowanie danych - odrzucamy wiersze z przekreślonymi wartościami
+wiersze_do_zachowania <- sapply(1:nrow(dane), function(i) !czy_wiersz_przekreslony(i))
+
+# Finalny zestaw danych bez wierszy z przekreślonymi komórkami
+dane_bez_przekreslen <- dane[wiersze_do_zachowania, ]
+
+# Wyświetlenie przetworzonych danych
+print(dane_bez_przekreslen)
