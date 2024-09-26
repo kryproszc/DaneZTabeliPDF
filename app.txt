@@ -1,1 +1,24 @@
-3.	Projekcja przyszłych przepływów pieniężnych wyznaczana jest w następujący sposób:
+install.packages("openxlsx")
+library(openxlsx)
+
+# Wczytanie pliku Excel
+plik <- "twoj_plik.xlsx"
+wb <- loadWorkbook(plik)
+
+# Wczytanie danych z pierwszego arkusza
+dane <- read.xlsx(wb, sheet = 1)
+
+# Pobranie informacji o stylach komórek
+styles <- getStyles(wb)
+
+# Sprawdzenie stylów dla komórek (w tym przekreślenia)
+# Zmienimy to na listę, aby uzyskać dostęp do informacji o stylach każdej komórki
+cell_styles <- getCellStyles(wb, sheet = 1)
+
+# Przykład sprawdzania komórek pod kątem przekreślenia (strikethrough)
+# Iterujemy przez style komórek i sprawdzamy, czy któraś ma strikethrough
+for(i in seq_along(cell_styles)) {
+  if(cell_styles[[i]]$font$strike == TRUE) {
+    cat("Komórka", i, "jest przekreślona.\n")
+  }
+}
