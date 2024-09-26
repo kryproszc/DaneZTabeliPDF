@@ -1,20 +1,36 @@
-czy_wiersz_przekreslony <- function(nr_wiersza) {
-  # Sprawdzenie, czy wiersz istnieje
-  if (nr_wiersza <= length(arkusz$sheet_data$rows)) {
-    wiersz <- arkusz$sheet_data$rows[[nr_wiersza]]
-    
-    # Iterowanie przez komórki w wierszu, jeśli istnieją
-    if (!is.null(wiersz$c)) {
-      for (nr_kolumny in seq_along(wiersz$c)) {
-        komorka <- wiersz$c[[nr_kolumny]]
-        nr_stylu <- komorka$s
-        if (!is.null(nr_stylu) && !is.null(style_komorek[[as.numeric(nr_stylu)]]$font$strike)) {
-          if (style_komorek[[as.numeric(nr_stylu)]]$font$strike == TRUE) {
-            return(TRUE)  # Wiersz ma przekreśloną komórkę
-          }
-        }
-      }
-    }
+library(readxl)
+library(openxlsx)
+
+# Wczytanie pliku Excela z zakładkami
+plik_excel <- "nazwa_pliku.xlsx"  # Podaj nazwę swojego pliku Excel
+wszystkie_zakladki <- excel_sheets(plik_excel)
+
+# Wczytanie danych z zakładki "Szkody 2020-2023"
+dane_szkody <- read_excel(plik_excel, sheet = "Szkody 2020-2023")
+
+# Przykładowa operacja na danych, np. uzupełnianie braków średnią
+dane_szkody_poprawione <- dane_szkody
+dane_szkody_poprawione[is.na(dane_szkody_poprawione)] <- mean(dane_szkody_poprawione, na.rm = TRUE)
+
+# Tworzenie nowego pliku Excel, do którego zapiszemy wszystkie zakładki
+nowy_plik <- createWorkbook()
+
+# Zapisanie każdej zakładki z oryginalnego pliku do nowego pliku
+for (zakladka in wszystkie_zakladki) {
+  # Wczytanie zakładki
+  dane <- read_excel(plik_excel, sheet = zakladka)
+  
+  # Dodanie zakładki do nowego pliku, ale zamiast "Szkody 2020-2023" zmieniamy nazwę
+  if (zakladka == "Szkody 2020-2023") {
+    addWorksheet(nowy_plik, "Szkody 2020-2023_poprawa")
+    writeData(nowy_plik, sheet = "Szkody 2020-2023_poprawa", dane_szkody_poprawione)
+  } else {
+    addWorksheet(nowy_plik, zakladka)
+    writeData(nowy_plik, sheet = zakladka, dane)
   }
-  return(FALSE)  # Wiersz nie ma przekreślonej komórki
 }
+
+# Zapisanie nowego pliku Excel o nazwie "Form_poprawa.xlsx"
+saveWorkbook(nowy_plik, file = "Form_poprawa.xlsx", overwrite = TRUE)
+
+print("Nowy plik Excel zapisany z poprawioną zakładką.")
