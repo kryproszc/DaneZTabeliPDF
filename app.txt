@@ -1,28 +1,37 @@
-# Funkcja do obliczania wartości inkrementalnych
-calculate_incremental_losses <- function(df) {
-  # Sprawdzenie, czy ramka danych ma co najmniej 2 kolumny
-  if (ncol(df) < 2) {
-    stop("Ramka danych musi mieć co najmniej 2 kolumny.")
+# Funkcja do tworzenia pełnego trójkąta z danych
+create_full_triangle <- function(incomplete_triangle, full_triangle) {
+  # Kopiowanie pełnego trójkąta do nowego trójkąta
+  result_triangle <- full_triangle
+  
+  # Zastępowanie wartości w pełnym trójkącie tylko tymi z niepełnego
+  for (i in 1:nrow(incomplete_triangle)) {
+    for (j in 1:ncol(incomplete_triangle)) {
+      if (!is.na(incomplete_triangle[i, j])) {
+        result_triangle[i, j] <- incomplete_triangle[i, j]
+      } else {
+        result_triangle[i, j] <- NA  # Ustawianie na NA, gdy wartość jest pusta
+      }
+    }
   }
   
-  # Inicjalizacja ramki danych dla wartości inkrementalnych
-  incremental_losses <- df
-  
-  # Obliczanie wartości inkrementalnych
-  for (i in 2:ncol(df)) {
-    incremental_losses[, i] <- df[, i] - df[, i - 1]
-  }
-  
-  return(incremental_losses)
+  return(result_triangle)
 }
 
-# Tworzenie przykładowej ramki danych
-data <- data.frame(
+# Przykładowe dane
+incomplete_triangle <- data.frame(
   `0 rok` = c(1000, 1200, 1100),
-  `1 rok` = c(500, 600, NA),
-  `2 lata` = c(300, NA, NA)
+  `1 rok` = c(500, NA, NA),
+  `2 lata` = c(NA, NA, NA)
 )
 
-# Wywołanie funkcji i wyświetlenie wyników
-incremental_result <- calculate_incremental_losses(data)
-print(incremental_result)
+full_triangle <- data.frame(
+  `0 rok` = c(1000, 1200, 1100),
+  `1 rok` = c(500, 600, 700),
+  `2 lata` = c(300, 400, 500)
+)
+
+# Wywołanie funkcji
+result_triangle <- create_full_triangle(incomplete_triangle, full_triangle)
+
+# Wyświetlenie wyników
+print(result_triangle)
