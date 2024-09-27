@@ -1,29 +1,11 @@
-install.packages("ggplot2")
-install.packages("sf")
-install.packages("dplyr")
+gmina <- polska %>%
+  filter(st_contains(geometry, punkt_sf, sparse = FALSE))
 
-# Załaduj wymagane pakiety
-library(ggplot2)
-library(sf)
-library(dplyr)
-
-# Wczytanie granic Polski z pliku SHP (załaduj plik SHP zawierający granice Polski)
-# Jeśli nie masz pliku SHP, możesz użyć ogólnodostępnych granic administracyjnych z OpenStreetMap
-polska <- st_read("gminy/gminy.shp")  # Podaj poprawną ścieżkę do pliku SHP z granicami gmin Polski
-
-# Wprowadź uzyskane współrzędne do ramki danych
-coordinates <- data.frame(
-  latitude = 52.22985,  # Wprowadź uzyskaną szerokość geograficzną
-  longitude = 21.00652  # Wprowadź uzyskaną długość geograficzną
-)
-
-# Konwersja ramki danych do obiektu przestrzennego (sf)
-punkt_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)  # Ustaw układ współrzędnych na WGS 84
-
-# Rysowanie mapy Polski z zaznaczeniem punktu
+# Rysowanie mapy Polski z zaznaczoną gminą
 ggplot(data = polska) +
   geom_sf(fill = "lightblue", color = "black") +  # Rysowanie granic Polski
-  geom_sf(data = punkt_sf, color = "red", size = 3) +  # Zaznaczenie punktu na mapie innym kolorem
+  geom_sf(data = gmina, fill = "yellow", color = "black") +  # Zaznaczenie wybranej gminy na mapie
+  geom_sf(data = punkt_sf, color = "red", size = 3) +  # Zaznaczenie punktu na mapie
   theme_minimal() +
-  labs(title = "Zaznaczenie punktu dla kodu pocztowego na mapie Polski") +
+  labs(title = "Zaznaczenie gminy i punktu na mapie Polski") +
   coord_sf()
