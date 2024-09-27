@@ -1,27 +1,39 @@
-# Załaduj pakiet httr
 library(httr)
+library(jsonlite)  # Jeśli odpowiedź serwera jest w formacie JSON
 
-# Definiowanie URL z zapytaniem
-url <- "http://dft-everace:8080/search.php"
-
-# Parametry zapytania (zmienne, które wpisujesz po `?q=`)
-params <- list(q = "WANDY%RUTKIEWICZ%25A%Wroc%C5%82aw")
-
-# Wysłanie GET request na serwer z zapytaniem
-response <- GET(url, query = params)
-
-# Sprawdzenie statusu odpowiedzi
-if (status_code(response) == 200) {
-  # Pobranie treści odpowiedzi w formacie tekstowym
-  content_text <- content(response, "text", encoding = "UTF-8")
+# Definicja funkcji do pobierania współrzędnych na podstawie kodu pocztowego
+get_coordinates_by_postcode <- function(postcode) {
+  # Definiowanie URL serwera
+  url <- "http://dft-everace:8080/search.php"
   
-  # Wyświetlenie odpowiedzi
-  print(content_text)
+  # Przygotowanie zapytania z zakodowanym kodem pocztowym jako parametrem
+  params <- list(q = URLencode(postcode))
   
-  # Możesz także spróbować wczytać odpowiedź jako JSON, jeśli zwraca dane w tym formacie:
-  # response_data <- content(response, "parsed")
-  # print(response_data)
-} else {
-  print(paste("Błąd podczas zapytania:", status_code(response)))
+  # Wysłanie zapytania HTTP GET do serwera
+  response <- GET(url, query = params)
+  
+  # Sprawdzenie, czy odpowiedź jest prawidłowa (kod odpowiedzi 200)
+  if (status_code(response) == 200) {
+    # Pobranie treści odpowiedzi jako tekst
+    content_text <- content(response, "text", encoding = "UTF-8")
+    
+    # Jeśli odpowiedź jest w formacie JSON, parsowanie jej do listy
+    # Przykładowa struktura JSON zwracana przez serwer powinna zawierać "latitude" i "longitude"
+    coordinates <- fromJSON(content_text)
+    
+    # Wyświetlenie współrzędnych
+    print(coordinates)
+    
+    # Zwrócenie współrzędnych jako wynik funkcji (przykład: data frame)
+    return(data.frame(latitude = coordinates$latitude, longitude = coordinates$longitude))
+  } else {
+    # Wyświetlenie błędu, jeśli odpowiedź nie jest prawidłowa
+    stop(paste("Błąd podczas zapytania:", status_code(response)))
+  }
 }
-Wyjaśnienie:
+
+# Przykładowe użycie funkcji z kodem pocztowym
+coordinates <- get_coordinates_by_postcode("00-001")
+
+# Wyświetlenie wyniku
+print(coordinates)
