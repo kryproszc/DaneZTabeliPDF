@@ -1,6 +1,28 @@
-gminy <- st_read("gminy/gminy.shp")
-ggplot(data = gminy) +
-  geom_sf(fill = "lightblue", color = "black") +
-  theme_minimal() +
-  labs(title = "Gminy w Polsce") +
-  coord_sf()
+nstall.packages("DBI")
+install.packages("RPostgres")
+library(DBI)
+library(RPostgres)
+
+# Połączenie z bazą danych
+con <- dbConnect(RPostgres::Postgres(),
+                 host = "localhost",
+                 port = 8080,
+                 dbname = "nazwa_bazy_danych",
+                 user = "twoj_uzytkownik",
+                 password = "twoje_haslo")
+
+# Wykonanie zapytania SQL w celu pobrania kodów pocztowych i współrzędnych
+query <- "
+  SELECT 
+    addr.postcode AS kod_pocztowy,
+    ST_X(geometry) AS longitude,
+    ST_Y(geometry) AS latitude
+  FROM planet_osm_point AS addr
+  WHERE addr.postcode IS NOT NULL;
+"
+
+# Wczytanie wyników zapytania do R
+kody_pocztowe <- dbGetQuery(con, query)
+
+# Wyświetlenie kilku pierwszych wierszy
+head(kody_pocztowe)
