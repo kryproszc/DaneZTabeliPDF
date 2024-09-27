@@ -1,33 +1,13 @@
-calculate_percentage_and_triangle <- function(trojkat_zadoscuczynienia, trojkat_laczny) {
-  # Inicjalizacja ramki dla wyników
-  percentage_results <- data.frame(Rok = colnames(trojkat_laczny), Udział = NA)
-  new_triangle <- trojkat_zadoscuczynienia  # Nowy trójkąt na podstawie zadośćuczynienia
+percentage_results <- na.omit(percentage_results)
 
-  for (i in 1:ncol(trojkat_laczny)) {
-    # Obliczanie wartości w trójkącie zadośćuczynienia i łącznym
-    zadoscuczenie_value <- trojkat_zadoscuczynienia[, i]
-    laczny_value <- trojkat_laczny[, i]
-    
-    # Obliczanie procentu
-    total_sum_laczny <- sum(laczny_value, na.rm = TRUE)
-    percentage_results$Udział[i] <- (sum(zadoscuczenie_value, na.rm = TRUE) / total_sum_laczny) * 100
-
-    # Tworzenie nowego trójkąta
-    for (j in 1:length(zadoscuczenie_value)) {
-      if (!is.na(zadoscuczenie_value[j]) && !is.na(laczny_value[j]) && laczny_value[j] > 0) {
-        new_triangle[j, i] <- zadoscuczenie_value[j] / laczny_value[j]
-      } else {
-        new_triangle[j, i] <- NA  # Ustawianie na NA, gdy wartość jest pusta
-      }
-    }
-  }
-  
-  return(list(percentage_results = percentage_results, new_triangle = new_triangle))
-}
-
-# Wywołanie funkcji
-result <- calculate_percentage_and_triangle(trojkat_zadoscuczynienia, trojkat_laczny)
-
-# Wyświetlenie wyników
-print(result$percentage_results)
-print(result$new_triangle)
+# Rysowanie wykresu liniowego
+plot(percentage_results$Rok, 
+     percentage_results$Udział, 
+     type = "o",  # 'o' oznacza, że punkty będą połączone linią
+     col = "skyblue", 
+     main = "Udział wartości z trójkąta zadośćuczynienia w trójkącie łącznym",
+     xlab = "Rok", 
+     ylab = "Udział (%)", 
+     ylim = c(0, 110),
+     pch = 16)  # 'pch' ustawia styl punktów
+grid(nx = NA, ny = NULL)  # Dodajemy siatkę
