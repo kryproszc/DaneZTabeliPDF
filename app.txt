@@ -1,3 +1,45 @@
-> gmina_sf <- polska[st_contains(polska, punkt_sf, sparse = FALSE), ]
-Error in wk_handle.wk_wkb(wkb, s2_geography_writer(oriented = oriented,  : 
-  Loop 0 is not valid: Edge 0 has duplicate vertex with edge 4
+library(ggplot2)
+library(sf)
+library(dplyr)
+
+# Wczytanie granic Polski z pliku SHP
+polska <- st_read("gminy/gminy.shp")  # Podaj poprawną ścieżkę do pliku SHP z granicami gmin Polski
+
+# Naprawa geometrii, jeśli występują problemy
+polska <- st_make_valid(polska)  # Użyj tej funkcji, jeśli masz zainstalowany pakiet `lwgeom`
+# Alternatywa: polska <- st_buffer(polska, 0)  # Użycie zerowego bufora do naprawy geometrii
+
+# Sprawdzenie poprawności geometrii
+if (any(!st_is_valid(polska))) {
+  print("Niektóre geometrie są nieprawidłowe. Usuwanie nieprawidłowych geometrii...")
+  polska <- polska[st_is_valid(polska), ]  # Usunięcie nieprawidłowych geometrii
+}
+
+# Wprowadź uzyskane współrzędne do ramki danych
+coordinates <- data.frame(
+  latitude = 52.22985,  # Wprowadź uzyskaną szerokość geograficzną
+  longitude = 21.00652  # Wprowadź uzyskaną długość geograficzną
+)
+
+# Konwersja ramki danych do obiektu przestrzennego (sf)
+punkt_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)  # Ustaw układ współrzędnych na WGS 84
+
+# Przekształcenie układu współrzędnych pliku SHP na układ WGS 84, aby dopasować do punktu
+polska <- st_transform(polska, crs = 4326)
+
+# Znalezienie gminy, która zawiera podany punkt
+gmina_sf <- polska[st_contains(polska, punkt_sf, sparse = FALSE), ]
+
+# Sprawdzenie, czy gmina została znaleziona
+if (nrow(gmina_sf) == 0) {
+  stop("Nie znaleziono gminy dla podanych współrzędnych.")
+}
+
+# Rysowanie mapy Polski z zaznaczoną gminą
+ggplot(data = polska) +
+  geom_sf(fill = "lightblue", color = "black") +  # Rysowanie granic wszystkich gmin
+  geom_sf(data = gmina_sf, fill = "yellow", color = "black") +  # Zaznaczenie wybranej gminy innym kolorem
+  geom_sf(data = punkt_sf, color = "red", size = 3) +  # Zaznaczenie punktu na mapie (opcjonalnie)
+  theme_minimal() +
+  labs(title = "Zaznaczenie gminy na podstawie współrzędnych na mapie Polski") +
+  coord_sf()
