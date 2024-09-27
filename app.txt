@@ -1,5 +1,3 @@
-library(httr)
-library(jsonlite)
 
 # Funkcja przyjmująca ramkę danych z kodami pocztowymi i liczbą budynków
 get_coordinates_by_postcodes <- function(data) {
@@ -15,6 +13,12 @@ get_coordinates_by_postcodes <- function(data) {
   for (i in 1:nrow(data)) {
     postcode <- data$kody[i]
     ilosc <- data$ilosc[i]
+    
+    # Sprawdzenie, czy kod pocztowy jest prawidłowy
+    if (!grepl("^\\d{2}-\\d{3}$", postcode)) {
+      warning(paste("Nieprawidłowy format kodu pocztowego:", postcode))
+      next
+    }
     
     # Definiowanie URL serwera
     url <- "http://dft-everace:8080/search.php"
@@ -33,18 +37,27 @@ get_coordinates_by_postcodes <- function(data) {
       # Parsowanie odpowiedzi jako JSON
       response_json <- fromJSON(content_text, flatten = TRUE)
       
-      # Tworzenie ramki danych z koordynatami i ilością
-      result_row <- data.frame(
-        latitude = response_json$lat,
-        longitude = response_json$lon,
-        ilosc = ilosc
-      )
-      
-      # Dodanie wiersza do wynikowej ramki
-      results <- rbind(results, result_row)
+      # Sprawdzenie, czy odpowiedź zawiera dane geograficzne
+      if (!is.null(response_json$lat) && !is.null(response_json$lon)) {
+        result_row <- data.frame(
+          latitude = response_json$lat,
+          longitude = response_json$lon,
+          ilosc = ilosc
+        )
+        
+        # Dodanie wiersza do wynikowej ramki
+        results <- rbind(results, result_row)
+      } else {
+        warning(paste("Brak danych geograficznych dla kodu:", postcode))
+      }
     } else {
       warning(paste("Błąd podczas zapytania dla kodu:", postcode, " - Kod odpowiedzi:", status_code(response)))
     }
+  }
+  
+  # Sprawdzenie, czy wyniki zostały zwrócone
+  if (nrow(results) == 0) {
+    stop("Brak danych geograficznych dla podanych kodów pocztowych.")
   }
   
   return(results)
