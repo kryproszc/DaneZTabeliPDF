@@ -1,52 +1,29 @@
-library(httr)
-library(jsonlite)  # Używane do parsowania odpowiedzi JSON, jeśli zwracane dane są w tym formacie
+install.packages("ggplot2")
+install.packages("sf")
+install.packages("dplyr")
 
-# Funkcja do pobierania współrzędnych na podstawie kodu pocztowego
-get_coordinates_by_postcode <- function(postcode) {
-  # Definiowanie URL serwera
-  url <- "http://dft-everace:8080/search.php"
-  
-  # Przygotowanie zapytania z kodem pocztowym jako parametrem
-  params <- list(q = URLencode(postcode))
-  
-  # Wysłanie zapytania HTTP GET do serwera
-  response <- GET(url, query = params)
-  
-  # Sprawdzenie, czy odpowiedź jest prawidłowa (kod odpowiedzi 200)
-  if (status_code(response) == 200) {
-    # Pobranie treści odpowiedzi jako tekst
-    content_text <- content(response, "text", encoding = "UTF-8")
-    
-    # Sprawdzenie, czy odpowiedź ma jakąkolwiek treść
-    if (nchar(content_text) > 0) {
-      print("Treść odpowiedzi z serwera:")
-      print(content_text)
-      
-      # Jeśli odpowiedź jest w formacie JSON, parsowanie jej do listy
-      response_json <- fromJSON(content_text, flatten = TRUE)
-      
-      # Wyświetlenie pełnej struktury odpowiedzi (dla debugowania)
-      print("Odpowiedź w formacie listy:")
-      print(response_json)
-      
-      # Wyodrębnienie współrzędnych z odpowiedzi
-      if (!is.null(response_json$lat) & !is.null(response_json$lon)) {
-        coordinates <- data.frame(
-          latitude = as.numeric(response_json$lat),
-          longitude = as.numeric(response_json$lon)
-        )
-        return(coordinates)
-      } else {
-        stop("Nie znaleziono współrzędnych w odpowiedzi.")
-      }
-    } else {
-      stop("Odpowiedź z serwera jest pusta.")
-    }
-  } else {
-    # Wyświetlenie błędu, jeśli odpowiedź nie jest prawidłowa
-    stop(paste("Błąd podczas zapytania:", status_code(response)))
-  }
-}
+# Załaduj wymagane pakiety
+library(ggplot2)
+library(sf)
+library(dplyr)
 
-# Przykładowe użycie funkcji z kodem pocztowym
-coordinates <- get_coordinates_by_postcode("00-001")
+# Wczytanie granic Polski z pliku SHP (załaduj plik SHP zawierający granice Polski)
+# Jeśli nie masz pliku SHP, możesz użyć ogólnodostępnych granic administracyjnych z OpenStreetMap
+polska <- st_read("gminy/gminy.shp")  # Podaj poprawną ścieżkę do pliku SHP z granicami gmin Polski
+
+# Wprowadź uzyskane współrzędne do ramki danych
+coordinates <- data.frame(
+  latitude = 52.22985,  # Wprowadź uzyskaną szerokość geograficzną
+  longitude = 21.00652  # Wprowadź uzyskaną długość geograficzną
+)
+
+# Konwersja ramki danych do obiektu przestrzennego (sf)
+punkt_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)  # Ustaw układ współrzędnych na WGS 84
+
+# Rysowanie mapy Polski z zaznaczeniem punktu
+ggplot(data = polska) +
+  geom_sf(fill = "lightblue", color = "black") +  # Rysowanie granic Polski
+  geom_sf(data = punkt_sf, color = "red", size = 3) +  # Zaznaczenie punktu na mapie innym kolorem
+  theme_minimal() +
+  labs(title = "Zaznaczenie punktu dla kodu pocztowego na mapie Polski") +
+  coord_sf()
