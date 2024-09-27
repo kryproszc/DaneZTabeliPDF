@@ -1,38 +1,44 @@
 # Przykładowe dane
 trojkat_laczny <- data.frame(
-  `0 rok` = c(1000, 1200, 1100),
-  `1 rok` = c(500, 600, 700),
-  `2 lata` = c(300, 400, 500)
+  `0 rok` = c(1000, 1200, 1100, 1300, 1500),
+  `1 rok` = c(500, 600, 700, 800, 900),
+  `2 lata` = c(300, 400, 500, 600, 700)
 )
 
 trojkat_zadoscuczynienia <- data.frame(
-  `0 rok` = c(1000, 1200, 1100),
-  `1 rok` = c(500, NA, NA),
-  `2 lata` = c(NA, NA, NA)
+  `0 rok` = c(1000, 1200, 1100, 1300, 1500),
+  `1 rok` = c(500, NA, NA, NA, NA),
+  `2 lata` = c(NA, NA, NA, NA, NA)
 )
 
-# Obliczenie skumulowanych wartości
-cumulative_laczny <- apply(trojkat_laczny, 2, cumsum)
-cumulative_zadoscuczynienia <- apply(trojkat_zadoscuczynienia, 2, cumsum)
+# Wybór ostatnich 5 komórek z trójkąta łącznego
+last_five_laczny <- tail(trojkat_laczny, 5)
+last_five_zadoscuczynienia <- tail(trojkat_zadoscuczynienia, 5)
 
-# Przekształcenie danych do formatu długiego do wykresu
-cumulative_data <- data.frame(
-  Rok = rep(colnames(cumulative_laczny), each = nrow(cumulative_laczny)),
-  Wartość = c(cumulative_laczny, cumulative_zadoscuczynienia),
-  Typ = rep(c("Trójkąt Łączny", "Trójkąt Zadośćuczynienia"), times = ncol(cumulative_laczny))
+# Uporządkowanie danych do wykresu
+data_for_correlation <- data.frame(
+  Trójkąt_Lączny = as.vector(t(last_five_laczny)),
+  Trójkąt_Zadośćuczynienia = as.vector(t(last_five_zadoscuczynienia))
 )
 
 # Usunięcie NA
-cumulative_data <- na.omit(cumulative_data)
+data_for_correlation <- na.omit(data_for_correlation)
 
-# Rysowanie wykresu
+# Obliczanie współczynnika korelacji
+correlation_pearson <- cor(data_for_correlation$Trójkąt_Lączny, data_for_correlation$Trójkąt_Zadośćuczynienia, method = "pearson")
+correlation_spearman <- cor(data_for_correlation$Trójkąt_Lączny, data_for_correlation$Trójkąt_Zadośćuczynienia, method = "spearman")
+
+# Wyświetlenie współczynników korelacji
+cat("Współczynnik korelacji Pearsona: ", correlation_pearson, "\n")
+cat("Współczynnik korelacji Spearmana: ", correlation_spearman, "\n")
+
+# Wykres rozrzutu
 library(ggplot2)
 
-ggplot(cumulative_data, aes(x = Rok, y = Wartość, color = Typ)) +
-  geom_line(linewidth = 1) +  # Używamy linewidth zamiast size
-  geom_point(size = 2) +
-  labs(title = "Porównanie Trójkąta Łącznego i Zadośćuczynienia",
-       x = "Rok",
-       y = "Skumulowana Wartość") +
-  theme_minimal() +
-  scale_color_manual(values = c("blue", "red"))  # Ustawiamy kolory dla każdego typu
+ggplot(data_for_correlation, aes(x = Trójkąt_Lączny, y = Trójkąt_Zadośćuczynienia)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", color = "red", se = FALSE) +  # Linia regresji
+  labs(title = "Wykres Rozrzutu: Zadośćuczynienia vs. Trójkąt Łączny",
+       x = "Trójkąt Łączny",
+       y = "Trójkąt Zadośćuczynienia") +
+  theme_minimal()
