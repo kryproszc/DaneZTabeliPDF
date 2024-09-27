@@ -11,34 +11,34 @@ trojkat_zadoscuczynienia <- data.frame(
   `2 lata` = c(NA, NA, NA, NA, NA)
 )
 
-# Wybór ostatnich 5 komórek z trójkąta łącznego
+# Wybór ostatnich 5 komórek
 last_five_laczny <- tail(trojkat_laczny, 5)
 last_five_zadoscuczynienia <- tail(trojkat_zadoscuczynienia, 5)
 
-# Uporządkowanie danych do wykresu
-data_for_correlation <- data.frame(
+# Uporządkowanie danych do analizy
+data_for_analysis <- data.frame(
   Trójkąt_Lączny = as.vector(t(last_five_laczny)),
   Trójkąt_Zadośćuczynienia = as.vector(t(last_five_zadoscuczynienia))
 )
 
 # Usunięcie NA
-data_for_correlation <- na.omit(data_for_correlation)
+data_for_analysis <- na.omit(data_for_analysis)
 
-# Obliczanie współczynnika korelacji
-correlation_pearson <- cor(data_for_correlation$Trójkąt_Lączny, data_for_correlation$Trójkąt_Zadośćuczynienia, method = "pearson")
-correlation_spearman <- cor(data_for_correlation$Trójkąt_Lączny, data_for_correlation$Trójkąt_Zadośćuczynienia, method = "spearman")
+# Analiza korelacji
+correlation <- cor(data_for_analysis$Trójkąt_Lączny, data_for_analysis$Trójkąt_Zadośćuczynienia)
+cat("Współczynnik korelacji: ", correlation, "\n")
 
-# Wyświetlenie współczynników korelacji
-cat("Współczynnik korelacji Pearsona: ", correlation_pearson, "\n")
-cat("Współczynnik korelacji Spearmana: ", correlation_spearman, "\n")
+# Model regresji
+model <- lm(Trójkąt_Lączny ~ Trójkąt_Zadośćuczynienia, data = data_for_analysis)
+summary(model)
 
-# Wykres rozrzutu
+# Wykres
 library(ggplot2)
 
-ggplot(data_for_correlation, aes(x = Trójkąt_Lączny, y = Trójkąt_Zadośćuczynienia)) +
+ggplot(data_for_analysis, aes(x = Trójkąt_Zadośćuczynienia, y = Trójkąt_Lączny)) +
   geom_point(color = "blue") +
-  geom_smooth(method = "lm", color = "red", se = FALSE) +  # Linia regresji
-  labs(title = "Wykres Rozrzutu: Zadośćuczynienia vs. Trójkąt Łączny",
-       x = "Trójkąt Łączny",
-       y = "Trójkąt Zadośćuczynienia") +
+  geom_smooth(method = "lm", color = "red") +  # Linia regresji
+  labs(title = "Regresja: Zadośćuczynienia vs. Trójkąt Łączny",
+       x = "Zadośćuczynienia",
+       y = "Trójkąt Łączny") +
   theme_minimal()
