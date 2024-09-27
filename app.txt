@@ -1,18 +1,28 @@
+# Funkcja do obliczania wartości inkrementalnych
+calculate_incremental_losses <- function(df) {
+  # Sprawdzenie, czy ramka danych ma co najmniej 2 kolumny
+  if (ncol(df) < 2) {
+    stop("Ramka danych musi mieć co najmniej 2 kolumny.")
+  }
+  
+  # Inicjalizacja ramki danych dla wartości inkrementalnych
+  incremental_losses <- df
+  
+  # Obliczanie wartości inkrementalnych
+  for (i in 2:ncol(df)) {
+    incremental_losses[, i] <- df[, i] - df[, i - 1]
+  }
+  
+  return(incremental_losses)
+}
+
+# Tworzenie przykładowej ramki danych
 data <- data.frame(
-  Rocznik = c(2018, 2019, 2020),
   `0 rok` = c(1000, 1200, 1100),
   `1 rok` = c(500, 600, NA),
   `2 lata` = c(300, NA, NA)
 )
 
-# Tworzenie ramki danych dla wartości inkrementalnych
-incremental_losses <- data.frame(Rocznik = data$Rocznik)
-
-# Obliczanie wartości inkrementalnych
-for (i in 2:ncol(data)) {  # Zaczynamy od 2. kolumny
-  incremental_losses[[paste0("Inkrementalna_", colnames(data)[i])]] <- 
-    data[[i]] - lag(data[[i]], 1)
-}
-
-# Wyświetlenie wyników
-print(incremental_losses)
+# Wywołanie funkcji i wyświetlenie wyników
+incremental_result <- calculate_incremental_losses(data)
+print(incremental_result)
