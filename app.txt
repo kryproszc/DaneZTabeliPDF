@@ -1,126 +1,37 @@
-setwd("I:/WOM/Sprawy_bieżące/Model ryzyka pożaru/Model YE2023/1_programy pomocnicze/tworzenie_map_gmin")
-
-library(httr)
-library(jsonlite)  # Używane do parsowania odpowiedzi JSON, jeśli zwracane dane są w tym formacie
-
-# Funkcja do pobierania współrzędnych na podstawie kodu pocztowego
-get_coordinates_by_postcode <- function(postcode) {
-  # Definiowanie URL serwera
-  url <- "http://dft-everace:8080/search.php"
-  
-  # Przygotowanie zapytania z kodem pocztowym jako parametrem
-  params <- list(q = URLencode(postcode))
-  
-  # Wysłanie zapytania HTTP GET do serwera
-  response <- GET(url, query = params)
-  
-  # Sprawdzenie, czy odpowiedź jest prawidłowa (kod odpowiedzi 200)
-  if (status_code(response) == 200) {
-    # Pobranie treści odpowiedzi jako tekst
-    content_text <- content(response, "text", encoding = "UTF-8")
-    
-    # Sprawdzenie, czy odpowiedź ma jakąkolwiek treść
-    if (nchar(content_text) > 0) {
-      print("Treść odpowiedzi z serwera:")
-      print(content_text)
-      
-      # Jeśli odpowiedź jest w formacie JSON, parsowanie jej do listy
-      response_json <- fromJSON(content_text, flatten = TRUE)
-      
-      # Wyświetlenie pełnej struktury odpowiedzi (dla debugowania)
-      print("Odpowiedź w formacie listy:")
-      print(response_json)
-      
-      # Wyodrębnienie współrzędnych z odpowiedzi
-      if (!is.null(response_json$lat) & !is.null(response_json$lon)) {
-        coordinates <- data.frame(
-          latitude = as.numeric(response_json$lat),
-          longitude = as.numeric(response_json$lon)
-        )
-        return(coordinates)
-      } else {
-        stop("Nie znaleziono współrzędnych w odpowiedzi.")
-      }
-    } else {
-      stop("Odpowiedź z serwera jest pusta.")
-    }
-  } else {
-    # Wyświetlenie błędu, jeśli odpowiedź nie jest prawidłowa
-    stop(paste("Błąd podczas zapytania:", status_code(response)))
-  }
-}
-
-# Przykładowe użycie funkcji z kodem pocztowym
-coordinates <- get_coordinates_by_postcode("00-001")
-
-################################################################################################################
-library(ggplot2)
-library(sf)
-library(dplyr)
-
-# Wczytanie granic Polski z pliku SHP (upewnij się, że podajesz właściwą ścieżkę do pliku)
-polska <- st_read("gminy/gminy.shp")  # Podaj poprawną ścieżkę do pliku SHP z granicami gmin Polski
-
-# Sprawdzenie, czy dane zostały poprawnie wczytane
-print("Struktura wczytanych danych:")
-print(st_geometry_type(polska))  # Typy geometrii (np. POLYGON)
-print(st_crs(polska))            # Układ współrzędnych (CRS)
-
-# Naprawa geometrii (jeśli są problemy z geometrią)
-# Użyj jednej z poniższych opcji:
-
-# 1. Naprawa geometrii przy użyciu st_make_valid (wymaga pakietu lwgeom)
-# install.packages("lwgeom")  # Jeśli `lwgeom` nie jest zainstalowany, zainstaluj go
-# library(lwgeom)
-# polska <- st_make_valid(polska)
-
-# 2. Alternatywnie, użyj st_buffer() z zerową wartością bufora, aby naprawić geometrię
-polska <- st_buffer(polska, 0)
-
-# Sprawdzenie poprawności geometrii
-if (any(!st_is_valid(polska))) {
-  print("Niektóre geometrie są nieprawidłowe. Usuwanie nieprawidłowych geometrii...")
-  polska <- polska[st_is_valid(polska), ]  # Usunięcie nieprawidłowych geometrii
-}
-
-# Uproszczenie geometrii w celu poprawy wydajności (zmniejsza liczbę wierzchołków)
-polska <- st_simplify(polska, dTolerance = 0.001)
-
-# Sprawdzenie liczby geometrii (gmin) po uproszczeniu
-print(paste("Liczba geometrii (gmin) po uproszczeniu:", nrow(polska)))
-
-# Wprowadź uzyskane współrzędne punktu (na podstawie zapytania HTTP)
 coordinates <- data.frame(
-  latitude = 52.22985,  # Wprowadź uzyskaną szerokość geograficzną (np. z zapytania HTTP)
-  longitude = 21.00652  # Wprowadź uzyskaną długość geograficzną (np. z zapytania HTTP)
+  latitude = c(52.22985, 50.06143, 51.10789),  # Szerokość geograficzna
+  longitude = c(21.00652, 19.93884, 17.03854), # Długość geograficzna
+  ilosc = c(20, 35, 50)  # Liczba budynków w danym kodzie pocztowym
 )
 
 # Konwersja ramki danych do obiektu przestrzennego (sf)
-punkt_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)  # Ustaw układ współrzędnych na WGS 84
+punkty_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)
 
-# Przekształcenie układu współrzędnych granic gmin na WGS 84 (EPSG:4326) - jeśli dane mają inny układ
-polska <- st_transform(polska, crs = 4326)
+# Lista do przechowywania gmin zawierających podane współrzędne
+znalezione_gminy <- list()
 
-# Znalezienie gminy, która zawiera podany punkt
-gmina_sf <- polska[st_contains(polska, punkt_sf, sparse = FALSE), ]
-
-# Sprawdzenie, czy gmina została znaleziona
-if (nrow(gmina_sf) == 0) {
-  stop("Nie znaleziono gminy dla podanych współrzędnych.")
-} else {
-  print("Znaleziono gminę dla podanych współrzędnych.")
+# Iterowanie przez każdy punkt i znajdowanie gminy, która go zawiera
+for (i in 1:nrow(punkty_sf)) {
+  punkt <- punkty_sf[i, ]
+  gmina <- polska[st_contains(polska, punkt, sparse = FALSE), ]
+  
+  if (nrow(gmina) > 0) {
+    gmina$ilosc <- coordinates$ilosc[i]  # Dodajemy informację o liczbie budynków do gminy
+    znalezione_gminy[[i]] <- gmina  # Przechowujemy gminę w liście
+  }
 }
 
+# Połączenie wszystkich znalezionych gmin w jedną ramkę danych
+wszystkie_gminy_sf <- do.call(rbind, znalezione_gminy)
 
-
-map <- ggplot() +
-  geom_sf(data = polska, fill = "lightblue", color = "black") +  # Rysowanie wszystkich granic gmin
-  geom_sf(data = gmina_sf, fill = "yellow", color = "black") +  # Zaznaczenie znalezionej gminy innym kolorem
-  geom_sf(data = punkt_sf, color = "red", size = 3) +  # Zaznaczenie punktu na mapie
+# Rysowanie mapy Polski z zaznaczeniem wszystkich gmin i punktów
+ggplot() +
+  geom_sf(data = polska, fill = "lightgray", color = "black") +  # Rysowanie wszystkich granic gmin
+  geom_sf(data = wszystkie_gminy_sf, aes(fill = ilosc), color = "black", size = 0.5) +  # Zaznaczenie znalezionych gmin, wypełnienie według liczby budynków
+  geom_sf(data = punkty_sf, aes(size = ilosc), color = "red", shape = 21, fill = "yellow", stroke = 1.5) +  # Zaznaczenie punktów z liczbą budynków
+  scale_fill_gradient(low = "lightyellow", high = "red", name = "Liczba budynków") +  # Gradient kolorów dla liczby budynków
+  scale_size_continuous(range = c(3, 10), name = "Liczba budynków") +  # Skala wielkości punktów według liczby budynków
   theme_minimal() +
-  labs(title = "Zaznaczenie gminy na mapie Polski na podstawie współrzędnych") +
+  labs(title = "Zaznaczenie gmin na mapie Polski na podstawie współrzędnych",
+       subtitle = "Kolor i wielkość zależne od liczby budynków") +
   coord_sf()
-
-# Renderowanie i zapis mapy
-print(map)
-ggsave("mapa_gmina.png", plot = map, width = 10, height = 7, units = "in", dpi = 300)
