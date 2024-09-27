@@ -1,1 +1,27 @@
-http://dft-everace:8080/search.php?q=WANDY%RUTKIEWICZ%25A%Wroc%C5%82aw
+# Załaduj pakiet httr
+library(httr)
+
+# Definiowanie URL z zapytaniem
+url <- "http://dft-everace:8080/search.php"
+
+# Parametry zapytania (zmienne, które wpisujesz po `?q=`)
+params <- list(q = "WANDY%RUTKIEWICZ%25A%Wroc%C5%82aw")
+
+# Wysłanie GET request na serwer z zapytaniem
+response <- GET(url, query = params)
+
+# Sprawdzenie statusu odpowiedzi
+if (status_code(response) == 200) {
+  # Pobranie treści odpowiedzi w formacie tekstowym
+  content_text <- content(response, "text", encoding = "UTF-8")
+  
+  # Wyświetlenie odpowiedzi
+  print(content_text)
+  
+  # Możesz także spróbować wczytać odpowiedź jako JSON, jeśli zwraca dane w tym formacie:
+  # response_data <- content(response, "parsed")
+  # print(response_data)
+} else {
+  print(paste("Błąd podczas zapytania:", status_code(response)))
+}
+Wyjaśnienie:
