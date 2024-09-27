@@ -1,13 +1,37 @@
-percentage_results <- na.omit(percentage_results)
+# Przykładowe dane
+trojkat_laczny <- data.frame(
+  `0 rok` = c(1000, 1200, 1100),
+  `1 rok` = c(500, 600, 700),
+  `2 lata` = c(300, 400, 500)
+)
 
-# Rysowanie wykresu liniowego
-plot(percentage_results$Rok, 
-     percentage_results$Udział, 
-     type = "o",  # 'o' oznacza, że punkty będą połączone linią
-     col = "skyblue", 
-     main = "Udział wartości z trójkąta zadośćuczynienia w trójkącie łącznym",
-     xlab = "Rok", 
-     ylab = "Udział (%)", 
-     ylim = c(0, 110),
-     pch = 16)  # 'pch' ustawia styl punktów
-grid(nx = NA, ny = NULL)  # Dodajemy siatkę
+trojkat_zadoscuczynienia <- data.frame(
+  `0 rok` = c(1000, 1200, 1100),
+  `1 rok` = c(500, NA, NA),
+  `2 lata` = c(NA, NA, NA)
+)
+
+# Obliczenie skumulowanych wartości
+cumulative_laczny <- apply(trojkat_laczny, 2, cumsum)
+cumulative_zadoscuczynienia <- apply(trojkat_zadoscuczynienia, 2, cumsum)
+
+# Przekształcenie danych do formatu długiego do łatwiejszego wykresu
+cumulative_data <- data.frame(
+  Rok = rep(colnames(cumulative_laczny), each = nrow(cumulative_laczny)),
+  Wartość = c(cumulative_laczny, cumulative_zadoscuczynienia),
+  Typ = rep(c("Trójkąt Łączny", "Trójkąt Zadośćuczynienia"), times = ncol(cumulative_laczny))
+)
+
+# Usunięcie NA
+cumulative_data <- na.omit(cumulative_data)
+
+# Rysowanie wykresu
+library(ggplot2)
+
+ggplot(cumulative_data, aes(x = Rok, y = Wartość, color = Typ)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Analiza Trendów: Trójkąt Łączny vs. Trójkąt Zadośćuczynienia",
+       x = "Rok",
+       y = "Skumulowana Wartość") +
+  theme_minimal()
