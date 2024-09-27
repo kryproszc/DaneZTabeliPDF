@@ -1,8 +1,20 @@
+data <- data.frame(
+    kod_pocztowy = c("32-100", "32-001"),  # Przykładowe kody pocztowe
+    liczba_budynkow = c(50, 30)             # Przykładowe liczby budynków
+)
 
-# Możesz również wczytać mapę Polski, np. z innego pliku shapefile
-# W tym przykładzie użyję prostego wyrysowania gmin na mapie
-ggplot(data = gminy) +
-    geom_sf(fill = "lightblue", color = "black") +
+# Wczytanie shapefile z kodami pocztowymi
+mapa_polski <- st_read("sciezka/do/mapy_kodow_pocztowych.shp")
+
+# Połączenie danych
+mapa_polski <- mapa_polski %>%
+    left_join(data, by = c("kod_pocztowy" = "kod_pocztowy"))
+
+# Wizualizacja
+ggplot(data = mapa_polski) +
+    geom_sf(aes(fill = liczba_budynkow), color = "black") +
+    scale_fill_gradient(low = "lightyellow", high = "darkred", 
+                        name = "Liczba budynków") +
     theme_minimal() +
-    labs(title = "Gminy w Polsce") +
-    coord_sf()  # Zapewnia odpowiednią projekcję
+    labs(title = "Rozkład budynków według kodów pocztowych w Polsce") +
+    coord_sf()
