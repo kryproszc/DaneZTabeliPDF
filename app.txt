@@ -1,9 +1,1 @@
-install.packages("tidyxl")
-install.packages("unpivotr")
-
-# Ładowanie pakietów
-library(tidyxl)
-library(unpivotr)
-
-# Próba wczytania danych z pliku Excel zabezpieczonego hasłem
-data <- tidyxl::xlsx_cells("plik_z_haslem.xlsx")
+formularz danych_v2.xlsx.i2f30zp
