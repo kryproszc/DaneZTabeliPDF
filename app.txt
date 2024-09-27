@@ -1,3 +1,18 @@
-incremental_losses <- data %>%
-  mutate(across(starts_with("rok"), ~ . - lag(.), .names = "inkr_{col}")) %>%
-  select(Rocznik, starts_with("inkr"))
+data <- data.frame(
+  Rocznik = c(2018, 2019, 2020),
+  `0 rok` = c(1000, 1200, 1100),
+  `1 rok` = c(500, 600, NA),
+  `2 lata` = c(300, NA, NA)
+)
+
+# Tworzenie ramki danych dla wartości inkrementalnych
+incremental_losses <- data.frame(Rocznik = data$Rocznik)
+
+# Obliczanie wartości inkrementalnych
+for (i in 2:ncol(data)) {  # Zaczynamy od 2. kolumny
+  incremental_losses[[paste0("Inkrementalna_", colnames(data)[i])]] <- 
+    data[[i]] - lag(data[[i]], 1)
+}
+
+# Wyświetlenie wyników
+print(incremental_losses)
