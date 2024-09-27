@@ -1,3 +1,4 @@
-> coordinates <- get_coordinates_by_postcode(df_kody)
-Error in !repeated && grepl("%[[:xdigit:]]{2}", URL, useBytes = TRUE) :
-'length = 4811' in coercion to 'logical(1)'
+input_data <- data.frame(
+  kody = c("00-001", "00-002", "00-003"),
+  ilosc = c(20, 35, 50)
+)
