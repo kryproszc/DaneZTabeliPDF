@@ -1,20 +1,6 @@
-# Przykładowe dane dotyczące kodów pocztowych i liczby budynków
-gminy_budynki <- data.frame(
-    kod_pocztowy = c("32-100", "32-001", "32-002", "32-003", "32-004", 
-                     "32-005", "32-006", "32-007", "32-008", "32-009"),  # Przykładowe kody pocztowe
-    liczba_budynkow = c(50, 30, 80, 20, 100, 45, 10, 70, 55, 90)  # Przykładowe liczby budynków
-)
-
-# Upewnij się, że w shapefile z gminami jest kolumna z kodami pocztowymi
-# Dodaj kolory do danych gmin na podstawie kodów pocztowych
-kody_pocztowe <- kody_pocztowe %>%
-    left_join(gminy_budynki, by = "kod_pocztowy")
-
-# Wizualizacja kodów pocztowych z kolorami reprezentującymi liczbę budynków
-ggplot(data = kody_pocztowe) +
-    geom_sf(aes(fill = liczba_budynkow), color = "black") +
-    scale_fill_gradient(low = "lightyellow", high = "darkred", name = "Liczba budynków") +
-    theme_minimal() +
-    labs(title = "Liczba budynków w gminach w Polsce") +
-    coord_sf()
-Kluczowe elem
+gminy <- st_read("gminy/gminy.shp")
+ggplot(data = gminy) +
+  geom_sf(fill = "lightblue", color = "black") +
+  theme_minimal() +
+  labs(title = "Gminy w Polsce") +
+  coord_sf()
