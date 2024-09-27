@@ -1,14 +1,116 @@
-tm_shape(polska) +
-  tm_borders(col = "black") +  # Granice wszystkich gmin
-  tm_shape(gmina_sf) +
-  tm_fill(col = "yellow", alpha = 0.6) +  # Zaznaczenie znalezionej gminy na żółto
-  tm_shape(punkt_sf) +
-  tm_dots(col = "red", size = 0.5) +  # Zaznaczenie punktu na czerwono
-  tm_layout(title = "Zaznaczenie gminy na mapie Polski") +
-  tmap_mode("plot")  # Tryb renderowania wykresu
+setwd("I:/WOM/Sprawy_bieżące/Model ryzyka pożaru/Model YE2023/1_programy pomocnicze/tworzenie_map_gmin")
 
-# Zapis mapy do pliku PNG
-tmap_save(tm = last_map(), filename = "mapa_gmina.png", width = 10, height = 7, units = "in")
+library(httr)
+library(jsonlite)  # Używane do parsowania odpowiedzi JSON, jeśli zwracane dane są w tym formacie
+
+# Funkcja do pobierania współrzędnych na podstawie kodu pocztowego
+get_coordinates_by_postcode <- function(postcode) {
+  # Definiowanie URL serwera
+  url <- "http://dft-everace:8080/search.php"
+  
+  # Przygotowanie zapytania z kodem pocztowym jako parametrem
+  params <- list(q = URLencode(postcode))
+  
+  # Wysłanie zapytania HTTP GET do serwera
+  response <- GET(url, query = params)
+  
+  # Sprawdzenie, czy odpowiedź jest prawidłowa (kod odpowiedzi 200)
+  if (status_code(response) == 200) {
+    # Pobranie treści odpowiedzi jako tekst
+    content_text <- content(response, "text", encoding = "UTF-8")
+    
+    # Sprawdzenie, czy odpowiedź ma jakąkolwiek treść
+    if (nchar(content_text) > 0) {
+      print("Treść odpowiedzi z serwera:")
+      print(content_text)
+      
+      # Jeśli odpowiedź jest w formacie JSON, parsowanie jej do listy
+      response_json <- fromJSON(content_text, flatten = TRUE)
+      
+      # Wyświetlenie pełnej struktury odpowiedzi (dla debugowania)
+      print("Odpowiedź w formacie listy:")
+      print(response_json)
+      
+      # Wyodrębnienie współrzędnych z odpowiedzi
+      if (!is.null(response_json$lat) & !is.null(response_json$lon)) {
+        coordinates <- data.frame(
+          latitude = as.numeric(response_json$lat),
+          longitude = as.numeric(response_json$lon)
+        )
+        return(coordinates)
+      } else {
+        stop("Nie znaleziono współrzędnych w odpowiedzi.")
+      }
+    } else {
+      stop("Odpowiedź z serwera jest pusta.")
+    }
+  } else {
+    # Wyświetlenie błędu, jeśli odpowiedź nie jest prawidłowa
+    stop(paste("Błąd podczas zapytania:", status_code(response)))
+  }
+}
+
+# Przykładowe użycie funkcji z kodem pocztowym
+coordinates <- get_coordinates_by_postcode("00-001")
+
+################################################################################################################
+library(ggplot2)
+library(sf)
+library(dplyr)
+
+# Wczytanie granic Polski z pliku SHP (upewnij się, że podajesz właściwą ścieżkę do pliku)
+polska <- st_read("gminy/gminy.shp")  # Podaj poprawną ścieżkę do pliku SHP z granicami gmin Polski
+
+# Sprawdzenie, czy dane zostały poprawnie wczytane
+print("Struktura wczytanych danych:")
+print(st_geometry_type(polska))  # Typy geometrii (np. POLYGON)
+print(st_crs(polska))            # Układ współrzędnych (CRS)
+
+# Naprawa geometrii (jeśli są problemy z geometrią)
+# Użyj jednej z poniższych opcji:
+
+# 1. Naprawa geometrii przy użyciu st_make_valid (wymaga pakietu lwgeom)
+# install.packages("lwgeom")  # Jeśli `lwgeom` nie jest zainstalowany, zainstaluj go
+# library(lwgeom)
+# polska <- st_make_valid(polska)
+
+# 2. Alternatywnie, użyj st_buffer() z zerową wartością bufora, aby naprawić geometrię
+polska <- st_buffer(polska, 0)
+
+# Sprawdzenie poprawności geometrii
+if (any(!st_is_valid(polska))) {
+  print("Niektóre geometrie są nieprawidłowe. Usuwanie nieprawidłowych geometrii...")
+  polska <- polska[st_is_valid(polska), ]  # Usunięcie nieprawidłowych geometrii
+}
+
+# Uproszczenie geometrii w celu poprawy wydajności (zmniejsza liczbę wierzchołków)
+polska <- st_simplify(polska, dTolerance = 0.001)
+
+# Sprawdzenie liczby geometrii (gmin) po uproszczeniu
+print(paste("Liczba geometrii (gmin) po uproszczeniu:", nrow(polska)))
+
+# Wprowadź uzyskane współrzędne punktu (na podstawie zapytania HTTP)
+coordinates <- data.frame(
+  latitude = 52.22985,  # Wprowadź uzyskaną szerokość geograficzną (np. z zapytania HTTP)
+  longitude = 21.00652  # Wprowadź uzyskaną długość geograficzną (np. z zapytania HTTP)
+)
+
+# Konwersja ramki danych do obiektu przestrzennego (sf)
+punkt_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)  # Ustaw układ współrzędnych na WGS 84
+
+# Przekształcenie układu współrzędnych granic gmin na WGS 84 (EPSG:4326) - jeśli dane mają inny układ
+polska <- st_transform(polska, crs = 4326)
+
+# Znalezienie gminy, która zawiera podany punkt
+gmina_sf <- polska[st_contains(polska, punkt_sf, sparse = FALSE), ]
+
+# Sprawdzenie, czy gmina została znaleziona
+if (nrow(gmina_sf) == 0) {
+  stop("Nie znaleziono gminy dla podanych współrzędnych.")
+} else {
+  print("Znaleziono gminę dla podanych współrzędnych.")
+}
+
 
 
 map <- ggplot() +
@@ -22,4 +124,3 @@ map <- ggplot() +
 # Renderowanie i zapis mapy
 print(map)
 ggsave("mapa_gmina.png", plot = map, width = 10, height = 7, units = "in", dpi = 300)
-
