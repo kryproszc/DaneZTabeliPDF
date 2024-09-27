@@ -1,40 +1,8 @@
-# Przykładowe dane (całe kolumny)
-trojkat_laczny <- data.frame(
-  `0 rok` = c(1000, 1200, 1100, 1300, 1500, 1600),
-  `1 rok` = c(500, 600, 700, 800, 900, 1000),
-  `2 lata` = c(300, 400, 500, 600, 700, 800)
-)
 
-trojkat_zadoscuczynienia <- data.frame(
-  `0 rok` = c(1000, 1200, 1100, 1300, 1500, 1600),
-  `1 rok` = c(500, 600, NA, NA, NA, NA),
-  `2 lata` = c(NA, NA, NA, NA, NA, NA)
-)
-
-# Uporządkowanie danych do analizy
-data_for_analysis <- data.frame(
-  Trójkąt_Lączny = c(as.vector(t(trojkat_laczny))),
-  Trójkąt_Zadośćuczynienia = c(as.vector(t(trojkat_zadoscuczynienia)))
-)
-
-# Usunięcie NA
-data_for_analysis <- na.omit(data_for_analysis)
-
-# Analiza korelacji
-correlation <- cor(data_for_analysis$Trójkąt_Lączny, data_for_analysis$Trójkąt_Zadośćuczynienia)
-cat("Współczynnik korelacji: ", correlation, "\n")
-
-# Model regresji
-model <- lm(Trójkąt_Lączny ~ Trójkąt_Zadośćuczynienia, data = data_for_analysis)
-summary(model)
-
-# Wykres
-library(ggplot2)
-
-ggplot(data_for_analysis, aes(x = Trójkąt_Zadośćuczynienia, y = Trójkąt_Lączny)) +
-  geom_point(color = "blue") +
-  geom_smooth(method = "lm", color = "red") +  # Linia regresji
-  labs(title = "Regresja: Zadośćuczynienia vs. Trójkąt Łączny",
-       x = "Zadośćuczynienia",
-       y = "Trójkąt Łączny") +
-  theme_minimal()
+# Możesz również wczytać mapę Polski, np. z innego pliku shapefile
+# W tym przykładzie użyję prostego wyrysowania gmin na mapie
+ggplot(data = gminy) +
+    geom_sf(fill = "lightblue", color = "black") +
+    theme_minimal() +
+    labs(title = "Gminy w Polsce") +
+    coord_sf()  # Zapewnia odpowiednią projekcję
