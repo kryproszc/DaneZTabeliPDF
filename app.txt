@@ -1,1 +1,3 @@
-formularz danych_v2.xlsx.i2f30zp
+incremental_losses <- data %>%
+  mutate(across(starts_with("rok"), ~ . - lag(.), .names = "inkr_{col}")) %>%
+  select(Rocznik, starts_with("inkr"))
