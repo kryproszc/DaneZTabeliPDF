@@ -1,7 +1,9 @@
-wb <- loadWorkbook(file = password_protected_file, password = password)
+install.packages("tidyxl")
+install.packages("unpivotr")
 
-# Zapisanie pliku bez hasła
-saveWorkbook(wb, file = "plik_bez_hasla.xlsx", overwrite = TRUE)
+# Ładowanie pakietów
+library(tidyxl)
+library(unpivotr)
 
-# Wczytanie pliku już bez hasła
-data <- read.xlsx("plik_bez_hasla.xlsx")
+# Próba wczytania danych z pliku Excel zabezpieczonego hasłem
+data <- tidyxl::xlsx_cells("plik_z_haslem.xlsx")
