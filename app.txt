@@ -1,8 +1,13 @@
-ggplot() +
-  geom_sf(data = polska, fill = "lightgray", color = "black") +  # Rysowanie wszystkich granic gmin
-  geom_sf(data = wszystkie_gminy_sf, aes(fill = ilosc), color = "black", size = 0.5) +  # Zaznaczenie znalezionych gmin
-  scale_fill_gradient(low = "lightyellow", high = "red", name = "Liczba budynków") +  # Gradient kolorów
-  theme_minimal() +
-  labs(title = "Zaznaczenie gmin na mapie Polski na podstawie współrzędnych",
-       subtitle = "Kolor zależny od liczby budynków") +
-  coord_sf()
+wszystkie_gminy_df <- st_drop_geometry(wszystkie_gminy_sf)  # Usunięcie geometrii, zostawiając tylko dane tabelaryczne
+
+# Tworzenie nowego arkusza Excel
+wb <- createWorkbook()
+addWorksheet(wb, "Mapa Gminy")
+
+# Zapisanie danych do arkusza od kolumny F (6. kolumna)
+writeData(wb, sheet = "Mapa Gminy", x = wszystkie_gminy_df, startCol = 6, startRow = 1)
+
+# Zapisanie pliku Excel na dysku
+saveWorkbook(wb, "gminy_wspolrzedne.xlsx", overwrite = TRUE)
+
+print("Dane o gminach zostały zapisane do pliku Excel w kolumnach od F.")
