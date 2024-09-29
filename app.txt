@@ -1,6 +1,8 @@
 szczkr@DIU-01:~$ g++ programtest23.cpp -O3 -lpqxx -lpq && ./a.out
-terminate called after throwing an instance of 'pqxx::broken_connection'
-  what():  connection to server at "localhost" (127.0.0.1), port 9740 failed: Connection refused
-        Is the server running on that host and accepting TCP/IP connections?
-
-Aborted (core dumped)
+programtest23.cpp: In function ‘int main()’:
+programtest23.cpp:1168:14: error: expected ‘}’ at end of input
+ 1168 |     return 0;
+      |              ^
+programtest23.cpp:1029:1: note: to match this ‘{’
+ 1029 | {
+      | ^
