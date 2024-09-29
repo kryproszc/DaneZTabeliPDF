@@ -1,1 +1,5 @@
 docker run -it -e PBF_URL=https://download.geofabrik.de/europe/poland-latest.osm.pbf -e REPLICATION_URL=https://download.geofabrik.de/europe/poland-updates/ -p 9741:8080 -p 5432:5432 --name nominatimdb mediagis/nominatim:4.4
+
+
+docker: error during connect: Head "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/_ping": open //./pipe/dockerDesktopLinuxEngine: Nie można odnaleźć określonego pliku.
+See 'docker run --help'.
