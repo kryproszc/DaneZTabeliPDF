@@ -1,20 +1,3 @@
-# Załaduj pakiety
-library(sf)
-library(parallel)
-library(foreach)
-library(doParallel)
-
-polska$ilosc <- NA  
-
-# Ustawienie planu równoległego
-cl <- makeCluster(detectCores() - 1)  # Użyj wszystkich rdzeni z wyjątkiem jednego
-registerDoParallel(cl)
-
-# Równoległe przypisanie wartości z gminy_przypisane_agg do polska
-foreach(i = 1:nrow(gminy_przypisane_agg), .packages = 'sf') %dopar% {
-  gmina_contains <- st_contains(polska, gminy_przypisane_agg[i,], sparse = FALSE)
-  polska$ilosc[gmina_contains] <<- gminy_przypisane_agg$ilosc[i]
-}
-
-# Zatrzymanie klastra
-stopCluster(cl)
+szczkr@DIU-01:~$ g++ programtest23.cpp -lpqxx -lpq && ./a.out
+Polaczony z nominatim
+Segmentation fault (core dumped)
