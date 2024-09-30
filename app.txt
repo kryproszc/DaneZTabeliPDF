@@ -1,13 +1,9 @@
-# Dodanie kolumny z ilością
-gminy_przypisane$ilosc <- coordinates$ilosc[match(gminy_przypisane$geometry, punkty_sf$geometry)]
+polska$ilosc <- NA  # Inicjalizacja kolumny dla liczby budynków
 
-# Agregacja danych na poziomie gminy
-gminy_przypisane_agg <- gminy_przypisane %>%
-  group_by(geometry) %>%  # Użyj odpowiedniej kolumny z nazwą gminy
-  summarize(ilosc = sum(ilosc, na.rm = TRUE), .groups = "drop")
-
-# Dołączenie wartości liczby budynków do gmin
-polska <- left_join(polska, gminy_przypisane_agg, by = "geometry")  # Użyj tej samej kolumny, co w polska
+# Przypisanie wartości z gminy_przypisane_agg do polska
+for (i in 1:nrow(gminy_przypisane_agg)) {
+  polska$ilosc[st_contains(polska, gminy_przypisane_agg[i,], sparse = FALSE)] <- gminy_przypisane_agg$ilosc[i]
+}
 
 # Rysowanie mapy Polski
 map <- ggplot() +
