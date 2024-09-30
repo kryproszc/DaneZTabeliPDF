@@ -1,17 +1,52 @@
-> for (i in 1:nrow(punkty_sf)) {
-+   punkt <- punkty_sf[i, ]
-+   gmina <- polska[st_contains(polska, punkt, sparse = FALSE), ]
-+   
-+   if (nrow(gmina) > 0) {
-+     gmina$ilosc <- coordinates$ilosc[i]  
-+     znalezione_gminy[[i]] <- gmina  #
-+   }
-+ }
-Error in st_geos_binop("contains", x, y, sparse = sparse, prepared = prepared,  : 
-  zmienna st_crs(x) == st_crs(y) nie ma wartości TRUE
+polska <- st_read("gminy/gminy.shp")
 
+# Naprawa geometrii
+polska <- st_make_valid(polska)  # Naprawia błędne geometrie
 
+# Upewnij się, że CRS dla polska jest w WGS 84
+polska <- st_transform(polska, crs = 4326)
 
+# Przykładowe dane współrzędnych
+coordinates <- data.frame(
+  latitude = c(52.22985, 50.06143, 51.10789),
+  longitude = c(21.00652, 19.93884, 17.03854),
+  ilosc = c(20, 35, 50)
+)
+
+# Konwersja ramki danych do obiektu sf
+punkty_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)
+
+# Sprawdzenie CRS dla obu obiektów
+print(st_crs(polska))     # Sprawdzenie CRS dla polska
+print(st_crs(punkty_sf))  # Sprawdzenie CRS dla punkty_sf
+
+# Lista do przechowywania gmin
+znalezione_gminy <- list()
+
+# Iteracja przez każdy punkt
+for (i in 1:nrow(punkty_sf)) {
+  punkt <- punkty_sf[i, ]
+  
+  # Upewnij się, że CRS są zgodne
+  if (!st_crs(punkt) == st_crs(polska)) {
+    punkt <- st_transform(punkt, st_crs(polska))  # Przekształcenie CRS punktu
+  }
+  
+  gmina <- polska[st_contains(polska, punkt, sparse = FALSE), ]
+  
+  if (nrow(gmina) > 0) {
+    gmina$ilosc <- coordinates$ilosc[i]  
+    znalezione_gminy[[i]] <- gmina  
+  } else {
+    warning(paste("Nie znaleziono gminy dla punktu:", punkt))
+  }
+}
+
+# Połączenie wszystkich znalezionych gmin w jedną ramkę danych
+wszystkie_gminy_sf <- do.call(rbind, znalezione_gminy)
+
+# Wyświetlenie wyników
+print(wszytkie_gminy_sf)
 ggsave("mapa_gminy.png", plot = map, width = 12, height = 8, units = "in", dpi = 300)
 
 
