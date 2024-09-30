@@ -1,3 +1,29 @@
+# Instalacja wymaganych pakietów, jeśli jeszcze ich nie masz
+install.packages("sf")
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("lwgeom")
+install.packages("openxlsx")
+install.packages("future")
+
+# Załaduj pakiety
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(lwgeom)
+library(openxlsx)
+library(future)
+
+# Wczytanie granic Polski z pliku SHP
+polska <- st_read("gminy/gminy.shp")
+
+# Naprawa geometrii gmin
+polska <- st_make_valid(polska)
+
+# Upewnij się, że CRS dla polska jest w WGS 84
+polska <- st_transform(polska, crs = 4326)
+
+# Przykładowe dane współrzędnych
 coordinates <- data.frame(
   latitude = c(52.22985, 50.06143, 51.10789),
   longitude = c(21.00652, 19.93884, 17.03854),
@@ -7,11 +33,68 @@ coordinates <- data.frame(
 # Konwersja ramki danych do obiektu sf
 punkty_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)
 
-# Przypisanie gmin do punktów za pomocą st_join
-gminy_przypisane <- st_join(punkty_sf, polska, join = st_contains)
+# Sprawdzenie CRS dla obu obiektów
+print(st_crs(polska))     # Sprawdzenie CRS dla polska
+print(st_crs(punkty_sf))  # Sprawdzenie CRS dla punkty_sf
 
-# Dodanie kolumny z ilością
-gminy_przypisane$ilosc <- coordinates$ilosc[match(gminy_przypisane$geometry, punkty_sf$geometry)]
+# Ustawienie planu równoległego
+plan(multisession)
 
-# Sprawdzenie wyników
-print(gminy_przypisane)
+# Funkcja do przypisywania gmin
+przypisz_gminy <- function(punkt) {
+  gmina <- polska[st_contains(polska, punkt, sparse = FALSE), ]
+  if (nrow(gmina) > 0) {
+    return(gmina)
+  } else {
+    return(NULL)
+  }
+}
+
+# Przypisanie gmin w trybie równoległym
+znalezione_gminy <- future_lapply(1:nrow(punkty_sf), function(i) {
+  punkt <- punkty_sf[i, ]
+  gmina <- przypisz_gminy(punkt)
+  if (!is.null(gmina)) {
+    gmina$ilosc <- coordinates$ilosc[i]
+    return(gmina)
+  } else {
+    return(NULL)
+  }
+})
+
+# Połączenie wyników
+znalezione_gminy <- do.call(rbind, znalezione_gminy)
+
+# Wyświetlenie wyników
+print(znalezione_gminy)
+
+# Rysowanie mapy Polski
+map <- ggplot() +
+  geom_sf(data = polska, fill = "lightgray", color = "black") +  
+  geom_sf(data = znalezione_gminy, aes(fill = ilosc), color = "black", size = 0.5) +  
+  scale_fill_gradient(low = "lightyellow", high = "red", name = "Liczba budynków") +  
+  theme_minimal() +
+  labs(title = "Zaznaczenie gmin na mapie Polski na podstawie współrzędnych",
+       subtitle = "Kolor zależny od liczby budynków") +
+  coord_sf()
+
+# Zapisanie mapy do pliku PNG
+ggsave("mapa_gminy.png", plot = map, width = 12, height = 8, units = "in", dpi = 300)
+
+# Tworzenie nowego arkusza Excel
+wb <- createWorkbook()
+addWorksheet(wb, "Ubezpieczyciel")
+
+# Konwersja ramki danych do formatu tabelarycznego (bez geometrii)
+wszystkie_gminy_df <- st_drop_geometry(znalezione_gminy)
+
+# Zapisanie danych do arkusza
+writeData(wb, sheet = "Ubezpieczyciel", x = wszystkie_gminy_df)
+
+# Dodanie obrazu do arkusza
+insertImage(wb, sheet = "Ubezpieczyciel", file = "mapa_gminy.png", startRow = 1, startCol = 6)
+
+# Zapisanie pliku Excel na dysku
+saveWorkbook(wb, "gminy_wspolrzedne.xlsx", overwrite = TRUE)
+
+print("Dane o gminach oraz mapa zostały zapisane do pliku Excel w zakładce 'Ubezpieczyciel'.")
