@@ -1,3 +1,17 @@
+> for (i in 1:nrow(punkty_sf)) {
++   punkt <- punkty_sf[i, ]
++   gmina <- polska[st_contains(polska, punkt, sparse = FALSE), ]
++   
++   if (nrow(gmina) > 0) {
++     gmina$ilosc <- coordinates$ilosc[i]  
++     znalezione_gminy[[i]] <- gmina  #
++   }
++ }
+Error in st_geos_binop("contains", x, y, sparse = sparse, prepared = prepared,  : 
+  zmienna st_crs(x) == st_crs(y) nie ma wartości TRUE
+
+
+
 ggsave("mapa_gminy.png", plot = map, width = 12, height = 8, units = "in", dpi = 300)
 
 
