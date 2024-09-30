@@ -1,5 +1,23 @@
-std::cout << "Rozmiar flaga2: " << flaga2.size() << std::endl;
-    std::cout << "Rozmiar flaga3: " << flaga3.size() << std::endl;
-    std::cout << "Rozmiar flaga4: " << flaga4.size() << std::endl;
-    std::cout << "Rozmiar flaga5: " << flaga5.size() << std::endl;
-    std::cout << "Rozmiar flaga6: " << flaga6.size() << std::endl;
+Polaczony z nominatim
+(
+    SELECT 
+        6 AS Flag,
+        '0 ' AS VecPos,
+        address,
+        ST_Y(ST_Centroid(centroid)) AS lat,
+        ST_X(ST_Centroid(centroid)) AS lon
+    FROM 
+        placex
+    WHERE 
+        address -> 'postcode' ILIKE '13-606'
+        AND address -> 'housenumber' IS NOT NULL AND address -> 'housenumber' != ''
+    LIMIT 1
+)
+
+Rozmiar flaga2: 0
+Rozmiar flaga3: 0
+Rozmiar flaga4: 0
+Rozmiar flaga5: 0
+Rozmiar flaga6: 1
+Czas : 406.849 sekund
+szczkr@DIU-01:~$ 
