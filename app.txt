@@ -1,15 +1,2 @@
-polska$ilosc <- NA  # Inicjalizacja kolumny dla liczby budynków
-
-# Przypisanie wartości z gminy_przypisane_agg do polska
-for (i in 1:nrow(gminy_przypisane_agg)) {
-  polska$ilosc[st_contains(polska, gminy_przypisane_agg[i,], sparse = FALSE)] <- gminy_przypisane_agg$ilosc[i]
-}
-
-# Rysowanie mapy Polski
-map <- ggplot() +
-  geom_sf(data = polska, aes(fill = ilosc), color = "black", size = 0.5) +  
-  scale_fill_gradient(low = "lightyellow", high = "red", name = "Liczba budynków", na.value = "lightgray") +  
-  theme_minimal() +
-  labs(title = "Zaznaczenie gmin na mapie Polski na podstawie współrzędnych",
-       subtitle = "Kolor zależny od liczby budynków") +
-  coord_sf()
+Polaczony z nominatim
+Segmentation fault (core dumped)
