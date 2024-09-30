@@ -1,14 +1,20 @@
-Lp.	Nr_umowy	Data poczatku okresu ubezpieczenia	Data konca okresu ubezpieczenia	SU_v_PML	Odnow	Adres_Ulica_i_numer	Adres_Kod_pocztowy	Adres_Miasto	Adres_Wojewodztwo	Adres_Kraj	ReasekuracjaO	ReasekuracjaF
+ggsave("mapa_gminy.png", plot = map, width = 12, height = 8, units = "in", dpi = 300)
 
 
+# Tworzenie nowego arkusza Excel
+wb <- createWorkbook()
+addWorksheet(wb, "Ubezpieczyciel")  # Dodanie nowego arkusza
 
-Lp	NumerUmowy	DataPoczatku	DataKonca	SumaUbezpieczenia	Odnowienia	Ulica	KodPocztowy	Miasto	Wojewodztwo	Kraj	ReasekuracjaO	ReasekuracjaF	Szerokosc	Dlugosc	AdresUjednolicony	Flaga_1	Flaga_2
+# Zapisanie danych do arkusza (przykładowo, zakładając, że masz dane o gminach)
+wszystkie_gminy_df <- st_drop_geometry(wszystkie_gminy_sf)  # Usunięcie geometrii
 
-ggplot() +
-  geom_sf(data = polska, fill = "lightgray", color = "black") +  
-  geom_sf(data = wszystkie_gminy_sf, aes(fill = ilosc), color = "black", size = 0.5) +  
-  scale_fill_gradient(low = "lightyellow", high = "red", name = "Liczba budynków") +  
-  theme_minimal() +
-  labs(title = "Zaznaczenie gmin na mapie Polski na podstawie współrzędnych",
-       subtitle = "Kolor i wielkość zależne od liczby budynków") +
-  coord_sf()
+# Zapisanie danych do arkusza
+writeData(wb, sheet = "Ubezpieczyciel", x = wszystkie_gminy_df)
+
+# Dodanie obrazu do arkusza
+insertImage(wb, sheet = "Ubezpieczyciel", file = "mapa_gminy.png", startRow = 1, startCol = 6)
+
+# Zapisanie pliku Excel na dysku
+saveWorkbook(wb, "gminy_wspolrzedne.xlsx", overwrite = TRUE)
+
+
