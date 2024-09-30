@@ -8,3 +8,15 @@ szczkr@DIU-01:~$ g++ programtest23.cpp -O3 -lpqxx -lpq && ./a.out
 terminate called after throwing an instance of 'pqxx::broken_connection'
   what():  connection to server at "localhost" (127.0.0.1), port 5432 failed: FATAL:  password authentication failed for user "nominatim"
 connection to server at "localhost" (127.0.0.1), port 5432 failed: FATAL:  password authentication failed for user "nominatim"
+
+
+# sudo -u postgres psql
+psql (14.13 (Ubuntu 14.13-0ubuntu0.22.04.1))
+Type "help" for help.
+
+postgres=# ^[[200~ALTER USER nominatim WITH PASSWORD 'nominatim';
+ERROR:  syntax error at or near "
+INE 1: ALTER USER nominatim WITH PASSWORD 'nominatim';
+        ^
+postgres=# ALTER USER nominatim WITH PASSWORD 'nominatim'
+postgres-#
