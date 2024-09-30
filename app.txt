@@ -1,6 +1,6 @@
-szczkr@DIU-01:~$ g++ programtest23.cpp -O3 -lpqxx -lpq && ./a.out
-terminate called after throwing an instance of 'pqxx::broken_connection'
-  what():  connection to server at "localhost" (127.0.0.1), port 5432 failed: FATAL:  password authentication failed for user "nominatim"
-connection to server at "localhost" (127.0.0.1), port 5432 failed: FATAL:  password authentication failed for user "nominatim"
-
-Aborted (core dumped)
+1.	Dnia 22.07.2024 poszło wezwania, gdzie było pytanie o sposób ustalania BONUS_RES (pkt 3)
+2.	Dostaliśmy odpowiedź na pytanie, że: „Przepływ BONUS_RES jest przyjmowany w zaksięgowanej wartości.”
+3.	Dnia 25.07.2024 zapytaliśmy  o wyjaśnienia co reprezentują oraz w jaki sposób zostały ustalone wartości zaksięgowane (pytanie 12 ppkt. a)
+4.	Dnia 31.07.2024 dostaliśmy odpowiedź, ale nie dotyczyła przepływu BONUS, dlatego od tego dnia przypominałem się o to co około tydzień
+5.	Dnia 16.08 przesłali pierwszą część odpowiedzi na wezwanie z 25.07. Jest tam opis, że jest to procent składki zarobionej na koniec danego okresu, przy czym ja np. miałem problem ze zrozumieniem jakie jest powiązanie tego pliku z wartościami BONUS_RES w BELu (tj. plik S2_CASHFLOWS_REPORT_202403). Ale Pan Chadysz zapewnił tego dnia 16.08, że będzie druga część tej odpowiedzi
+6.	Po przypomnieniach wysłali dnia 26.08 drugą część odpowiedzi na wezwania z 25.07 pkt 12. Jednak miałem problem ze zrozumieniem co się znajduje w tym pliku i dzisiaj w rozmowie telefonicznej Pan Chadysz powiedział, że widział tę odpowiedz i tez nie wie o co tam chodzi. Zwracał im podobno uwagę aby napisać to jaśniej, jednak nie zrobili tego.
