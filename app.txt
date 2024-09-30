@@ -1,13 +1,20 @@
-czy_jest_ciag <- function(wektor) {
+znajdz_ciag <- function(wektor) {
+  ciag <- c()  # Zmienna do przechowywania elementów ciągu
   for (i in 1:(length(wektor) - 1)) {
     if (wektor[i + 1] == wektor[i] + 1) {
-      return(TRUE)  # Zwraca TRUE, jeśli znaleziono ciąg
+      ciag <- c(ciag, wektor[i])  # Dodajemy element do ciągu
+      # Sprawdzamy, czy następny element również jest w ciągu
+      while (i < length(wektor) && wektor[i + 1] == wektor[i] + 1) {
+        ciag <- c(ciag, wektor[i + 1])
+        i <- i + 1
+      }
+      return(ciag)  # Zwracamy znaleziony ciąg
     }
   }
-  return(FALSE)  # Zwraca FALSE, jeśli nie znaleziono ciągu
+  return(NULL)  # Zwraca NULL, jeśli nie znaleziono ciągu
 }
 
 # Przykładowe użycie
-wektor <- c(3, 5, 4, 6, 7)
-wynik <- czy_jest_ciag(wektor)
-print(wynik)
+wektor1 <- c(3, 4, 5, 6, 7, 8, 9)  # powinno zwrócić wszystkie
+wektor2 <- c(3, 6, 7, 8, 9)         # powinno zwrócić NULL
+wektor3 <- c(3, 4, 5, 6, 5, 7, 8)   
