@@ -1,2 +1,10 @@
-Polaczony z nominatim
-Segmentation fault (core dumped)
+library(parallel)
+
+# Inicjalizacja kolumny dla liczby budynków
+polska$ilosc <- NA  
+
+# Równoległe przypisanie wartości z gminy_przypisane_agg do polska
+mclapply(1:nrow(gminy_przypisane_agg), function(i) {
+  gmina_contains <- st_contains(polska, gminy_przypisane_agg[i,], sparse = FALSE)
+  polska$ilosc[gmina_contains] <<- gminy_przypisane_agg$ilosc[i]
+}, mc.cores = detectCores() - 1)
