@@ -19,4 +19,7 @@ ERROR:  syntax error at or near "
 INE 1: ALTER USER nominatim WITH PASSWORD 'nominatim';
         ^
 postgres=# ALTER USER nominatim WITH PASSWORD 'nominatim'
-postgres-#
+postgres-# ^C
+postgres=# ALTER USER nominatim WITH PASSWORD 'nominatim';
+ALTER ROLE
+postgres=#
