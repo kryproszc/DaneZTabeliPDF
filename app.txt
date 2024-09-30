@@ -1,16 +1,15 @@
-gminy_przypisane <- st_join(punkty_sf, polska, join = st_contains)
+# Agregacja danych na poziomie gminy
+gminy_przypisane_agg <- gminy_przypisane %>%
+  group_by(GMINA_NAME) %>%  # Użyj odpowiedniej kolumny z nazwą gminy
+  summarize(ilosc = sum(ilosc, na.rm = TRUE), .groups = "drop")
 
-# Dodanie kolumny z ilością
-gminy_przypisane$ilosc <- coordinates$ilosc[match(gminy_przypisane$geometry, punkty_sf$geometry)]
-
-# Sprawdzenie wyników
-print(gminy_przypisane)
+# Dołączenie wartości liczby budynków do gmin
+polska <- left_join(polska, gminy_przypisane_agg, by = "GMINA_NAME")  # Użyj tej samej kolumny, co w polska
 
 # Rysowanie mapy Polski
 map <- ggplot() +
-  geom_sf(data = polska, fill = "lightgray", color = "black") +  
-  geom_sf(data = gminy_przypisane, aes(fill = ilosc), color = "black", size = 0.5) +  
-  scale_fill_gradient(low = "lightyellow", high = "red", name = "Liczba budynków") +  
+  geom_sf(data = polska, aes(fill = ilosc), color = "black", size = 0.5) +  
+  scale_fill_gradient(low = "lightyellow", high = "red", name = "Liczba budynków", na.value = "lightgray") +  
   theme_minimal() +
   labs(title = "Zaznaczenie gmin na mapie Polski na podstawie współrzędnych",
        subtitle = "Kolor zależny od liczby budynków") +
