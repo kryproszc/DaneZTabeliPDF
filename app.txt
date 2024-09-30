@@ -1,4 +1,17 @@
-szczkr@DIU-01:~$ g++ programtest23.cpp -lpqxx -lpq && ./a.out
-Polaczony z nominatim
-double free or corruption (!prev)
-Aborted (core dumped)
+coordinates <- data.frame(
+  latitude = c(52.22985, 50.06143, 51.10789),
+  longitude = c(21.00652, 19.93884, 17.03854),
+  ilosc = c(20, 35, 50)
+)
+
+# Konwersja ramki danych do obiektu sf
+punkty_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)
+
+# Przypisanie gmin do punktów za pomocą st_join
+gminy_przypisane <- st_join(punkty_sf, polska, join = st_contains)
+
+# Dodanie kolumny z ilością
+gminy_przypisane$ilosc <- coordinates$ilosc[match(gminy_przypisane$geometry, punkty_sf$geometry)]
+
+# Sprawdzenie wyników
+print(gminy_przypisane)
