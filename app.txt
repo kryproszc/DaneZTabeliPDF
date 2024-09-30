@@ -1,1 +1,19 @@
-Zakład inspekcyjny ustalił na podstawie załącznika nr 1, że „przepływ BONUS_RES jest przyjmowany w zaksięgowanej wartości”, co oznacza, że wartość ta to procent składki zarobionej na koniec okresu. Pojawiły się jednak wątpliwości co do powiązania tej informacji z wartościami BONUS_RES w pliku S2_CASHFLOWS_REPORT_202403. W kolejnym wezwaniu Zakład, w załączniku nr 3, przekazał rozszerzoną odpowiedź, która również wzbudziła wątpliwości. Zespół inspekcyjny skontaktował się z Zakładem w celu wyjaśnienia przesłanych informacji, a Zakład przyznał, że przesłane dane są niekompletne i zobowiązał się do wysłania dodatkowych wyjaśnień. Tych wyjaśnień już nie przesłał.
+coordinates
+  latitude longitude ilosc
+1 52.22985  21.00652    20
+2 50.06143  19.93884    35
+3 51.10789  17.03854    50
+> punkty_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)
+> znalezione_gminy <- list()
+> for (i in 1:nrow(punkty_sf)) {
++   punkt <- punkty_sf[i, ]
++   gmina <- polska[st_contains(polska, punkt, sparse = FALSE), ]
++   
++   if (nrow(gmina) > 0) {
++     gmina$ilosc <- coordinates$ilosc[i]  
++     znalezione_gminy[[i]] <- gmina  
++   }
++ }
+Error in st_geos_binop("contains", x, y, sparse = sparse, prepared = prepared,  : 
+  zmienna st_crs(x) == st_crs(y) nie ma wartości TRUE
+> 
