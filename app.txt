@@ -1,23 +1,6 @@
-Polaczony z nominatim
-(
-    SELECT 
-        6 AS Flag,
-        '0 ' AS VecPos,
-        address,
-        ST_Y(ST_Centroid(centroid)) AS lat,
-        ST_X(ST_Centroid(centroid)) AS lon
-    FROM 
-        placex
-    WHERE 
-        address -> 'postcode' ILIKE '13-606'
-        AND address -> 'housenumber' IS NOT NULL AND address -> 'housenumber' != ''
-    LIMIT 1
-)
-
-Rozmiar flaga2: 0
-Rozmiar flaga3: 0
-Rozmiar flaga4: 0
-Rozmiar flaga5: 0
-Rozmiar flaga6: 1
-Czas : 406.849 sekund
-szczkr@DIU-01:~$ 
+Lp	NumerUmowy	DataPoczatku	DataKonca	SumaUbezpieczenia	Odnowienia	Ulica	KodPocztowy	Miasto	Wojewodztwo	Kraj	ReasekuracjaO	ReasekuracjaF	Szerokosc	Dlugosc	AdresUjednolicony	Flaga_1	Flaga_2		
+6958	M1145226210	25.11.2021	24.11.2022	140000.0	TAK	organizacji &quot	wolnoĹ›Ä‡ i niezawisĹ‚oĹ›Ä‡&quot	45	91-836	Ĺ‚ĂłdĹş	Ĺ‚Ăłdzkie	polska	1,2		51.80617815	19.314292046696906	45, Spacerowa, RÄ…bieĹ„ AB, gmina AleksandrĂłw ĹĂłdzki, powiat zgierski, wojewĂłdztwo Ĺ‚Ăłdzkie, 95-070, Polska	0	2
+12681	M1241384009	13.06.2021	12.06.2022	697072.0	TAK	zgrupowania ak &quot	ĹĽmija&quot	 13a	01-875	warszawa	mazowieckie	polska	1,2		52.288101100000006	20.876102609522167	Orlen, 13A, Estrady, Radiowo, Bielany, MoĹ›ciska, wojewĂłdztwo mazowieckie, 05-080, Polska	0	2
+19559	M13837175803	20.05.2021	19.05.2022	420000.0	TAK	wĹ‚adysĹ‚awa szeflera &quot	wĹ‚ada&quot	8	04-424	warszawa	mazowieckie	polska	1,2		52.132317	21.0673	Ĺ»abka, 8, WÄ…wozowa, Wysoki UrsynĂłw, Kabaty, UrsynĂłw, Warszawa, wojewĂłdztwo mazowieckie, 02-796, Polska	0	2
+27478	M1571462708	06.07.2021	05.07.2022	340000.0	TAK	henryka dobrzaĹ„skiego &quot	hubala&quot	 2a	86-300	grudziÄ…dz	kujawsko-pomorskie	polska	1,2		53.4858829438351	18.77385604814491	Kuntersztyn, GrudziÄ…dz, powiat grudziÄ…dzki, wojewĂłdztwo kujawsko-pomorskie, 86-300, Polska	0	3
+120478	M9849643304	01.07.2021	30.06.2022	210000.0	TAK	aleja gen. antoniego chruĹ›ciela &quot	montera&quot	37	04-454	warszawa	mazowieckie	polska	1,2		52.248095	21.044627648024377	Podstacja "Zamoyskiego", Praga-PoĹ‚udnie, Warszawa, wojewĂłdztwo mazowieckie, Polska	0	2
