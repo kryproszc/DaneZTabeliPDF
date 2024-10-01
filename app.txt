@@ -1,3 +1,4 @@
 zielona%206;55-002;dobrzykowice;pl
 przedszkolna 2/4a;56-120;brzeg dolny;dolnośląskie;pl
 gabrieli zapolskiej 9;59-220;legnica;dolnośląskie;pl
+kolejowa%2019;55-002;dobrzykowice
