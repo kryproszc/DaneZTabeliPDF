@@ -15,9 +15,12 @@ max_value <- max(df_joined$ilosc, na.rm = TRUE)
 break_interval <- max_value / 10
 breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)  # Dodaj przedział do max_value - interval
 
-# Dodanie wartości 0 i 1, aby zdefiniować kategorię [0, 1)
+# Dodanie wartości 0 i 1, aby zdefiniować kategorię [0, 1) oraz maksymalną wartość, aby zamknąć przedział
 breaks <- c(0, 1, breaks, max_value)  # Ostatni element to `max_value`
 breaks <- unique(breaks)  # Usunięcie duplikatów
+
+# Sprawdzenie przedziałów
+print(breaks)
 
 # Tworzenie etykiet dla przedziałów >= 1
 # Etykieta "[0, 1)" dla wartości < 1 oraz etykiety dla przedziałów >= 1, w tym ostatni przedział domknięty
@@ -32,16 +35,16 @@ df_joined$ilosc_category <- cut(
   breaks = breaks,
   include.lowest = TRUE,
   labels = labels,
-  right = TRUE  # Otwarta prawostronna granica dla wszystkich oprócz ostatniego (ten domknięty)
+  right = TRUE  # Zamknięcie tylko ostatniego przedziału (wartości <= max_value)
 )
-
-# Przypisanie `NA` dla wartości < 1, aby nie pokazywać ich w legendzie
-df_joined$ilosc_category[df_joined$ilosc < 1] <- NA
 
 # Sprawdzenie liczby obserwacji w każdej kategorii (w celu weryfikacji)
 print(table(df_joined$ilosc_category, useNA = "ifany"))
 
-# Tworzenie 11 kolorów z gradacją, np. od niebieskiego do czerwonego (szary dla wartości < 1, reszta dla >= 1)
+# Sprawdzenie, czy gminy z maksymalną wartością są poprawnie przypisane
+print(df_joined[df_joined$ilosc == max_value, c("ilosc", "ilosc_category")])
+
+# Tworzenie 11 kolorów z gradacją, np. od szarego (dla wartości < 1) do ciemnoczerwonego (dla maksymalnej wartości)
 grad_colors <- colorRampPalette(c("lightgray", "yellow", "orange", "red", "darkred"))(11)
 
 # Definicja kolorów: pierwszy kolor to szary dla wartości < 1, reszta to gradacja dla przedziałów >= 1
@@ -52,7 +55,8 @@ unique_categories <- unique(df_joined$ilosc_category)
 num_categories <- length(unique_categories)
 
 # Tworzenie palety kolorów dla `plot()`
-pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))  # Przypisanie kolorów do wszystkich poziomów
+# Przypisanie kolorów do wszystkich poziomów `ilosc_category`
+pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))
 
 # Wyświetlenie przypisanej palety w celu weryfikacji
 print(pal)
