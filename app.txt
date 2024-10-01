@@ -1,10 +1,38 @@
-> ggplot(data = df_joined) +
-+   geom_sf(aes(fill = ilosc), color = "black") +  # Kolorowanie gmin na podstawie liczby budynków
-+   scale_fill_viridis_c(option = "plasma", trans = "log") +  # Skala kolorów logarytmiczna
-+   theme_minimal() +
-+   labs(title = "Mapa gmin z liczbą budynków",
-+        fill = "Liczba budynków") +
-+   theme(plot.title = element_text(hjust = 0.5))
-Warning message:
-In scale_fill_viridis_c(option = "plasma", trans = "log") :
-  log-2.718282 transformation introduced infinite values.
+df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
+
+# Automatyczne wyznaczenie przedziałów na podstawie wartości w kolumnie `ilosc`
+# Użyjemy funkcji `classIntervals()` do podzielenia danych na 5 dynamicznych przedziałów (lub inną liczbę)
+intervals <- classIntervals(df_joined$ilosc, n = 5, style = "quantile")
+
+# Wartości granic przedziałów
+breaks <- intervals$brks
+
+# Stworzenie kolumny z kategoriami na podstawie przedziałów
+df_joined$ilosc_category <- cut(
+  df_joined$ilosc,
+  breaks = breaks,  # Używamy automatycznie wyznaczonych granic
+  include.lowest = TRUE,
+  dig.lab = 10  # Zwiększenie liczby cyfr wyświetlanych w etykietach
+)
+
+# Przypisanie kolorów dla poszczególnych przedziałów
+# Definiujemy 6 kolorów: pierwszy dla 0.1 i 5 dla reszty przedziałów
+colors <- c("lightgray", "#fee0d2", "#fc9272", "#fb6a4a", "#de2d26", "#a50f15")
+
+# Wyświetlenie liczności w poszczególnych przedziałach
+print(table(df_joined$ilosc_category))
+
+# Rysowanie mapy z przedziałami i odpowiednią legendą
+ggplot(data = df_joined) +
+  geom_sf(aes(fill = ilosc_category), color = "black") +  # Kolorowanie gmin na podstawie kategorii `ilosc_category`
+  scale_fill_manual(
+    values = colors,
+    name = "Liczba budynków",  # Tytuł legendy
+    labels = levels(df_joined$ilosc_category)  # Automatyczne etykiety na podstawie podziałów
+  ) +
+  theme_minimal() +
+  labs(title = "Mapa gmin z liczbą budynków podzieloną na dynamiczne przedziały") +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "right"
+  )
