@@ -1,18 +1,55 @@
-> print(df_joined[df_joined$ilosc_category == tail(levels(df_joined$ilosc_category), 1), c("ilosc", "ilosc_category")])
-Simple feature collection with 637 features and 2 fields (with 636 geometries empty)
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 691985.3 ymin: 393202.9 xmax: 710658.9 ymax: 412902.8
-Projected CRS: ETRS89 / Poland CS92
-First 10 features:
-     ilosc ilosc_category           geometry
-NA      NA           <NA> MULTIPOLYGON EMPTY
-NA.1    NA           <NA> MULTIPOLYGON EMPTY
-NA.2    NA           <NA> MULTIPOLYGON EMPTY
-NA.3    NA           <NA> MULTIPOLYGON EMPTY
-NA.4    NA           <NA> MULTIPOLYGON EMPTY
-NA.5    NA           <NA> MULTIPOLYGON EMPTY
-NA.6    NA           <NA> MULTIPOLYGON EMPTY
-NA.7    NA           <NA> MULTIPOLYGON EMPTY
-NA.8    NA           <NA> MULTIPOLYGON EMPTY
-NA.9    NA           <NA> MULTIPOLYGON EMPTY
+# Filtracja gmin z brakującymi geometriami (MULTIPOLYGON EMPTY)
+df_joined_clean <- df_joined[!st_is_empty(df_joined), ]
+
+# Sprawdzenie obiektów z wartościami NA w `ilosc_category` i ich usunięcie
+df_joined_clean <- df_joined_clean[!is.na(df_joined_clean$ilosc_category), ]
+
+# Sprawdzenie, czy wszystkie geometrie są poprawne
+print("Liczba gmin po usunięciu pustych geometrii:")
+print(nrow(df_joined_clean))
+
+# Sprawdzenie przypisania kategorii i liczby obserwacji
+print("Liczba obserwacji w każdej kategorii po usunięciu pustych geometrii:")
+print(table(df_joined_clean$ilosc_category, useNA = "ifany"))
+
+# Tworzenie bardziej zróżnicowanej palety kolorów
+palette_name <- "RdYlBu"  # Użyj bardziej kontrastowej palety, np. "RdYlBu"
+grad_colors <- rev(brewer.pal(n = length(levels(df_joined_clean$ilosc_category)), palette_name))
+
+# Przypisanie kolorów tylko do istniejących kategorii
+colors_to_use <- grad_colors
+
+# Tworzenie palety kolorów na podstawie aktualnych kategorii `ilosc_category`
+pal <- setNames(colors_to_use, levels(df_joined_clean$ilosc_category))
+
+# Sprawdzenie przypisania kolorów do kategorii w celu weryfikacji
+print("Przypisanie kolorów do istniejących kategorii:")
+print(pal)
+
+# Sprawdzenie, czy gminy z maksymalną wartością są poprawnie przypisane po filtracji
+max_value_clean <- max(df_joined_clean$ilosc, na.rm = TRUE)
+print("Gminy z maksymalną wartością po filtracji:")
+print(df_joined_clean[df_joined_clean$ilosc == max_value_clean, c("ilosc", "ilosc_category")])
+
+# Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
+png(filename = "mapa_gmin_statyczna_bez_pustych_geometrii.png", width = 10, height = 8, units = "in", res = 300)
+
+# Rysowanie mapy z przypisaniem kolorów do kategorii po oczyszczeniu danych
+plot(
+  df_joined_clean["ilosc_category"],
+  col = pal[df_joined_clean$ilosc_category],  # Przypisanie kolorów bezpośrednio do kategorii
+  main = "Mapa gmin bez pustych geometrii i poprawnie przypisanymi kolorami",
+  key.pos = NULL  # Wyłączenie wbudowanej legendy
+)
+
+# Dodanie legendy tylko dla istniejących kategorii (pominięcie pustych)
+legend("topright",
+       legend = levels(df_joined_clean$ilosc_category),  # Legendy tylko dla istniejących kategorii
+       fill = colors_to_use,  # Kolory tylko dla wartości >= 1 (bez szarego)
+       title = "Liczba budynków",
+       cex = 0.8,
+       bg = "white",
+       bty = "n")
+
+# Zakończenie zapisywania do pliku
+dev.off()
