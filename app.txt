@@ -1,4 +1,3 @@
-df_sf <- st_as_sf(df, coords = c("longitude", "latitude"), crs = 4326)
-
-# Dołączenie punktów do granic gmin
-df_joined <- st_join(gminy, df_sf, join = st_contains)
+> df_joined <- st_join(gminy, df_sf, join = st_contains)
+Error in st_geos_binop("contains", x, y, sparse = sparse, prepared = prepared,  : 
+  zmienna st_crs(x) == st_crs(y) nie ma wartości TRUE
