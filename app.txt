@@ -16,6 +16,7 @@ intervals <- classIntervals(df_joined$ilosc[df_joined$ilosc >= minimal_value], n
 # Dodanie przedziału [0, 1), aby uwzględnić gminy z małymi wartościami
 breaks <- c(0, intervals$brks)
 breaks <- unique(breaks)  # Usunięcie duplikatów na wypadek powtarzających się wartości
+print("Przedziały breaks:")
 print(breaks)
 
 # Tworzenie etykiet dla kategorii
@@ -23,9 +24,13 @@ labels <- c(
   "[0, 1)",  # Etykieta dla wartości < 1, które będą wyświetlane na biało i nie będą oznaczane kolorami
   sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)])
 )
+print("Etykiety labels:")
+print(labels)
 
 # Modyfikacja ostatniej etykiety, aby była w formie zamkniętej [ostatnia wartość, max_value]
 labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 1], max_value)
+print("Etykiety po modyfikacji:")
+print(labels)
 
 # Przypisanie kategorii do danych z uwzględnieniem przedziałów
 df_joined$ilosc_category <- cut(
@@ -38,6 +43,8 @@ df_joined$ilosc_category <- cut(
 
 # Pozostawienie kategorii "Brak danych" w `ilosc_category` jako `NA`
 df_joined$ilosc_category[df_joined$ilosc < 1] <- NA  # Wartości poniżej 1 (czyli `[0, 1)`) oraz `NA` będą miały wartość `NA`
+print("Unikalne wartości w `ilosc_category` po przypisaniu kategorii:")
+print(unique(df_joined$ilosc_category))
 
 # Usunięcie pustych kategorii z `ilosc_category`
 df_joined$ilosc_category <- droplevels(df_joined$ilosc_category)
@@ -54,10 +61,14 @@ colors_to_use <- c("white", grad_colors)
 
 # Tworzenie palety kolorów na podstawie aktualnych kategorii `ilosc_category`
 pal <- setNames(colors_to_use, c("Brak danych", levels(df_joined$ilosc_category)))
-
-# Wyświetlenie przypisania kolorów do kategorii w celu weryfikacji
-print("Przypisanie kolorów do istniejących kategorii:")
+print("Przypisanie kolorów do kategorii:")
 print(pal)
+
+# Sprawdzenie przypisania kolorów do kategorii
+print("Sprawdzenie kolorów i poziomów w `ilosc_category`:")
+for (lvl in levels(df_joined$ilosc_category)) {
+  print(paste("Kategoria:", lvl, "Liczba gmin:", sum(df_joined$ilosc_category == lvl, na.rm = TRUE)))
+}
 
 # Sprawdzenie, czy gminy z maksymalną wartością są poprawnie przypisane po filtracji
 max_value_clean <- max(df_joined$ilosc, na.rm = TRUE)
@@ -65,7 +76,7 @@ print("Gminy z maksymalną wartością po przypisaniu kategorii:")
 print(df_joined[df_joined$ilosc == max_value_clean, c("ilosc", "ilosc_category")])
 
 # Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
-png(filename = "mapa_gmin_statyczna_20_przedzialow_czerwone.png", width = 10, height = 8, units = "in", res = 300)
+png(filename = "mapa_gmin_statyczna_poprawiona_20_przedzialow.png", width = 10, height = 8, units = "in", res = 300)
 
 # Rysowanie mapy z przypisaniem kolorów do kategorii
 plot(
