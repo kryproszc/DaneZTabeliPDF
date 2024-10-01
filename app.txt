@@ -1,10 +1,8 @@
-tmap_mode("plot")
+library(mapview)
+
+# Uproszczenie geometrii dla lepszego renderowania
 df_joined_simplified <- st_simplify(df_joined, dTolerance = 1000)
 
-# Tworzenie mapy i zapisanie jej jako pliku graficznego
-map <- tm_shape(df_joined_simplified) +
-  tm_polygons("ilosc", style = "quantile", n = 5, palette = "Reds", title = "Liczba budynków") +
-  tm_layout(main.title = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków")
-
-
-library(tmap)      # Do generowania mapy
+# Wyświetlanie mapy interaktywnej z `mapview`
+mapview(df_joined_simplified, zcol = "ilosc", col.regions = RColorBrewer::brewer.pal(5, "Reds"),
+        layer.name = "Liczba budynków", legend = TRUE)
