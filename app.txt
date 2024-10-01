@@ -1,26 +1,50 @@
-print(levels(df_joined$ilosc_category))
+values_above_1 <- df_joined$ilosc[df_joined$ilosc >= 1]
 
-# Dopasowanie kolorów do poziomów
-colors <- c(
-  "[0, 0.1)" = "lightgray", 
-  "[0.1, 1)" = "#fee0d2", 
-  "[1, 5]" = "#fc9272", 
-  "(5, 10]" = "#fb6a4a", 
-  "(10, 50]" = "#de2d26", 
-  "(50, 100]" = "#a50f15", 
-  "(100, 500]" = "#67000d"
+# Wyznaczenie dynamicznych przedziałów dla wartości >= 1
+# Wyznaczamy 4 przedziały dynamiczne (możesz dostosować `n`)
+intervals <- classIntervals(values_above_1, n = 4, style = "quantile")
+
+# Połączenie ręcznie ustalonego przedziału [0, 0.1] z automatycznie wyznaczonymi przedziałami
+breaks <- c(0, 0.1, intervals$brks)  # Łączymy ręcznie ustalone wartości z dynamicznymi przedziałami
+breaks <- unique(breaks)  # Usunięcie ewentualnych duplikatów
+print(breaks)  # Sprawdzenie przedziałów
+
+# Tworzenie etykiet przedziałów na podstawie dynamicznych granic
+labels <- c(
+  "[0, 0.1)",  # Ręcznie ustalona etykieta dla przedziału
+  sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-1])  # Automatyczne etykiety dla reszty przedziałów
 )
 
-# Tworzenie mapy z odpowiednimi przedziałami i kolorami
+# Stworzenie kategorii na podstawie dynamicznych przedziałów
+df_joined$ilosc_category <- cut(
+  df_joined$ilosc,
+  breaks = breaks,
+  include.lowest = TRUE,
+  labels = labels,
+  right = FALSE  # Ustawienie prawostronnie otwartych przedziałów
+)
+
+# Sprawdzenie poziomów, aby upewnić się, że kategorie są poprawne
+print(levels(df_joined$ilosc_category))
+
+# 2. Automatyczne ustalanie kolorów
+
+# Liczba unikalnych kategorii w `ilosc_category`
+num_categories <- length(levels(df_joined$ilosc_category))
+
+# Automatyczne wygenerowanie palety kolorów na podstawie liczby kategorii
+colors <- c("lightgray", scales::hue_pal()(num_categories - 1))  # Pierwszy kolor jasnoszary, reszta dynamicznie
+
+# 3. Tworzenie mapy z dynamicznymi przedziałami i automatyczną legendą
 ggplot(data = df_joined) +
   geom_sf(aes(fill = ilosc_category), color = "black") +  # Kolorowanie gmin na podstawie kategorii `ilosc_category`
   scale_fill_manual(
-    values = colors,
+    values = setNames(colors, levels(df_joined$ilosc_category)),  # Automatyczne przypisanie kolorów do kategorii
     name = "Liczba budynków",  # Tytuł legendy
-    labels = levels(df_joined$ilosc_category)  # Automatyczne etykiety na podstawie podziałów
+    labels = levels(df_joined$ilosc_category)  # Etykiety dla kategorii
   ) +
   theme_minimal() +
-  labs(title = "Mapa gmin z liczbą budynków podzieloną na dynamiczne przedziały") +
+  labs(title = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków") +
   theme(
     plot.title = element_text(hjust = 0.5),
     legend.position = "right"
