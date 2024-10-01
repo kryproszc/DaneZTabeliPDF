@@ -1,68 +1,9 @@
-library(sf)
-library(classInt)
-library(RColorBrewer)
-
-# Przekształcenie wartości 0 na 0.1, aby uniknąć problemów z logarytmiczną transformacją
-df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
-
-# Zmienna dla wartości minimalnej (pomijamy wartości mniejsze niż 1 w podziale)
-minimal_value <- 1
-
-# Maksymalna wartość w kolumnie `ilosc`
-max_value <- max(df_joined$ilosc, na.rm = TRUE)
-
-# Dynamiczne przedziały: równy rozstęp (max_value / 10)
-break_interval <- max_value / 10
-breaks <- seq(minimal_value, max_value, by = break_interval)
-
-# Dodanie wartości 0 do przedziałów, aby zdefiniować kategorię [0, 1)
-breaks <- c(0, 1, breaks)
-breaks <- unique(breaks)  # Usunięcie duplikatów
-
-# Tworzenie etykiet dla przedziałów >= 1
-labels <- c(
-  "[0, 1)",  # Etykieta dla wartości < 1, które mają być szare i ukryte w legendzie
-  sprintf("[%.1f, %.1f)", breaks[-c(1, 2, length(breaks))], breaks[-c(1, 2)])  # Etykiety dla przedziałów >= 1
-)
-
-# Przypisanie kategorii do danych z pominięciem wartości < 1 (oznaczonych jako `NA`)
-df_joined$ilosc_category <- cut(
-  df_joined$ilosc,
-  breaks = breaks,
-  include.lowest = TRUE,
-  labels = labels,
-  right = FALSE
-)
-
-# Przypisanie `NA` dla wartości < 1, aby nie pokazywać ich w legendzie
-df_joined$ilosc_category[df_joined$ilosc < 1] <- NA
-
-# Sprawdzenie liczby obserwacji w każdej kategorii (w celu weryfikacji)
-print(table(df_joined$ilosc_category, useNA = "ifany"))
-
-# Definicja kolorów: szary dla wartości < 1, oraz kolory dla 10 przedziałów >= 1
-colors_above_1 <- brewer.pal(n = 10, name = "YlOrRd")  # Użycie palety `YlOrRd` dla 10 kolorów
-colors_to_use <- c("lightgray", colors_above_1)  # Szary dla wartości < 1, a pozostałe kolory dla >= 1
-
-# Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
-png(filename = "mapa_gmin_statyczna_10_przedzialow.png", width = 10, height = 8, units = "in", res = 300)
-
-# Rysowanie mapy z przypisaniem kolorów do kategorii
-plot(
-  df_joined_simplified["ilosc_category"],
-  col = colors_to_use,  # Przypisanie kolorów do kategorii, gdzie szary dla wartości < 1
-  main = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków",
-  key.pos = NULL  # Wyłączenie wbudowanej legendy
-)
-
-# Dodanie legendy tylko dla wartości >= 1
-legend("topright",
-       legend = levels(df_joined$ilosc_category)[-1],  # Pominięcie etykiety dla NA (wartości < 1)
-       fill = colors_above_1,  # Kolory tylko dla wartości >= 1
-       title = "Liczba budynków",
-       cex = 0.8,
-       bg = "white",
-       bty = "n")
-
-# Zakończenie zapisywania do pliku
-dev.off()
+> breaks
+ [1]   0.0   1.0  31.1  61.2  91.3 121.4 151.5 181.6 211.7 241.8 271.9
+> # Tworzenie etykiet dla przedziałów >= 1
+> labels <- c(
++   "[0, 1)",  # Etykieta dla wartości < 1, które mają być szare i ukryte w legendzie
++   sprintf("[%.1f, %.1f)", breaks[-c(1, 2, length(breaks))], breaks[-c(1, 2)])  # Etykiety dla przedziałów >= 1
++ )
+Error in sprintf("[%.1f, %.1f)", breaks[-c(1, 2, length(breaks))], breaks[-c(1,  : 
+  arguments cannot be recycled to the same length
