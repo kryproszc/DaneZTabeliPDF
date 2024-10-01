@@ -1,32 +1,11 @@
-custom_colors <- c(
-  "#f7fbff",  # Jasnoniebieski
-  "#deebf7",  # Niebieski
-  "#c6dbef",  # Jasny niebieski z odcieniem zieleni
-  "#9ecae1",  # Średni niebieski
-  "#6baed6",  # Intensywny niebieski
-  "#4292c6",  # Ciemnoniebieski
-  "#2171b5",  # Niebieski z nutą szarości
-  "#08519c",  # Granatowy
-  "#08306b",  # Ciemnogranatowy
-  "#67001f"   # Bardzo ciemny czerwony, jako najciemniejszy kolor
+  "#FF5733",  # Intensywny pomarańczowy
+  "#C70039",  # Intensywny czerwony
+  "#900C3F",  # Ciemny czerwony
+  "#581845",  # Fioletowy
+  "#1D8348",  # Zielony
+  "#2874A6",  # Niebieski
+  "#884EA0",  # Fiolet z domieszką niebieskiego
+  "#FFC300",  # Żółty
+  "#DAF7A6",  # Jasny zielony
+  "#FF33CC"   # Różowy
 )
-
-# Ustawienie kolorów do użytku w wizualizacji
-colors_to_use <- c("white", custom_colors) 
-
-
-custom_colors <- c(
-  "#f7fbff",  # Jasnoniebieski
-  "#deebf7",  # Niebieski
-  "#c6dbef",  # Jasny niebieski z odcieniem zieleni
-  "#9ecae1",  # Średni niebieski
-  "#6baed6",  # Intensywny niebieski
-  "#4292c6",  # Ciemnoniebieski
-  "#2171b5",  # Niebieski z nutą szarości
-  "#08519c",  # Granatowy
-  "#08306b",  # Ciemnogranatowy
-  "#67001f"   # Bardzo ciemny czerwony, jako najciemniejszy kolor
-)
-
-# Ustawienie kolorów do użytku w wizualizacji
-colors_to_use <- c("white", custom_colors) 
