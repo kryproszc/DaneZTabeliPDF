@@ -13,15 +13,18 @@ max_value <- max(df_joined$ilosc, na.rm = TRUE)
 
 # Dynamiczne przedziały: równy rozstęp (max_value / 10)
 break_interval <- max_value / 10
-breaks <- seq(minimal_value, max_value, by = break_interval)
+breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)  # Dodaj przedział do max_value - interval
 
-# Dodanie wartości 0 i 1, aby zdefiniować kategorię [0, 1) oraz maksymalną wartość, aby zamknąć przedział
-breaks <- c(0, 1, breaks, max_value)
+# Dodanie wartości 0 i 1, aby zdefiniować kategorię [0, 1)
+breaks <- c(0, 1, breaks, max_value)  # Ostatni element to `max_value`
 breaks <- unique(breaks)  # Usunięcie duplikatów
 
 # Tworzenie etykiet dla przedziałów >= 1
-# Etykieta "[0, 1)" dla wartości < 1 oraz etykiety dla przedziałów >= 1
+# Etykieta "[0, 1)" dla wartości < 1 oraz etykiety dla przedziałów >= 1, w tym ostatni przedział domknięty
 labels <- c("[0, 1)", sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)]))
+
+# Modyfikacja ostatniej etykiety, aby była w formie "(..., max_value]"
+labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 2], max_value)
 
 # Przypisanie kategorii do danych z pominięciem wartości < 1 (oznaczonych jako `NA`)
 df_joined$ilosc_category <- cut(
@@ -29,7 +32,7 @@ df_joined$ilosc_category <- cut(
   breaks = breaks,
   include.lowest = TRUE,
   labels = labels,
-  right = FALSE
+  right = TRUE  # Otwarta prawostronna granica dla wszystkich oprócz ostatniego (ten domknięty)
 )
 
 # Przypisanie `NA` dla wartości < 1, aby nie pokazywać ich w legendzie
@@ -49,15 +52,18 @@ unique_categories <- unique(df_joined$ilosc_category)
 num_categories <- length(unique_categories)
 
 # Tworzenie palety kolorów dla `plot()`
-pal <- setNames(colors_to_use, unique_categories)
+pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))  # Przypisanie kolorów do wszystkich poziomów
+
+# Wyświetlenie przypisanej palety w celu weryfikacji
+print(pal)
 
 # Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
 png(filename = "mapa_gmin_statyczna_11_przedzialow_gradacja.png", width = 10, height = 8, units = "in", res = 300)
 
-# Rysowanie mapy z przypisaniem kolorów do kategorii za pomocą `pal`
+# Rysowanie mapy z przypisaniem kolorów do kategorii za pomocą `col`
 plot(
   df_joined_simplified["ilosc_category"],
-  pal = pal,  # Użycie `pal` do przypisania kolorów do kategorii
+  col = pal[df_joined_simplified$ilosc_category],  # Użycie `col`, aby przypisać kolory bezpośrednio do wartości
   main = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków",
   key.pos = NULL  # Wyłączenie wbudowanej legendy
 )
