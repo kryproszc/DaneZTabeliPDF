@@ -1,8 +1,4 @@
-Thank you for your response. I confirm that I will attend the training on both days.
+df_sf <- st_as_sf(df, coords = c("longitude", "latitude"), crs = 4326)
 
-I do not have any dietary requirements.
-
-Is the decision to participate in the dinner binding? If I confirm, will I be obligated to attend?
-
-Best regards,
-[Your Name]
+# Dołączenie punktów do granic gmin
+df_joined <- st_join(gminy, df_sf, join = st_contains)
