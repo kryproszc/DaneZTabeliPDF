@@ -1,15 +1,85 @@
- print(pal)
-        [0, 1)    [1.0, 31.1)   [31.1, 61.2)   [61.2, 91.3)  [91.3, 121.4) [121.4, 151.5) [151.5, 181.6) [181.6, 211.7) [211.7, 241.8) 
-     "#D3D3D3"      "#E4E47E"      "#F6F62A"      "#FFEC00"      "#FFC900"      "#FFA500"      "#FF6200"      "#FF2000"      "#E70000" 
-[241.8, 301.0]           <NA> 
-     "#B90000"      "#8B0000" 
-> # Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
-> png(filename = "mapa_gmin_statyczna_11_przedzialow_gradacja.png", width = 10, height = 8, units = "in", res = 300)
-> # Sprawdzenie liczby obserwacji w każdej kategorii (w celu weryfikacji)
-> print(table(df_joined$ilosc_category, useNA = "ifany"))
+library(sf)
+library(classInt)
+library(RColorBrewer)
 
-        [0, 1)    [1.0, 31.1)   [31.1, 61.2)   [61.2, 91.3)  [91.3, 121.4) [121.4, 151.5) [151.5, 181.6) [181.6, 211.7) [211.7, 241.8) 
-          3743           2710             76             15             11              3              1              1              0 
-[241.8, 301.0] 
-             1 
-> 
+# Przekształcenie wartości 0 na 0.1, aby uniknąć problemów z logarytmiczną transformacją
+df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
+
+# Zmienna dla wartości minimalnej (pomijamy wartości mniejsze niż 1 w podziale)
+minimal_value <- 1
+
+# Maksymalna wartość w kolumnie `ilosc`
+max_value <- max(df_joined$ilosc, na.rm = TRUE)
+
+# Dynamiczne przedziały: równy rozstęp (max_value / 10)
+break_interval <- max_value / 10
+breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)  # Dodaj przedział do max_value - interval
+
+# Dodanie wartości 0 i 1, aby zdefiniować kategorię [0, 1) oraz maksymalną wartość, aby zamknąć przedział
+breaks <- c(0, 1, breaks, max_value)  # Ostatni element to `max_value`
+breaks <- unique(breaks)  # Usunięcie duplikatów
+
+# Sprawdzenie przedziałów
+print(breaks)
+
+# Tworzenie etykiet dla przedziałów >= 1
+labels <- c("[0, 1)", sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)]))
+
+# Modyfikacja ostatniej etykiety, aby była w formie "(..., max_value]"
+# Ostatnia etykieta powinna mieć postać `[ostatnia_wartość, max_value]`
+labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 1], max_value)
+
+# Przypisanie kategorii do danych z pominięciem wartości < 1 (oznaczonych jako `NA`)
+df_joined$ilosc_category <- cut(
+  df_joined$ilosc,
+  breaks = breaks,
+  include.lowest = TRUE,
+  labels = labels,
+  right = TRUE  # Zamknięcie tylko ostatniego przedziału (wartości <= max_value)
+)
+
+# Sprawdzenie liczby obserwacji w każdej kategorii (w celu weryfikacji)
+print(table(df_joined$ilosc_category, useNA = "ifany"))
+
+# Sprawdzenie, czy gminy z maksymalną wartością są poprawnie przypisane
+print(df_joined[df_joined$ilosc == max_value, c("ilosc", "ilosc_category")])
+
+# Tworzenie 11 kolorów z gradacją (od szarego do ciemnoczerwonego) dla 11 przedziałów oraz 1 na szary dla NA
+grad_colors <- colorRampPalette(c("lightgray", "yellow", "orange", "red", "darkred"))(11)
+
+# Definicja kolorów: pierwszy kolor to szary dla wartości < 1, reszta to gradacja dla przedziałów >= 1
+colors_to_use <- grad_colors
+
+# Sprawdzenie przypisania kolorów do każdej kategorii
+# Wykluczamy `NA`, ponieważ jest tam problem z przypisaniem koloru
+pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))
+pal <- pal[!is.na(pal)]  # Usuń `NA` z przypisania palety
+
+# Wyświetlenie przypisanej palety w celu weryfikacji
+print(pal)
+
+# Sprawdzenie gmin z maksymalną wartością i przypisanej kategorii
+print(df_joined[df_joined$ilosc == max_value, c("ilosc", "ilosc_category")])
+
+# Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
+png(filename = "mapa_gmin_statyczna_11_przedzialow_gradacja.png", width = 10, height = 8, units = "in", res = 300)
+
+# Rysowanie mapy z przypisaniem kolorów do kategorii
+plot(
+  df_joined_simplified["ilosc_category"],
+  col = pal[df_joined_simplified$ilosc_category],  # Przypisanie kolorów bezpośrednio do kategorii
+  main = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków",
+  key.pos = NULL  # Wyłączenie wbudowanej legendy
+)
+
+# Dodanie legendy tylko dla wartości >= 1 (pominięcie kategorii `NA`)
+legend("topright",
+       legend = levels(df_joined$ilosc_category)[-1],  # Pominięcie etykiety dla NA (wartości < 1)
+       fill = colors_to_use[-1],  # Kolory tylko dla wartości >= 1 (bez szarego)
+       title = "Liczba budynków",
+       cex = 0.8,
+       bg = "white",
+       bty = "n")
+
+# Zakończenie zapisywania do pliku
+dev.off()
