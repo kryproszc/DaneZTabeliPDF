@@ -1,12 +1,13 @@
-gminy_aggregated <- df_joined %>%
-  group_by(gmina) %>%
-  summarize(ilosc = sum(ilosc, na.rm = TRUE))
+library(ggplot2)
+library(dplyr)
 
-# Wizualizacja mapy z gradacją kolorów
-ggplot(data = gminy_aggregated) +
-  geom_sf(aes(fill = ilosc), color = "black") +
-  scale_fill_viridis_c(option = "plasma", trans = "log") +
+# Upewniamy się, że mamy odpowiednie dane do wizualizacji
+# Jeśli `df_joined` zawiera już `geometry` i `ilosc`, możemy od razu stworzyć mapę
+
+ggplot(data = df_joined) +
+  geom_sf(aes(fill = ilosc), color = "black") +  # Kolorowanie gmin na podstawie liczby budynków
+  scale_fill_viridis_c(option = "plasma", trans = "log") +  # Skala kolorów logarytmiczna
   theme_minimal() +
-  labs(title = "Mapa gmin z zaznaczoną ilością wystąpień",
-       fill = "Ilość wystąpień") +
+  labs(title = "Mapa gmin z liczbą budynków",
+       fill = "Liczba budynków") +
   theme(plot.title = element_text(hjust = 0.5))
