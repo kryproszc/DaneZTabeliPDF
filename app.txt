@@ -1,23 +1,23 @@
 library(sf)
+library(classInt)
 
-# Zakładam, że kolumna `ilosc` została wcześniej odpowiednio przygotowana
-# Przekształcenie wartości 0 na 0.1, jeśli to konieczne
+# Przekształcenie wartości 0 na 0.1, aby uniknąć problemów z logarytmiczną transformacją
 df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
 
-# Tworzenie kategorii na podstawie dynamicznych przedziałów dla wartości >= 1
-# Wyznacz dynamiczne przedziały na podstawie wartości
-values_above_1 <- df_joined$ilosc[df_joined$ilosc >= 1]
+# Podział wartości `ilosc` na dynamiczne przedziały
+values_above_1 <- df_joined$ilosc[df_joined$ilosc >= 1]  # Wartości >= 1
 
-# Podział na 5 przedziałów za pomocą `classIntervals` w stylu "quantile"
+# Dynamiczne przedziały za pomocą `classIntervals`
 intervals <- classIntervals(values_above_1, n = 5, style = "quantile")
-breaks <- c(0, 0.1, intervals$brks)  # Dodaj ręcznie przedział dla wartości < 1
-breaks <- unique(breaks)  # Usuwanie duplikatów
-print(breaks)
 
-# Tworzenie etykiet dla kategorii
+# Dodanie ręcznego przedziału dla wartości < 1
+breaks <- c(0, 0.1, intervals$brks)
+breaks <- unique(breaks)  # Usunięcie duplikatów
+
+# Tworzenie etykiet kategorii
 labels <- c(
-  "[0, 0.1)",  # Ręczna etykieta dla wartości < 1
-  sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1,2)])
+  "[0, 0.1)",  # Etykieta dla wartości < 0.1
+  sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)])
 )
 
 # Przypisanie kategorii do danych
@@ -29,32 +29,32 @@ df_joined$ilosc_category <- cut(
   right = FALSE
 )
 
-# Sprawdzenie, czy kategorie są poprawnie przypisane
-print(table(df_joined$ilosc_category))  # Sprawdzenie liczby obserwacji w każdej kategorii
+# Przypisanie `NA` dla przedziału `[0, 0.1)`
+df_joined$ilosc_category[df_joined$ilosc < 1] <- NA
 
-# Określenie niestandardowych kolorów dla kategorii (zmień kolory, jeśli chcesz)
-custom_colors <- c("lightgray", "#fee0d2", "#fc9272", "#fb6a4a", "#de2d26", "#a50f15")  # Przykładowe kolory
+# Sprawdzenie liczby obserwacji w każdej kategorii (w celu weryfikacji)
+print(table(df_joined$ilosc_category, useNA = "ifany"))
 
-# Liczba kategorii w danych (pomijając NA)
-levels_count <- length(levels(df_joined$ilosc_category))
-print(levels(df_joined$ilosc_category))  # Wyświetlenie poziomów kategorii
+# Definicja kolorów dla przedziałów >= 1
+colors_above_1 <- c("#fee0d2", "#fc9272", "#fb6a4a", "#de2d26", "#a50f15")  # Kolory dla przedziałów >= 1
+levels_count <- length(levels(df_joined$ilosc_category)) - 1  # Liczba poziomów pomijając NA
+colors_to_use <- c("lightgray", colors_above_1[1:levels_count])  # Szary dla wartości < 1, reszta dla >= 1
 
-# Upewnienie się, że mamy tyle kolorów, ile kategorii
-colors_to_use <- custom_colors[1:levels_count]
-
-# Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
+# Tworzenie pliku graficznego PNG
 png(filename = "mapa_gmin_statyczna.png", width = 10, height = 8, units = "in", res = 300)
 
-# Rysowanie mapy w pliku graficznym z przypisaniem kolorów do kategorii
-plot(df_joined_simplified["ilosc_category"], 
-     col = colors_to_use,  # Przypisanie kolorów do kategorii
-     main = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków",
-     key.pos = NULL)  # Wyłączenie domyślnej legendy
+# Rysowanie mapy z przypisaniem kolorów do kategorii
+plot(
+  df_joined_simplified["ilosc_category"],
+  col = colors_to_use,  # Przypisanie kolorów do kategorii, gdzie szary dla NA
+  main = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków",
+  key.pos = NULL  # Wyłączenie wbudowanej legendy
+)
 
-# Dodanie legendy z niestandardowymi kolorami
+# Dodanie legendy tylko dla wartości >= 1
 legend("topright",
-       legend = levels(df_joined$ilosc_category),  # Etykiety legendy
-       fill = colors_to_use,  # Przypisanie kolorów do legendy
+       legend = levels(df_joined$ilosc_category)[-1],  # Pominięcie etykiety dla NA
+       fill = colors_above_1,  # Kolory tylko dla wartości >= 1
        title = "Liczba budynków",
        cex = 0.8,
        bg = "white",
