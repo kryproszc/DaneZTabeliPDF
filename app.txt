@@ -1,18 +1,23 @@
+df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
+
+# Podział wartości `ilosc` na dwie grupy:
+# - Pierwsza grupa to wartości < 1 (przypisujemy je do pierwszego przedziału ręcznie)
+# - Druga grupa to wartości >= 1 (na podstawie tych wartości utworzymy dynamiczne przedziały)
 values_above_1 <- df_joined$ilosc[df_joined$ilosc >= 1]
 
 # Wyznaczenie dynamicznych przedziałów dla wartości >= 1
-# Wyznaczamy 4 przedziały dynamiczne (możesz dostosować `n`)
-intervals <- classIntervals(values_above_1, n = 4, style = "quantile")
+# Używamy `classIntervals` do dynamicznego podziału na 5 przedziałów
+intervals <- classIntervals(values_above_1, n = 5, style = "quantile")
 
-# Połączenie ręcznie ustalonego przedziału [0, 0.1] z automatycznie wyznaczonymi przedziałami
-breaks <- c(0, 0.1, intervals$brks)  # Łączymy ręcznie ustalone wartości z dynamicznymi przedziałami
-breaks <- unique(breaks)  # Usunięcie ewentualnych duplikatów
-print(breaks)  # Sprawdzenie przedziałów
+# Połączenie ręcznie ustalonego przedziału [0, 0.1] z automatycznie wyznaczonymi przedziałami od 1 w górę
+breaks <- c(0, 0.1, intervals$brks)
+breaks <- unique(breaks)  # Usunięcie duplikatów na wypadek powtarzających się wartości
+print(breaks)
 
-# Tworzenie etykiet przedziałów na podstawie dynamicznych granic
+# Tworzenie etykiet tylko dla przedziałów >= 1
 labels <- c(
-  "[0, 0.1)",  # Ręcznie ustalona etykieta dla przedziału
-  sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-1])  # Automatyczne etykiety dla reszty przedziałów
+  "[0, 0.1)",  # Ręcznie ustalona etykieta dla przedziału, która NIE będzie wyświetlana w legendzie
+  sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-1])
 )
 
 # Stworzenie kategorii na podstawie dynamicznych przedziałów
@@ -21,27 +26,34 @@ df_joined$ilosc_category <- cut(
   breaks = breaks,
   include.lowest = TRUE,
   labels = labels,
-  right = FALSE  # Ustawienie prawostronnie otwartych przedziałów
+  right = FALSE  # Przedziały są lewostronnie zamknięte, prawostronnie otwarte
 )
 
-# Sprawdzenie poziomów, aby upewnić się, że kategorie są poprawne
-print(levels(df_joined$ilosc_category))
+# 2. Filtrowanie legendy - wykluczenie przedziałów mniejszych niż 1
 
-# 2. Automatyczne ustalanie kolorów
+# Zachowanie tylko przedziałów >= 1 w legendzie
+categories_for_legend <- levels(df_joined$ilosc_category)[-1]  # Wykluczenie pierwszego przedziału `[0, 0.1)`
+df_joined$ilosc_category_filtered <- df_joined$ilosc_category  # Skopiowanie kolumny kategorii
 
-# Liczba unikalnych kategorii w `ilosc_category`
-num_categories <- length(levels(df_joined$ilosc_category))
+# Zamiana wartości `[0, 0.1)` na NA, aby ukryć w legendzie
+df_joined$ilosc_category_filtered[df_joined$ilosc_category == "[0, 0.1)"] <- NA
+
+# 3. Automatyczne ustalanie kolorów dla pozostałych kategorii
+
+# Liczba unikalnych kategorii w `ilosc_category_filtered` (pomijając NA)
+num_categories <- length(categories_for_legend)
 
 # Automatyczne wygenerowanie palety kolorów na podstawie liczby kategorii
-colors <- c("lightgray", scales::hue_pal()(num_categories - 1))  # Pierwszy kolor jasnoszary, reszta dynamicznie
+colors <- scales::hue_pal()(num_categories)  # Dynamiczna paleta kolorów dla przedziałów >= 1
 
-# 3. Tworzenie mapy z dynamicznymi przedziałami i automatyczną legendą
+# Tworzenie mapy z dynamicznymi przedziałami i odpowiednią legendą
 ggplot(data = df_joined) +
-  geom_sf(aes(fill = ilosc_category), color = "black") +  # Kolorowanie gmin na podstawie kategorii `ilosc_category`
+  geom_sf(aes(fill = ilosc_category_filtered), color = "black", na.rm = TRUE) +  # Użycie `na.rm = TRUE`, aby pominąć kategorie NA
   scale_fill_manual(
-    values = setNames(colors, levels(df_joined$ilosc_category)),  # Automatyczne przypisanie kolorów do kategorii
+    values = setNames(colors, categories_for_legend),  # Automatyczne przypisanie kolorów do kategorii >= 1
     name = "Liczba budynków",  # Tytuł legendy
-    labels = levels(df_joined$ilosc_category)  # Etykiety dla kategorii
+    na.translate = FALSE,  # Ukrycie kategorii NA w legendzie
+    labels = categories_for_legend  # Etykiety tylko dla przedziałów >= 1
   ) +
   theme_minimal() +
   labs(title = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków") +
@@ -49,3 +61,4 @@ ggplot(data = df_joined) +
     plot.title = element_text(hjust = 0.5),
     legend.position = "right"
   )
+Wyjaśnieni
