@@ -1,13 +1,21 @@
-# Tworzenie mapy za pomocą `ggplot2`
-ggplot_map <- ggplot(data = df_joined) +
-  geom_sf(aes(color = ilosc), size = 3) +  # Użycie punktów jako geometrii i kolorowanie na podstawie `ilosc`
-  scale_color_viridis_c(option = "plasma") +  # Użycie palety kolorów `viridis`
-  theme_minimal() +
-  labs(title = "Mapa gmin z liczbą budynków", color = "Liczba budynków") +
-  theme(plot.title = element_text(hjust = 0.5))
+# Określenie niestandardowych kolorów dla kategorii
+custom_colors <- c("lightgray", "#fee0d2", "#fc9272", "#fb6a4a", "#de2d26", "#a50f15")  # Przykładowe kolory
+levels_count <- length(levels(df_joined$ilosc_category))  # Liczba kategorii
 
-# Zapisanie mapy do pliku PNG
-ggsave("mapa_gmin_stat_ggplot.png", plot = ggplot_map, width = 10, height = 8, units = "in", dpi = 300)
+# Tworzenie pliku graficznego PNG
+png(filename = "mapa_gmin_statyczna.png", width = 10, height = 8, units = "in", res = 300)
 
-# Wyświetlenie mapy
-print(ggplot_map)
+# Rysowanie mapy w pliku graficznym
+plot(df_joined_simplified["ilosc_category"], 
+     col = custom_colors[1:levels_count],  # Przypisanie kolorów do wykresu
+     main = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków",
+     key.pos = NULL)  # Wyłączenie domyślnej legendy
+
+# Dodanie legendy z niestandardowymi kolorami
+legend("topright",
+       legend = levels(df_joined$ilosc_category),  # Etykiety legendy
+       fill = custom_colors[1:levels_count],  # Przypisanie kolorów do legendy
+       title = "Liczba budynków",
+       cex = 0.8,
+       bg = "white",
+       bty = "n")
