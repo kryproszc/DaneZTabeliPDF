@@ -43,12 +43,15 @@ print(levels(df_joined$ilosc_category))
 print("Liczba obserwacji w każdej kategorii po usunięciu pustych kategorii:")
 print(table(df_joined$ilosc_category, useNA = "ifany"))
 
-# Tworzenie kontrastowej palety kolorów (wypróbuj różne palety np. "Spectral", "RdYlBu", "Dark2")
-palette_name <- "Spectral"
+# Tworzenie bardziej zróżnicowanej palety kolorów
+palette_name <- "RdYlBu"  # Użyj bardziej kontrastowej palety, np. "RdYlBu"
 grad_colors <- rev(brewer.pal(n = length(levels(df_joined$ilosc_category)), palette_name))
 
 # Przypisanie kolorów tylko do istniejących kategorii
 colors_to_use <- grad_colors
+
+# Ręczne przypisanie kolorów dla lepszego kontrastu (przykładowe kolory dla testów)
+# colors_to_use <- c("lightgray", "lightblue", "blue", "yellow", "orange", "red", "darkred", "purple", "brown", "black")
 
 # Tworzenie palety kolorów na podstawie aktualnych kategorii `ilosc_category`
 pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))
@@ -62,7 +65,7 @@ print("Gminy z maksymalną wartością:")
 print(df_joined[df_joined$ilosc == max_value, c("ilosc", "ilosc_category")])
 
 # Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
-png(filename = "mapa_gmin_statyczna_kontrastowe_kolory.png", width = 10, height = 8, units = "in", res = 300)
+png(filename = "mapa_gmin_statyczna_wyrazne_kolory.png", width = 10, height = 8, units = "in", res = 300)
 
 # Rysowanie mapy z przypisaniem kolorów do kategorii
 plot(
@@ -83,5 +86,3 @@ legend("topright",
 
 # Zakończenie zapisywania do pliku
 dev.off()
-
-cat("Mapa została zapisa
