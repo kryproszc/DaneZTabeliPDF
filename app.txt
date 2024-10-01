@@ -38,9 +38,11 @@ df_joined$ilosc_category[df_joined$ilosc < 1] <- NA
 # Sprawdzenie liczby obserwacji w każdej kategorii (w celu weryfikacji)
 print(table(df_joined$ilosc_category, useNA = "ifany"))
 
-# Definicja kolorów: szary dla wartości < 1, oraz kolory dla 10 przedziałów >= 1
-colors_above_1 <- brewer.pal(n = 10, name = "YlOrRd")  # Użycie palety `YlOrRd` dla 10 kolorów
-colors_to_use <- c("lightgray", colors_above_1)  # Szary dla wartości < 1, a pozostałe kolory dla >= 1
+# Tworzenie 11 kolorów z gradacją, np. od niebieskiego do czerwonego (szary dla wartości < 1, reszta dla >= 1)
+grad_colors <- colorRampPalette(c("lightgray", "yellow", "orange", "red", "darkred"))(11)
+
+# Definicja kolorów: pierwszy kolor to szary dla wartości < 1, reszta to gradacja dla przedziałów >= 1
+colors_to_use <- grad_colors
 
 # Sprawdzenie liczby unikalnych wartości w `ilosc_category`
 unique_categories <- unique(df_joined$ilosc_category)
@@ -50,7 +52,7 @@ num_categories <- length(unique_categories)
 pal <- setNames(colors_to_use, unique_categories)
 
 # Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
-png(filename = "mapa_gmin_statyczna_11_przedzialow.png", width = 10, height = 8, units = "in", res = 300)
+png(filename = "mapa_gmin_statyczna_11_przedzialow_gradacja.png", width = 10, height = 8, units = "in", res = 300)
 
 # Rysowanie mapy z przypisaniem kolorów do kategorii za pomocą `pal`
 plot(
@@ -63,7 +65,7 @@ plot(
 # Dodanie legendy tylko dla wartości >= 1 (pominięcie kategorii `NA`)
 legend("topright",
        legend = levels(df_joined$ilosc_category)[-1],  # Pominięcie etykiety dla NA (wartości < 1)
-       fill = colors_above_1,  # Kolory tylko dla wartości >= 1
+       fill = grad_colors[-1],  # Kolory tylko dla wartości >= 1 (bez szarego)
        title = "Liczba budynków",
        cex = 0.8,
        bg = "white",
@@ -71,5 +73,3 @@ legend("topright",
 
 # Zakończenie zapisywania do pliku
 dev.off()
-
-cat("Mapa została zapisana jako 'mapa_gmin_statyczna_11_przedzialow.png' w katalogu:", getwd(), "\n")
