@@ -1,9 +1,11 @@
-> ggplot(data = df_joined) +
-+   geom_sf(aes(fill = ilosc), color = "black") +  # Kolorowanie gmin na podstawie liczby budynków
-+   scale_fill_viridis_c(option = "plasma", trans = "log") +  # Skala kolorów logarytmiczna
-+   theme_minimal() +
-+   labs(title = "Mapa gmin z liczbą budynków",
-+        fill = "Liczba budynków") +
-+   theme(plot.title = element_text(hjust = 0.5))
-Error in UseMethod("depth") : 
-  no applicable method for 'depth' applied to an object of class "NULL"
+print(class(df_joined))         # Powinno zwrócić coś takiego: "sf" "data.frame"
+print(st_geometry_type(df_joined)) 
+
+print(names(df_joined))  # Powinno zwrócić kolumnę "geometry"
+
+# Zamiana na obiekt sf, jeśli `df_joined` nie jest obiektem sf
+if (!inherits(df_joined, "sf")) {
+  df_joined <- st_as_sf(df_joined)
+}
+
+head(df_joined$geometry)  # Powinno zwrócić współrzędne, np. MULTIPOLYGON ((...))
