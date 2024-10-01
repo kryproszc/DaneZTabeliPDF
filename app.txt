@@ -1,3 +1,11 @@
-Error in cut.default(df_joined$ilosc, include.lowest = TRUE, dig.lab = 10) : 
-  argument "breaks" is missing, with no default
-> intervals
+ breaks
+[1]   1   1   1   2   4 301
+> # Stworzenie kolumny z kategoriami na podstawie przedziałów
+> df_joined$ilosc_category <- cut(
++   df_joined$ilosc,
++   breaks = breaks,  # Używamy automatycznie wyznaczonych granic
++   include.lowest = TRUE,
++   dig.lab = 10  # Zwiększenie liczby cyfr wyświetlanych w etykietach
++ )
+Error in cut.default(df_joined$ilosc, breaks = breaks, include.lowest = TRUE,  : 
+  wartosci w argumencie 'breaks' nie są unikalne
