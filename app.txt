@@ -36,6 +36,9 @@ df_joined$ilosc_category <- cut(
 df_joined$ilosc_category[is.na(df_joined$ilosc)] <- "Brak danych"  # Kategorie dla gmin bez wartości
 df_joined$ilosc_category[df_joined$ilosc_category == "[0, 1)"] <- "Brak danych"  # Kategorie dla gmin z przedziałem [0, 1)
 
+# Tworzenie specjalnej kategorii dla gmin, które nadal są na biało (czyli nie mają wartości w `ilosc_category`)
+df_joined$ilosc_category[is.na(df_joined$ilosc_category)] <- "Brak danych"  # Przypisanie "Brak danych" dla wszystkich `NA`
+
 # Usunięcie pustych kategorii za pomocą droplevels()
 df_joined$ilosc_category <- droplevels(df_joined$ilosc_category)
 
@@ -67,7 +70,7 @@ print("Gminy z maksymalną wartością po przypisaniu kategorii:")
 print(df_joined[df_joined$ilosc == max_value_clean, c("ilosc", "ilosc_category")])
 
 # Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
-png(filename = "mapa_gmin_statyczna_szare_gminy_brak_danych.png", width = 10, height = 8, units = "in", res = 300)
+png(filename = "mapa_gmin_statyczna_szare_dla_brak_danych_i_0_1.png", width = 10, height = 8, units = "in", res = 300)
 
 # Rysowanie mapy z przypisaniem kolorów do kategorii
 plot(
