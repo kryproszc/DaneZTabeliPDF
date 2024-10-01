@@ -9,16 +9,20 @@ df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
 minimal_value <- 1
 max_value <- max(df_joined$ilosc, na.rm = TRUE)
 
-# Dynamiczne przedziały: równy rozstęp (max_value / 10)
-break_interval <- max_value / 10
-breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)
+# Tworzenie dynamicznych przedziałów na podstawie wartości >= 1
+# Używamy `classIntervals` do podziału na 20 równych przedziałów od wartości minimalnej do maksymalnej
+intervals <- classIntervals(df_joined$ilosc[df_joined$ilosc >= minimal_value], n = 20, style = "quantile")
 
-# Dodanie przedziałów [0, 1) oraz maksymalnej wartości, aby zamknąć przedział
-breaks <- c(0, 1, breaks, max_value)
-breaks <- unique(breaks)
+# Dodanie przedziału [0, 1), aby uwzględnić gminy z małymi wartościami
+breaks <- c(0, intervals$brks)
+breaks <- unique(breaks)  # Usunięcie duplikatów na wypadek powtarzających się wartości
+print(breaks)
 
-# Tworzenie etykiet dla przedziałów
-labels <- c("[0, 1)", sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)]))
+# Tworzenie etykiet dla kategorii
+labels <- c(
+  "[0, 1)",  # Etykieta dla wartości < 1, które będą wyświetlane na biało i nie będą oznaczane kolorami
+  sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)])
+)
 
 # Modyfikacja ostatniej etykiety, aby była w formie zamkniętej [ostatnia wartość, max_value]
 labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 1], max_value)
@@ -32,33 +36,24 @@ df_joined$ilosc_category <- cut(
   right = TRUE  # Ostatni przedział zamknięty, aby obejmował wartość maksymalną
 )
 
-# Tworzenie specjalnej kategorii dla gmin z wartościami [0, 1) oraz gmin z NA
-df_joined$ilosc_category[is.na(df_joined$ilosc)] <- "Brak danych"  # Kategorie dla gmin bez wartości
-df_joined$ilosc_category[df_joined$ilosc_category == "[0, 1)"] <- "Brak danych"  # Kategorie dla gmin z przedziałem [0, 1)
+# Pozostawienie kategorii "Brak danych" w `ilosc_category` jako `NA`
+df_joined$ilosc_category[df_joined$ilosc < 1] <- NA  # Wartości poniżej 1 (czyli `[0, 1)`) oraz `NA` będą miały wartość `NA`
 
-# Tworzenie specjalnej kategorii dla gmin, które nadal są na biało (czyli nie mają wartości w `ilosc_category`)
-df_joined$ilosc_category[is.na(df_joined$ilosc_category)] <- "Brak danych"  # Przypisanie "Brak danych" dla wszystkich `NA`
-
-# Usunięcie pustych kategorii za pomocą droplevels()
+# Usunięcie pustych kategorii z `ilosc_category`
 df_joined$ilosc_category <- droplevels(df_joined$ilosc_category)
 
 # Sprawdzenie aktualnych poziomów kategorii (po usunięciu pustych)
 print("Aktualne poziomy kategorii po usunięciu pustych:")
 print(levels(df_joined$ilosc_category))
 
-# Sprawdzenie przypisania kategorii i liczby obserwacji
-print("Liczba obserwacji w każdej kategorii po usunięciu pustych kategorii:")
-print(table(df_joined$ilosc_category, useNA = "ifany"))
+# Tworzenie gradientu kolorów od jasnych do intensywnie czerwonych
+grad_colors <- colorRampPalette(c("lightyellow", "orange", "red", "darkred"))(20)
 
-# Tworzenie bardziej zróżnicowanej palety kolorów
-palette_name <- "RdYlBu"  # Użyj bardziej kontrastowej palety, np. "RdYlBu"
-grad_colors <- rev(brewer.pal(n = length(levels(df_joined$ilosc_category)) - 1, palette_name))  # Pomijamy kategorię "Brak danych"
-
-# Dodanie koloru szarego dla kategorii "Brak danych"
-colors_to_use <- c("lightgray", grad_colors)  # "lightgray" dla brakujących wartości, pozostałe kolory dla przedziałów >= 1
+# Przypisanie białego koloru dla gmin z `NA` (czyli brak danych lub wartości w przedziale `[0, 1)`)
+colors_to_use <- c("white", grad_colors)
 
 # Tworzenie palety kolorów na podstawie aktualnych kategorii `ilosc_category`
-pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))
+pal <- setNames(colors_to_use, c("Brak danych", levels(df_joined$ilosc_category)))
 
 # Wyświetlenie przypisania kolorów do kategorii w celu weryfikacji
 print("Przypisanie kolorów do istniejących kategorii:")
@@ -70,20 +65,20 @@ print("Gminy z maksymalną wartością po przypisaniu kategorii:")
 print(df_joined[df_joined$ilosc == max_value_clean, c("ilosc", "ilosc_category")])
 
 # Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
-png(filename = "mapa_gmin_statyczna_szare_dla_brak_danych_i_0_1.png", width = 10, height = 8, units = "in", res = 300)
+png(filename = "mapa_gmin_statyczna_20_przedzialow_czerwone.png", width = 10, height = 8, units = "in", res = 300)
 
 # Rysowanie mapy z przypisaniem kolorów do kategorii
 plot(
   df_joined_simplified["ilosc_category"],
-  col = pal[df_joined_simplified$ilosc_category],  # Przypisanie kolorów bezpośrednio do kategorii
-  main = "Mapa gmin z wyróżnionymi gminami bez danych i przedziałem [0, 1)",
+  col = pal[ifelse(is.na(df_joined_simplified$ilosc_category), "Brak danych", df_joined_simplified$ilosc_category)],  # Przypisanie kolorów
+  main = "Mapa gmin z podziałem na 20 przedziałów i białymi gminami z małymi wartościami",
   key.pos = NULL  # Wyłączenie wbudowanej legendy
 )
 
-# Dodanie legendy z kolorem szarym dla gmin z brakującymi wartościami oraz pozostałymi przedziałami
+# Dodanie legendy z kolorem białym dla gmin z brakującymi wartościami oraz pozostałymi przedziałami
 legend("topright",
-       legend = levels(df_joined$ilosc_category),  # Legendy dla wszystkich kategorii
-       fill = colors_to_use,  # Kolory z uwzględnieniem "lightgray" dla brakujących danych
+       legend = c("Brak danych", levels(df_joined$ilosc_category)),  # Legendy dla wszystkich kategorii
+       fill = colors_to_use,  # Kolory z uwzględnieniem białego dla brakujących danych
        title = "Liczba budynków",
        cex = 0.8,
        bg = "white",
