@@ -1,52 +1,11 @@
-library(dplyr)
+wojewodztwa <- st_read("wojewodztwa.shp", quiet = TRUE)  # Wczytanie granic województw
 
-# Definicja ścieżek (zmień "tutaj_podaj_sciezke_do_folderu" na ścieżkę do swojego katalogu)
-sciezka_glowna <- "tutaj_podaj_sciezke_do_folderu"
-sciezka_zapisu <- "tutaj_podaj_sciezke_do_zapisu"
+# Sprawdź CRS (układ współrzędnych), aby upewnić się, że jest zgodny z mapą gmin
+print(st_crs(wojewodztwa))
+print(st_crs(df_joined))
 
-# Pobranie nazw folderów w ścieżce głównej i zapisanie ich do zmiennej 'ubezpieczyciel'
-ubezpieczyciel <- list.dirs(sciezka_glowna, recursive = FALSE, full.names = FALSE)
+# Jeśli CRS są różne, przekształć granice województw na ten sam układ co gminy
+wojewodztwa <- st_transform(wojewodztwa, crs = st_crs(df_joined))
 
-# Pętla po każdym ubezpieczycielu
-for (nazwa_ubezpieczyciela in ubezpieczyciel) {
-  
-  # Ścieżka do katalogu ubezpieczyciela
-  sciezka_ubezpieczyciel <- file.path(sciezka_glowna, nazwa_ubezpieczyciela)
-  
-  # Sprawdzenie, czy istnieje folder 'standaryzacja v3' w katalogu ubezpieczyciela
-  sciezka_standaryzacja <- file.path(sciezka_ubezpieczyciel, "standaryzacja v3")
-  if (dir.exists(sciezka_standaryzacja)) {
-    
-    # Wczytanie listy plików CSV w folderze 'standaryzacja v3'
-    pliki_csv <- list.files(sciezka_standaryzacja, pattern = "\\.csv$", full.names = TRUE)
-    
-    # Wczytanie pliku, który zawiera w nazwie 'Ubezpieczone obiekty'
-    plik_do_wczytania <- pliki_csv[grep("Ubezpieczone obiekty", pliki_csv)]
-    
-    if (length(plik_do_wczytania) > 0) {
-      
-      # Wczytanie pliku CSV (zakładam, że jest tylko jeden pasujący plik)
-      dane <- read.csv(plik_do_wczytania[1], sep = ";", header = TRUE, stringsAsFactors = FALSE)
-      
-      # Ścieżka zapisu wyników (tworzenie folderu, jeśli nie istnieje)
-      sciezka_do_zapisu_ubezpieczyciel <- file.path(sciezka_zapisu, nazwa_ubezpieczyciela)
-      if (!dir.exists(sciezka_do_zapisu_ubezpieczyciel)) {
-        dir.create(sciezka_do_zapisu_ubezpieczyciel, recursive = TRUE)
-      }
-      
-      # Ścieżka do zapisu wczytanego pliku
-      nazwa_pliku <- basename(plik_do_wczytania[1])
-      sciezka_zapisu_pliku <- file.path(sciezka_do_zapisu_ubezpieczyciel, nazwa_pliku)
-      
-      # Zapisanie pliku CSV do wybranego folderu
-      write.csv(dane, file = sciezka_zapisu_pliku, row.names = FALSE, sep = ";", fileEncoding = "UTF-8")
-      
-      cat("Plik zapisany w:", sciezka_zapisu_pliku, "\n")
-      
-    } else {
-      cat("Nie znaleziono pliku 'Ubezpieczone obiekty' dla ubezpieczyciela:", nazwa_ubezpieczyciela, "\n")
-    }
-  } else {
-    cat("Brak folderu 'standaryzacja v3' w katalogu:", sciezka_ubezpieczyciel, "\n")
-  }
-}
+
+plot(st_geometry(wojewodztwa), add = TRUE, border = "black", lwd = 2)  # Dodanie konturów z granic województw
