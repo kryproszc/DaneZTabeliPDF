@@ -5,61 +5,71 @@ library(RColorBrewer)
 # Przekształcenie wartości 0 na 0.1, aby uniknąć problemów z logarytmiczną transformacją
 df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
 
-# Zmienna dla wartości minimalnej (pomijamy wartości mniejsze niż 1 w podziale)
+# Ustalanie wartości minimalnej i maksymalnej
 minimal_value <- 1
-
-# Maksymalna wartość w kolumnie `ilosc`
 max_value <- max(df_joined$ilosc, na.rm = TRUE)
 
 # Dynamiczne przedziały: równy rozstęp (max_value / 10)
 break_interval <- max_value / 10
-breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)  # Dodaj przedział do max_value - interval
+breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)
 
-# Dodanie wartości 0 i 1, aby zdefiniować kategorię [0, 1) oraz maksymalną wartość, aby zamknąć przedział
-breaks <- c(0, 1, breaks, max_value)  # Ostatni element to `max_value`
-breaks <- unique(breaks)  # Usunięcie duplikatów
+# Dodanie przedziałów [0, 1) oraz maksymalnej wartości, aby zamknąć przedział
+breaks <- c(0, 1, breaks, max_value)
+breaks <- unique(breaks)
 
 # Sprawdzenie przedziałów
+print("Przedziały breaks:")
 print(breaks)
 
-# Tworzenie etykiet dla przedziałów >= 1
+# Tworzenie etykiet dla przedziałów
 labels <- c("[0, 1)", sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)]))
 
-# Modyfikacja ostatniej etykiety, aby była w formie "(..., max_value]"
-# Ostatnia etykieta powinna mieć postać `[ostatnia_wartość, max_value]`
+# Modyfikacja ostatniej etykiety, aby była w formie zamkniętej [ostatnia wartość, max_value]
 labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 1], max_value)
 
-# Przypisanie kategorii do danych z pominięciem wartości < 1 (oznaczonych jako `NA`)
+# Sprawdzenie poprawności etykiet
+print("Etykiety labels:")
+print(labels)
+
+# Przypisanie kategorii do danych z uwzględnieniem przedziałów
 df_joined$ilosc_category <- cut(
   df_joined$ilosc,
   breaks = breaks,
   include.lowest = TRUE,
   labels = labels,
-  right = TRUE  # Zamknięcie tylko ostatniego przedziału (wartości <= max_value)
+  right = TRUE  # Ostatni przedział zamknięty, aby obejmował wartość maksymalną
 )
 
-# Sprawdzenie liczby obserwacji w każdej kategorii (w celu weryfikacji)
+# Sprawdzenie przypisania kategorii
+print("Liczba obserwacji w każdej kategorii:")
 print(table(df_joined$ilosc_category, useNA = "ifany"))
 
-# Sprawdzenie, czy gminy z maksymalną wartością są poprawnie przypisane
+# Wyświetlenie gmin z maksymalną wartością, aby sprawdzić, czy są poprawnie przypisane
+print("Gminy z maksymalną wartością:")
 print(df_joined[df_joined$ilosc == max_value, c("ilosc", "ilosc_category")])
 
-# Tworzenie 11 kolorów z gradacją (od szarego do ciemnoczerwonego) dla 11 przedziałów oraz 1 na szary dla NA
+# Tworzenie 11 kolorów dla przedziałów [1, max_value] oraz szarego dla [0, 1)
 grad_colors <- colorRampPalette(c("lightgray", "yellow", "orange", "red", "darkred"))(11)
 
-# Definicja kolorów: pierwszy kolor to szary dla wartości < 1, reszta to gradacja dla przedziałów >= 1
+# Definicja kolorów: przypisanie koloru dla kategorii
 colors_to_use <- grad_colors
 
-# Sprawdzenie przypisania kolorów do każdej kategorii
-# Wykluczamy `NA`, ponieważ jest tam problem z przypisaniem koloru
+# Tworzenie palety kolorów na podstawie kategorii `ilosc_category`
 pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))
-pal <- pal[!is.na(pal)]  # Usuń `NA` z przypisania palety
 
-# Wyświetlenie przypisanej palety w celu weryfikacji
+# Wyświetlenie palety w celu sprawdzenia przypisania kolorów
+print("Przypisanie kolorów do kategorii:")
 print(pal)
 
-# Sprawdzenie gmin z maksymalną wartością i przypisanej kategorii
-print(df_joined[df_joined$ilosc == max_value, c("ilosc", "ilosc_category")])
+# Sprawdzenie przypisania kolorów do kategorii (bez `NA`)
+pal <- pal[!is.na(pal)]
+
+# Sprawdzenie wszystkich wartości `ilosc` dla gmin w każdej kategorii (w celu weryfikacji)
+print("Przypisane kategorie i liczba budynków w każdej kategorii:")
+for (level in levels(df_joined$ilosc_category)) {
+  cat("Kategoria:", level, "\n")
+  print(df_joined[df_joined$ilosc_category == level, c("ilosc")])
+}
 
 # Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
 png(filename = "mapa_gmin_statyczna_11_przedzialow_gradacja.png", width = 10, height = 8, units = "in", res = 300)
