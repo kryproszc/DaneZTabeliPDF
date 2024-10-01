@@ -1,11 +1,46 @@
-  "#FF5733",  # Intensywny pomarańczowy
-  "#C70039",  # Intensywny czerwony
-  "#900C3F",  # Ciemny czerwony
-  "#581845",  # Fioletowy
-  "#1D8348",  # Zielony
-  "#2874A6",  # Niebieski
-  "#884EA0",  # Fiolet z domieszką niebieskiego
-  "#FFC300",  # Żółty
-  "#DAF7A6",  # Jasny zielony
-  "#FF33CC"   # Różowy
+library(openxlsx)
+library(sf)
+library(ggplot2)  # Opcjonalnie, jeśli korzystasz z ggplot2 do wizualizacji
+
+# Tworzenie przykładowego `input_data`
+# W tym przykładzie, zakładam, że `input_data` to twoje dane wejściowe
+# Zastąp to swoją rzeczywistą ramką danych
+input_data <- data.frame(
+  latitude = runif(10, min = 50, max = 55),
+  longitude = runif(10, min = 14, max = 24)
 )
+
+# Zapisz dane wejściowe `input_data` do kolumn A i B w Excelu
+# Utworzenie nowego pliku Excel
+wb <- createWorkbook()
+
+# Dodanie arkusza
+addWorksheet(wb, "Mapa i Dane")
+
+# Zapis danych wejściowych do kolumn A i B
+writeData(wb, sheet = "Mapa i Dane", input_data, startCol = 1, startRow = 1, colNames = TRUE)
+
+# Zapisanie grafiki do pliku PNG
+png(filename = "mapa_gmin_statyczna.png", width = 10, height = 8, units = "in", res = 300)
+plot(
+  df_joined_simplified["ilosc_category"],
+  col = pal[ifelse(is.na(df_joined_simplified$ilosc_category), "Brak danych", df_joined_simplified$ilosc_category)],  
+  main = "Mapa gmin z podziałem na 20 przedziałów i białymi gminami z małymi wartościami",
+  key.pos = NULL
+)
+dev.off()
+
+# Dodanie pliku graficznego do arkusza Excel (kolumna D, wiersz 10)
+insertImage(
+  wb, 
+  sheet = "Mapa i Dane", 
+  file = "mapa_gmin_statyczna.png", 
+  startCol = 4,  # Kolumna D to czwarta kolumna
+  startRow = 10, 
+  width = 10,  # Szerokość obrazka w calach (można dostosować)
+  height = 8,  # Wysokość obrazka w calach (można dostosować)
+  units = "in"  # Jednostki cali
+)
+
+# Zapisanie pliku Excel z nazwą "mapa_z_danymi.xlsx"
+saveWorkbook(wb, file = "mapa_z_danymi.xlsx", overwrite = TRUE)
