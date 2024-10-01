@@ -1,15 +1,8 @@
-if (st_crs(gminy) != st_crs(df_sf)) {
-  df_sf <- st_transform(df_sf, st_crs(gminy)$epsg)if (st_crs(gminy) != st_crs(df_sf)) {
-+   df_sf <- st_transform(df_sf, st_crs(gminy)$epsg)
-+ }
- Error: crs not found: is it missing? 
-> # Łączenie danych punktowych z granicami gmin
-> df_joined <- st_join(gminy, df_sf, join = st_contains)
-Error in st_geos_binop("contains", x, y, sparse = sparse, prepared = prepared,  : 
-  zmienna st_crs(x) == st_crs(y) nie ma wartości TRUE
-> st_crs(gminy)$epsg
-[1] NA
+if (is.na(st_crs(gminy))) {
+  st_crs(gminy) <- 2180  # Ustawienie CRS dla granic gmin
 }
 
-# Łączenie danych punktowych z granicami gmin
+df_sf <- st_transform(df_sf, st_crs(gminy))
+
+
 df_joined <- st_join(gminy, df_sf, join = st_contains)
