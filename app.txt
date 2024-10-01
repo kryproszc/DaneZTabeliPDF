@@ -1,23 +1,19 @@
-df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
-
-# Podział wartości `ilosc` na dwie grupy:
-# - Pierwsza grupa to wartości < 1 (przypisujemy je do pierwszego przedziału ręcznie)
-# - Druga grupa to wartości >= 1 (na podstawie tych wartości utworzymy dynamiczne przedziały)
 values_above_1 <- df_joined$ilosc[df_joined$ilosc >= 1]
+values_above_1
 
 # Wyznaczenie dynamicznych przedziałów dla wartości >= 1
 # Używamy `classIntervals` do dynamicznego podziału na 5 przedziałów
-intervals <- classIntervals(values_above_1, n = 5, style = "quantile")
-
+intervals <- classIntervals(values_above_1, n = 15, style = "quantile")
+intervals
 # Połączenie ręcznie ustalonego przedziału [0, 0.1] z automatycznie wyznaczonymi przedziałami od 1 w górę
-breaks <- c(0, 0.1, intervals$brks)
+breaks <- c(0,intervals$brks)
 breaks <- unique(breaks)  # Usunięcie duplikatów na wypadek powtarzających się wartości
 print(breaks)
 
 # Tworzenie etykiet tylko dla przedziałów >= 1
 labels <- c(
   "[0, 0.1)",  # Ręcznie ustalona etykieta dla przedziału, która NIE będzie wyświetlana w legendzie
-  sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-1])
+  sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1,2)])
 )
 
 # Stworzenie kategorii na podstawie dynamicznych przedziałów
@@ -61,4 +57,3 @@ ggplot(data = df_joined) +
     plot.title = element_text(hjust = 0.5),
     legend.position = "right"
   )
-Wyjaśnieni
