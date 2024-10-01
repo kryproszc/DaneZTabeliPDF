@@ -1,8 +1,13 @@
-library(mapview)
+# Tworzenie mapy za pomocą `ggplot2`
+ggplot_map <- ggplot(data = df_joined) +
+  geom_sf(aes(color = ilosc), size = 3) +  # Użycie punktów jako geometrii i kolorowanie na podstawie `ilosc`
+  scale_color_viridis_c(option = "plasma") +  # Użycie palety kolorów `viridis`
+  theme_minimal() +
+  labs(title = "Mapa gmin z liczbą budynków", color = "Liczba budynków") +
+  theme(plot.title = element_text(hjust = 0.5))
 
-# Uproszczenie geometrii dla lepszego renderowania
-df_joined_simplified <- st_simplify(df_joined, dTolerance = 1000)
+# Zapisanie mapy do pliku PNG
+ggsave("mapa_gmin_stat_ggplot.png", plot = ggplot_map, width = 10, height = 8, units = "in", dpi = 300)
 
-# Wyświetlanie mapy interaktywnej z `mapview`
-mapview(df_joined_simplified, zcol = "ilosc", col.regions = RColorBrewer::brewer.pal(5, "Reds"),
-        layer.name = "Liczba budynków", legend = TRUE)
+# Wyświetlenie mapy
+print(ggplot_map)
