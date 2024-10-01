@@ -1,32 +1,18 @@
-print("Dane gmin w ostatnim przedziale:")
-print(df_joined[df_joined$ilosc_category == tail(levels(df_joined$ilosc_category), 1), c("ilosc", "ilosc_category")])
-
-# Kolorowanie mapy z wyróżnieniem ostatniego przedziału
-# Przypisanie wyraźnego koloru dla ostatniego przedziału (np. czarny lub intensywny czerwony)
-colors_to_use <- c(grad_colors[-length(grad_colors)], "#FF0000")  # Usuwamy kolor dla ostatniego przedziału i przypisujemy nowy
-
-# Sprawdzenie, czy paleta kolorów obejmuje wszystkie kategorie
-pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))
-
-# Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
-png(filename = "mapa_gmin_statyczna_widoczny_ostatni_przedzial.png", width = 10, height = 8, units = "in", res = 300)
-
-# Rysowanie mapy z przypisaniem kolorów do kategorii
-plot(
-  df_joined_simplified["ilosc_category"],
-  col = pal[df_joined_simplified$ilosc_category],  # Przypisanie kolorów bezpośrednio do kategorii
-  main = "Mapa gmin z wyróżnionym ostatnim przedziałem budynków",
-  key.pos = NULL  # Wyłączenie wbudowanej legendy
-)
-
-# Dodanie legendy tylko dla istniejących kategorii (pominięcie pustych)
-legend("topright",
-       legend = levels(df_joined$ilosc_category),  # Legendy tylko dla istniejących kategorii
-       fill = colors_to_use,  # Kolory tylko dla wartości >= 1 (bez szarego)
-       title = "Liczba budynków",
-       cex = 0.8,
-       bg = "white",
-       bty = "n")
-
-# Zakończenie zapisywania do pliku
-dev.off()
+> print(df_joined[df_joined$ilosc_category == tail(levels(df_joined$ilosc_category), 1), c("ilosc", "ilosc_category")])
+Simple feature collection with 637 features and 2 fields (with 636 geometries empty)
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 691985.3 ymin: 393202.9 xmax: 710658.9 ymax: 412902.8
+Projected CRS: ETRS89 / Poland CS92
+First 10 features:
+     ilosc ilosc_category           geometry
+NA      NA           <NA> MULTIPOLYGON EMPTY
+NA.1    NA           <NA> MULTIPOLYGON EMPTY
+NA.2    NA           <NA> MULTIPOLYGON EMPTY
+NA.3    NA           <NA> MULTIPOLYGON EMPTY
+NA.4    NA           <NA> MULTIPOLYGON EMPTY
+NA.5    NA           <NA> MULTIPOLYGON EMPTY
+NA.6    NA           <NA> MULTIPOLYGON EMPTY
+NA.7    NA           <NA> MULTIPOLYGON EMPTY
+NA.8    NA           <NA> MULTIPOLYGON EMPTY
+NA.9    NA           <NA> MULTIPOLYGON EMPTY
