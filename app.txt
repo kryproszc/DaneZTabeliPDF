@@ -15,13 +15,13 @@ max_value <- max(df_joined$ilosc, na.rm = TRUE)
 break_interval <- max_value / 10
 breaks <- seq(minimal_value, max_value, by = break_interval)
 
-# Dodanie wartości 0 i 1, aby zdefiniować kategorię [0, 1)
-breaks <- c(0, 1, breaks)
+# Dodanie wartości 0 i 1, aby zdefiniować kategorię [0, 1) oraz maksymalną wartość, aby zamknąć przedział
+breaks <- c(0, 1, breaks, max_value)
 breaks <- unique(breaks)  # Usunięcie duplikatów
 
 # Tworzenie etykiet dla przedziałów >= 1
-labels <- c("[0, 1)",  # Etykieta dla wartości < 1
-            sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)]))
+# Etykieta "[0, 1)" dla wartości < 1 oraz etykiety dla przedziałów >= 1
+labels <- c("[0, 1)", sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)]))
 
 # Przypisanie kategorii do danych z pominięciem wartości < 1 (oznaczonych jako `NA`)
 df_joined$ilosc_category <- cut(
@@ -50,7 +50,7 @@ num_categories <- length(unique_categories)
 pal <- setNames(colors_to_use, unique_categories)
 
 # Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
-png(filename = "mapa_gmin_statyczna_10_przedzialow.png", width = 10, height = 8, units = "in", res = 300)
+png(filename = "mapa_gmin_statyczna_11_przedzialow.png", width = 10, height = 8, units = "in", res = 300)
 
 # Rysowanie mapy z przypisaniem kolorów do kategorii za pomocą `pal`
 plot(
@@ -60,7 +60,7 @@ plot(
   key.pos = NULL  # Wyłączenie wbudowanej legendy
 )
 
-# Dodanie legendy tylko dla wartości >= 1
+# Dodanie legendy tylko dla wartości >= 1 (pominięcie kategorii `NA`)
 legend("topright",
        legend = levels(df_joined$ilosc_category)[-1],  # Pominięcie etykiety dla NA (wartości < 1)
        fill = colors_above_1,  # Kolory tylko dla wartości >= 1
@@ -72,4 +72,4 @@ legend("topright",
 # Zakończenie zapisywania do pliku
 dev.off()
 
-cat("Mapa została zapisana jako 'mapa_gmin_statyczna_10_przedzialow.png' w katalogu:", getwd(), "\n")
+cat("Mapa została zapisana jako 'mapa_gmin_statyczna_11_przedzialow.png' w katalogu:", getwd(), "\n")
