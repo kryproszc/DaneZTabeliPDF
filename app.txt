@@ -1,67 +1,8 @@
-df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
-
-# Zmienna dla wartości minimalnej (pomijamy wartości mniejsze niż 1 w podziale)
-minimal_value <- 1
-max_value <- max(df_joined$ilosc, na.rm = TRUE)
-
-# Dynamiczne przedziały: równy rozstęp (max_value / 10)
-break_interval <- max_value / 10
-breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)
-
-# Dodanie przedziałów [0, 1) oraz maksymalnej wartości, aby zamknąć przedział
-breaks <- c(0, 1, breaks, max_value)
-breaks <- unique(breaks)
-
-# Tworzenie etykiet dla przedziałów
-labels <- c("[0, 1)", sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)]))
-
-# Modyfikacja ostatniej etykiety, aby była w formie zamkniętej [ostatnia wartość, max_value]
-labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 1], max_value)
-
-# Przypisanie kategorii do danych z uwzględnieniem przedziałów
-df_joined$ilosc_category <- cut(
-  df_joined$ilosc,
-  breaks = breaks,
-  include.lowest = TRUE,
-  labels = labels,
-  right = TRUE  # Ostatni przedział zamknięty, aby obejmował wartość maksymalną
-)
-
-# Usunięcie kategorii bez obserwacji
-levels(df_joined$ilosc_category) <- levels(df_joined$ilosc_category)[levels(df_joined$ilosc_category) %in% df_joined$ilosc_category]
-
-# Tworzenie 11 kolorów dla przedziałów [1, max_value] oraz szarego dla [0, 1)
-grad_colors <- colorRampPalette(c("lightgray", "yellow", "orange", "red", "darkred"))(length(levels(df_joined$ilosc_category)))
-
-# Przypisanie kolorów do pozostałych kategorii
-colors_to_use <- grad_colors
-
-# Tworzenie palety kolorów na podstawie kategorii `ilosc_category`
-pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))
-
-# Sprawdzenie przypisania kolorów do kategorii
-print("Przypisanie kolorów do kategorii:")
-print(pal)
-
-# Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
-png(filename = "mapa_gmin_statyczna_11_przedzialow_gradacja.png", width = 10, height = 8, units = "in", res = 300)
-
-# Rysowanie mapy z przypisaniem kolorów do kategorii
-plot(
-  df_joined_simplified["ilosc_category"],
-  col = pal[df_joined_simplified$ilosc_category],  # Przypisanie kolorów bezpośrednio do kategorii
-  main = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków",
-  key.pos = NULL  # Wyłączenie wbudowanej legendy
-)
-
-# Dodanie legendy tylko dla wartości >= 1 (pominięcie kategorii `NA`)
-legend("topright",
-       legend = levels(df_joined$ilosc_category)[-1],  # Pominięcie etykiety dla NA (wartości < 1)
-       fill = colors_to_use[-1],  # Kolory tylko dla wartości >= 1 (bez szarego)
-       title = "Liczba budynków",
-       cex = 0.8,
-       bg = "white",
-       bty = "n")
-
-# Zakończenie zapisywania do pliku
-dev.off()
+> # Sprawdzenie przypisania kolorów do kategorii
+> print("Przypisanie kolorów do kategorii:")
+[1] "Przypisanie kolorów do kategorii:"
+> print(pal)
+        [0, 1)    [1.0, 31.1)   [31.1, 61.2)   [61.2, 91.3)  [91.3, 121.4) [121.4, 151.5) [151.5, 181.6) [181.6, 211.7) [211.7, 241.8) 
+     "#D3D3D3"      "#E6E675"      "#FAFA17"      "#FFE100"      "#FFB900"      "#FF8000"      "#FF3700"      "#F20000"      "#BE0000" 
+[241.8, 301.0] 
+     "#8B0000"
