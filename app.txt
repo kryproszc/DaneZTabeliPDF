@@ -1,9 +1,2 @@
-znajdz_przerwy <- function(wektor) {
-  przerwy <- c()  # Zmienna do przechowywania elementów, które są przerwami
-  for (i in 1:(length(wektor) - 1)) {
-    if (wektor[i + 1] - wektor[i] > 1) {
-      przerwy <- c(przerwy, wektor[i], wektor[i + 1])  # Dodajemy elementy z przerwą
-    }
-  }
-  return(przerwy)  # Zwracamy znalezione elementy z przerwami
-}
+zielona%206;55-002;dobrzykowice;pl
+przedszkolna 2/4a;56-120;brzeg dolny;dolnośląskie;pl
