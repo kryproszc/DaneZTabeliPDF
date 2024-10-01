@@ -1,46 +1,52 @@
-library(openxlsx)
-library(sf)
-library(ggplot2)  # Opcjonalnie, jeśli korzystasz z ggplot2 do wizualizacji
+library(dplyr)
 
-# Tworzenie przykładowego `input_data`
-# W tym przykładzie, zakładam, że `input_data` to twoje dane wejściowe
-# Zastąp to swoją rzeczywistą ramką danych
-input_data <- data.frame(
-  latitude = runif(10, min = 50, max = 55),
-  longitude = runif(10, min = 14, max = 24)
-)
+# Definicja ścieżek (zmień "tutaj_podaj_sciezke_do_folderu" na ścieżkę do swojego katalogu)
+sciezka_glowna <- "tutaj_podaj_sciezke_do_folderu"
+sciezka_zapisu <- "tutaj_podaj_sciezke_do_zapisu"
 
-# Zapisz dane wejściowe `input_data` do kolumn A i B w Excelu
-# Utworzenie nowego pliku Excel
-wb <- createWorkbook()
+# Pobranie nazw folderów w ścieżce głównej i zapisanie ich do zmiennej 'ubezpieczyciel'
+ubezpieczyciel <- list.dirs(sciezka_glowna, recursive = FALSE, full.names = FALSE)
 
-# Dodanie arkusza
-addWorksheet(wb, "Mapa i Dane")
-
-# Zapis danych wejściowych do kolumn A i B
-writeData(wb, sheet = "Mapa i Dane", input_data, startCol = 1, startRow = 1, colNames = TRUE)
-
-# Zapisanie grafiki do pliku PNG
-png(filename = "mapa_gmin_statyczna.png", width = 10, height = 8, units = "in", res = 300)
-plot(
-  df_joined_simplified["ilosc_category"],
-  col = pal[ifelse(is.na(df_joined_simplified$ilosc_category), "Brak danych", df_joined_simplified$ilosc_category)],  
-  main = "Mapa gmin z podziałem na 20 przedziałów i białymi gminami z małymi wartościami",
-  key.pos = NULL
-)
-dev.off()
-
-# Dodanie pliku graficznego do arkusza Excel (kolumna D, wiersz 10)
-insertImage(
-  wb, 
-  sheet = "Mapa i Dane", 
-  file = "mapa_gmin_statyczna.png", 
-  startCol = 4,  # Kolumna D to czwarta kolumna
-  startRow = 10, 
-  width = 10,  # Szerokość obrazka w calach (można dostosować)
-  height = 8,  # Wysokość obrazka w calach (można dostosować)
-  units = "in"  # Jednostki cali
-)
-
-# Zapisanie pliku Excel z nazwą "mapa_z_danymi.xlsx"
-saveWorkbook(wb, file = "mapa_z_danymi.xlsx", overwrite = TRUE)
+# Pętla po każdym ubezpieczycielu
+for (nazwa_ubezpieczyciela in ubezpieczyciel) {
+  
+  # Ścieżka do katalogu ubezpieczyciela
+  sciezka_ubezpieczyciel <- file.path(sciezka_glowna, nazwa_ubezpieczyciela)
+  
+  # Sprawdzenie, czy istnieje folder 'standaryzacja v3' w katalogu ubezpieczyciela
+  sciezka_standaryzacja <- file.path(sciezka_ubezpieczyciel, "standaryzacja v3")
+  if (dir.exists(sciezka_standaryzacja)) {
+    
+    # Wczytanie listy plików CSV w folderze 'standaryzacja v3'
+    pliki_csv <- list.files(sciezka_standaryzacja, pattern = "\\.csv$", full.names = TRUE)
+    
+    # Wczytanie pliku, który zawiera w nazwie 'Ubezpieczone obiekty'
+    plik_do_wczytania <- pliki_csv[grep("Ubezpieczone obiekty", pliki_csv)]
+    
+    if (length(plik_do_wczytania) > 0) {
+      
+      # Wczytanie pliku CSV (zakładam, że jest tylko jeden pasujący plik)
+      dane <- read.csv(plik_do_wczytania[1], sep = ";", header = TRUE, stringsAsFactors = FALSE)
+      
+      # Ścieżka zapisu wyników (tworzenie folderu, jeśli nie istnieje)
+      sciezka_do_zapisu_ubezpieczyciel <- file.path(sciezka_zapisu, nazwa_ubezpieczyciela)
+      if (!dir.exists(sciezka_do_zapisu_ubezpieczyciel)) {
+        dir.create(sciezka_do_zapisu_ubezpieczyciel, recursive = TRUE)
+      }
+      
+      # Ścieżka do zapisu wczytanego pliku
+      nazwa_pliku <- basename(plik_do_wczytania[1])
+      sciezka_zapisu_pliku <- file.path(sciezka_do_zapisu_ubezpieczyciel, nazwa_pliku)
+      
+      # Zapisanie pliku CSV do wybranego folderu
+      write.csv(dane, file = sciezka_zapisu_pliku, row.names = FALSE, sep = ";", fileEncoding = "UTF-8")
+      
+      cat("Plik zapisany w:", sciezka_zapisu_pliku, "\n")
+      
+    } else {
+      cat("Nie znaleziono pliku 'Ubezpieczone obiekty' dla ubezpieczyciela:", nazwa_ubezpieczyciela, "\n")
+    }
+  } else {
+    cat("Brak folderu 'standaryzacja v3' w katalogu:", sciezka_ubezpieczyciel, "\n")
+  }
+}
