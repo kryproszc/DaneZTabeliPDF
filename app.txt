@@ -1,9 +1,9 @@
-> breaks
- [1]   0.0   1.0  31.1  61.2  91.3 121.4 151.5 181.6 211.7 241.8 271.9
-> # Tworzenie etykiet dla przedziałów >= 1
-> labels <- c(
-+   "[0, 1)",  # Etykieta dla wartości < 1, które mają być szare i ukryte w legendzie
-+   sprintf("[%.1f, %.1f)", breaks[-c(1, 2, length(breaks))], breaks[-c(1, 2)])  # Etykiety dla przedziałów >= 1
+> plot(
++   df_joined_simplified["ilosc_category"],
++   col = colors_to_use,  # Przypisanie kolorów do kategorii, gdzie szary dla wartości < 1
++   main = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków",
++   key.pos = NULL  # Wyłączenie wbudowanej legendy
 + )
-Error in sprintf("[%.1f, %.1f)", breaks[-c(1, 2, length(breaks))], breaks[-c(1,  : 
-  arguments cannot be recycled to the same length
+Warning message:
+In plot.sf(df_joined_simplified["ilosc_category"], col = colors_to_use,  :
+  col is not of length 1 or nrow(x): colors will be recycled; use pal to specify a color palette
