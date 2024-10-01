@@ -1,196 +1,67 @@
-> # Sprawdzenie przedziałów
-> print("Przedziały breaks:")
-[1] "Przedziały breaks:"
-> print(breaks)
- [1]   0.0   1.0  31.1  61.2  91.3 121.4 151.5 181.6 211.7 241.8 301.0
-> # Tworzenie etykiet dla przedziałów
-> labels <- c("[0, 1)", sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)]))
-> # Modyfikacja ostatniej etykiety, aby była w formie zamkniętej [ostatnia wartość, max_value]
-> labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 1], max_value)
-> # Sprawdzenie poprawności etykiet
-> print("Etykiety labels:")
-[1] "Etykiety labels:"
-> print(labels)
- [1] "[0, 1)"         "[1.0, 31.1)"    "[31.1, 61.2)"   "[61.2, 91.3)"   "[91.3, 121.4)"  "[121.4, 151.5)" "[151.5, 181.6)" "[181.6, 211.7)"
- [9] "[211.7, 241.8)" "[241.8, 301.0]"
-> # Przypisanie kategorii do danych z uwzględnieniem przedziałów
-> df_joined$ilosc_category <- cut(
-+   df_joined$ilosc,
-+   breaks = breaks,
-+   include.lowest = TRUE,
-+   labels = labels,
-+   right = TRUE  # Ostatni przedział zamknięty, aby obejmował wartość maksymalną
-+ )
-> # Sprawdzenie przypisania kategorii
-> print("Liczba obserwacji w każdej kategorii:")
-[1] "Liczba obserwacji w każdej kategorii:"
-> print(table(df_joined$ilosc_category, useNA = "ifany"))
+df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
 
-        [0, 1)    [1.0, 31.1)   [31.1, 61.2)   [61.2, 91.3)  [91.3, 121.4) [121.4, 151.5) [151.5, 181.6) [181.6, 211.7) [211.7, 241.8) 
-          3743           2710             76             15             11              3              1              1              0 
-[241.8, 301.0] 
-             1 
-> # Wyświetlenie gmin z maksymalną wartością, aby sprawdzić, czy są poprawnie przypisane
-> print("Gminy z maksymalną wartością:")
-[1] "Gminy z maksymalną wartością:"
-> print(df_joined[df_joined$ilosc == max_value, c("ilosc", "ilosc_category")])
-Simple feature collection with 1 feature and 2 fields
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 691985.3 ymin: 393202.9 xmax: 710658.9 ymax: 412902.8
-Projected CRS: ETRS89 / Poland CS92
-       ilosc ilosc_category                       geometry
-2356.2   301 [241.8, 301.0] MULTIPOLYGON (((703377.7 39...
-> # Tworzenie 11 kolorów dla przedziałów [1, max_value] oraz szarego dla [0, 1)
-> grad_colors <- colorRampPalette(c("lightgray", "yellow", "orange", "red", "darkred"))(11)
-> # Definicja kolorów: przypisanie koloru dla kategorii
-> colors_to_use <- grad_colors
-> # Tworzenie palety kolorów na podstawie kategorii `ilosc_category`
-> pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))
-> # Wyświetlenie palety w celu sprawdzenia przypisania kolorów
-> print("Przypisanie kolorów do kategorii:")
-[1] "Przypisanie kolorów do kategorii:"
-> print(pal)
-        [0, 1)    [1.0, 31.1)   [31.1, 61.2)   [61.2, 91.3)  [91.3, 121.4) [121.4, 151.5) [151.5, 181.6) [181.6, 211.7) [211.7, 241.8) 
-     "#D3D3D3"      "#E4E47E"      "#F6F62A"      "#FFEC00"      "#FFC900"      "#FFA500"      "#FF6200"      "#FF2000"      "#E70000" 
-[241.8, 301.0]           <NA> 
-     "#B90000"      "#8B0000" 
-> # Sprawdzenie przypisania kolorów do kategorii (bez `NA`)
-> pal <- pal[!is.na(pal)]
-> # Sprawdzenie wszystkich wartości `ilosc` dla gmin w każdej kategorii (w celu weryfikacji)
-> print("Przypisane kategorie i liczba budynków w każdej kategorii:")
-[1] "Przypisane kategorie i liczba budynków w każdej kategorii:"
-> for (level in levels(df_joined$ilosc_category)) {
-+   cat("Kategoria:", level, "\n")
-+   print(df_joined[df_joined$ilosc_category == level, c("ilosc")])
-+ }
-Kategoria: [0, 1) 
-Simple feature collection with 3743 features and 1 field
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 171677.5 ymin: 133223.4 xmax: 861895.8 ymax: 775019.1
-Projected CRS: ETRS89 / Poland CS92
-First 10 features:
-     ilosc                       geometry
-2      0.1 MULTIPOLYGON (((822697.5 38...
-3      1.0 MULTIPOLYGON (((481876 6465...
-3.1    1.0 MULTIPOLYGON (((481876 6465...
-3.3    1.0 MULTIPOLYGON (((481876 6465...
-3.4    1.0 MULTIPOLYGON (((481876 6465...
-3.5    1.0 MULTIPOLYGON (((481876 6465...
-3.7    1.0 MULTIPOLYGON (((481876 6465...
-3.8    1.0 MULTIPOLYGON (((481876 6465...
-3.9    1.0 MULTIPOLYGON (((481876 6465...
-3.10   1.0 MULTIPOLYGON (((481876 6465...
-Kategoria: [1.0, 31.1) 
-Simple feature collection with 2710 features and 1 field
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 178591.3 ymin: 146221.8 xmax: 854567.5 ymax: 775019.1
-Projected CRS: ETRS89 / Poland CS92
-First 10 features:
-     ilosc                       geometry
-1       24 MULTIPOLYGON (((348589.9 64...
-3.2      3 MULTIPOLYGON (((481876 6465...
-3.6      2 MULTIPOLYGON (((481876 6465...
-7        3 MULTIPOLYGON (((683584.7 26...
-9        4 MULTIPOLYGON (((682876.7 28...
-10       3 MULTIPOLYGON (((517033.6 23...
-12       3 MULTIPOLYGON (((324963.1 29...
-12.1     3 MULTIPOLYGON (((324963.1 29...
-13.3     2 MULTIPOLYGON (((528659.7 57...
-13.4     2 MULTIPOLYGON (((528659.7 57...
-Kategoria: [31.1, 61.2) 
-Simple feature collection with 76 features and 1 field
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 183944.1 ymin: 186262.6 xmax: 817195.1 ymax: 773173.3
-Projected CRS: ETRS89 / Poland CS92
-First 10 features:
-      ilosc                       geometry
-77       45 MULTIPOLYGON (((508854.8 26...
-88       39 MULTIPOLYGON (((304524 3917...
-113      47 MULTIPOLYGON (((380580.1 34...
-146.1    37 MULTIPOLYGON (((445146.9 25...
-153      37 MULTIPOLYGON (((518755.1 29...
-172      37 MULTIPOLYGON (((764276 2428...
-246      49 MULTIPOLYGON (((432021.5 43...
-315      52 MULTIPOLYGON (((574967.5 18...
-321      52 MULTIPOLYGON (((485094.5 68...
-332      35 MULTIPOLYGON (((327747.5 60...
-Kategoria: [61.2, 91.3) 
-Simple feature collection with 15 features and 1 field
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 189015.2 ymin: 244314.5 xmax: 816336.4 ymax: 659140.7
-Projected CRS: ETRS89 / Poland CS92
-First 10 features:
-        ilosc                       geometry
-108        65 MULTIPOLYGON (((652810.7 38...
-531        62 MULTIPOLYGON (((667773.2 34...
-928.1      64 MULTIPOLYGON (((229996.3 60...
-1044.1     76 MULTIPOLYGON (((496225.9 27...
-1370.12    74 MULTIPOLYGON (((469809.4 56...
-1441       69 MULTIPOLYGON (((648043.5 35...
-1516.1     78 MULTIPOLYGON (((525741.1 59...
-1562       83 MULTIPOLYGON (((545701.6 27...
-1640.3     62 MULTIPOLYGON (((480226.8 25...
-1671       76 MULTIPOLYGON (((760990.5 30...
-Kategoria: [91.3, 121.4) 
-Simple feature collection with 11 features and 1 field
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 446543.5 ymin: 207701.2 xmax: 818821.5 ymax: 749338.4
-Projected CRS: ETRS89 / Poland CS92
-First 10 features:
-       ilosc                       geometry
-229.2    112 MULTIPOLYGON (((450542.9 54...
-591       99 MULTIPOLYGON (((633251.6 63...
-954.4    101 MULTIPOLYGON (((458560.2 74...
-1492.5   110 MULTIPOLYGON (((526268.6 43...
-1670     113 MULTIPOLYGON (((499019.3 20...
-1673      97 MULTIPOLYGON (((797072 3679...
-2034     101 MULTIPOLYGON (((782880.3 46...
-2094     120 MULTIPOLYGON (((531300.7 28...
-2192      93 MULTIPOLYGON (((814188.8 36...
-2318     118 MULTIPOLYGON (((517137.6 25...
-Kategoria: [121.4, 151.5) 
-Simple feature collection with 3 features and 1 field
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 663488.1 ymin: 375720.1 xmax: 760473.1 ymax: 429444.6
-Projected CRS: ETRS89 / Poland CS92
-     ilosc                       geometry
-6      146 MULTIPOLYGON (((679556.5 40...
-2097   130 MULTIPOLYGON (((716387.9 40...
-2370   148 MULTIPOLYGON (((758885.2 37...
-Kategoria: [151.5, 181.6) 
-Simple feature collection with 1 feature and 1 field
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 723373.7 ymin: 390073.3 xmax: 729915.5 ymax: 401202.3
-Projected CRS: ETRS89 / Poland CS92
-       ilosc                       geometry
-1798.1   160 MULTIPOLYGON (((725960.1 39...
-Kategoria: [181.6, 211.7) 
-Simple feature collection with 1 feature and 1 field
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 523436.3 ymin: 696769 xmax: 533263.8 ymax: 711097.1
-Projected CRS: ETRS89 / Poland CS92
-       ilosc                       geometry
-1211.2   188 MULTIPOLYGON (((529172.3 69...
-Kategoria: [211.7, 241.8) 
-Simple feature collection with 0 features and 1 field
-Bounding box:  xmin: NA ymin: NA xmax: NA ymax: NA
-Projected CRS: ETRS89 / Poland CS92
-[1] ilosc    geometry
-<0 wierszy> (lub 'row.names' o zerowej długości)
-Kategoria: [241.8, 301.0] 
-Simple feature collection with 1 feature and 1 field
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 691985.3 ymin: 393202.9 xmax: 710658.9 ymax: 412902.8
-Projected CRS: ETRS89 / Poland CS92
-       ilosc                       geometry
-2356.2   301 MULTIPOLYGON (((703377.7 39...
+# Zmienna dla wartości minimalnej (pomijamy wartości mniejsze niż 1 w podziale)
+minimal_value <- 1
+max_value <- max(df_joined$ilosc, na.rm = TRUE)
+
+# Dynamiczne przedziały: równy rozstęp (max_value / 10)
+break_interval <- max_value / 10
+breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)
+
+# Dodanie przedziałów [0, 1) oraz maksymalnej wartości, aby zamknąć przedział
+breaks <- c(0, 1, breaks, max_value)
+breaks <- unique(breaks)
+
+# Tworzenie etykiet dla przedziałów
+labels <- c("[0, 1)", sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1, 2)]))
+
+# Modyfikacja ostatniej etykiety, aby była w formie zamkniętej [ostatnia wartość, max_value]
+labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 1], max_value)
+
+# Przypisanie kategorii do danych z uwzględnieniem przedziałów
+df_joined$ilosc_category <- cut(
+  df_joined$ilosc,
+  breaks = breaks,
+  include.lowest = TRUE,
+  labels = labels,
+  right = TRUE  # Ostatni przedział zamknięty, aby obejmował wartość maksymalną
+)
+
+# Usunięcie kategorii bez obserwacji
+levels(df_joined$ilosc_category) <- levels(df_joined$ilosc_category)[levels(df_joined$ilosc_category) %in% df_joined$ilosc_category]
+
+# Tworzenie 11 kolorów dla przedziałów [1, max_value] oraz szarego dla [0, 1)
+grad_colors <- colorRampPalette(c("lightgray", "yellow", "orange", "red", "darkred"))(length(levels(df_joined$ilosc_category)))
+
+# Przypisanie kolorów do pozostałych kategorii
+colors_to_use <- grad_colors
+
+# Tworzenie palety kolorów na podstawie kategorii `ilosc_category`
+pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))
+
+# Sprawdzenie przypisania kolorów do kategorii
+print("Przypisanie kolorów do kategorii:")
+print(pal)
+
+# Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
+png(filename = "mapa_gmin_statyczna_11_przedzialow_gradacja.png", width = 10, height = 8, units = "in", res = 300)
+
+# Rysowanie mapy z przypisaniem kolorów do kategorii
+plot(
+  df_joined_simplified["ilosc_category"],
+  col = pal[df_joined_simplified$ilosc_category],  # Przypisanie kolorów bezpośrednio do kategorii
+  main = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków",
+  key.pos = NULL  # Wyłączenie wbudowanej legendy
+)
+
+# Dodanie legendy tylko dla wartości >= 1 (pominięcie kategorii `NA`)
+legend("topright",
+       legend = levels(df_joined$ilosc_category)[-1],  # Pominięcie etykiety dla NA (wartości < 1)
+       fill = colors_to_use[-1],  # Kolory tylko dla wartości >= 1 (bez szarego)
+       title = "Liczba budynków",
+       cex = 0.8,
+       bg = "white",
+       bty = "n")
+
+# Zakończenie zapisywania do pliku
+dev.off()
