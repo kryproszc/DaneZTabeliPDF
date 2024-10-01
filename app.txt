@@ -1,21 +1,64 @@
-# Określenie niestandardowych kolorów dla kategorii
-custom_colors <- c("lightgray", "#fee0d2", "#fc9272", "#fb6a4a", "#de2d26", "#a50f15")  # Przykładowe kolory
-levels_count <- length(levels(df_joined$ilosc_category))  # Liczba kategorii
+library(sf)
 
-# Tworzenie pliku graficznego PNG
+# Zakładam, że kolumna `ilosc` została wcześniej odpowiednio przygotowana
+# Przekształcenie wartości 0 na 0.1, jeśli to konieczne
+df_joined$ilosc[df_joined$ilosc == 0] <- 0.1
+
+# Tworzenie kategorii na podstawie dynamicznych przedziałów dla wartości >= 1
+# Wyznacz dynamiczne przedziały na podstawie wartości
+values_above_1 <- df_joined$ilosc[df_joined$ilosc >= 1]
+
+# Podział na 5 przedziałów za pomocą `classIntervals` w stylu "quantile"
+intervals <- classIntervals(values_above_1, n = 5, style = "quantile")
+breaks <- c(0, 0.1, intervals$brks)  # Dodaj ręcznie przedział dla wartości < 1
+breaks <- unique(breaks)  # Usuwanie duplikatów
+print(breaks)
+
+# Tworzenie etykiet dla kategorii
+labels <- c(
+  "[0, 0.1)",  # Ręczna etykieta dla wartości < 1
+  sprintf("[%.1f, %.1f)", breaks[-c(1, length(breaks))], breaks[-c(1,2)])
+)
+
+# Przypisanie kategorii do danych
+df_joined$ilosc_category <- cut(
+  df_joined$ilosc,
+  breaks = breaks,
+  include.lowest = TRUE,
+  labels = labels,
+  right = FALSE
+)
+
+# Sprawdzenie, czy kategorie są poprawnie przypisane
+print(table(df_joined$ilosc_category))  # Sprawdzenie liczby obserwacji w każdej kategorii
+
+# Określenie niestandardowych kolorów dla kategorii (zmień kolory, jeśli chcesz)
+custom_colors <- c("lightgray", "#fee0d2", "#fc9272", "#fb6a4a", "#de2d26", "#a50f15")  # Przykładowe kolory
+
+# Liczba kategorii w danych (pomijając NA)
+levels_count <- length(levels(df_joined$ilosc_category))
+print(levels(df_joined$ilosc_category))  # Wyświetlenie poziomów kategorii
+
+# Upewnienie się, że mamy tyle kolorów, ile kategorii
+colors_to_use <- custom_colors[1:levels_count]
+
+# Tworzenie pliku graficznego PNG i zapis w bieżącym katalogu roboczym
 png(filename = "mapa_gmin_statyczna.png", width = 10, height = 8, units = "in", res = 300)
 
-# Rysowanie mapy w pliku graficznym
+# Rysowanie mapy w pliku graficznym z przypisaniem kolorów do kategorii
 plot(df_joined_simplified["ilosc_category"], 
-     col = custom_colors[1:levels_count],  # Przypisanie kolorów do wykresu
+     col = colors_to_use,  # Przypisanie kolorów do kategorii
      main = "Mapa gmin z dynamicznie podzielonymi przedziałami budynków",
      key.pos = NULL)  # Wyłączenie domyślnej legendy
 
 # Dodanie legendy z niestandardowymi kolorami
 legend("topright",
        legend = levels(df_joined$ilosc_category),  # Etykiety legendy
-       fill = custom_colors[1:levels_count],  # Przypisanie kolorów do legendy
+       fill = colors_to_use,  # Przypisanie kolorów do legendy
        title = "Liczba budynków",
        cex = 0.8,
        bg = "white",
        bty = "n")
+
+# Zakończenie zapisywania do pliku
+dev.off()
