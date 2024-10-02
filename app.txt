@@ -1,13 +1,57 @@
-wynik_coords <- cbind(wynik, st_coordinates(wynik$geometry))
+dataframe <- data.frame(
+  lat = c(52.229675, 52.406374, 50.064651, 50.059217),  # Szerokość geograficzna
+  lon = c(21.012230, 16.925168, 19.944981, 19.947853),  # Długość geograficzna
+  ilosc = c(5, 8, 3, 4)                                # Liczba budynków w danej lokalizacji
+)
 
-# Wyświetlenie punktów przy użyciu podstawowej funkcji plot
-plot(st_geometry(wynik), col = "red", pch = 16, main = "Punkty z danych 'wynik'")
+# Konwersja dataframe do obiektu przestrzennego sf
+punkty_sf <- st_as_sf(dataframe, coords = c("lon", "lat"), crs = 4326)
 
-# Rysowanie punktów przy użyciu ggplot2 z poprawionymi współrzędnymi
-ggplot(data = wynik_coords) +
-  geom_point(aes(x = X, y = Y, size = total_budynkow), color = "red") +
-  labs(title = "Liczba budynków w wybranych punktach", 
-       x = "Długość geograficzna", 
-       y = "Szerokość geograficzna", 
-       size = "Liczba budynków") +
-  theme_minimal()
+# Przestrzenne przypisanie punktów do gmin
+gminy <- st_transform(gminy, crs = 4326)  # Upewnienie się, że układ współrzędnych jest ten sam
+punkty_gminy <- st_join(punkty_sf, gminy, join = st_within)
+
+# 3. Sumowanie liczby budynków dla każdej gminy
+# W kolumnie `nazwa_gminy` powinna być odpowiednia nazwa gminy w danych gminy.shp
+wynik_gminy <- punkty_gminy %>%
+  group_by(nazwa_gminy) %>%  # Zastąp `nazwa_gminy` odpowiednią kolumną w danych gmin
+  summarise(total_budynkow = sum(ilosc, na.rm = TRUE))
+
+# 4. Połączenie zsumowanych danych z danymi przestrzennymi gmin
+gminy_z_budynkami <- left_join(gminy, wynik_gminy, by = "nazwa_gminy")
+
+# 5. Wizualizacja całych obszarów gmin z sumaryczną liczbą budynków
+ggplot(data = gminy_z_budynkami) +
+  geom_sf(aes(fill = total_budynkow), color = "black", lwd = 0.2) +
+  scale_fill_viridis_c(option = "plasma", na.value = "white") +  # Kolorowanie wg liczby budynków
+  theme_minimal() +
+  labs(title = "Liczba budynków w poszczególnych gminach",
+       fill = "Liczba budynków")dataframe <- data.frame(
+  lat = c(52.229675, 52.406374, 50.064651, 50.059217),  # Szerokość geograficzna
+  lon = c(21.012230, 16.925168, 19.944981, 19.947853),  # Długość geograficzna
+  ilosc = c(5, 8, 3, 4)                                # Liczba budynków w danej lokalizacji
+)
+
+# Konwersja dataframe do obiektu przestrzennego sf
+punkty_sf <- st_as_sf(dataframe, coords = c("lon", "lat"), crs = 4326)
+
+# Przestrzenne przypisanie punktów do gmin
+gminy <- st_transform(gminy, crs = 4326)  # Upewnienie się, że układ współrzędnych jest ten sam
+punkty_gminy <- st_join(punkty_sf, gminy, join = st_within)
+
+# 3. Sumowanie liczby budynków dla każdej gminy
+# W kolumnie `nazwa_gminy` powinna być odpowiednia nazwa gminy w danych gminy.shp
+wynik_gminy <- punkty_gminy %>%
+  group_by(nazwa_gminy) %>%  # Zastąp `nazwa_gminy` odpowiednią kolumną w danych gmin
+  summarise(total_budynkow = sum(ilosc, na.rm = TRUE))
+
+# 4. Połączenie zsumowanych danych z danymi przestrzennymi gmin
+gminy_z_budynkami <- left_join(gminy, wynik_gminy, by = "nazwa_gminy")
+
+# 5. Wizualizacja całych obszarów gmin z sumaryczną liczbą budynków
+ggplot(data = gminy_z_budynkami) +
+  geom_sf(aes(fill = total_budynkow), color = "black", lwd = 0.2) +
+  scale_fill_viridis_c(option = "plasma", na.value = "white") +  # Kolorowanie wg liczby budynków
+  theme_minimal() +
+  labs(title = "Liczba budynków w poszczególnych gminach",
+       fill = "Liczba budynków")
