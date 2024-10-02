@@ -1,9 +1,12 @@
 wynik_coords <- cbind(wynik, st_coordinates(wynik$geometry))
 
-# Rysowanie punktów przy użyciu ggplot2 z poprawnymi współrzędnymi
+# Wyświetlenie punktów przy użyciu podstawowej funkcji plot
+plot(st_geometry(wynik), col = "red", pch = 16, main = "Punkty z danych 'wynik'")
+
+# Rysowanie punktów przy użyciu ggplot2 z poprawionymi współrzędnymi
 ggplot(data = wynik_coords) +
-  geom_point(aes(x = X, y = Y, size = total_budynkow), color = "red") +  # `X` i `Y` to wyodrębnione współrzędne
-  labs(title = "Liczba budynków w wybranych punktach",
+  geom_point(aes(x = X, y = Y, size = total_budynkow), color = "red") +
+  labs(title = "Liczba budynków w wybranych punktach", 
        x = "Długość geograficzna", 
        y = "Szerokość geograficzna", 
        size = "Liczba budynków") +
