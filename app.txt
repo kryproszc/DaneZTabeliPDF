@@ -1,37 +1,56 @@
+# Ustawienie minimalnej wartości i maksymalnej wartości
+minimal_value <- 1
+max_value <- max(gminy_z_budynkami$total_budynkow, na.rm = TRUE)
 
-  minimal_value <- 1
-  max_value <- max(df_joined$ilosc, na.rm = TRUE)
-  break_interval <- max_value / 10
-  breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)
-  breaks <- c( 1, breaks, max_value)
-  breaks <- unique(breaks)
-  labels <- c( sprintf("[%.1f, %.1f)", breaks[-c(length(breaks))], breaks[-c(1)]))
-  labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 1], max_value)
-  df_joined$ilosc_category <- cut(
-    df_joined$ilosc,
-    breaks = breaks,
-    include.lowest = TRUE,
-    labels = labels,
-    right = TRUE 
-  )
-  palette_name <- "YlGnBu"  
-  grad_colors <- brewer.pal(n = length(levels(df_joined$ilosc_category)), palette_name)
-  colors_to_use <- grad_colors
-  pal <- setNames(colors_to_use, levels(df_joined$ilosc_category))
-  max_value_clean <- max(df_joined$ilosc, na.rm = TRUE)
-  df_joined_simplified <- st_simplify(df_joined, dTolerance = 1000)
-  png(filename = paste0(sciezka_do_zapisu_ubezpieczyciel,"/gminy.png"), width = 10, height = 8, units = "in", res = 300)
-  plot(
-    df_joined_simplified["ilosc_category"],
-    col = pal[df_joined_simplified$ilosc_category], 
-    main = "Mapa ilości budynków ubezpieczonych od pożaru w Polsce",
-    key.pos = NULL  
-  )
-  legend("topright",
-         legend = levels(df_joined$ilosc_category), 
-         fill = colors_to_use,  
-         title = "Liczba budynków",
-         cex = 0.8,
-         bg = "white",
-         bty = "n")
-  dev.off()
+# Określenie interwałów przerwań (breaks)
+break_interval <- max_value / 10
+breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)
+breaks <- c(1, breaks, max_value)
+breaks <- unique(breaks)
+
+# Tworzenie etykiet dla kategorii
+labels <- c(sprintf("[%.1f, %.1f)", breaks[-length(breaks)], breaks[-1]))
+labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 1], max_value)
+
+# Przypisanie kategorii ilości budynków
+gminy_z_budynkami$total_budynkow_category <- cut(
+  gminy_z_budynkami$total_budynkow,
+  breaks = breaks,
+  include.lowest = TRUE,
+  labels = labels,
+  right = TRUE 
+)
+
+# Ustawienie palety kolorów
+palette_name <- "YlGnBu"  # Możesz zmienić na dowolną inną dostępną paletę
+grad_colors <- RColorBrewer::brewer.pal(n = length(levels(gminy_z_budynkami$total_budynkow_category)), palette_name)
+colors_to_use <- grad_colors
+
+# Dopasowanie kolorów do poziomów kategorii
+pal <- setNames(colors_to_use, levels(gminy_z_budynkami$total_budynkow_category))
+
+# Upraszczanie geometrii dla lepszej wydajności rysowania
+gminy_z_budynkami_simplified <- st_simplify(gminy_z_budynkami, dTolerance = 1000)
+
+# Tworzenie mapy w formacie PNG
+png(filename = "gminy_z_budynkami.png", width = 10, height = 8, units = "in", res = 300)
+
+# Rysowanie mapy gmin z odpowiednią kategorią kolorów
+plot(
+  gminy_z_budynkami_simplified["total_budynkow_category"],
+  col = pal[gminy_z_budynkami_simplified$total_budynkow_category], 
+  main = "Liczba budynków w gminach Polski",
+  key.pos = NULL  
+)
+
+# Dodanie legendy do mapy
+legend("topright",
+       legend = levels(gminy_z_budynkami$total_budynkow_category), 
+       fill = colors_to_use,  
+       title = "Liczba budynków",
+       cex = 0.8,
+       bg = "white",
+       bty = "n")
+
+# Zapisanie pliku graficznego i zamknięcie urządzenia graficznego
+dev.off()
