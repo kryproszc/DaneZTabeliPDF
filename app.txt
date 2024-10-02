@@ -1,40 +1,67 @@
-> coordinates <- get_coordinates_by_postcode(input_data)
-Początkowa suma ilości budynków: 21385 
-Suma ilości budynków po przetworzeniu: 23295 
-There were 17 warnings (use warnings() to see them)
-> warnings()
-Komunikaty ostrzegawcze:
-1: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 03-998
-2: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 05-512
-3: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 15-014
-4: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 15-078
-5: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 75-006
-6: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 80-050
-7: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 81-051
-8: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 81-080
-9: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 81-092
-10: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 90-023
-11: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 91-015
-12: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 91-051
-13: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 91-076
-14: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 93-009
-15: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 94-049
-16: In get_coordinates_by_postcode(input_data) :
-  Brak danych geograficznych dla kodu: 95-075
-17: In get_coordinates_by_postcode(input_data) :
-  Suma budynków po przetworzeniu jest inna niż przed przetworzeniem!
+get_coordinates_by_postcode <- function(data) {
+  # Sprawdzenie początkowej sumy ilości budynków
+  initial_sum <- sum(data$ilosc, na.rm = TRUE)
+  cat("Początkowa suma ilości budynków:", initial_sum, "\n")
+  
+  # Inicjalizacja pustego data.frame z odpowiednimi kolumnami
+  results <- data.frame(latitude = numeric(0), longitude = numeric(0), ilosc = numeric(0), kody = character(0))
+  
+  # Iteracja przez wszystkie wiersze w danych wejściowych
+  for (i in 1:nrow(data)) {
+    postcode <- data$kody[i]
+    ilosc <- data$ilosc[i]
+    
+    # Definicja adresu URL API
+    url <- "http://dft-everace:8080/search.php"
+    params <- list(q = postcode)
+    
+    # Wysłanie zapytania GET do API
+    response <- GET(url, query = params)
+    
+    # Sprawdzenie, czy odpowiedź jest poprawna (kod statusu 200)
+    if (status_code(response) == 200) {
+      content_text <- content(response, "text", encoding = "UTF-8")
+      response_json <- fromJSON(content_text, flatten = TRUE)
+      
+      # Sprawdzenie, czy współrzędne są dostępne w odpowiedzi
+      if (!is.null(response_json$lat) && !is.null(response_json$lon)) {
+        # Tworzenie nowego wiersza wynikowego z danymi geograficznymi, ilością budynków i kodem
+        result_row <- data.frame(
+          latitude = response_json$lat,
+          longitude = response_json$lon,
+          ilosc = ilosc,
+          kody = postcode
+        )
+        
+        # Dodanie nowego wiersza do wynikowego data.frame (bez duplikacji)
+        results <- rbind(results, result_row)
+      } else {
+        warning(paste("Brak danych geograficznych dla kodu:", postcode))
+      }
+    } else {
+      warning(paste("Błąd podczas zapytania dla kodu:", postcode, " - Kod odpowiedzi:", status_code(response)))
+    }
+  }
+  
+  # Grupowanie wyników według kodu pocztowego i współrzędnych, a następnie sumowanie ilości
+  results_grouped <- results %>%
+    group_by(latitude, longitude, kody) %>%
+    summarise(ilosc = sum(ilosc), .groups = "drop")  # Zsumowanie ilości budynków dla unikalnych kodów
+  
+  # Sumowanie ilości budynków po przetworzeniu
+  final_sum <- sum(results_grouped$ilosc, na.rm = TRUE)
+  cat("Suma ilości budynków po przetworzeniu:", final_sum, "\n")
+  
+  # Sprawdzenie, czy suma budynków się zmieniła
+  if (initial_sum != final_sum) {
+    warning("Suma budynków po przetworzeniu jest inna niż przed przetworzeniem!")
+  }
+  
+  # Sprawdzenie, czy wyniki są puste
+  if (nrow(results_grouped) == 0) {
+    stop("Brak danych geograficznych dla podanych kodów pocztowych.")
+  }
+  
+  # Zwrócenie wynikowego data.frame z unikalnymi wartościami
+  return(results_grouped)
+}
