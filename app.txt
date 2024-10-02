@@ -1,24 +1,28 @@
- uniquw_regon_gminy<-gminy%>%
-+   group_by(REGON)%>%
-+   summarise(count = n())
-> uniquw_regon_gminy
-Simple feature collection with 2247 features and 2 fields
-Geometry type: GEOMETRY
-Dimension:     XY
-Bounding box:  xmin: 14.12288 ymin: 49.00204 xmax: 24.14578 ymax: 54.83642
-Geodetic CRS:  WGS 84
-# A tibble: 2,247 x 3
-   REGON          count                                                                                     geometry
-   <chr>          <int>                                                                       <POLYGON [arc_degree]>
- 1 00052676500000     1 ((15.62104 52.00567, 15.62124 52.00568, 15.62187 52.00571, 15.6246 52.00585, 15.62656 52....
- 2 00052871200000     1 ((15.03563 51.68122, 15.03525 51.68247, 15.03473 51.68318, 15.03443 51.68359, 15.03389 51...
- 3 00054971400000     1 ((15.87943 51.7191, 15.88107 51.71949, 15.88239 51.7199, 15.88409 51.72068, 15.88527 51.7...
- 4 01326877000000     1 ((21.26781 52.08343, 21.268 52.08347, 21.26908 52.08367, 21.2705 52.08393, 21.27255 52.08...
- 5 01326896500000     1 ((21.37608 51.97006, 21.3774 51.97012, 21.3774 51.97015, 21.37737 51.97079, 21.37732 51.9...
- 6 01326899400000     1 ((21.37191 52.10258, 21.37304 52.10277, 21.37387 52.10286, 21.37504 52.10275, 21.37569 52...
- 7 01326911400000     1 ((21.28524 52.22162, 21.28526 52.22164, 21.28528 52.22165, 21.28529 52.22179, 21.28549 52...
- 8 01326913700000     1 ((20.66711 52.11095, 20.66652 52.11166, 20.66691 52.11177, 20.66665 52.1121, 20.6664 52.1...
- 9 01326915000000     1 ((20.69278 52.09942, 20.69265 52.09961, 20.69253 52.09977, 20.69249 52.0998, 20.69243 52....
-10 01326917200000     1 ((21.38372 52.16358, 21.38376 52.16363, 21.38384 52.1637, 21.38482 52.16444, 21.38486 52....
-# i 2,237 more rows
-# i Use `print(n = ...)` to see more rows
+punkty_przypisane_wielokrotnie <- punkty_gminy %>%
+  group_by(REGON) %>%
+  summarise(ilosc_budynkow = sum(ilosc, na.rm = TRUE), liczba_punktow = n())
+
+# Sprawdzenie, czy liczba punktów jest większa niż liczba budynków
+cat("Liczba gmin, do których przypisano punkty więcej niż raz:", 
+    nrow(punkty_przypisane_wielokrotnie %>% filter(liczba_punktow > 1)), "\n")
+print(punkty_przypisane_wielokrotnie %>% filter(liczba_punktow > 1))
+
+
+# Sprawdzenie sumy budynków dla każdego REGON po `left_join`
+suma_po_join <- gminy_z_budynkami %>%
+  group_by(REGON) %>%
+  summarise(suma_budynkow = sum(total_budynkow, na.rm = TRUE))
+
+# Sprawdzenie, czy są różnice między `suma_po_join` a `wynik_gminy_df`
+roznice_suma <- anti_join(suma_po_join, wynik_gminy_df, by = "REGON")
+cat("Liczba REGON z różnicą w sumie budynków po `left_join`:", nrow(roznice_suma), "\n")
+print(roznice_suma)
+
+# Usunięcie powtórzeń `total_budynkow` po `left_join`
+gminy_z_budynkami_bez_powtorzen <- gminy_z_budynkami %>%
+  group_by(REGON) %>%
+  summarise(total_budynkow = sum(total_budynkow, na.rm = TRUE))
+
+# Obliczenie sumy liczby budynków po usunięciu powtórzeń
+suma_po_usunieciu_powtorzen <- sum(gminy_z_budynkami_bez_powtorzen$total_budynkow, na.rm = TRUE)
+cat("Suma liczby budynków po usunięciu powtórzeń:", suma_po_usunieciu_powtorzen, "\n")
