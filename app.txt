@@ -1,4 +1,10 @@
-ggplot(data = wynik) +
-  geom_point(aes(x = st_coordinates(geometry)[, 1], y = st_coordinates(geometry)[, 2], size = total_budynkow), color = "red") +
-  labs(title = "Liczba budynków w wybranych punktach", x = "Długość geograficzna", y = "Szerokość geograficzna", size = "Liczba budynków") +
+wynik_coords <- cbind(wynik, st_coordinates(wynik$geometry))
+
+# Rysowanie punktów przy użyciu ggplot2 z poprawnymi współrzędnymi
+ggplot(data = wynik_coords) +
+  geom_point(aes(x = X, y = Y, size = total_budynkow), color = "red") +  # `X` i `Y` to wyodrębnione współrzędne
+  labs(title = "Liczba budynków w wybranych punktach",
+       x = "Długość geograficzna", 
+       y = "Szerokość geograficzna", 
+       size = "Liczba budynków") +
   theme_minimal()
