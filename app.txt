@@ -1,16 +1,22 @@
-df_joined <- st_join(gminy, df_sf, join = st_within)
+dataframe <- data.frame(
+  lat = c(52.229675, 52.406374, 50.064651, 50.059217),
+  lon = c(21.012230, 16.925168, 19.944981, 19.947853),
+  ilosc = c(5, 8, 3, 4)  # Ilość budynków w danej lokalizacji
+)
 
-# Sprawdzenie, czy punkty zostały przypisane
-print(head(df_joined))
+# 3. Konwersja dataframe do obiektu przestrzennego (sf) z użyciem współrzędnych
+punkty_sf <- st_as_sf(dataframe, coords = c("lon", "lat"), crs = 4326)  # Tworzenie obiektu sf z punktów
 
-# 6. Agregacja liczby budynków (`ilosc`) w każdej gminie na podstawie przypisanych punktów
-# Upewniamy się, że suma `ilosc` z `df_sf` jest przypisana do odpowiednich gmin
-gminy_with_count <- df_joined %>%
-  group_by(JPT_KOD_JE) %>%  # Zakładam, że `JPT_KOD_JE` to unikalny identyfikator gminy
-  summarize(ilosc_budynkow = sum(ilosc, na.rm = TRUE))  # Sumujemy `ilosc` w każdej gminie
+# 4. Dopasowanie układu współrzędnych, jeśli gminy są w innym układzie (np. EPSG:2180)
+gminy <- st_transform(gminy, crs = 4326)  # Zmiana układu współrzędnych na WGS 84 (EPSG:4326)
 
-# 7. Przypisanie liczby budynków z `df_sf` do gmin, które zawierają punkty
-gminy_final <- left_join(gminy, gminy_with_count, by = "JPT_KOD_JE")
+# 5. Przypisanie współrzędnych do odpowiednich gmin (operacja przestrzennego połączenia)
+punkty_gminy <- st_join(punkty_sf, gminy, join = st_within)
 
-# 8. Sprawdzenie wyników przypisania
-print(head(gminy_final))
+# 6. Zsumowanie liczby budynków (ilosc) w każdej gminie
+wynik <- punkty_gminy %>%
+  group_by(nazwa_gminy) %>%  # Zastąp "nazwa_gminy" odpowiednią kolumną w danych gmin
+  summarise(total_budynkow = sum(ilosc, na.rm = TRUE))
+
+# 7. Wyświetlenie wyniku
+print(wynik)
