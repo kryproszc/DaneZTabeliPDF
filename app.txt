@@ -1,7 +1,1 @@
-74;2021-06-30;2022-06-29;185000,0;TAK;Grzegorza Kunawina 32rrrrrr;16-200rrrrr;Dąbrowa Białostocka;podlaskie;Polska;1,2;;53.654439;23.3485102;0;2;
-75;2021-07-08;2022-07-07;830000,0;TAK;Jana Pawła IIrrrrrrrr 74;32-091;Michałowicerrrrrr;małopolskie;Polska;1,2;;49.790952;20.3793521;0;3;
-76;2021-07-01;2022-06-30;700000,0;TAK;drrrrrr. Henryka Jordana 4a;44-193;Knurów;śląskie;Polska;1,2;;50.20168786023916;18.64104145186846;0;1;
-77;2021-06-30;2022-06-29;360000,0;TAK;Pelikana 19;71-698;;zachodniopomorskie;Polska;1,2;;53.4682544;14.5609724;6;0;
-78;2021-07-01;2022-06-30;242000,0;TAK;;01-829;Warszawa;mazowieckie;Polska;1,2;;52.279697164285714;20.948496935714285;2;0;
-79;2021-07-02;2022-07-01;110000,0;TAK;;;;mazowieckie;Polska;1,2;;52.5461934;21.2073404;0;0;
-80;2021-07-01;2022-06-30;50000,0;TAK;;;;;;1,2;;0;0;0;3;
+78	01.07.2021	30.06.2022	242000	TAK		01-829	Warszawa	mazowieckie	Polska	1,2	
