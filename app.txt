@@ -1,3 +1,7 @@
+library(httr)        # Do wysyłania zapytań HTTP
+library(jsonlite)    # Do pracy z danymi JSON
+library(dplyr)       # Do przetwarzania danych
+
 get_coordinates_by_postcode <- function(data) {
   # Sprawdzenie początkowej sumy ilości budynków
   initial_sum <- sum(data$ilosc, na.rm = TRUE)
@@ -33,23 +37,24 @@ get_coordinates_by_postcode <- function(data) {
           kody = postcode
         )
         
-        # Dodanie nowego wiersza do wynikowego data.frame (bez duplikacji)
+        # Dodanie nowego wiersza do wynikowego data.frame
         results <- rbind(results, result_row)
       } else {
+        # Ostrzeżenie w przypadku braku współrzędnych
         warning(paste("Brak danych geograficznych dla kodu:", postcode))
       }
     } else {
+      # Ostrzeżenie w przypadku błędu odpowiedzi z API
       warning(paste("Błąd podczas zapytania dla kodu:", postcode, " - Kod odpowiedzi:", status_code(response)))
     }
   }
   
-  # Grupowanie wyników według kodu pocztowego i współrzędnych, a następnie sumowanie ilości
-  results_grouped <- results %>%
-    group_by(latitude, longitude, kody) %>%
-    summarise(ilosc = sum(ilosc), .groups = "drop")  # Zsumowanie ilości budynków dla unikalnych kodów
+  # Usunięcie duplikatów na podstawie kodu pocztowego i współrzędnych (jeśli istnieją powtórzenia)
+  results <- results %>%
+    distinct(latitude, longitude, kody, .keep_all = TRUE)
   
   # Sumowanie ilości budynków po przetworzeniu
-  final_sum <- sum(results_grouped$ilosc, na.rm = TRUE)
+  final_sum <- sum(results$ilosc, na.rm = TRUE)
   cat("Suma ilości budynków po przetworzeniu:", final_sum, "\n")
   
   # Sprawdzenie, czy suma budynków się zmieniła
@@ -57,11 +62,11 @@ get_coordinates_by_postcode <- function(data) {
     warning("Suma budynków po przetworzeniu jest inna niż przed przetworzeniem!")
   }
   
-  # Sprawdzenie, czy wyniki są puste
-  if (nrow(results_grouped) == 0) {
+  # Sprawdzenie, czy wyniki są puste (brak współrzędnych)
+  if (nrow(results) == 0) {
     stop("Brak danych geograficznych dla podanych kodów pocztowych.")
   }
   
   # Zwrócenie wynikowego data.frame z unikalnymi wartościami
-  return(results_grouped)
+  return(results)
 }
