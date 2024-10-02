@@ -1,2 +1,22 @@
-77;2021-06-30;2022-06-29;360000,0;TAK;;71-698;;zachodniopomorskie;Polska;1,2;;53.468066789999995;14.55960763;0;0;
-78;2021-07-01;2022-06-30;242000,0;TAK;;01-829;Warszawa;mazowieckie;Polska;1,2;;52.279697164285714;20.948496935714285;2;0;
+head(coordinates)
+           latitude          longitude ilosc
+1       52.23752936        21.00948042     1
+2       52.23776325        21.00761585     1
+3      52.238126175       21.010395725     1
+4       52.23915958        21.01130398     1
+5 52.24419258666667 21.013297719999997     1
+6         52.246361        21.01250889     1
+> 
+
+
+
+
+head(coordinates)
+gminy <- st_read("gminy/gminy.shp")  
+df_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)
+
+if (is.na(st_crs(gminy))) {
+  st_crs(gminy) <- 2180  # Ustawienie CRS dla granic gmin
+}
+df_sf <- st_transform(df_sf, st_crs(gminy))
+df_joined <- st_join(gminy, df_sf, join = st_contains)
