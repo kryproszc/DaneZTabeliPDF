@@ -1,28 +1,210 @@
-punkty_przypisane_wielokrotnie <- punkty_gminy %>%
-  group_by(REGON) %>%
-  summarise(ilosc_budynkow = sum(ilosc, na.rm = TRUE), liczba_punktow = n())
-
-# Sprawdzenie, czy liczba punktów jest większa niż liczba budynków
-cat("Liczba gmin, do których przypisano punkty więcej niż raz:", 
-    nrow(punkty_przypisane_wielokrotnie %>% filter(liczba_punktow > 1)), "\n")
-print(punkty_przypisane_wielokrotnie %>% filter(liczba_punktow > 1))
-
-
-# Sprawdzenie sumy budynków dla każdego REGON po `left_join`
-suma_po_join <- gminy_z_budynkami %>%
-  group_by(REGON) %>%
-  summarise(suma_budynkow = sum(total_budynkow, na.rm = TRUE))
-
-# Sprawdzenie, czy są różnice między `suma_po_join` a `wynik_gminy_df`
-roznice_suma <- anti_join(suma_po_join, wynik_gminy_df, by = "REGON")
-cat("Liczba REGON z różnicą w sumie budynków po `left_join`:", nrow(roznice_suma), "\n")
-print(roznice_suma)
-
-# Usunięcie powtórzeń `total_budynkow` po `left_join`
-gminy_z_budynkami_bez_powtorzen <- gminy_z_budynkami %>%
-  group_by(REGON) %>%
-  summarise(total_budynkow = sum(total_budynkow, na.rm = TRUE))
-
-# Obliczenie sumy liczby budynków po usunięciu powtórzeń
-suma_po_usunieciu_powtorzen <- sum(gminy_z_budynkami_bez_powtorzen$total_budynkow, na.rm = TRUE)
-cat("Suma liczby budynków po usunięciu powtórzeń:", suma_po_usunieciu_powtorzen, "\n")
+> dim(gminy)
+[1] 2477   37
+> if (is.na(st_crs(gminy))) {
++   st_crs(gminy) <- 2180  # Ustawienie CRS dla granic gmin
++ }
+> df_sf <- st_transform(df_sf, st_crs(gminy))
+> punkty_gminy <- st_join(punkty_sf, gminy, join = st_within)
+Error in wk_handle.wk_wkb(wkb, s2_geography_writer(oriented = oriented,  : 
+  Loop 0 is not valid: Edge 0 has duplicate vertex with edge 4
+> df_joined <- st_join(gminy, df_sf, join = st)
+Error in st_join.sf(gminy, df_sf, join = st) : object 'st' not found
+> gminy
+Simple feature collection with 2477 features and 36 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 14.12288 ymin: 49.00204 xmax: 24.14578 ymax: 54.83642
+Geodetic CRS:  WGS 84
+First 10 features:
+   gml_id JPT_SJR_KO JPT_POWIER JPT_KOD_JE     JPT_NAZWA_ JPT_ORGAN_ JPT_JOR_ID WERSJA_OD WERSJA_DO WAZNY_OD WAZNY_DO JPT_KOD__1 JPT_NAZWA1 JPT_ORGAN1 JPT_WAZNA_ ID_BUFORA_
+1    <NA>        GMI       4889    3215011     Szczecinek       <NA>      13151  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13616
+2    <NA>        GMI      15063    0619072   Wola Uhruska       <NA>      13176  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13642
+3    <NA>        GMI      19465    2214023          Gniew       <NA>      13208  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13674
+4    <NA>        GMI       9068    2214032    Morzeszczyn       <NA>      13208  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13674
+5    <NA>        GMI      10903    1406062      Jasieniec       <NA>      13265  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13731
+6    <NA>        GMI      24419    1407053      Kozienice       <NA>      13266  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13732
+7    <NA>        GMI      12143    1811052         Mielec       <NA>      13407  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13767
+8    <NA>        GMI       5541    1811022         Borowa       <NA>      13407  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13767
+9    <NA>        GMI       7152    1811062 Padew Narodowa       <NA>      13407  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13767
+10   <NA>        GMI       7417    1213062       Oświęcim       <NA>      13325  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13793
+   ID_BUFORA1 ID_TECHNIC   IIP_PRZEST                           IIP_IDENTY                IIP_WERSJA JPT_KJ_IIP JPT_KJ_I_1 JPT_KJ_I_2 JPT_OPIS JPT_SPS_KO ID_BUFOR_1 JPT_ID
+1           0     828110 PL.PZGIK.200 f3535d28-7251-4b68-b534-c815f3f89259 2012-09-26T22:34:52+02:00       EGIB    3215011       <NA>     <NA>        UZG          0 828110
+2           0     828350 PL.PZGIK.200 80f0f2c3-cc9a-46c6-b106-a0b3f90742ad 2012-09-26T22:43:18+02:00       EGIB    0619072       <NA>     <NA>        UZG          0 828350
+3           0     828600 PL.PZGIK.200 4f9983c1-4c61-4908-a51a-8e5ca6b22d54 2012-09-26T22:46:25+02:00       EGIB    2214023       <NA>     <NA>        UZG          0 828600
+4           0     828604 PL.PZGIK.200 94e48aeb-a203-4d29-ba01-9aba199c1fb8 2012-09-26T22:46:25+02:00       EGIB    2214032       <NA>     <NA>        UZG          0 828604
+5           0     826035 PL.PZGIK.200 f12aa5e1-8849-46a4-bad2-ccf226bdcad0 2012-09-26T21:57:51+02:00       EGIB    1406062       <NA>     <NA>        UZG          0 826035
+6           0     826050 PL.PZGIK.200 03ad8d48-35dc-4fc8-8e3d-cdf01d08fee2 2012-09-26T21:58:00+02:00       EGIB    1407053       <NA>     <NA>        UZG          0 826050
+7           0     826304 PL.PZGIK.200 606cd21b-7250-4a14-a951-eb4493e1ef0b 2012-09-26T22:01:24+02:00       EGIB    1811052       <NA>     <NA>        UZG          0 826304
+8           0     826307 PL.PZGIK.200 2db4e6cb-71bc-457f-98f5-8f216aecbde7 2012-09-26T22:01:24+02:00       EGIB    1811022       <NA>     <NA>        UZG          0 826307
+9           0     826309 PL.PZGIK.200 bd60aaa9-2ae5-44b1-9268-c0a798b79cc7 2012-09-26T22:01:24+02:00       EGIB    1811062       <NA>     <NA>        UZG          0 826309
+10          0     826565 PL.PZGIK.200 0ced91c1-f9ee-4499-b395-d2354acfba6c 2012-09-26T22:11:49+02:00       EGIB    1213062       <NA>     <NA>        UZG          0 826565
+   JPT_POWI_1 JPT_KJ_I_3 JPT_GEOMET JPT_GEOM_1    SHAPE_LENG   SHAPE_AREA          REGON RODZAJ                       geometry
+1           0       <NA>          0          0   .5910644718 .00659579547 33092090800000  gmina MULTIPOLYGON (((16.70788 53...
+2           0       <NA>          0          0 1.26667897699 .01943350175 11019785900000  gmina MULTIPOLYGON (((23.62767 51...
+3           0       <NA>          0          0 1.17648653548 .02647713213 19167529600000  gmina MULTIPOLYGON (((18.7255 53....
+4           0       <NA>          0          0  .71824335003 .01244126039 19167531000000  gmina MULTIPOLYGON (((18.64079 53...
+5           0       <NA>          0          0  .72102677759 .01410220051 67022372900000  gmina MULTIPOLYGON (((20.99266 51...
+6           0       <NA>          0          0 1.21859070844 .03165358518 67022333300000  gmina MULTIPOLYGON (((21.58798 51...
+7           0       <NA>          0          0 1.31379185096 .01548215139 69058191000000  gmina MULTIPOLYGON (((21.57487 50...
+8           0       <NA>          0          0  .50642846078 .00699178764 69058188000000  gmina MULTIPOLYGON (((21.38336 50...
+9           0       <NA>          0          0  .70228811549 .00901644681 83040936000000  gmina MULTIPOLYGON (((21.57283 50...
+10          0       <NA>          0          0 1.03543521462 .00938374347 07218187600000  gmina MULTIPOLYGON (((19.23756 49...
+> df_sf
+Simple feature collection with 4795 features and 1 field
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 14.24054 ymin: 49.16588 xmax: 23.89589 ymax: 54.82847
+Geodetic CRS:  WGS 84
+First 10 features:
+   ilosc                  geometry
+1      1 POINT (21.00948 52.23753)
+2      1 POINT (21.00762 52.23776)
+3      1  POINT (21.0104 52.23813)
+4      1  POINT (21.0113 52.23916)
+5      1  POINT (21.0133 52.24419)
+6      1 POINT (21.01251 52.24636)
+7      1  POINT (20.9977 52.23645)
+8      1 POINT (20.99903 52.23958)
+9      1 POINT (21.00322 52.24069)
+10     2 POINT (20.99865 52.24296)
+> dim(punkty_sf)
+[1] 4795    2
+> # 4. Dopasowanie układu współrzędnych, jeśli gminy są w innym układzie (np. EPSG:2180)
+> gminy <- st_transform(gminy, crs = 4326)  # Zmiana układu współrzędnych na WGS 84 (EPSG:4326)
+> gminy<-st_make_valid(gminy)
+> punkty_gminy <- st_join(punkty_sf, gminy, join = st_within)
+> dim(punkty_gminy)
+[1] 4795   38
+> sum(coordinates$ilosc)
+[1] 21366
+> # 3. Sumowanie liczby budynków dla każdej gminy
+> # W kolumnie `nazwa_gminy` powinna być odpowiednia nazwa gminy w danych gminy.shp
+> wynik_gminy <- punkty_gminy %>%
++   group_by(REGON) %>%  # Zastąp `nazwa_gminy` odpowiednią kolumną w danych gmin
++   summarise(total_budynkow = sum(ilosc, na.rm = TRUE))
+> dim(wynik_gminy)
+[1] 1687    3
+> sum(wynik_gminy$total_budynkow)
+[1] 21366
+> wynik_gminy_df <- as.data.frame(wynik_gminy)
+> # Usunięcie kolumny geometry, aby uniknąć konfliktów przy łączeniu
+> wynik_gminy_df$geometry <- NULL
+> # Wykonanie `left_join` na podstawie kolumny `REGON`
+> gminy_z_budynkami <- left_join(gminy, wynik_gminy_df, by = "REGON")
+> dim(gminy)
+[1] 2477   37
+> sum(wynik_gminy_df$total_budynkow,na.rm=TRUE)
+[1] 21366
+> # Sprawdzenie wynikowego połączenia
+> print(gminy_z_budynkami)
+Simple feature collection with 2477 features and 37 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 14.12288 ymin: 49.00204 xmax: 24.14578 ymax: 54.83642
+Geodetic CRS:  WGS 84
+First 10 features:
+   gml_id JPT_SJR_KO JPT_POWIER JPT_KOD_JE     JPT_NAZWA_ JPT_ORGAN_ JPT_JOR_ID WERSJA_OD WERSJA_DO WAZNY_OD WAZNY_DO JPT_KOD__1 JPT_NAZWA1 JPT_ORGAN1 JPT_WAZNA_ ID_BUFORA_
+1    <NA>        GMI       4889    3215011     Szczecinek       <NA>      13151  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13616
+2    <NA>        GMI      15063    0619072   Wola Uhruska       <NA>      13176  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13642
+3    <NA>        GMI      19465    2214023          Gniew       <NA>      13208  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13674
+4    <NA>        GMI       9068    2214032    Morzeszczyn       <NA>      13208  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13674
+5    <NA>        GMI      10903    1406062      Jasieniec       <NA>      13265  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13731
+6    <NA>        GMI      24419    1407053      Kozienice       <NA>      13266  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13732
+7    <NA>        GMI      12143    1811052         Mielec       <NA>      13407  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13767
+8    <NA>        GMI       5541    1811022         Borowa       <NA>      13407  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13767
+9    <NA>        GMI       7152    1811062 Padew Narodowa       <NA>      13407  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13767
+10   <NA>        GMI       7417    1213062       Oświęcim       <NA>      13325  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13793
+   ID_BUFORA1 ID_TECHNIC   IIP_PRZEST                           IIP_IDENTY                IIP_WERSJA JPT_KJ_IIP JPT_KJ_I_1 JPT_KJ_I_2 JPT_OPIS JPT_SPS_KO ID_BUFOR_1 JPT_ID
+1           0     828110 PL.PZGIK.200 f3535d28-7251-4b68-b534-c815f3f89259 2012-09-26T22:34:52+02:00       EGIB    3215011       <NA>     <NA>        UZG          0 828110
+2           0     828350 PL.PZGIK.200 80f0f2c3-cc9a-46c6-b106-a0b3f90742ad 2012-09-26T22:43:18+02:00       EGIB    0619072       <NA>     <NA>        UZG          0 828350
+3           0     828600 PL.PZGIK.200 4f9983c1-4c61-4908-a51a-8e5ca6b22d54 2012-09-26T22:46:25+02:00       EGIB    2214023       <NA>     <NA>        UZG          0 828600
+4           0     828604 PL.PZGIK.200 94e48aeb-a203-4d29-ba01-9aba199c1fb8 2012-09-26T22:46:25+02:00       EGIB    2214032       <NA>     <NA>        UZG          0 828604
+5           0     826035 PL.PZGIK.200 f12aa5e1-8849-46a4-bad2-ccf226bdcad0 2012-09-26T21:57:51+02:00       EGIB    1406062       <NA>     <NA>        UZG          0 826035
+6           0     826050 PL.PZGIK.200 03ad8d48-35dc-4fc8-8e3d-cdf01d08fee2 2012-09-26T21:58:00+02:00       EGIB    1407053       <NA>     <NA>        UZG          0 826050
+7           0     826304 PL.PZGIK.200 606cd21b-7250-4a14-a951-eb4493e1ef0b 2012-09-26T22:01:24+02:00       EGIB    1811052       <NA>     <NA>        UZG          0 826304
+8           0     826307 PL.PZGIK.200 2db4e6cb-71bc-457f-98f5-8f216aecbde7 2012-09-26T22:01:24+02:00       EGIB    1811022       <NA>     <NA>        UZG          0 826307
+9           0     826309 PL.PZGIK.200 bd60aaa9-2ae5-44b1-9268-c0a798b79cc7 2012-09-26T22:01:24+02:00       EGIB    1811062       <NA>     <NA>        UZG          0 826309
+10          0     826565 PL.PZGIK.200 0ced91c1-f9ee-4499-b395-d2354acfba6c 2012-09-26T22:11:49+02:00       EGIB    1213062       <NA>     <NA>        UZG          0 826565
+   JPT_POWI_1 JPT_KJ_I_3 JPT_GEOMET JPT_GEOM_1    SHAPE_LENG   SHAPE_AREA          REGON RODZAJ total_budynkow                       geometry
+1           0       <NA>          0          0   .5910644718 .00659579547 33092090800000  gmina             25 MULTIPOLYGON (((16.70842 53...
+2           0       <NA>          0          0 1.26667897699 .01943350175 11019785900000  gmina             NA MULTIPOLYGON (((23.62785 51...
+3           0       <NA>          0          0 1.17648653548 .02647713213 19167529600000  gmina              3 MULTIPOLYGON (((18.72553 53...
+4           0       <NA>          0          0  .71824335003 .01244126039 19167531000000  gmina              1 MULTIPOLYGON (((18.64127 53...
+5           0       <NA>          0          0  .72102677759 .01410220051 67022372900000  gmina             NA MULTIPOLYGON (((20.99269 51...
+6           0       <NA>          0          0 1.21859070844 .03165358518 67022333300000  gmina            146 MULTIPOLYGON (((21.58891 51...
+7           0       <NA>          0          0 1.31379185096 .01548215139 69058191000000  gmina             32 MULTIPOLYGON (((21.57641 50...
+8           0       <NA>          0          0  .50642846078 .00699178764 69058188000000  gmina              1 MULTIPOLYGON (((21.38389 50...
+9           0       <NA>          0          0  .70228811549 .00901644681 83040936000000  gmina              4 MULTIPOLYGON (((21.5729 50....
+10          0       <NA>          0          0 1.03543521462 .00938374347 07218187600000  gmina             15 MULTIPOLYGON (((19.23759 49...
+> sum(gminy_z_budynkami$total_budynkow, na.rm = TRUE)
+[1] 26895
+> uniquw_regon_gminy<-gminy%>%
++   group_by(REGON)%>%
++   summarise(count = n())
+> ### TESTY
+> # Sprawdzenie liczby unikalnych `REGON` w obu zbiorach danych
+> punkty_przypisane_wielokrotnie <- punkty_gminy %>%
++   group_by(REGON) %>%
++   summarise(ilosc_budynkow = sum(ilosc, na.rm = TRUE), liczba_punktow = n())
+> # Sprawdzenie, czy liczba punktów jest większa niż liczba budynków
+> cat("Liczba gmin, do których przypisano punkty więcej niż raz:", 
++     nrow(punkty_przypisane_wielokrotnie %>% filter(liczba_punktow > 1)), "\n")
+Liczba gmin, do których przypisano punkty więcej niż raz: 504 
+> print(punkty_przypisane_wielokrotnie %>% filter(liczba_punktow > 1))
+Simple feature collection with 504 features and 3 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: 14.24054 ymin: 49.16588 xmax: 23.77241 ymax: 54.82847
+Geodetic CRS:  WGS 84
+# A tibble: 504 x 4
+   REGON          ilosc_budynkow liczba_punktow                                                                            geometry
+ * <chr>                   <int>          <int>                                                           <MULTIPOINT [arc_degree]>
+ 1 00052676500000             12              2                                          ((15.47285 52.05229), (15.60843 52.08992))
+ 2 01326877000000             12              2                                          ((21.27427 52.11341), (21.24283 52.11573))
+ 3 01326899400000              5              2                                          ((21.31595 52.17637), (21.41012 52.13246))
+ 4 01326964000000              6              2                                            ((21.22507 52.3697), (21.25633 52.3507))
+ 5 01326967000000              7              4 ((21.11853 52.36152), (21.12228 52.36202), (21.10368 52.32172), (21.11532 52.3358))
+ 6 01326970000000              9              2                                          ((21.11501 52.47946), (21.17453 52.41279))
+ 7 01327034700000              7              3                                           ((20.69668 52.44115), (20.72628 52.4279))
+ 8 01327047100000              3              3                                          ((20.53394 52.39022), (20.50039 52.30636))
+ 9 01327051900000              4              2                                          ((21.00651 52.45501), (21.04209 52.40037))
+10 01327057700000              8              2                                          ((20.95194 52.45704), (20.85956 52.45812))
+# i 494 more rows
+# i Use `print(n = ...)` to see more rows
+> # Sprawdzenie sumy budynków dla każdego REGON po `left_join`
+> suma_po_join <- gminy_z_budynkami %>%
++   group_by(REGON) %>%
++   summarise(suma_budynkow = sum(total_budynkow, na.rm = TRUE))
+> # Sprawdzenie, czy są różnice między `suma_po_join` a `wynik_gminy_df`
+> roznice_suma <- anti_join(suma_po_join, wynik_gminy_df, by = "REGON")
+> cat("Liczba REGON z różnicą w sumie budynków po `left_join`:", nrow(roznice_suma), "\n")
+Liczba REGON z różnicą w sumie budynków po `left_join`: 561 
+> print(roznice_suma)
+Simple feature collection with 561 features and 2 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: 14.12288 ymin: 49.00204 xmax: 24.14578 ymax: 54.79707
+Geodetic CRS:  WGS 84
+# A tibble: 561 x 3
+   REGON          suma_budynkow                                                                                             geometry
+   <chr>                  <int>                                                                              <GEOMETRY [arc_degree]>
+ 1 01326920300000             0 MULTIPOLYGON (((20.77595 52.11486, 20.77695 52.11506, 20.7773 52.11509, 20.7777 52.11512, 20.7779...
+ 2 01327039900000             0 POLYGON ((20.63033 52.41635, 20.63472 52.41724, 20.63778 52.41826, 20.6405 52.41955, 20.64344 52....
+ 3 01327130600000             0 POLYGON ((20.34191 52.24842, 20.34108 52.24721, 20.3399 52.24541, 20.33958 52.24495, 20.3394 52.2...
+ 4 01589122000000             0 POLYGON ((20.28338 52.2751, 20.28372 52.27516, 20.2844 52.27526, 20.28546 52.27543, 20.28612 52.2...
+ 5 01589125000000             0 POLYGON ((20.90027 51.9214, 20.90137 51.92159, 20.9018 51.92167, 20.90194 51.9217, 20.90213 51.92...
+ 6 03023752300000             0 POLYGON ((22.90225 52.06369, 22.9024 52.06408, 22.90256 52.06448, 22.90262 52.06466, 22.9027 52.0...
+ 7 03023755200000             0 POLYGON ((22.68661 51.82441, 22.68723 51.82445, 22.6875 51.82447, 22.68814 51.82451, 22.68831 51....
+ 8 03023764100000             0 POLYGON ((22.83699 52.20218, 22.83778 52.20343, 22.83861 52.20471, 22.83974 52.20646, 22.83999 52...
+ 9 03023767000000             0 POLYGON ((23.06599 51.79954, 23.06684 51.7998, 23.06696 51.79984, 23.06709 51.79989, 23.06722 51....
+10 03023768700000             0 POLYGON ((23.03113 52.21508, 23.03117 52.21574, 23.03129 52.21645, 23.03297 52.21863, 23.0339 52....
+# i 551 more rows
+# i Use `print(n = ...)` to see more rows
+> # Usunięcie powtórzeń `total_budynkow` po `left_join`
+> gminy_z_budynkami_bez_powtorzen <- gminy_z_budynkami %>%
++   group_by(REGON) %>%
++   summarise(total_budynkow = sum(total_budynkow, na.rm = TRUE))
+> # Obliczenie sumy liczby budynków po usunięciu powtórzeń
+> suma_po_usunieciu_powtorzen <- sum(gminy_z_budynkami_bez_powtorzen$total_budynkow, na.rm = TRUE)
+> cat("Suma liczby budynków po usunięciu powtórzeń:", suma_po_usunieciu_powtorzen, "\n")
+Suma liczby budynków po usunięciu powtórzeń: 26895 
