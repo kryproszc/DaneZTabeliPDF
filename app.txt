@@ -1,22 +1,4 @@
-dataframe <- data.frame(
-  lat = c(52.229675, 52.406374, 50.064651, 50.059217),
-  lon = c(21.012230, 16.925168, 19.944981, 19.947853),
-  ilosc = c(5, 8, 3, 4)  # Ilość budynków w danej lokalizacji
-)
-
-# 3. Konwersja dataframe do obiektu przestrzennego (sf) z użyciem współrzędnych
-punkty_sf <- st_as_sf(dataframe, coords = c("lon", "lat"), crs = 4326)  # Tworzenie obiektu sf z punktów
-
-# 4. Dopasowanie układu współrzędnych, jeśli gminy są w innym układzie (np. EPSG:2180)
-gminy <- st_transform(gminy, crs = 4326)  # Zmiana układu współrzędnych na WGS 84 (EPSG:4326)
-
-# 5. Przypisanie współrzędnych do odpowiednich gmin (operacja przestrzennego połączenia)
-punkty_gminy <- st_join(punkty_sf, gminy, join = st_within)
-
-# 6. Zsumowanie liczby budynków (ilosc) w każdej gminie
-wynik <- punkty_gminy %>%
-  group_by(nazwa_gminy) %>%  # Zastąp "nazwa_gminy" odpowiednią kolumną w danych gmin
-  summarise(total_budynkow = sum(ilosc, na.rm = TRUE))
-
-# 7. Wyświetlenie wyniku
-print(wynik)
+> # 5. Przypisanie współrzędnych do odpowiednich gmin (operacja przestrzennego połączenia)
+> punkty_gminy <- st_join(punkty_sf, gminy, join = st_within)
+Error in wk_handle.wk_wkb(wkb, s2_geography_writer(oriented = oriented,  : 
+  Loop 0 is not valid: Edge 0 has duplicate vertex with edge 4
