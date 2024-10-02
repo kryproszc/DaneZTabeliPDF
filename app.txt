@@ -1,7 +1,3 @@
-library(httr)        # Do wysyłania zapytań HTTP
-library(jsonlite)    # Do pracy z danymi JSON
-library(dplyr)       # Do przetwarzania danych
-
 get_coordinates_by_postcode <- function(data) {
   # Sprawdzenie początkowej sumy ilości budynków
   initial_sum <- sum(data$ilosc, na.rm = TRUE)
@@ -27,21 +23,28 @@ get_coordinates_by_postcode <- function(data) {
       content_text <- content(response, "text", encoding = "UTF-8")
       response_json <- fromJSON(content_text, flatten = TRUE)
       
-      # Sprawdzenie, czy współrzędne są dostępne w odpowiedzi
-      if (!is.null(response_json$lat) && !is.null(response_json$lon)) {
-        # Tworzenie nowego wiersza wynikowego z danymi geograficznymi, ilością budynków i kodem
-        result_row <- data.frame(
-          latitude = response_json$lat,
-          longitude = response_json$lon,
-          ilosc = ilosc,
-          kody = postcode
-        )
+      # Sprawdzenie, czy współrzędne i kod pocztowy są dostępne w odpowiedzi
+      if (!is.null(response_json$lat) && !is.null(response_json$lon) && !is.null(response_json$postcode)) {
         
-        # Dodanie nowego wiersza do wynikowego data.frame
-        results <- rbind(results, result_row)
+        # Sprawdzenie, czy kod pocztowy w odpowiedzi zgadza się z zapytanym kodem
+        if (response_json$postcode == postcode) {
+          # Tworzenie nowego wiersza wynikowego z danymi geograficznymi, ilością budynków i kodem
+          result_row <- data.frame(
+            latitude = response_json$lat,
+            longitude = response_json$lon,
+            ilosc = ilosc,
+            kody = postcode
+          )
+          # Dodanie nowego wiersza do wynikowego data.frame
+          results <- rbind(results, result_row)
+        } else {
+          # Ostrzeżenie, jeśli zwrócony kod pocztowy różni się od zapytanego
+          warning(paste("Otrzymano niezgodny kod pocztowy dla zapytania:", postcode, 
+                        "- Kod w odpowiedzi:", response_json$postcode))
+        }
       } else {
-        # Ostrzeżenie w przypadku braku współrzędnych
-        warning(paste("Brak danych geograficznych dla kodu:", postcode))
+        # Ostrzeżenie, jeśli brak współrzędnych lub kodu pocztowego w odpowiedzi
+        warning(paste("Brak danych geograficznych lub brak kodu pocztowego w odpowiedzi dla kodu:", postcode))
       }
     } else {
       # Ostrzeżenie w przypadku błędu odpowiedzi z API
