@@ -1,4 +1,14 @@
-> # 5. Przypisanie współrzędnych do odpowiednich gmin (operacja przestrzennego połączenia)
-> punkty_gminy <- st_join(punkty_sf, gminy, join = st_within)
-Error in wk_handle.wk_wkb(wkb, s2_geography_writer(oriented = oriented,  : 
-  Loop 0 is not valid: Edge 0 has duplicate vertex with edge 4
+print(wynik)
+Simple feature collection with 4 features and 1 field
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 16.92517 ymin: 50.05922 xmax: 21.01223 ymax: 52.40637
+Geodetic CRS:  WGS 84
+# A tibble: 4 x 2
+              geometry total_budynkow
+  <POINT [arc_degree]>          <dbl>
+1  (21.01223 52.22968)              5
+2  (16.92517 52.40637)              8
+3  (19.94498 50.06465)              3
+4  (19.94785 50.05922)              4
+> 
