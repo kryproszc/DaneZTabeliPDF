@@ -1,5 +1,44 @@
-else if (ulica == "" && (miasto != "" || wojewodztwo != "" || kraj != "" || kodPocztowy != "")) {
-  sklejone = kodPocztowy + ";" + miasto;
-  flaga1 = 4;
-  //losujemy budynek z sklejone
+if (ulica == "" && kodPocztowy == "" && miasto == "" && wojewodztwo == "" &&
+    kraj == "") {
+  flaga1 = 0;
+  //tu będzie losowanie z rozkłądu kodu pocztowego i pozniej z tego kodu pocztowego losowanie budynku
 }
+else if (ulica != "" && kodPocztowy == "" && miasto != "" && ulica!=miasto) {
+  sklejone = ulica + ";" + miasto;
+  flaga1 = 2;
+  // koduje
+}
+else if (ulica != "" && kodPocztowy != "" && miasto != "" && ulica.find(miasto) != std::string::npos) {
+  sklejone = ulica + ";" + kodPocztowy;
+  flaga1 = 3;
+}
+else if (ulica != "" && kodPocztowy != "" && miasto != "" && ulica == miasto) {
+  flaga1 = 4;
+  sklejone = ulica + ";" + kodPocztowy
+    
+    // to losujemy jakis budynek z tego ulica;kodPocztowy czyli z tego sklejone
+    //robimy to po to zeby nie bylo w jednej miejscowosci duzo puntow w jendym iejscu jak si ebedzie przypadek powtarzal
+}
+else if (ulica == "" && kodPocztowy != "" && miasto != "") {
+  sklejone = kodPocztowy + ";" + miasto;
+  flaga1 = 5;
+  //losujemy budynek z sklejone czyli kodPocztowy + ";" + miasto;
+}
+else if (ulica == "" && kodPocztowy != "" && miasto == "") {
+  sklejone = kodPocztowy 
+  flaga1 = 6;
+  //losujemy budynek z sklejone, czyli sam kod pocztowy
+}
+else if (ulica == "" && kodPocztowy == "" && miasto == "") {
+  flaga1 = 7;
+// losujemy z rozkladu kod pocztwoy i z niego budynki
+//tutaj nie wazne co jest w wojewodztwie i kraju zawsze bedzie losowanie
+}
+else if{
+  sklejone = ulica + ";" + kodPocztowy + ";" + miasto + ";" + wojewodztwo +
+    ";" + kraj;
+  flaga1 = 1;
+}
+
+
+
