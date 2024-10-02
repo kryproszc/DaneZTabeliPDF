@@ -1,10 +1,49 @@
-wynik_gminy_df <- as.data.frame(wynik_gminy)
-
-# Usunięcie kolumny geometry, aby uniknąć konfliktów przy łączeniu
-wynik_gminy_df$geometry <- NULL
-
-# Wykonanie `left_join` na podstawie kolumny `REGON`
-gminy_z_budynkami <- left_join(gminy, wynik_gminy_df, by = "REGON")
-
-# Sprawdzenie wynikowego połączenia
-print(gminy_z_budynkami)
+> wynik_gminy_df <- as.data.frame(wynik_gminy)
+> # Usunięcie kolumny geometry, aby uniknąć konfliktów przy łączeniu
+> wynik_gminy_df$geometry <- NULL
+> # Wykonanie `left_join` na podstawie kolumny `REGON`
+> gminy_z_budynkami <- left_join(gminy, wynik_gminy_df, by = "REGON")
+> # Sprawdzenie wynikowego połączenia
+> print(gminy_z_budynkami)
+Simple feature collection with 2477 features and 37 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 14.12288 ymin: 49.00204 xmax: 24.14578 ymax: 54.83642
+Geodetic CRS:  WGS 84
+First 10 features:
+   gml_id JPT_SJR_KO JPT_POWIER JPT_KOD_JE     JPT_NAZWA_ JPT_ORGAN_ JPT_JOR_ID WERSJA_OD WERSJA_DO WAZNY_OD WAZNY_DO JPT_KOD__1 JPT_NAZWA1 JPT_ORGAN1 JPT_WAZNA_ ID_BUFORA_
+1    <NA>        GMI       4889    3215011     Szczecinek       <NA>      13151  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13616
+2    <NA>        GMI      15063    0619072   Wola Uhruska       <NA>      13176  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13642
+3    <NA>        GMI      19465    2214023          Gniew       <NA>      13208  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13674
+4    <NA>        GMI       9068    2214032    Morzeszczyn       <NA>      13208  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13674
+5    <NA>        GMI      10903    1406062      Jasieniec       <NA>      13265  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13731
+6    <NA>        GMI      24419    1407053      Kozienice       <NA>      13266  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13732
+7    <NA>        GMI      12143    1811052         Mielec       <NA>      13407  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13767
+8    <NA>        GMI       5541    1811022         Borowa       <NA>      13407  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13767
+9    <NA>        GMI       7152    1811062 Padew Narodowa       <NA>      13407  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13767
+10   <NA>        GMI       7417    1213062       Oświęcim       <NA>      13325  20120926         0 20120926        0       <NA>       <NA>        NZN        NZN      13793
+   ID_BUFORA1 ID_TECHNIC   IIP_PRZEST                           IIP_IDENTY                IIP_WERSJA JPT_KJ_IIP JPT_KJ_I_1 JPT_KJ_I_2 JPT_OPIS JPT_SPS_KO ID_BUFOR_1 JPT_ID
+1           0     828110 PL.PZGIK.200 f3535d28-7251-4b68-b534-c815f3f89259 2012-09-26T22:34:52+02:00       EGIB    3215011       <NA>     <NA>        UZG          0 828110
+2           0     828350 PL.PZGIK.200 80f0f2c3-cc9a-46c6-b106-a0b3f90742ad 2012-09-26T22:43:18+02:00       EGIB    0619072       <NA>     <NA>        UZG          0 828350
+3           0     828600 PL.PZGIK.200 4f9983c1-4c61-4908-a51a-8e5ca6b22d54 2012-09-26T22:46:25+02:00       EGIB    2214023       <NA>     <NA>        UZG          0 828600
+4           0     828604 PL.PZGIK.200 94e48aeb-a203-4d29-ba01-9aba199c1fb8 2012-09-26T22:46:25+02:00       EGIB    2214032       <NA>     <NA>        UZG          0 828604
+5           0     826035 PL.PZGIK.200 f12aa5e1-8849-46a4-bad2-ccf226bdcad0 2012-09-26T21:57:51+02:00       EGIB    1406062       <NA>     <NA>        UZG          0 826035
+6           0     826050 PL.PZGIK.200 03ad8d48-35dc-4fc8-8e3d-cdf01d08fee2 2012-09-26T21:58:00+02:00       EGIB    1407053       <NA>     <NA>        UZG          0 826050
+7           0     826304 PL.PZGIK.200 606cd21b-7250-4a14-a951-eb4493e1ef0b 2012-09-26T22:01:24+02:00       EGIB    1811052       <NA>     <NA>        UZG          0 826304
+8           0     826307 PL.PZGIK.200 2db4e6cb-71bc-457f-98f5-8f216aecbde7 2012-09-26T22:01:24+02:00       EGIB    1811022       <NA>     <NA>        UZG          0 826307
+9           0     826309 PL.PZGIK.200 bd60aaa9-2ae5-44b1-9268-c0a798b79cc7 2012-09-26T22:01:24+02:00       EGIB    1811062       <NA>     <NA>        UZG          0 826309
+10          0     826565 PL.PZGIK.200 0ced91c1-f9ee-4499-b395-d2354acfba6c 2012-09-26T22:11:49+02:00       EGIB    1213062       <NA>     <NA>        UZG          0 826565
+   JPT_POWI_1 JPT_KJ_I_3 JPT_GEOMET JPT_GEOM_1    SHAPE_LENG   SHAPE_AREA          REGON RODZAJ total_budynkow                       geometry
+1           0       <NA>          0          0   .5910644718 .00659579547 33092090800000  gmina             NA MULTIPOLYGON (((16.70842 53...
+2           0       <NA>          0          0 1.26667897699 .01943350175 11019785900000  gmina             NA MULTIPOLYGON (((23.62785 51...
+3           0       <NA>          0          0 1.17648653548 .02647713213 19167529600000  gmina             NA MULTIPOLYGON (((18.72553 53...
+4           0       <NA>          0          0  .71824335003 .01244126039 19167531000000  gmina             NA MULTIPOLYGON (((18.64127 53...
+5           0       <NA>          0          0  .72102677759 .01410220051 67022372900000  gmina             NA MULTIPOLYGON (((20.99269 51...
+6           0       <NA>          0          0 1.21859070844 .03165358518 67022333300000  gmina             NA MULTIPOLYGON (((21.58891 51...
+7           0       <NA>          0          0 1.31379185096 .01548215139 69058191000000  gmina             NA MULTIPOLYGON (((21.57641 50...
+8           0       <NA>          0          0  .50642846078 .00699178764 69058188000000  gmina             NA MULTIPOLYGON (((21.38389 50...
+9           0       <NA>          0          0  .70228811549 .00901644681 83040936000000  gmina             NA MULTIPOLYGON (((21.5729 50....
+10          0       <NA>          0          0 1.03543521462 .00938374347 07218187600000  gmina             NA MULTIPOLYGON (((19.23759 49...
+> sum(gminy_z_budynkami$total_budynkow)
+[1] NA
+>
