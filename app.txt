@@ -1,6 +1,6 @@
- all(ilosc_regon_aggregated$REGON %in% gminy_unikaty$REGON)
-[1] FALSE
-> 
-> setdiff(ilosc_regon_aggregated$REGON, gminy_unikaty$REGON)
-[1] NA
-> 
+dim(gminy)
+[1] 2477   37
+> length((gminy$IIP_IDENTY))
+[1] 2477
+> length(unique(gminy$IIP_IDENTY))
+[1] 2477
