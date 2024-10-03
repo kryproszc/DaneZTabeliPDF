@@ -1,8 +1,60 @@
-coordinates_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)  # Zamiana coordinates na sf
-coordinates_with_gminy <- st_join(coordinates_sf, punkty_gminy, join = st_within)
-
-budynki_w_gminach <- coordinates_with_gminy %>%
-  group_by(REGON) %>%
-  summarise(total_budynkow = sum(ilosc, na.rm = TRUE))
-
-punkty_gminy_z_budynkami <- left_join(punkty_gminy, budynki_w_gminach, by = "REGON")
+> coordinates_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)  # Zamiana coordinates na sf
+> coordinates_with_gminy <- st_join(coordinates_sf, punkty_gminy, join = st_within)
+> coordinates_sf
+Simple feature collection with 4795 features and 1 field
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 14.24054 ymin: 49.16588 xmax: 23.89589 ymax: 54.82847
+Geodetic CRS:  WGS 84
+First 10 features:
+   ilosc                  geometry
+1      1 POINT (21.00948 52.23753)
+2      1 POINT (21.00762 52.23776)
+3      1  POINT (21.0104 52.23813)
+4      1  POINT (21.0113 52.23916)
+5      1  POINT (21.0133 52.24419)
+6      1 POINT (21.01251 52.24636)
+7      1  POINT (20.9977 52.23645)
+8      1 POINT (20.99903 52.23958)
+9      1 POINT (21.00322 52.24069)
+10     2 POINT (20.99865 52.24296)
+> coordinates_with_gminy
+Simple feature collection with 4941 features and 38 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 14.24054 ymin: 49.16588 xmax: 23.89589 ymax: 54.82847
+Geodetic CRS:  WGS 84
+First 10 features:
+   ilosc.x ilosc.y gml_id JPT_SJR_KO JPT_POWIER JPT_KOD_JE JPT_NAZWA_ JPT_ORGAN_ JPT_JOR_ID WERSJA_OD WERSJA_DO WAZNY_OD WAZNY_DO JPT_KOD__1 JPT_NAZWA1 JPT_ORGAN1
+1        1      NA   <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>      <NA>      <NA>     <NA>     <NA>       <NA>       <NA>       <NA>
+2        1      NA   <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>      <NA>      <NA>     <NA>     <NA>       <NA>       <NA>       <NA>
+3        1      NA   <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>      <NA>      <NA>     <NA>     <NA>       <NA>       <NA>       <NA>
+4        1      NA   <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>      <NA>      <NA>     <NA>     <NA>       <NA>       <NA>       <NA>
+5        1      NA   <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>      <NA>      <NA>     <NA>     <NA>       <NA>       <NA>       <NA>
+6        1      NA   <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>      <NA>      <NA>     <NA>     <NA>       <NA>       <NA>       <NA>
+7        1      NA   <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>      <NA>      <NA>     <NA>     <NA>       <NA>       <NA>       <NA>
+8        1      NA   <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>      <NA>      <NA>     <NA>     <NA>       <NA>       <NA>       <NA>
+9        1      NA   <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>      <NA>      <NA>     <NA>     <NA>       <NA>       <NA>       <NA>
+10       2      NA   <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>      <NA>      <NA>     <NA>     <NA>       <NA>       <NA>       <NA>
+   JPT_WAZNA_ ID_BUFORA_ ID_BUFORA1 ID_TECHNIC IIP_PRZEST IIP_IDENTY IIP_WERSJA JPT_KJ_IIP JPT_KJ_I_1 JPT_KJ_I_2 JPT_OPIS JPT_SPS_KO ID_BUFOR_1 JPT_ID JPT_POWI_1 JPT_KJ_I_3
+1        <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>     <NA>       <NA>       <NA>   <NA>       <NA>       <NA>
+2        <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>     <NA>       <NA>       <NA>   <NA>       <NA>       <NA>
+3        <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>     <NA>       <NA>       <NA>   <NA>       <NA>       <NA>
+4        <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>     <NA>       <NA>       <NA>   <NA>       <NA>       <NA>
+5        <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>     <NA>       <NA>       <NA>   <NA>       <NA>       <NA>
+6        <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>     <NA>       <NA>       <NA>   <NA>       <NA>       <NA>
+7        <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>     <NA>       <NA>       <NA>   <NA>       <NA>       <NA>
+8        <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>     <NA>       <NA>       <NA>   <NA>       <NA>       <NA>
+9        <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>     <NA>       <NA>       <NA>   <NA>       <NA>       <NA>
+10       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>       <NA>     <NA>       <NA>       <NA>   <NA>       <NA>       <NA>
+   JPT_GEOMET JPT_GEOM_1 SHAPE_LENG SHAPE_AREA REGON RODZAJ                  geometry
+1        <NA>       <NA>       <NA>       <NA>  <NA>   <NA> POINT (21.00948 52.23753)
+2        <NA>       <NA>       <NA>       <NA>  <NA>   <NA> POINT (21.00762 52.23776)
+3        <NA>       <NA>       <NA>       <NA>  <NA>   <NA>  POINT (21.0104 52.23813)
+4        <NA>       <NA>       <NA>       <NA>  <NA>   <NA>  POINT (21.0113 52.23916)
+5        <NA>       <NA>       <NA>       <NA>  <NA>   <NA>  POINT (21.0133 52.24419)
+6        <NA>       <NA>       <NA>       <NA>  <NA>   <NA> POINT (21.01251 52.24636)
+7        <NA>       <NA>       <NA>       <NA>  <NA>   <NA>  POINT (20.9977 52.23645)
+8        <NA>       <NA>       <NA>       <NA>  <NA>   <NA> POINT (20.99903 52.23958)
+9        <NA>       <NA>       <NA>       <NA>  <NA>   <NA> POINT (21.00322 52.24069)
+10       <NA>       <NA>       <NA>       <NA>  <NA>   <NA> POINT (20.99865 52.24296)
