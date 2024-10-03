@@ -1,21 +1,11 @@
-kody <- trimws(kody)
+data_input$kod <- gsub(" ", "", trimws(data_input$kod))
 
-# Usuwanie spacji w środku kodu, np. "22 -111" na "22-111"
-kody <- gsub("\\s+", "", kody)
+# 2. Usunięcie pustych miejsc i wartości NA
+data_input <- data_input[!is.na(data_input$kod) & data_input$kod != "", ]
 
-# Usunięcie wartości NA i pustych miejsc
-kody <- kody[!is.na(kody) & kody != ""]
+# 3. Tworzenie tabeli częstotliwości kodów pocztowych
+# - Zliczenie wystąpień każdego kodu
+kod_freq <- as.data.frame(table(data_input$kod))
 
-# 2. Sprawdzenie poprawności formatu XX-XXX
-# Definiujemy wzorzec dla kodu pocztowego w Polsce
-valid_pattern <- "^\\d{2}-\\d{3}$"
-
-# Tworzenie logicznego wektora z informacją, które kody są poprawne
-valid_kody <- grepl(valid_pattern, kody)
-
-# Filtracja: pozostawiamy tylko kody, które mają poprawny format
-kody_poprawne <- kody[valid_kody]
-
-# 3. Wynik: wyświetlenie poprawnych kodów pocztowych
-print("Poprawne kody pocztowe:")
-print(kody_poprawne)
+# 4. Zmiana nazw kolumn
+colnames(kod_freq) <- c("Kod", "Ilosc")
