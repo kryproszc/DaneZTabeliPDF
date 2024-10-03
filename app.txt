@@ -1,8 +1,6 @@
-valid_pattern <- "^\\d{2}-\\d{3}$"
+kod_freq_valid <- kod_freq_valid[grepl("^[0-9]{2}-[0-9]{3}$", kod_freq_valid$kod), ]
 
-# Tworzymy nowy dataframe zawierający tylko kody, które mają poprawny format
-kod_freq_valid <- kod_freq[grepl(valid_pattern, kod_freq$kod), ]
 
-# Wyświetlenie wynikowego dataframe z poprawnymi kodami
-print("Kody z poprawnym formatem:")
-print(kod_freq_valid)
+kod_freq_valid <- kod_freq_valid[!(kod_freq_valid$kod %in% c("00-950", "00-999")), ]
+kod_freq_valid$kod <- gsub("\\s+", "", kod_freq_valid$kod)  # Usunięcie spacji
+kod_freq_valid$kod <- toupper(kod_freq_valid$kod)  # Konwersja do wielkich liter
