@@ -1,11 +1,1 @@
 data_input$kod <- gsub(" ", "", trimws(data_input$kod))
-
-# 2. Usunięcie pustych miejsc i wartości NA
-data_input <- data_input[!is.na(data_input$kod) & data_input$kod != "", ]
-
-# 3. Tworzenie tabeli częstotliwości kodów pocztowych
-# - Zliczenie wystąpień każdego kodu
-kod_freq <- as.data.frame(table(data_input$kod))
-
-# 4. Zmiana nazw kolumn
-colnames(kod_freq) <- c("Kod", "Ilosc")
