@@ -1,5 +1,4 @@
->   coordinates_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)
->   gminy <- st_transform(gminy, st_crs(coordinates_sf))
->   coordinates_with_ident <- st_join(coordinates_sf, gminy["IIP_IDENTY"], join = st_within)
-Error in wk_handle.wk_wkb(wkb, s2_geography_writer(oriented = oriented,  : 
-  Loop 0 is not valid: Edge 0 has duplicate vertex with edge 4
+if (sum(!gminy_valid) > 0) {
+  # Naprawa niepoprawnych geometrii
+  gminy <- st_make_valid(gminy)
+}
