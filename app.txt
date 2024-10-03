@@ -1,17 +1,37 @@
-# Konwersja obiektu sf do data.frame
-coordinates_with_regon_df <- as.data.frame(coordinates_with_regon)
+# Sprawdzenie unikalności REGON w `coordinates_with_regon_df`
+distinct_coordinates <- coordinates_with_regon_df %>% 
+  distinct(REGON, ilosc)
 
-# Usunięcie kolumny geometry, ponieważ `data.frame` nie obsługuje geometrii
-coordinates_with_regon_df <- coordinates_with_regon_df %>% select(-geometry)
+# Sprawdzenie, czy suma budynków odpowiada początkowej liczbie
+sum_initial_buildings <- sum(distinct_coordinates$ilosc, na.rm = TRUE)
 
-# Grupowanie i sumowanie liczby budynków dla każdej gminy na podstawie REGON
-building_summary <- coordinates_with_regon_df %>%
+# Grupowanie danych z `coordinates_with_regon_df` na podstawie REGON i sumowanie liczby budynków
+building_summary <- distinct_coordinates %>%
   group_by(REGON) %>%
   summarise(total_buildings = sum(ilosc, na.rm = TRUE))
 
-# Połączenie z danymi gminy na podstawie REGON
+# Połączenie danych `gminy` z `building_summary` na podstawie REGON
 gminy_with_buildings <- gminy %>%
   left_join(building_summary, by = "REGON")
 
-# Sprawdzenie wyników
-print(gminy_with_buildings)
+# Sprawdzenie sumy budynków po połączeniu
+sum_final_buildings <- sum(gminy_with_buildings$total_buildings, na.rm = TRUE)
+
+# Wyświetlenie sumy początkowej i końcowej do porównania
+cat("Suma budynków początkowa:", sum_initial_buildings, "\n")
+cat("Suma budynków po połączeniu:", sum_final_buildings, "\n")
+
+
+
+duplicated_coords <- coordinates_with_regon_df %>%
+  filter(duplicated(paste(REGON, ilosc)))
+
+cat("Liczba zduplikowanych wpisów:", nrow(duplicated_coords), "\n")
+
+building_summary %>%
+  arrange(desc(total_buildings)) %>%
+  head(10) %>%
+  print()
+
+cat("Liczba gmin w `gminy`:", nrow(gminy), "\n")
+cat("Liczba gmin w `gminy_with_buildings`:", nrow(gminy_with_buildings), "\n")
