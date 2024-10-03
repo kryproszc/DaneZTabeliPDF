@@ -1,32 +1,19 @@
- cat("Suma budynków początkowa:", sum_initial_buildings, "\n")
-Suma budynków początkowa: 17693 
-> cat("Suma budynków po połączeniu:", sum_final_buildings, "\n")
-Suma budynków po połączeniu: 23031 
-> duplicated_coords <- coordinates_with_regon_df %>%
-+   filter(duplicated(paste(REGON, ilosc)))
-> 
-> cat("Liczba zduplikowanych wpisów:", nrow(duplicated_coords), "\n")
-Liczba zduplikowanych wpisów: 2351 
-> 
-> building_summary %>%
-+   arrange(desc(total_buildings)) %>%
-+   head(10) %>%
-+   print()
-# A tibble: 10 x 2
-   REGON          total_buildings
-   <chr>                    <int>
- 1 43101992200000             302
- 2 17074773800000             193
- 3 27625526900000             161
- 4 43101960300000             160
- 5 19167557000000             159
- 6 43101935900000             149
- 7 67022333300000             146
- 8 27625537000000             135
- 9 07218174100000             134
-10 43102011500000             130
-> 
-> cat("Liczba gmin w `gminy`:", nrow(gminy), "\n")
-Liczba gmin w `gminy`: 2477 
-> cat("Liczba gmin w `gminy_with_buildings`:", nrow(gminy_with_buildings), "\n")
-Liczba gmin w `gminy_with_buildings`: 2477 
+coordinates_no_duplicates <- coordinates_with_regon_df %>% 
+  distinct(REGON, geometry, .keep_all = TRUE)
+
+# Sprawdzenie sumy po usunięciu duplikatów
+sum_without_duplicates <- sum(coordinates_no_duplicates$ilosc, na.rm = TRUE)
+cat("Suma budynków po usunięciu duplikatów:", sum_without_duplicates, "\n")
+
+# Grupowanie i sumowanie liczby budynków po usunięciu duplikatów
+building_summary_no_duplicates <- coordinates_no_duplicates %>%
+  group_by(REGON) %>%
+  summarise(total_buildings = sum(ilosc, na.rm = TRUE))
+
+# Połączenie danych z `gminy` po usunięciu duplikatów
+gminy_with_buildings_no_duplicates <- gminy %>%
+  left_join(building_summary_no_duplicates, by = "REGON")
+
+# Sprawdzenie sumy budynków po połączeniu z `gminy`
+sum_final_no_duplicates <- sum(gminy_with_buildings_no_duplicates$total_buildings, na.rm = TRUE)
+cat("Suma budynków po połączeniu po usunięciu duplikatów:", sum_final_no_duplicates, "\n")
