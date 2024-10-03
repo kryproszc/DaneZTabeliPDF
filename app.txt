@@ -1,3 +1,1 @@
-plot(st_geometry(gminy), col = "lightgray", main = "Punkty bez przypisanego IIP_IDENTY")
-plot(st_geometry(coordinates_nieprzypisane), col = "red", add = TRUE)
-legend("bottomleft", legend = c("Gminy", "Punkty bez IIP_IDENTY"), fill = c("lightgray", "red"))
+input_data$prawdopodobienstwo <- input_data$ilosc / sum(input_data$ilosc, na.rm = TRUE)
