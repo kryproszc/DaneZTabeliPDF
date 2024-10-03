@@ -1,6 +1,8 @@
-gminy_bez_duplikatow <- gminy %>%
-  group_by(REGON) %>%
-  filter(row_number() == 1)
-
-gminy_z_budynkami <- left_join(gminy_bez_duplikatow, wynik_gminy_df, by = "REGON")
-sum(gminy_z_budynkami$total_budynkow, na.rm = TRUE)
+ gminy_bez_duplikatow <- gminy %>%
++   group_by(REGON) %>%
++   filter(row_number() == 1)
+> gminy_z_budynkami <- left_join(gminy_bez_duplikatow, wynik_gminy_df, by = "REGON")
+> sum(gminy_z_budynkami$total_budynkow, na.rm = TRUE)
+[1] 21355
+> sum(wynik_gminy_df$total_budynkow,na.rm=TRUE)
+[1] 21366
