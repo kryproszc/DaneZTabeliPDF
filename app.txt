@@ -1,9 +1,16 @@
-> # Przekształcenie geometrii na tekst, aby móc usunąć duplikaty na jej podstawie
-> coordinates_no_duplicates <- coordinates_with_regon_df %>%
-+   mutate(geometry_text = st_as_text(geometry)) %>%
-+   distinct(REGON, geometry_text, .keep_all = TRUE) %>%
-+   select(-geometry_text)  # Usunięcie pomocniczej kolumny
-Error in `mutate()`:
-i In argument: `geometry_text = st_as_text(geometry)`.
-Caused by error in `st_as_text()`:
-! object 'geometry' not found
+# Sprawdzenie czy coordinates_with_regon_df jest obiektem sf, jeśli nie, to zamiana
+if (!inherits(coordinates_with_regon_df, "sf")) {
+  coordinates_with_regon_df <- st_as_sf(coordinates_with_regon_df, coords = c("longitude", "latitude"), crs = 4326)
+}
+
+
+coordinates_no_duplicates <- coordinates_with_regon_df %>%
+  mutate(geometry_text = st_as_text(geometry)) %>%  # Przekształcenie geometrii na tekst
+  distinct(REGON, geometry_text, .keep_all = TRUE) %>%  # Usunięcie duplikatów
+  select(-geometry_text)  # Usunięcie pomocniczej kolumny
+
+
+str(coordinates_with_regon_df)
+
+coordinates_no_duplicates <- coordinates_with_regon_df %>%
+  distinct(REGON, st_geometry(.), .keep_all = TRUE)
