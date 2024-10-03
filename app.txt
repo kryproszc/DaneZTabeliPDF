@@ -1,6 +1,34 @@
-dim(gminy)
-[1] 2477   37
-> length((gminy$IIP_IDENTY))
-[1] 2477
-> length(unique(gminy$IIP_IDENTY))
-[1] 2477
+# Założenie: Oba zbiory danych `coordinates` oraz `gminy` są już wczytane i przekształcone na obiekty `sf`
+
+# Krok 1: Konwersja coordinates do obiektu sf (jeśli nie zostało to wcześniej wykonane)
+coordinates_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)
+
+# Krok 2: Upewnienie się, że gminy i coordinates_sf są w tym samym układzie współrzędnych (CRS)
+gminy <- st_transform(gminy, st_crs(coordinates_sf))
+
+# Krok 3: Przestrzenne łączenie `coordinates` z `gminy`, aby przypisać `IIP_IDENTY` do każdego punktu
+coordinates_with_ident <- st_join(coordinates_sf, gminy["IIP_IDENTY"], join = st_within)
+
+# Krok 4: Konwersja wyniku do zwykłego dataframe (usunięcie geometrii)
+coordinates_df <- as.data.frame(st_drop_geometry(coordinates_with_ident))
+
+# Krok 5: Sprawdzenie, czy są wartości `NA` w `IIP_IDENTY`
+# Usunięcie punktów, które nie zostały przypisane do żadnej gminy (brakujące `IIP_IDENTY`)
+coordinates_df <- coordinates_df[!is.na(coordinates_df$IIP_IDENTY), ]
+
+# Krok 6: Agregacja `ilosc` na podstawie unikalnych `IIP_IDENTY`
+ilosc_ident_aggregated <- coordinates_df %>%
+  group_by(IIP_IDENTY) %>%
+  summarise(ilosc = sum(ilosc, na.rm = TRUE)) %>%
+  ungroup()
+
+# Krok 7: Dodanie kolumny `ilosc` do `gminy` na podstawie `IIP_IDENTY`
+gminy <- gminy %>%
+  left_join(ilosc_ident_aggregated, by = "IIP_IDENTY")
+
+# Krok 8: Sprawdzenie wynikowego zbioru danych
+print(gminy)
+
+# Opcjonalnie: Wyświetlenie informacji o brakujących `IIP_IDENTY`
+brakujace_ident <- setdiff(ilosc_ident_aggregated$IIP_IDENTY, gminy$IIP_IDENTY)
+print(paste("Brakujące IIP_IDENTY:", brakujace_ident))
