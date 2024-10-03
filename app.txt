@@ -1,20 +1,6 @@
-data_input <- data.frame(kod = c("22-111", "22-111 ", "22 -111", NA, "", "33-444", " 33-444", "33 - 444"))
+valid_pattern <- "^\\d{2}-\\d{3}$"
+kod_freq$Valid_Format <- grepl(valid_pattern, kod_freq$kod)
+invalid_kody <- kod_freq[!kod_freq$Valid_Format, ]
+print("Niepoprawne kody pocztowe:")
+print(invalid_kody)
 
-# 1. Oczyszczanie danych:
-# - Usunięcie białych znaków na początku i końcu,
-# - Usunięcie spacji w środku kodu (np. "22 -111" na "22-111"),
-# - Zamiana na wielkie litery (opcjonalnie)
-data_input$kod <- gsub(" ", "", trimws(data_input$kod))
-
-# 2. Usunięcie pustych miejsc i wartości NA
-data_input <- data_input[!is.na(data_input$kod) & data_input$kod != "", ]
-
-# 3. Tworzenie tabeli częstotliwości kodów pocztowych
-# - Zliczenie wystąpień każdego kodu
-kod_freq <- as.data.frame(table(data_input$kod))
-
-# 4. Zmiana nazw kolumn
-colnames(kod_freq) <- c("Kod", "Ilosc")
-
-# 5. Wyświetlenie wynikowego dataframe
-print(kod_freq)
