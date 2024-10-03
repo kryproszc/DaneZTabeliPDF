@@ -1,25 +1,14 @@
-# Wczytanie bibliotek
-library(sf)
-library(dplyr)
+# Upewnij się, że `coordinates_with_regon` jest obiektem sf, ale bez geometrii do join
+coordinates_df <- as.data.frame(st_drop_geometry(coordinates_with_regon))
 
-# Zakładam, że oba zbiory są już wczytane: coordinates i gminy_unikaty
+# Sumowanie liczby wystąpień dla każdego REGON w `coordinates_with_regon`
+ilosc_regon <- coordinates_df %>%
+  group_by(REGON) %>%
+  summarise(ilosc = sum(ilosc, na.rm = TRUE))
 
-# Konwersja zbioru coordinates do obiektu sf
-coordinates_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)
+# Dodanie kolumny `ilosc` do `gminy_unikaty` na podstawie `REGON`
+gminy_unikaty <- gminy_unikaty %>%
+  left_join(ilosc_regon, by = "REGON")
 
-# Sprawdzenie systemu współrzędnych obu zbiorów
-st_crs(gminy_unikaty)
-st_crs(coordinates_sf)
-
-# Jeśli systemy współrzędnych są różne, należy je ujednolicić (transformacja do tego samego CRS)
-# Transformacja coordinates do CRS gminy_unikaty (jeśli to konieczne)
-coordinates_sf <- st_transform(coordinates_sf, st_crs(gminy_unikaty))
-
-# Przestrzenne przypisanie (spatial join) – przypisujemy regon do coordinates
-coordinates_with_regon <- st_join(coordinates_sf, gminy_unikaty["REGON"], join = st_within)
-
-# Sprawdzenie wyniku
-print(coordinates_with_regon)
-
-# Opcjonalnie, możesz zapisać wynik do nowego pliku
-# st_write(coordinates_with_regon, "coordinates_with_regon.shp")
+# Sprawdzenie wynikowego zbioru danych
+print(gminy_unikaty)
