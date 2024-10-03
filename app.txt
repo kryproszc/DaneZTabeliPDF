@@ -1,35 +1,28 @@
-# Sprawdzenie, czy punkty są przypisane do więcej niż jednej gminy
-punkty_przypisane_wielokrotnie <- punkty_gminy %>%
-  group_by(REGON) %>%
-  summarise(ilosc_budynkow = sum(ilosc, na.rm = TRUE), liczba_punktow = n()) %>%
-  filter(liczba_punktow > 1)
 
-# Wynik pokazuje gminy, do których punkty są przypisane wielokrotnie
-cat("Liczba gmin, do których punkty przypisano wielokrotnie:", nrow(punkty_przypisane_wielokrotnie), "\n")
-print(punkty_przypisane_wielokrotnie)
-
-
-# Poprawne przypisanie punktów do gmin przy użyciu `st_join`
-punkty_sf <- st_make_valid(punkty_sf)
-gminy <- st_make_valid(gminy)
-
+# Przestrzenne przypisanie punktów do gmin
+gminy <- st_transform(gminy, crs = 4326)  # Upewnienie się, że układ współrzędnych jest ten sam
 punkty_gminy <- st_join(punkty_sf, gminy, join = st_within)
+dim(punkty_gminy)
+sum(coordinates$ilosc)
 
-# Sprawdzenie, czy wszystkie `REGON` w `gminy` są jednolite
-unique_regon_gminy <- unique(gminy$REGON)
-cat("Liczba unikalnych `REGON` w gminy:", length(unique_regon_gminy), "\n")
+# 3. Sumowanie liczby budynków dla każdej gminy
+# W kolumnie `nazwa_gminy` powinna być odpowiednia nazwa gminy w danych gminy.shp
+wynik_gminy <- punkty_gminy %>%
+  group_by(REGON) %>%  # Zastąp `nazwa_gminy` odpowiednią kolumną w danych gmin
+  summarise(total_budynkow = sum(ilosc, na.rm = TRUE))
+dim(wynik_gminy)
+sum(wynik_gminy$total_budynkow)
 
-# Porównanie z `wynik_gminy_df`
-unique_regon_wynik <- unique(wynik_gminy_df$REGON)
-cat("Liczba unikalnych `REGON` w wynik_gminy_df:", length(unique_regon_wynik), "\n")
-Przywrócenie popraw
+wynik_gminy_df <- as.data.frame(wynik_gminy)
 
- Aktualizacja `total_budynkow` na podstawie `wynik_gminy_df`
-gminy_z_budynkami <- gminy_z_budynkami %>%
-  left_join(wynik_gminy_df, by = "REGON", suffix = c("", "_corrected"))
+# Usunięcie kolumny geometry, aby uniknąć konfliktów przy łączeniu
+wynik_gminy_df$geometry <- NULL
 
-gminy_z_budynkami$total_budynkow <- ifelse(!is.na(gminy_z_budynkami$total_budynkow_corrected),
-                                           gminy_z_budynkami$total_budynkow_corrected,
-                                           gminy_z_budynkami$total_budynkow)
-
-punkty_gminy <- st_join(punkty_sf, gminy, join = st_intersects)
+# Wykonanie `left_join` na podstawie kolumny `REGON`
+gminy_z_budynkami <- left_join(gminy, wynik_gminy_df, by = "REGON")
+dim(gminy)
+dim(gminy_z_budynkami)
+sum(wynik_gminy_df$total_budynkow,na.rm=TRUE)
+# Sprawdzenie wynikowego połączenia
+print(gminy_z_budynkami)
+sum(gminy_z_budynkami$total_budynkow, na.rm = TRUE)
