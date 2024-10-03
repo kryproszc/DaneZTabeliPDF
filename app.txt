@@ -1,10 +1,7 @@
-coordinates_with_regon_sf <- st_as_sf(coordinates_with_regon_df, coords = c("longitude", "latitude"), crs = 4326, remove = FALSE)
+uniquw_regon_gminy<-gminy%>%
+  group_by(REGON)%>%
+  summarise(count = n())
 
-
-coordinates_no_duplicates <- coordinates_with_regon_sf %>%
-  mutate(geometry_text = st_as_text(geometry)) %>%  # Przekształcenie geometrii na tekst
-  distinct(REGON, geometry_text, .keep_all = TRUE) %>%  # Usunięcie duplikatów
-  select(-geometry_text)  # Usunięcie pomocniczej kolumny
-
-print(st_geometry(coordinates_with_regon_sf))
-st_geometry(coordinates_with_regon_sf) <- coordinates_with_regon_df$geometry
+length(unique(gminy$REGON))
+length(gminy$REGON)
+sum(uniquw_regon_gminy$count)
