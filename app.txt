@@ -1,6 +1,16 @@
-# Przypisanie najbliższej gminy do każdego punktu za pomocą st_nearest_feature
-# Znalezienie indeksu najbliższej gminy dla każdego punktu
-nearest_gminy_indices <- st_nearest_feature(coordinates_sf, punkty_gminy)
+# 1. Przypisanie punktów do gmin na podstawie tego, czy leżą wewnątrz
+# Używamy st_join z join = st_within, aby przypisać tylko punkty wewnątrz gmin
+coordinates_within_gminy <- st_join(coordinates_sf, punkty_gminy, join = st_within)
 
-# Dodanie informacji o gminach do punktów
-coordinates_with_gminy <- cbind(coordinates_sf, punkty_gminy[nearest_gminy_indices, ])
+# 2. Wyselekcjonowanie punktów, które nie zostały przypisane do żadnej gminy (czyli leżą na krawędzi lub poza)
+# Zbiór danych coordinates, które nie mają przypisanego REGON (kolumna z gminami)
+coordinates_outside <- coordinates_within_gminy[is.na(coordinates_within_gminy$REGON), ]
+
+# 3. Przypisanie najbliższej gminy dla punktów, które nie zostały przypisane w poprzednim kroku
+nearest_gminy_indices <- st_nearest_feature(coordinates_outside, punkty_gminy)
+
+# 4. Dodanie informacji o najbliższych gminach do punktów leżących na krawędzi
+coordinates_outside <- cbind(coordinates_outside, punkty_gminy[nearest_gminy_indices, ])
+
+# 5. Połączenie punktów, które były przypisane wewnątrz oraz punktów przypisanych na krawędzi
+coordinates_final <- rbind(coordinates_within_gminy[!is.na(coordinates_within_gminy$REGON), ], coordinates_outside)
