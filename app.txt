@@ -1,7 +1,4 @@
-uniquw_regon_gminy<-gminy%>%
-  group_by(REGON)%>%
-  summarise(count = n())
+gminy_unique <- gminy %>% 
+  distinct(REGON, .keep_all = TRUE)
 
-length(unique(gminy$REGON))
-length(gminy$REGON)
-sum(uniquw_regon_gminy$count)
+
