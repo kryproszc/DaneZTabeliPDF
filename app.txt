@@ -1,8 +1,7 @@
- gminy_bez_duplikatow <- gminy %>%
-+   group_by(REGON) %>%
-+   filter(row_number() == 1)
-> gminy_z_budynkami <- left_join(gminy_bez_duplikatow, wynik_gminy_df, by = "REGON")
-> sum(gminy_z_budynkami$total_budynkow, na.rm = TRUE)
-[1] 21355
-> sum(wynik_gminy_df$total_budynkow,na.rm=TRUE)
-[1] 21366
+niepolaczone_regon <- wynik_gminy_df$REGON[!wynik_gminy_df$REGON %in% gminy_z_budynkami$REGON]
+cat("Liczba niepołączonych REGON:", length(niepolaczone_regon), "\n")
+print(niepolaczone_regon)
+
+
+niepolaczone <- anti_join(wynik_gminy_df, gminy_bez_duplikatow, by = "REGON")
+print(niepolaczone)
