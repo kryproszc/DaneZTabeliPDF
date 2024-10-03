@@ -1,6 +1,8 @@
 valid_pattern <- "^\\d{2}-\\d{3}$"
-kod_freq$Valid_Format <- grepl(valid_pattern, kod_freq$kod)
-invalid_kody <- kod_freq[!kod_freq$Valid_Format, ]
-print("Niepoprawne kody pocztowe:")
-print(invalid_kody)
 
+# Tworzymy nowy dataframe zawierający tylko kody, które mają poprawny format
+kod_freq_valid <- kod_freq[grepl(valid_pattern, kod_freq$kod), ]
+
+# Wyświetlenie wynikowego dataframe z poprawnymi kodami
+print("Kody z poprawnym formatem:")
+print(kod_freq_valid)
