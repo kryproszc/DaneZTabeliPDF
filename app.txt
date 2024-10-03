@@ -1,12 +1,6 @@
-# Usunięcie duplikatów pozostawiając jedno przypisanie dla każdego punktu
-coordinates_with_gminy_unique <- coordinates_with_gminy %>%
-  group_by(geometry) %>%
-  filter(row_number() == 1) %>%
-  ungroup()
+# Przypisanie najbliższej gminy do każdego punktu za pomocą st_nearest_feature
+# Znalezienie indeksu najbliższej gminy dla każdego punktu
+nearest_gminy_indices <- st_nearest_feature(coordinates_sf, punkty_gminy)
 
-
-budynki_w_gminach <- coordinates_with_gminy_unique %>%
-  group_by(REGON) %>%
-  summarise(total_budynkow = sum(ilosc, na.rm = TRUE))
-
-punkty_gminy_z_budynkami <- left_join(punkty_gminy, budynki_w_gminach, by = "REGON")
+# Dodanie informacji o gminach do punktów
+coordinates_with_gminy <- cbind(coordinates_sf, punkty_gminy[nearest_gminy_indices, ])
