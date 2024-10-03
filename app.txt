@@ -1,58 +1,17 @@
-> coordinates_with_regon
-Simple feature collection with 4795 features and 37 fields
-Geometry type: POINT
-Dimension:     XY
-Bounding box:  xmin: 14.24054 ymin: 49.16588 xmax: 23.89589 ymax: 54.82847
-Geodetic CRS:  WGS 84
-First 10 features:
-   ilosc gml_id JPT_SJR_KO JPT_POWIER JPT_KOD_JE JPT_NAZWA_ JPT_ORGAN_ JPT_JOR_ID WERSJA_OD WERSJA_DO WAZNY_OD WAZNY_DO JPT_KOD__1 JPT_NAZWA1
-1      1   <NA>        GMI      51757    1465011   Warszawa       <NA>      13278  20120926         0 20120926        0       <NA>       <NA>
-2      1   <NA>        GMI      51757    1465011   Warszawa       <NA>      13278  20120926         0 20120926        0       <NA>       <NA>
-3      1   <NA>        GMI      51757    1465011   Warszawa       <NA>      13278  20120926         0 20120926        0       <NA>       <NA>
-4      1   <NA>        GMI      51757    1465011   Warszawa       <NA>      13278  20120926         0 20120926        0       <NA>       <NA>
-5      1   <NA>        GMI      51757    1465011   Warszawa       <NA>      13278  20120926         0 20120926        0       <NA>       <NA>
-6      1   <NA>        GMI      51757    1465011   Warszawa       <NA>      13278  20120926         0 20120926        0       <NA>       <NA>
-7      1   <NA>        GMI      51757    1465011   Warszawa       <NA>      13278  20120926         0 20120926        0       <NA>       <NA>
-8      1   <NA>        GMI      51757    1465011   Warszawa       <NA>      13278  20120926         0 20120926        0       <NA>       <NA>
-9      1   <NA>        GMI      51757    1465011   Warszawa       <NA>      13278  20120926         0 20120926        0       <NA>       <NA>
-10     2   <NA>        GMI      51757    1465011   Warszawa       <NA>      13278  20120926         0 20120926        0       <NA>       <NA>
-   JPT_ORGAN1 JPT_WAZNA_ ID_BUFORA_ ID_BUFORA1 ID_TECHNIC   IIP_PRZEST                           IIP_IDENTY                IIP_WERSJA
-1         NZN        NZN      13744          0     826112 PL.PZGIK.200 113959e1-bdd2-47cd-8503-ff49e366d577 2012-09-26T21:59:01+02:00
-2         NZN        NZN      13744          0     826112 PL.PZGIK.200 113959e1-bdd2-47cd-8503-ff49e366d577 2012-09-26T21:59:01+02:00
-3         NZN        NZN      13744          0     826112 PL.PZGIK.200 113959e1-bdd2-47cd-8503-ff49e366d577 2012-09-26T21:59:01+02:00
-4         NZN        NZN      13744          0     826112 PL.PZGIK.200 113959e1-bdd2-47cd-8503-ff49e366d577 2012-09-26T21:59:01+02:00
-5         NZN        NZN      13744          0     826112 PL.PZGIK.200 113959e1-bdd2-47cd-8503-ff49e366d577 2012-09-26T21:59:01+02:00
-6         NZN        NZN      13744          0     826112 PL.PZGIK.200 113959e1-bdd2-47cd-8503-ff49e366d577 2012-09-26T21:59:01+02:00
-7         NZN        NZN      13744          0     826112 PL.PZGIK.200 113959e1-bdd2-47cd-8503-ff49e366d577 2012-09-26T21:59:01+02:00
-8         NZN        NZN      13744          0     826112 PL.PZGIK.200 113959e1-bdd2-47cd-8503-ff49e366d577 2012-09-26T21:59:01+02:00
-9         NZN        NZN      13744          0     826112 PL.PZGIK.200 113959e1-bdd2-47cd-8503-ff49e366d577 2012-09-26T21:59:01+02:00
-10        NZN        NZN      13744          0     826112 PL.PZGIK.200 113959e1-bdd2-47cd-8503-ff49e366d577 2012-09-26T21:59:01+02:00
-   JPT_KJ_IIP JPT_KJ_I_1 JPT_KJ_I_2 JPT_OPIS JPT_SPS_KO ID_BUFOR_1 JPT_ID JPT_POWI_1 JPT_KJ_I_3 JPT_GEOMET JPT_GEOM_1    SHAPE_LENG
-1        EGIB    1465011       <NA>     <NA>        UZG          0 826112          0       <NA>          0          0 1.61077203872
-2        EGIB    1465011       <NA>     <NA>        UZG          0 826112          0       <NA>          0          0 1.61077203872
-3        EGIB    1465011       <NA>     <NA>        UZG          0 826112          0       <NA>          0          0 1.61077203872
-4        EGIB    1465011       <NA>     <NA>        UZG          0 826112          0       <NA>          0          0 1.61077203872
-5        EGIB    1465011       <NA>     <NA>        UZG          0 826112          0       <NA>          0          0 1.61077203872
-6        EGIB    1465011       <NA>     <NA>        UZG          0 826112          0       <NA>          0          0 1.61077203872
-7        EGIB    1465011       <NA>     <NA>        UZG          0 826112          0       <NA>          0          0 1.61077203872
-8        EGIB    1465011       <NA>     <NA>        UZG          0 826112          0       <NA>          0          0 1.61077203872
-9        EGIB    1465011       <NA>     <NA>        UZG          0 826112          0       <NA>          0          0 1.61077203872
-10       EGIB    1465011       <NA>     <NA>        UZG          0 826112          0       <NA>          0          0 1.61077203872
-     SHAPE_AREA          REGON RODZAJ                  geometry
-1  .06802746822 01525964000000  gmina POINT (21.00948 52.23753)
-2  .06802746822 01525964000000  gmina POINT (21.00762 52.23776)
-3  .06802746822 01525964000000  gmina  POINT (21.0104 52.23813)
-4  .06802746822 01525964000000  gmina  POINT (21.0113 52.23916)
-5  .06802746822 01525964000000  gmina  POINT (21.0133 52.24419)
-6  .06802746822 01525964000000  gmina POINT (21.01251 52.24636)
-7  .06802746822 01525964000000  gmina  POINT (20.9977 52.23645)
-8  .06802746822 01525964000000  gmina POINT (20.99903 52.23958)
-9  .06802746822 01525964000000  gmina POINT (21.00322 52.24069)
-10 .06802746822 01525964000000  gmina POINT (20.99865 52.24296)
-> # 3. Teraz połącz dane z `coordinates` z danymi `gminy` na podstawie REGON
-> # Przypisujemy liczbę budynków do każdej gminy
-> gminy_with_buildings <- gminy %>%
-+   left_join(coordinates_with_regon %>% 
-+               group_by(REGON) %>% 
-+               summarise(total_buildings = sum(ilosc, na.rm = TRUE)), by = "REGON")
-Error: y should not have class sf; for spatial joins, use st_join
+# Konwersja obiektu sf do data.frame
+coordinates_with_regon_df <- as.data.frame(coordinates_with_regon)
+
+# Usunięcie kolumny geometry, ponieważ `data.frame` nie obsługuje geometrii
+coordinates_with_regon_df <- coordinates_with_regon_df %>% select(-geometry)
+
+# Grupowanie i sumowanie liczby budynków dla każdej gminy na podstawie REGON
+building_summary <- coordinates_with_regon_df %>%
+  group_by(REGON) %>%
+  summarise(total_buildings = sum(ilosc, na.rm = TRUE))
+
+# Połączenie z danymi gminy na podstawie REGON
+gminy_with_buildings <- gminy %>%
+  left_join(building_summary, by = "REGON")
+
+# Sprawdzenie wyników
+print(gminy_with_buildings)
