@@ -1,11 +1,4 @@
- sum(ilosc_regon$ilosc,na.rm=TRUE)
-[1] 21366
-> sum(gminy_unikaty$ilosc,na.rm=TRUE)
-[1] 18368
-> sum(coordinates_df$ilosc)
-[1] 21366
-> length(coordinates_df$REGON)
-[1] 4795
-> length(unique(coordinates_df$REGON))
-[1] 1633
-> 
+ilosc_regon_aggregated <- coordinates_df %>%
+  group_by(REGON) %>%
+  summarise(ilosc = sum(ilosc, na.rm = TRUE)) %>%
+  ungroup() 
