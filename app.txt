@@ -1,4 +1,90 @@
-if (sum(!gminy_valid) > 0) {
-  # Naprawa niepoprawnych geometrii
-  gminy <- st_make_valid(gminy)
+ubezpieczyciel<-c("23 SALTUS TUW",'6 TUW PZUW')
+wb <- createWorkbook()
+for(nazwa_ubezpieczyciela in ubezpieczyciel){
+  print(paste0("Wyznaczam ubezpieczyciela: ",nazwa_ubezpieczyciela))
+  addWorksheet(wb, nazwa_ubezpieczyciela)
+  sciezka_ubezpieczyciel <- file.path(sciezka_glowna, nazwa_ubezpieczyciela)
+  sciezka_ubezpieczyciel <- file.path(sciezka_glowna, nazwa_ubezpieczyciela)
+  sciezka_standaryzacja <- file.path(sciezka_ubezpieczyciel, "standaryzacja v3")
+  pliki_csv <- list.files(sciezka_standaryzacja, pattern = "\\.csv$", full.names = TRUE)
+  plik_do_wczytania <- pliki_csv[grep("Ubezpieczone obiekty", pliki_csv)]
+  if (length(plik_do_wczytania) > 0) {
+    sciezka_do_zapisu_ubezpieczyciel <- file.path(sciezka_zapisu, nazwa_ubezpieczyciela)
+    if (!dir.exists(sciezka_do_zapisu_ubezpieczyciel)) {
+      dir.create(sciezka_do_zapisu_ubezpieczyciel, recursive = TRUE)
+    }}
+  nazwa_pliku <- basename(plik_do_wczytania[1])
+  if(!is.na(nazwa_pliku)){
+    sciezka_zapisu_pliku <- file.path(sciezka_do_zapisu_ubezpieczyciel, nazwa_pliku)
+    data_input <- read.csv2(plik_do_wczytania[1], sep=";",dec=".")
+    input_data<-as.data.frame(table(data_input$Adres.ubezpieczonego.obiektu...Kod.pocztowy))
+    colnames(input_data)<-c("kody","ilosc")
+    input_data_prob<-input_data
+    sum_ilosc<-sum(input_data$ilosc)
+    input_data_prob$ilosc<-input_data$ilosc/sum_ilosc
+    colnames(input_data_prob)<-c("kody","prawdopodobienstwo")
+    writeData(wb, sheet = nazwa_ubezpieczyciela, input_data, startCol = 1, startRow = 1, colNames = TRUE)
+    write.csv2(input_data_prob,paste0(sciezka_do_zapisu_ubezpieczyciel,"/",nazwa_ubezpieczyciela,".csv"),row.names = FALSE)
+    coordinates_sf <- st_as_sf(coordinates, coords = c("longitude", "latitude"), crs = 4326)
+    gminy <- st_transform(gminy, st_crs(coordinates_sf))
+    gminy <- st_make_valid(gminy)
+    coordinates_with_ident <- st_join(coordinates_sf, gminy["IIP_IDENTY"], join = st_within)
+    coordinates_df <- as.data.frame(st_drop_geometry(coordinates_with_ident))
+    coordinates_df <- coordinates_df[!is.na(coordinates_df$IIP_IDENTY), ]
+    ilosc_ident_aggregated <- coordinates_df %>%
+      group_by(IIP_IDENTY) %>%
+      summarise(ilosc = sum(ilosc, na.rm = TRUE)) %>%
+      ungroup()
+    gminy_z_budynkami <- gminy %>%
+      left_join(ilosc_ident_aggregated, by = "IIP_IDENTY")
+    minimal_value <- 1
+    max_value <- max(gminy_z_budynkami$ilosc, na.rm = TRUE)
+    break_interval <- max_value / 10
+    breaks <- seq(minimal_value, max_value - break_interval, by = break_interval)
+    breaks <- c(1, breaks, max_value)
+    breaks <- unique(breaks)
+    labels <- c(sprintf("[%.1f, %.1f)", breaks[-length(breaks)], breaks[-1]))
+    labels[length(labels)] <- sprintf("[%.1f, %.1f]", breaks[length(breaks) - 1], max_value)
+    gminy_z_budynkami$total_budynkow_category <- cut(
+      gminy_z_budynkami$ilosc,
+      breaks = breaks,
+      include.lowest = TRUE,
+      labels = labels,
+      right = TRUE 
+    )
+    palette_name <- "YlGnBu"  
+    grad_colors <- RColorBrewer::brewer.pal(n = length(levels(gminy_z_budynkami$total_budynkow_category)), palette_name)
+    colors_to_use <- grad_colors
+    pal <- setNames(colors_to_use, levels(gminy_z_budynkami$total_budynkow_category))
+    gminy_z_budynkami_simplified<-gminy_z_budynkami
+    png(filename = paste0(sciezka_do_zapisu_ubezpieczyciel,"/","gminy",".png"), width = 10, height = 8, units = "in", res = 300)
+    plot(
+      gminy_z_budynkami_simplified["total_budynkow_category"],
+      col = pal[gminy_z_budynkami_simplified$total_budynkow_category], 
+      main = "Kody pocztowe zagregregowane do gmin",
+      key.pos = NULL  
+    )
+    legend("topright",
+           legend = levels(gminy_z_budynkami$total_budynkow_category), 
+           fill = colors_to_use,  
+           title = "Liczba budynków",
+           cex = 0.8,
+           bg = "white",
+           bty = "n")
+    dev.off()
+    insertImage(
+      wb, 
+      sheet = nazwa_ubezpieczyciela, 
+      file = paste0(sciezka_do_zapisu_ubezpieczyciel,"/","gminy",".png"), 
+      startCol = 4,  # Kolumna D to czwarta kolumna
+      startRow = 10, 
+      width = 10,  # Szerokość obrazka w calach (można dostosować)
+      height = 8,  # Wysokość obrazka w calach (można dostosować)
+      units = "in"  # Jednostki cali
+    )
+  }else{
+    print(paste0("Brak danych o ubezpieczonych budynkach dla ubezpieczyciela ",nazwa_ubezpieczyciela))
+  }
 }
+saveWorkbook(wb, file = paste0(sciezka_zapisu,"/podsumowanie.xlsx"), overwrite = TRUE)
+
