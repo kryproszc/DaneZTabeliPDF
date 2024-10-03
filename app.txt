@@ -1,14 +1,11 @@
-# Upewnij się, że `coordinates_with_regon` jest obiektem sf, ale bez geometrii do join
-coordinates_df <- as.data.frame(st_drop_geometry(coordinates_with_regon))
-
-# Sumowanie liczby wystąpień dla każdego REGON w `coordinates_with_regon`
-ilosc_regon <- coordinates_df %>%
-  group_by(REGON) %>%
-  summarise(ilosc = sum(ilosc, na.rm = TRUE))
-
-# Dodanie kolumny `ilosc` do `gminy_unikaty` na podstawie `REGON`
-gminy_unikaty <- gminy_unikaty %>%
-  left_join(ilosc_regon, by = "REGON")
-
-# Sprawdzenie wynikowego zbioru danych
-print(gminy_unikaty)
+ sum(ilosc_regon$ilosc,na.rm=TRUE)
+[1] 21366
+> sum(gminy_unikaty$ilosc,na.rm=TRUE)
+[1] 18368
+> sum(coordinates_df$ilosc)
+[1] 21366
+> length(coordinates_df$REGON)
+[1] 4795
+> length(unique(coordinates_df$REGON))
+[1] 1633
+> 
