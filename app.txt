@@ -1,4 +1,6 @@
-ilosc_regon_aggregated <- coordinates_df %>%
-  group_by(REGON) %>%
-  summarise(ilosc = sum(ilosc, na.rm = TRUE)) %>%
-  ungroup() 
+ all(ilosc_regon_aggregated$REGON %in% gminy_unikaty$REGON)
+[1] FALSE
+> 
+> setdiff(ilosc_regon_aggregated$REGON, gminy_unikaty$REGON)
+[1] NA
+> 
