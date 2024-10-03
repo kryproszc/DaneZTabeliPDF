@@ -1,34 +1,5 @@
-wczytaj_i_polacz_csv <- function(sciezka_standaryzacja) {
-  # Rekurencyjne przeszukiwanie podfolderów w celu znalezienia wszystkich plików CSV
-  pliki_csv <- list.files(sciezka_standaryzacja, pattern = "\\.csv$", full.names = TRUE, recursive = TRUE)
-  
-  # Jeśli znaleziono pliki CSV
-  if (length(pliki_csv) > 0) {
-    # Wczytanie i połączenie wszystkich plików CSV
-    lista_danych <- lapply(pliki_csv, function(plik) {
-      # Wczytanie pliku CSV
-      dane <- read.csv2(plik, sep = ";", dec = ".", stringsAsFactors = FALSE)
-      
-      # Sprawdzenie, czy plik ma kolumny "Kod pocztowy" oraz "Kraj"
-      if (all(c("Kod.pocztowy", "Kraj") %in% colnames(dane))) {
-        # Zwrócenie tylko kolumn "Kod pocztowy" oraz "Kraj"
-        return(dane[, c("Kod.pocztowy", "Kraj")])
-      } else {
-        # Jeśli brakuje tych kolumn, zwróć pusty dataframe z odpowiednimi nazwami
-        return(data.frame(Kod.pocztowy = character(0), Kraj = character(0)))
-      }
-    })
-    
-    # Połączenie wszystkich dataframe w jedną ramkę danych
-    polaczone_dane <- do.call(rbind, lista_danych)
-    
-    # Wypisanie unikalnych kombinacji Kod pocztowy i Kraj
-    print(unique(polaczone_dane))
-    
-    # Zwrócenie połączonych danych
-    return(polaczone_dane)
-  } else {
-    print("Brak plików CSV w folderze lub podfolderach.")
-    return(NULL)
-  }
-}
+length(unique(data_input$Adres.ubezpieczajÄ.cego...Kod.pocztowy))
+[1] 24512
+> input_data <- as.data.frame(table(data_input$Adres.ubezpieczonego.obiektu...Kod.pocztowy))
+> dim(input_data)
+[1] 27045     2
