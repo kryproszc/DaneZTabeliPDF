@@ -1,5 +1,20 @@
-length(unique(data_input$Adres.ubezpieczajÄ.cego...Kod.pocztowy))
-[1] 24512
-> input_data <- as.data.frame(table(data_input$Adres.ubezpieczonego.obiektu...Kod.pocztowy))
-> dim(input_data)
-[1] 27045     2
+data_input <- data.frame(kod = c("22-111", "22-111 ", "22 -111", NA, "", "33-444", " 33-444", "33 - 444"))
+
+# 1. Oczyszczanie danych:
+# - Usunięcie białych znaków na początku i końcu,
+# - Usunięcie spacji w środku kodu (np. "22 -111" na "22-111"),
+# - Zamiana na wielkie litery (opcjonalnie)
+data_input$kod <- gsub(" ", "", trimws(data_input$kod))
+
+# 2. Usunięcie pustych miejsc i wartości NA
+data_input <- data_input[!is.na(data_input$kod) & data_input$kod != "", ]
+
+# 3. Tworzenie tabeli częstotliwości kodów pocztowych
+# - Zliczenie wystąpień każdego kodu
+kod_freq <- as.data.frame(table(data_input$kod))
+
+# 4. Zmiana nazw kolumn
+colnames(kod_freq) <- c("Kod", "Ilosc")
+
+# 5. Wyświetlenie wynikowego dataframe
+print(kod_freq)
