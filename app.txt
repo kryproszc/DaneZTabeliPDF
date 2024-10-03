@@ -1,19 +1,7 @@
 coordinates_no_duplicates <- coordinates_with_regon_df %>% 
-  distinct(REGON, geometry, .keep_all = TRUE)
-
-# Sprawdzenie sumy po usunięciu duplikatów
-sum_without_duplicates <- sum(coordinates_no_duplicates$ilosc, na.rm = TRUE)
-cat("Suma budynków po usunięciu duplikatów:", sum_without_duplicates, "\n")
-
-# Grupowanie i sumowanie liczby budynków po usunięciu duplikatów
-building_summary_no_duplicates <- coordinates_no_duplicates %>%
-  group_by(REGON) %>%
-  summarise(total_buildings = sum(ilosc, na.rm = TRUE))
-
-# Połączenie danych z `gminy` po usunięciu duplikatów
-gminy_with_buildings_no_duplicates <- gminy %>%
-  left_join(building_summary_no_duplicates, by = "REGON")
-
-# Sprawdzenie sumy budynków po połączeniu z `gminy`
-sum_final_no_duplicates <- sum(gminy_with_buildings_no_duplicates$total_buildings, na.rm = TRUE)
-cat("Suma budynków po połączeniu po usunięciu duplikatów:", sum_final_no_duplicates, "\n")
++   distinct(REGON, geometry, .keep_all = TRUE)
+Error in `distinct()`:
+! Must use existing variables.
+x `geometry` not found in `.data`.
+Run `rlang::last_trace()` to see where the error occurred.
+> 
