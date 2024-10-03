@@ -1,1 +1,17 @@
-data_input$kod <- gsub(" ", "", trimws(data_input$kod))
+valid_pattern <- "^\\d{2}-\\d{3}$"
+
+# Tworzymy nową kolumnę "Valid_Format", która będzie zawierała TRUE dla poprawnych kodów, a FALSE dla niepoprawnych
+kod_freq$Valid_Format <- grepl(valid_pattern, kod_freq$kod)
+
+# 2. Wyświetlenie niepoprawnych kodów (jeśli istnieją)
+invalid_kody <- kod_freq[!kod_freq$Valid_Format, ]
+print("Niepoprawne kody pocztowe:")
+print(invalid_kody
+
+
+
+# Definiujemy wzorzec dla poprawnego kodu pocztowego w Polsce: XX-XXX
+valid_pattern <- "^\\d{2}-\\d{3}$"
+
+# Tworzymy nowy dataframe zawierający tylko kody, które mają poprawny format
+kod_freq_valid <- kod_freq[grepl(valid_pattern, kod_freq$kod), ]
