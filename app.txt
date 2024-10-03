@@ -1,51 +1,6 @@
-> # Sprawdzenie liczby budynków przypisanych do każdej gminy przed i po join
-> roznice_po_join <- gminy_z_budynkami %>%
-+   select(REGON, total_budynkow) %>%
-+   inner_join(wynik_gminy_df, by = "REGON", suffix = c("_po_join", "_przed_join"))
-> # Porównanie wartości `total_budynkow` przed i po join
-> roznice_po_join <- roznice_po_join %>%
-+   mutate(roznica = total_budynkow_po_join - total_budynkow_przed_join) %>%
-+   filter(roznica != 0)  # Wyświetlenie tylko tych wierszy, gdzie są różnice
-> # Wyświetlenie gmin z różnicą w sumach budynków
-> print(roznice_po_join)
-Simple feature collection with 0 features and 4 fields
-Bounding box:  xmin: NA ymin: NA xmax: NA ymax: NA
-Geodetic CRS:  WGS 84
-[1] REGON                     total_budynkow_po_join    total_budynkow_przed_join geometry                  roznica                  
-<0 wierszy> (lub 'row.names' o zerowej długości)
-> # Sprawdzenie liczby wystąpień każdego REGON w gminy
-> wystapienia_gmin <- gminy %>%
-+   group_by(REGON) %>%
-+   summarise(liczba_wystapien = n())
-> # Wyświetlenie tych REGON, które występują więcej niż raz
-> wystapienia_gmin_duplikaty <- wystapienia_gmin %>%
-+   filter(liczba_wystapien > 1)
-> print(wystapienia_gmin_duplikaty)
-Simple feature collection with 216 features and 2 fields
-Geometry type: GEOMETRY
-Dimension:     XY
-Bounding box:  xmin: 14.53421 ymin: 49.22582 xmax: 24.07317 ymax: 54.82002
-Geodetic CRS:  WGS 84
-# A tibble: 216 x 3
-   REGON          liczba_wystapien                                                                                             geometry
- * <chr>                     <int>                                                                              <GEOMETRY [arc_degree]>
- 1 01327137000000                2 MULTIPOLYGON (((20.54763 52.22565, 20.54908 52.22575, 20.54968 52.22689, 20.55212 52.22705, 20.55...
- 2 03023739700000                2 POLYGON ((23.2103 51.93865, 23.21036 51.93866, 23.21041 51.93867, 23.21041 51.93863, 23.21079 51....
- 3 03023742800000                2 POLYGON ((22.79637 51.92061, 22.79638 51.92218, 22.79638 51.92314, 22.79638 51.92407, 22.79638 51...
- 4 03023745700000                2 POLYGON ((22.62776 51.74666, 22.62939 51.74691, 22.6303 51.74704, 22.63049 51.74707, 22.63056 51....
- 5 03023747000000                2 POLYGON ((23.61422 52.09633, 23.61349 52.09706, 23.61249 52.09752, 23.61156 52.09822, 23.61093 52...
- 6 03023762900000                2 MULTIPOLYGON (((17.51106 50.71974, 17.51151 50.7202, 17.51171 50.72062, 17.51197 50.72094, 17.512...
- 7 05065900700000                2 POLYGON ((23.18993 52.66013, 23.1898 52.66049, 23.18954 52.66127, 23.18985 52.66144, 23.1902 52.6...
- 8 05065901300000                2 POLYGON ((22.80305 52.74408, 22.80225 52.74356, 22.80198 52.74337, 22.80131 52.74291, 22.80093 52...
- 9 05065906500000                2 POLYGON ((23.7168 52.62444, 23.71674 52.62666, 23.71675 52.6283, 23.71682 52.63128, 23.71682 52.6...
-10 05065911900000                2 POLYGON ((22.85126 52.35879, 22.85151 52.35898, 22.85363 52.36046, 22.85507 52.36162, 22.85615 52...
-# i 206 more rows
-# i Use `print(n = ...)` to see more rows
-> gminy_z_budynkami_bez_powtorzen <- gminy_z_budynkami %>%
-+   group_by(REGON) %>%
-+   summarise(total_budynkow = sum(total_budynkow, na.rm = TRUE))
-> sum(gminy_z_budynkami_bez_powtorzen$total_budynkow)
-[1] 26895
-> gminy_z_budynkami_inner <- inner_join(gminy, wynik_gminy_df, by = "REGON")
-> sum(gminy_z_budynkami_inner$total_budynkow)
-[1] 26895
+gminy_bez_duplikatow <- gminy %>%
+  group_by(REGON) %>%
+  filter(row_number() == 1)
+
+gminy_z_budynkami <- left_join(gminy_bez_duplikatow, wynik_gminy_df, by = "REGON")
+sum(gminy_z_budynkami$total_budynkow, na.rm = TRUE)
