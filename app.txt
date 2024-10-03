@@ -1,11 +1,2 @@
-> print(paste("Brakujące IIP_IDENTY:", brakujace_ident))
-[1] "Brakujące IIP_IDENTY: "
-> sum(gminy$ilosc,na.rm=TRUE)
-[1] 21355
-> sum(ilosc_ident_aggregated$ilosc)
-[1] 21355
-> sum(coordinates_df$ilosc)
-[1] 21355
-> sum(coordinates_with_ident$ilosc)
-[1] 21366
->
+coordinates_nieprzypisane <- coordinates_with_ident[is.na(coordinates_with_ident$IIP_IDENTY), ]
+print(coordinates_nieprzypisane)
