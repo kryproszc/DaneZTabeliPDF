@@ -1,50 +1,35 @@
-> # Sprawdzenie, czy liczba punktów jest większa niż liczba budynków
-> cat("Liczba gmin, do których przypisano punkty więcej niż raz:", 
-+     nrow(punkty_przypisane_wielokrotnie %>% filter(liczba_punktow > 1)), "\n")
-Liczba gmin, do których przypisano punkty więcej niż raz: 504 
-> print(punkty_przypisane_wielokrotnie %>% filter(liczba_punktow > 1))
-Simple feature collection with 504 features and 3 fields
-Geometry type: GEOMETRY
-Dimension:     XY
-Bounding box:  xmin: 14.24054 ymin: 49.16588 xmax: 23.77241 ymax: 54.82847
-Geodetic CRS:  WGS 84
-# A tibble: 504 x 4
-   REGON          ilosc_budynkow liczba_punktow                                                                            geometry
- * <chr>                   <int>          <int>                                                           <MULTIPOINT [arc_degree]>
- 1 00052676500000             12              2                                          ((15.47285 52.05229), (15.60843 52.08992))
- 2 01326877000000             12              2                                          ((21.27427 52.11341), (21.24283 52.11573))
- 3 01326899400000              5              2                                          ((21.31595 52.17637), (21.41012 52.13246))
- 4 01326964000000              6              2                                            ((21.22507 52.3697), (21.25633 52.3507))
- 5 01326967000000              7              4 ((21.11853 52.36152), (21.12228 52.36202), (21.10368 52.32172), (21.11532 52.3358))
- 6 01326970000000              9              2                                          ((21.11501 52.47946), (21.17453 52.41279))
- 7 01327034700000              7              3                                           ((20.69668 52.44115), (20.72628 52.4279))
- 8 01327047100000              3              3                                          ((20.53394 52.39022), (20.50039 52.30636))
- 9 01327051900000              4              2                                          ((21.00651 52.45501), (21.04209 52.40037))
-10 01327057700000              8              2                                          ((20.95194 52.45704), (20.85956 52.45812))
-# i 494 more rows
-# i Use `print(n = ...)` to see more rows
-> cat("Liczba REGON z różnicą w sumie budynków po `left_join`:", nrow(roznice_suma), "\n")
-Liczba REGON z różnicą w sumie budynków po `left_join`: 561 
-> print(roznice_suma)
-Simple feature collection with 561 features and 2 fields
-Geometry type: GEOMETRY
-Dimension:     XY
-Bounding box:  xmin: 14.12288 ymin: 49.00204 xmax: 24.14578 ymax: 54.79707
-Geodetic CRS:  WGS 84
-# A tibble: 561 x 3
-   REGON          suma_budynkow                                                                                             geometry
-   <chr>                  <int>                                                                              <GEOMETRY [arc_degree]>
- 1 01326920300000             0 MULTIPOLYGON (((20.77595 52.11486, 20.77695 52.11506, 20.7773 52.11509, 20.7777 52.11512, 20.7779...
- 2 01327039900000             0 POLYGON ((20.63033 52.41635, 20.63472 52.41724, 20.63778 52.41826, 20.6405 52.41955, 20.64344 52....
- 3 01327130600000             0 POLYGON ((20.34191 52.24842, 20.34108 52.24721, 20.3399 52.24541, 20.33958 52.24495, 20.3394 52.2...
- 4 01589122000000             0 POLYGON ((20.28338 52.2751, 20.28372 52.27516, 20.2844 52.27526, 20.28546 52.27543, 20.28612 52.2...
- 5 01589125000000             0 POLYGON ((20.90027 51.9214, 20.90137 51.92159, 20.9018 51.92167, 20.90194 51.9217, 20.90213 51.92...
- 6 03023752300000             0 POLYGON ((22.90225 52.06369, 22.9024 52.06408, 22.90256 52.06448, 22.90262 52.06466, 22.9027 52.0...
- 7 03023755200000             0 POLYGON ((22.68661 51.82441, 22.68723 51.82445, 22.6875 51.82447, 22.68814 51.82451, 22.68831 51....
- 8 03023764100000             0 POLYGON ((22.83699 52.20218, 22.83778 52.20343, 22.83861 52.20471, 22.83974 52.20646, 22.83999 52...
- 9 03023767000000             0 POLYGON ((23.06599 51.79954, 23.06684 51.7998, 23.06696 51.79984, 23.06709 51.79989, 23.06722 51....
-10 03023768700000             0 POLYGON ((23.03113 52.21508, 23.03117 52.21574, 23.03129 52.21645, 23.03297 52.21863, 23.0339 52....
-# i 551 more rows
-# i Use `print(n = ...)` to see more rows
-> cat("Suma liczby budynków po usunięciu powtórzeń:", suma_po_usunieciu_powtorzen, "\n")
-Suma liczby budynków po usunięciu powtórzeń: 26895 
+# Sprawdzenie, czy punkty są przypisane do więcej niż jednej gminy
+punkty_przypisane_wielokrotnie <- punkty_gminy %>%
+  group_by(REGON) %>%
+  summarise(ilosc_budynkow = sum(ilosc, na.rm = TRUE), liczba_punktow = n()) %>%
+  filter(liczba_punktow > 1)
+
+# Wynik pokazuje gminy, do których punkty są przypisane wielokrotnie
+cat("Liczba gmin, do których punkty przypisano wielokrotnie:", nrow(punkty_przypisane_wielokrotnie), "\n")
+print(punkty_przypisane_wielokrotnie)
+
+
+# Poprawne przypisanie punktów do gmin przy użyciu `st_join`
+punkty_sf <- st_make_valid(punkty_sf)
+gminy <- st_make_valid(gminy)
+
+punkty_gminy <- st_join(punkty_sf, gminy, join = st_within)
+
+# Sprawdzenie, czy wszystkie `REGON` w `gminy` są jednolite
+unique_regon_gminy <- unique(gminy$REGON)
+cat("Liczba unikalnych `REGON` w gminy:", length(unique_regon_gminy), "\n")
+
+# Porównanie z `wynik_gminy_df`
+unique_regon_wynik <- unique(wynik_gminy_df$REGON)
+cat("Liczba unikalnych `REGON` w wynik_gminy_df:", length(unique_regon_wynik), "\n")
+Przywrócenie popraw
+
+ Aktualizacja `total_budynkow` na podstawie `wynik_gminy_df`
+gminy_z_budynkami <- gminy_z_budynkami %>%
+  left_join(wynik_gminy_df, by = "REGON", suffix = c("", "_corrected"))
+
+gminy_z_budynkami$total_budynkow <- ifelse(!is.na(gminy_z_budynkami$total_budynkow_corrected),
+                                           gminy_z_budynkami$total_budynkow_corrected,
+                                           gminy_z_budynkami$total_budynkow)
+
+punkty_gminy <- st_join(punkty_sf, gminy, join = st_intersects)
