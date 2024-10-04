@@ -1,1 +1,14 @@
-733;M10149326204;23.07.2021;22.07.2022;225720;TAK;Marii Zientary-Malewskiej 31;10-307;Olsztyn;warmińsko-mazurskie;Polska;1,2;
+2024-10-04 09:02:55 ==> /var/log/apache2/error.log <==
+2024-10-04 09:02:55 [Mon Sep 30 03:09:18.154334 2024] [core:info] [pid 2675] [client 172.17.0.1:47200] AH00128: File does not exist: /nominatim/website/wwwadmin.cgi
+2024-10-04 09:02:55 [Mon Sep 30 03:09:18.163429 2024] [core:info] [pid 97] [client 172.17.0.1:47208] AH00128: File does not exist: /nominatim/website/wwwboard.cgi
+2024-10-04 09:02:55 [Mon Sep 30 03:09:18.294819 2024] [core:info] [pid 2633] [client 172.17.0.1:47220] AH00128: File does not exist: /nominatim/website/wwwboard.cgi
+2024-10-04 09:02:55 [Mon Sep 30 03:09:18.295159 2024] [core:info] [pid 98] [client 172.17.0.1:47234] AH00128: File does not exist: /nominatim/website/xampp/cgi.cgi
+2024-10-04 09:02:55 [Mon Sep 30 03:09:18.415164 2024] [core:info] [pid 96] [client 172.17.0.1:47250] AH00128: File does not exist: /nominatim/website/xampp/cgi.cgi
+2024-10-04 09:02:55 [Mon Sep 30 03:09:20.455253 2024] [core:info] [pid 95] [client 172.17.0.1:47276] AH00128: File does not exist: /nominatim/website/rails_info/properties
+2024-10-04 09:02:55 [Mon Sep 30 03:09:22.874986 2024] [core:info] [pid 97] [client 172.17.0.1:59984] AH00128: File does not exist: /nominatim/website/index.html
+2024-10-04 09:02:55 [Fri Oct 04 07:02:51.590992 2024] [core:warn] [pid 90] AH00098: pid file /var/run/apache2/apache2.pid overwritten -- Unclean shutdown of previous Apache run?
+2024-10-04 09:02:55 [Fri Oct 04 07:02:51.595402 2024] [mpm_prefork:notice] [pid 90] AH00163: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+2024-10-04 09:02:55 [Fri Oct 04 07:02:51.595423 2024] [core:notice] [pid 90] AH00094: Command line: '/usr/sbin/apache2'
+2024-10-04 09:02:55 tail: cannot open '/var/log/replication.log' for reading: No such file or directory
+2024-10-04 09:02:55 2024-10-04 07:02:55: Using project directory: /nominatim
+2024-10-04 09:02:55 2024-10-04 07:02:55: Warming database caches
