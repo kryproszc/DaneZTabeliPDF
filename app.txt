@@ -1,1 +1,1 @@
-g++ programtest20.cpp -O3 -lpqxx -lpq -DUPDATE && ./a.out
+g++ programtest20.cpp -O3 -lpqxx -lpq  && ./a.out
