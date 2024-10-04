@@ -1,1 +1,3 @@
- g++ programtest23.cpp -lpqxx -lpq && ./a.out
+Polaczony z nominatim
+rozmiar 49
+Czas : 198.873 sekund
