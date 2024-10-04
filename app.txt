@@ -1,3 +1,1 @@
-Polaczony z nominatim
-rozmiar 49
-Czas : 198.873 sekund
+g++ programtest20.cpp -O3 -lpqxx -lpq -DUPDATE && ./a.out
