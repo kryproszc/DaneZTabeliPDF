@@ -5,6 +5,6 @@ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
 szczkr@DIU-01:~$ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 Polaczony z nominatim
-terminate called recursively
-terminate called recursively
-Aborted (core dumped)
+terminate called after throwing an instance of 'pqxx::broken_connection'
+  what():  connection to server at "localhost" (127.0.0.1), port 9740 failed: Connection refused
+        Is the server running on that host and accepting TCP/IP connections?
