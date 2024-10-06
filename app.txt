@@ -1,1 +1,10 @@
+
+
 g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
+
+
+szczkr@DIU-01:~$ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
+Polaczony z nominatim
+terminate called recursively
+terminate called recursively
+Aborted (core dumped)
