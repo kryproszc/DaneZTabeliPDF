@@ -29,7 +29,7 @@
 #include <mutex>
 #include <sstream>
 
-const int NUM_THREADS = 12;
+const int NUM_THREADS = 32;
 const char *HOST = "127.0.0.1";
 
 const char *PORT = "9741";
@@ -49,7 +49,7 @@ std::mt19937 gen(rd());
 
 pqxx::connection c(
     "dbname=nominatim user=nominatim password=nominatim host=localhost "
-    "port=9740");
+    "port=5432");
 pqxx::work txn(c);
 
 std::map<std::tuple<std::string, std::string, int>, std::pair<int, std::string>>
@@ -1660,7 +1660,7 @@ void perform_random(int threadid)
 
     pqxx::connection c(
         "dbname=nominatim user=nominatim password=nominatim host=localhost "
-        "port=9740");
+        "port=5432");
     pqxx::work txn(c);
 
     while (true)
@@ -2003,7 +2003,7 @@ int main()
     // }
 
     // -----------
-    csvstream csvin("dbdb.csv");
+    csvstream csvin("proba.csv");
 
     while (csvin >> row)
     {
@@ -2527,7 +2527,7 @@ int main()
     //     dataToCSV[index] = std::move(adres);
     // }
 
-    saveToCSV(toProcess, "cvdv.csv");
+    saveToCSV(toProcess, "cvdv8.csv");
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;
