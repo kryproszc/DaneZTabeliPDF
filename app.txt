@@ -8,3 +8,11 @@ Polaczony z nominatim
 terminate called after throwing an instance of 'pqxx::broken_connection'
   what():  connection to server at "localhost" (127.0.0.1), port 9740 failed: Connection refused
         Is the server running on that host and accepting TCP/IP connections?
+
+Polaczony z nominatim
+terminate called after throwing an instance of 'pqxx::broken_connection'
+  what():  connection to server at "localhost" (127.0.0.1), port 9741 failed: server closed the connection unexpectedly
+        This probably means the server terminated abnormally
+        before or while processing the request.
+
+Aborted (core dumped)
