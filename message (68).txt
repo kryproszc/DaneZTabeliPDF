@@ -29,7 +29,7 @@
 #include <mutex>
 #include <sstream>
 
-const int NUM_THREADS = 1;
+const int NUM_THREADS = 32;
 const char *HOST = "127.0.0.1";
 
 const char *PORT = "9741";
@@ -2060,7 +2060,7 @@ int main()
     // }
 
     // -----------
-    csvstream csvin("dbdb.csv");
+    csvstream csvin("1138tys.csv");
 
     while (csvin >> row)
     {
@@ -2580,7 +2580,7 @@ int main()
     //     dataToCSV[index] = std::move(adres);
     // }
 
-    saveToCSV(toProcess, "cvdvvv.csv");
+    saveToCSV(toProcess, "1138tys_proba.csv");
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;
