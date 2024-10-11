@@ -3,16 +3,21 @@
 g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
 
-szczkr@DIU-01:~$ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
-Polaczony z nominatim
-terminate called after throwing an instance of 'pqxx::broken_connection'
-  what():  connection to server at "localhost" (127.0.0.1), port 9740 failed: Connection refused
-        Is the server running on that host and accepting TCP/IP connections?
+#include <iostream>
+#include <filesystem>
 
-Polaczony z nominatim
-terminate called after throwing an instance of 'pqxx::broken_connection'
-  what():  connection to server at "localhost" (127.0.0.1), port 9741 failed: server closed the connection unexpectedly
-        This probably means the server terminated abnormally
-        before or while processing the request.
+namespace fs = std::filesystem;
 
-Aborted (core dumped)
+int main() {
+    std::string path = "/mnt/c/Input_geokodowanie";
+
+    try {
+        for (const auto& entry : fs::directory_iterator(path)) {
+            std::cout << entry.path().filename().string() << std::endl;
+        }
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
