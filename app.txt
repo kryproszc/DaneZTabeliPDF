@@ -7,5 +7,41 @@ Error: filesystem error: directory iterator cannot open directory: No such file 
 szczkr@DIU-01:~$ 
 
 
-Lp.;Nr_umowy;Data poczatku okresu ubezpieczenia;Data konca okresu ubezpieczenia;SU_v_PML;Odnow;Adres_Ulica_i_numer;Adres_Kod_pocztowy;Adres_Miasto;Adres_Wojewodztwo;Adres_Kraj;ReasekuracjaO;ReasekuracjaF
-895650;PL/0026025265;2019-01-08;2024-01-07;1338084,0;Nie;;;;;Polska;2;
+void saveToCSV(const std::vector<Address> &dataToCSV,
+               const std::string &filename)
+{
+    // std::ofstream file("/mnt/c/Output_geokodowanie/" + filename);
+
+    std::ofstream file(filename);
+
+    if (!file.is_open())
+    {
+        std::cerr << "Nie można otworzyć pliku do zapisu!" << std::endl;
+        return;
+    }
+
+    file << "Lp;DataPoczatku;DataKonca;SumaUbezpieczenia;Odnowienia;"
+            "Ulica;KodPocztowy;Miasto;Wojewodztwo;Kraj;ReasekuracjaO;"
+            "ReasekuracjaF;Szerokosc;Dlugosc;Flaga_1;Flaga_2;Nr_Wojewodztwa\n";
+
+    for (size_t i = 0; i < dataToCSV.size(); ++i)
+    {
+        const auto &address = dataToCSV[i];
+
+
+ if(address.lp == "895650")
+            std::cout << " JEQQQST lp " <<rozklad[i].lp  << " | " << i << " ," <<  toProcess[i].kodPocztowy << std::endl;
+        auto [wojewodztwo, nr_woj] = getWojewodztwoMapa(address.kodPocztowy);
+
+        file << address.lp << ";"
+             << address.dataPoczatku << ";" << address.dataKonca << ";"
+             << address.sumaUbezpieczenia << ";" << address.odnowienia << ";"
+             << address.ulica << ";" << address.kodPocztowy << ";" << address.miasto
+             << ";" << wojewodztwo << ";" << address.kraj << ";"
+             << address.reasekuracjaO << ";" << address.reasekuracjaF << ";"
+             << address.lat << ";" << address.lot
+             << ";" << address.flaga1 << ";" << address.flaga2 << ";" << nr_woj << ";" << "\n";
+    }
+
+    file.close();
+}
