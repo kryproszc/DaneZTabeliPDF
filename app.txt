@@ -30,7 +30,7 @@ void saveToCSV(const std::vector<Address> &dataToCSV,
 
 
  if(address.lp == "895650")
-            std::cout << " JEQQQST lp " <<rozklad[i].lp  << " | " << i << " ," <<  toProcess[i].kodPocztowy << std::endl;
+            std::cout << " JEQQQST lp " <<dataToCSV[i].lp  << " | " << i << " ," <<  dataToCSV[i].kodPocztowy << std::endl;
         auto [wojewodztwo, nr_woj] = getWojewodztwoMapa(address.kodPocztowy);
 
         file << address.lp << ";"
