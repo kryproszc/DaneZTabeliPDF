@@ -1,1585 +1,2676 @@
-#include <chrono>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <string>
-#include <iterator>
-#include <random>
-#include <numeric>
-#include <sstream>
-#include <chrono>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <string>
-#include <iterator>
-#include <random>
-#include <numeric>
-#include <chrono>
-#include <atomic>
-#include <mutex>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <string>
-#include <iterator>
-#include <random>
-#include <numeric>
-#include <sstream>
+#include <fcntl.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <sys/epoll.h>
+#include <sys/socket.h>
+#include <unistd.h>
 #include <deque>
-#include <condition_variable>
-#include <thread>
-#include <functional>
-#include <future>
-#include <sstream>
-#include <iostream>
-#include <string>
-#include <map>
+#include <algorithm>
+#include <filesystem>
+#include <atomic>
 #include <chrono>
+#include <cstring>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <pqxx/pqxx>
+#include <sstream>
+#include <thread>
 #include <vector>
+#include <iomanip>
+#include <unordered_map>
+#include <string>
+#include <iomanip>
+#include <vector>
+#include <random>
 #include "csvstream.hpp"
+#include "json.hpp"
+#include <mutex>
+#include <sstream>
+#include <utility>
+#include <stdexcept>
 
-class ThreadPool
+const int NUM_THREADS = 1;
+const char *HOST = "127.0.0.1";
+
+const char *PORT = "9741";
+const char *PORT2 = "9741";
+std::string DB_PORT = "5432";
+std::atomic<int> counterz(0);
+
+std::vector<std::vector<std::string>> allStrings(NUM_THREADS);
+std::vector<std::vector<std::string>> allStringsId(NUM_THREADS);
+
+std::unordered_map<std::string, int> postalCodeCount;
+int totalCodes = 0;
+std::vector<std::string> codes;
+std::vector<double> probabilities;
+
+std::random_device rd;
+std::mt19937 gen(rd());
+
+pqxx::connection c(
+    "dbname=nominatim user=nominatim password=nominatim host=localhost "
+    "port=5432");
+pqxx::work txn(c);
+
+std::map<std::tuple<std::string, std::string, int>, std::pair<int, std::string>>
+    occurrences;
+
+std::map<std::tuple<std::string, std::string, std::string>, int> wordCnt;
+
+// Deklaracja mutexa
+std::mutex occurrencesMutex;
+void addOccurrence(const std::string &city, const std::string &postcode,
+                   int flag, int vecPos)
 {
-public:
-    ThreadPool(unsigned int n);
+    if (!city.empty() || !postcode.empty())
+    {
+        // Blokada mutexa
+        std::lock_guard<std::mutex> lock(occurrencesMutex);
 
-    template <class F>
-    void enqueue(F &&f);
-    void waitFinished();
-    ~ThreadPool();
+        auto &entry = occurrences[{city, postcode, flag}];
 
-    unsigned int getProcessed() const { return processed; }
+        entry.first++;
+        entry.second += std::to_string(vecPos) + " ";
+    }
+}
 
-private:
-    std::vector<std::thread> workers;
-    std::deque<std::function<void()>> tasks;
-    std::mutex queue_mutex;
-    std::condition_variable cv_task;
-    std::condition_variable cv_finished;
-    std::atomic_uint processed;
-    unsigned int busy;
-    bool stop;
+std::pair<std::string, int> getWojewodztwoMapa(const std::string &kodPocztowy)
+{
+    int kod;
+    try
+    {
+        kod = std::stoi(kodPocztowy.substr(0, 2)) * 1000;
+    }
+    catch (const std::invalid_argument &e)
+    {
+        return {"Nieznane województwo", 0};
+    }
+    catch (const std::out_of_range &e)
+    {
+        return {"Nieznane województwo", 0};
+    }
 
-    void thread_proc();
+    std::map<std::string, std::pair<int, int>> wojewodztwa = {
+        {"Dolnośląskie", {50000, 59999}},
+        {"Kujawsko-Pomorskie", {85000, 89999}},
+        {"Lubelskie", {20000, 23999}},
+        {"Lubuskie", {65000, 69999}},
+        {"Łódzkie", {90000, 99999}},
+        {"Małopolskie", {30000, 34999}},
+        {"Mazowieckie", {0, 9999}},
+        {"Opolskie", {45000, 49999}},
+        {"Podkarpackie", {35000, 39999}},
+        {"Podlaskie", {15000, 19999}},
+        {"Pomorskie", {80000, 84999}},
+        {"Śląskie", {40000, 44999}},
+        {"Świętokrzyskie", {25000, 29999}},
+        {"Warmińsko-Mazurskie", {10000, 14999}},
+        {"Wielkopolskie", {60000, 64999}},
+        {"Zachodniopomorskie", {70000, 78999}}};
+
+    int numer = 1;
+    for (const auto &woj : wojewodztwa)
+    {
+        if (kod >= woj.second.first && kod <= woj.second.second)
+        {
+            return {woj.first, numer};
+        }
+        ++numer;
+    }
+
+    return {"Nieznane województwo", 0};
+}
+
+struct Address
+{
+    std::string lp;
+    std::string ulica;
+    std::string kodPocztowy;
+    std::string miasto;
+    std::string wojewodztwo;
+    std::string kraj;
+    std::string lot;
+    std::string lat;
+    int flaga1;
+    int flaga2;
+    std::string sklejone;
+    std::string numerUmowy;
+    std::string dataPoczatku;
+    std::string dataKonca;
+    std::string sumaUbezpieczenia;
+    std::string odnowienia;
+    std::string reasekuracjaO;
+    std::string reasekuracjaF;
+    std::string adresujedn;
+    int proby = 0;
+    bool dbProcess = false;
 };
 
-ThreadPool::ThreadPool(unsigned int n)
-    : busy(), processed(), stop()
+std::vector<Address> toProcess;
+std::vector<Address> dataToCSV;
+std::vector<Address> rozklad;
+std::vector<Address> flaga0;
+std::vector<Address> flaga1;
+std::vector<Address> flaga2;
+std::vector<Address> flaga3;
+std::vector<Address> flaga4;
+std::vector<Address> flaga5;
+std::vector<Address> flaga6;
+
+const double PI = 3.14159265358979323846;
+const double R = 6371.0;
+
+const char SAFE[256] =
+    {
+        /*      0 1 2 3  4 5 6 7  8 9 A B  C D E F */
+        /* 0 */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        /* 1 */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        /* 2 */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        /* 3 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+
+        /* 4 */ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        /* 5 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+        /* 6 */ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        /* 7 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+
+        /* 8 */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        /* 9 */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        /* A */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        /* B */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+
+        /* C */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        /* D */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        /* E */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        /* F */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+std::string url_encode(const std::string &sSrc)
 {
-    for (unsigned int i = 0; i < n; ++i)
-        workers.emplace_back(std::bind(&ThreadPool::thread_proc, this));
+    const char DEC2HEX[16 + 1] = "0123456789ABCDEF";
+    const unsigned char *pSrc = (const unsigned char *)sSrc.c_str();
+    const int SRC_LEN = sSrc.length();
+    unsigned char *const pStart = new unsigned char[SRC_LEN * 3];
+    unsigned char *pEnd = pStart;
+    const unsigned char *const SRC_END = pSrc + SRC_LEN;
+
+    for (; pSrc < SRC_END; ++pSrc)
+    {
+        if (SAFE[*pSrc])
+            *pEnd++ = *pSrc;
+        else
+        {
+            // escape this char
+            *pEnd++ = '%';
+            *pEnd++ = DEC2HEX[*pSrc >> 4];
+            *pEnd++ = DEC2HEX[*pSrc & 0x0F];
+        }
+    }
+
+    std::string sResult((char *)pStart, (char *)pEnd);
+    delete[] pStart;
+    return sResult;
+}
+// std::string url_encode(const std::string &value)
+// {
+//     std::ostringstream encoded;
+//     encoded.fill('0');
+//     encoded << std::nouppercase << std::hex;
+
+//     for (char c : value)
+//     {
+//         if (c == ';')
+//         {
+//             encoded << "%3B";
+//         }
+//         else if (!isalnum(static_cast<unsigned char>(c)) && c != '-' &&
+//                  c != '_' && c != '.' && c != '~')
+//         {
+//             encoded << '%' << std::setw(2)
+//                     << static_cast<int>(static_cast<unsigned char>(c));
+//         }
+//         else
+//         {
+//             encoded << c;
+//         }
+//     }
+
+//     return encoded.str();
+// }
+
+int create_nonblocking_socket(const char *host, const char *port)
+{
+    struct addrinfo hints, *res;
+    int sockfd;
+
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+
+    if (getaddrinfo(host, port, &hints, &res) != 0)
+    {
+        perror("getaddrinfo");
+        return -1;
+    }
+
+    sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if (sockfd == -1)
+    {
+        perror("socket");
+        freeaddrinfo(res);
+        return -1;
+    }
+
+    int flags = fcntl(sockfd, F_GETFL, 0);
+    if (fcntl(sockfd, F_SETFL, flags | O_NONBLOCK) == -1)
+    {
+        perror("fcntl");
+        close(sockfd);
+        freeaddrinfo(res);
+        return -1;
+    }
+
+    if (connect(sockfd, res->ai_addr, res->ai_addrlen) == -1)
+    {
+        if (errno != EINPROGRESS)
+        {
+            perror("connect");
+            close(sockfd);
+            freeaddrinfo(res);
+            return -1;
+        }
+    }
+
+    freeaddrinfo(res);
+    return sockfd;
+}
+std::vector<std::vector<Address>> all(NUM_THREADS);
+std::vector<std::vector<Address>> all2(NUM_THREADS);
+std::vector<std::vector<Address>> all3(NUM_THREADS);
+std::vector<std::vector<Address>> all4(NUM_THREADS);
+
+void add(const Address &pos)
+{
+    toProcess.push_back(pos);
 }
 
-ThreadPool::~ThreadPool()
+void add(const Address &pos, int &currentIndex)
 {
+    all[currentIndex].push_back(pos);
+    currentIndex = (currentIndex + 1) % all.size();
+}
+std::string removeUpToFirstSemicolon(const std::string &input)
+{
+    size_t pos = input.find(';');
 
-    std::unique_lock<std::mutex> latch(queue_mutex);
-    stop = true;
-    cv_task.notify_all();
-    latch.unlock();
+    if (pos != std::string::npos)
+    {
+        return input.substr(pos + 1);
+    }
 
-    for (auto &t : workers)
-        t.join();
+    return "";
 }
 
-void ThreadPool::thread_proc()
+void perform_requests4(int thread_id,
+                       std::shared_ptr<std::vector<std::string>> &data)
 {
+    int NUM_REQUESTS = all4[thread_id].size();
+
+    int epoll_fd = epoll_create1(0);
+    if (epoll_fd == -1)
+    {
+        perror("epoll_create1");
+        exit(1);
+    }
+    int valuer = ++counterz;
+
+    int sockfd;
+
+    sockfd = create_nonblocking_socket(HOST, PORT);
+
+    if (sockfd == -1)
+    {
+        exit(1);
+    }
+
+    epoll_event ev, events[NUM_REQUESTS];
+
+    ev.events = EPOLLOUT | EPOLLET;
+    ev.data.fd = sockfd;
+    if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sockfd, &ev) == -1)
+    {
+        perror("epoll_ctl: EPOLLOUT");
+        close(sockfd);
+        exit(1);
+    }
+
+    int requests_sent = 0;
+    bool keep_going = true;
+    int id = 0;
+    int lp = 0;
+
+    while (keep_going)
+    {
+        int nfds = epoll_wait(epoll_fd, events, NUM_REQUESTS, -1);
+        if (nfds == -1)
+        {
+            perror("epoll_wait");
+            exit(1);
+        }
+
+        for (int n = 0; n < nfds; ++n)
+        {
+            if (events[n].events & EPOLLOUT && requests_sent < NUM_REQUESTS)
+            {
+                std::string address = url_encode(all4[thread_id][id++].sklejone);
+
+                std::string request =
+                    "GET /search.php?q=" + address + "&format=json&limit=1" +
+                    " HTTP/1.1\r\nHost: 127.0.0.1:8080\r\nConnection: "
+                    "keep-alive\r\n\r\n";
+                ssize_t bytes_sent = send(sockfd, request.c_str(), request.length(), 0);
+                if (bytes_sent == -1)
+                {
+                    perror("send");
+                    keep_going = false;
+                    break;
+                }
+                requests_sent++;
+                ev.events = EPOLLIN | EPOLLET;
+                ev.data.fd = sockfd;
+                if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1)
+                {
+                    perror("epoll_ctl: EPOLLIN");
+                    keep_going = false;
+                    break;
+                }
+            }
+            else if (events[n].events & EPOLLIN)
+            {
+                char buffer[4096];
+                std::string response;
+                ssize_t bytes_read;
+                while ((bytes_read = read(sockfd, buffer, sizeof(buffer))) > 0)
+                {
+                    response.append(buffer, bytes_read);
+                }
+
+                if (bytes_read == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
+                {
+                    perror("read");
+                    keep_going = false;
+                }
+                else if (bytes_read == 0)
+                {
+                    keep_going = false;
+                }
+                else
+                {
+                    if (requests_sent < NUM_REQUESTS)
+                    {
+                        ev.events = EPOLLOUT | EPOLLET;
+                        ev.data.fd = sockfd;
+                        if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1)
+                        {
+                            perror("epoll_ctl: EPOLLOUT");
+                            keep_going = false;
+                        }
+                    }
+                    else
+                    {
+                        keep_going = false;
+                    }
+                }
+
+                if (!response.empty())
+                {
+                    std::string http_response = response;
+
+                    std::string::size_type json_start = http_response.find('[');
+
+                    if (json_start != std::string::npos)
+                    {
+                        std::string json_str = http_response.substr(json_start);
+
+                        nlohmann::json j = nlohmann::json::parse(json_str);
+
+                        if (!j[0]["lat"].is_null())
+                        {
+                            std::string lat = "" + std::string(j[0]["lat"]);
+                            std::string lon = "" + std::string(j[0]["lon"]);
+                            std::string name = "" + std::string(j[0]["display_name"]);
+                            all4[thread_id][lp].lat = lat;
+                            all4[thread_id][lp].lot = lon;
+                            all4[thread_id][lp].adresujedn = name;
+                            all4[thread_id][lp].flaga2 = 3;
+
+                            dataToCSV[std::stoi(all4[thread_id][lp].lp)] =
+                                std::move(all4[thread_id][lp]);
+                        }
+                        else
+                        {
+                            all4[thread_id][lp].lat = "0";
+                            all4[thread_id][lp].lot = "0";
+                            all4[thread_id][lp].adresujedn = "Brak danych";
+                            all4[thread_id][lp].flaga2 = 3;
+
+                            dataToCSV[std::stoi(all4[thread_id][lp].lp)] =
+                                std::move(all4[thread_id][lp]);
+                        }
+                        lp++;
+                    }
+                }
+            }
+        }
+    }
+
+    close(sockfd);
+    close(epoll_fd);
+}
+
+void perform_requests3(int thread_id,
+                       std::shared_ptr<std::vector<std::string>> &data)
+{
+    int NUM_REQUESTS = all3[thread_id].size();
+
+    int epoll_fd = epoll_create1(0);
+    if (epoll_fd == -1)
+    {
+        perror("epoll_create1");
+        exit(1);
+    }
+    int valuer = ++counterz;
+
+    int sockfd;
+
+    sockfd = create_nonblocking_socket(HOST, PORT);
+
+    if (sockfd == -1)
+    {
+        exit(1);
+    }
+
+    epoll_event ev, events[NUM_REQUESTS];
+
+    ev.events = EPOLLOUT | EPOLLET;
+    ev.data.fd = sockfd;
+    if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sockfd, &ev) == -1)
+    {
+        perror("epoll_ctl: EPOLLOUT");
+        close(sockfd);
+        exit(1);
+    }
+
+    int requests_sent = 0;
+    bool keep_going = true;
+    int id = 0;
+    int lp = 0;
+
+    while (keep_going)
+    {
+        int nfds = epoll_wait(epoll_fd, events, NUM_REQUESTS, -1);
+        if (nfds == -1)
+        {
+            perror("epoll_wait");
+            exit(1);
+        }
+
+        for (int n = 0; n < nfds; ++n)
+        {
+            if (events[n].events & EPOLLOUT && requests_sent < NUM_REQUESTS)
+            {
+                std::string address = url_encode(all3[thread_id][id++].sklejone);
+
+                std::string request =
+                    "GET /search.php?q=" + address + "&format=json&limit=1" +
+                    " HTTP/1.1\r\nHost: 127.0.0.1:8080\r\nConnection: "
+                    "keep-alive\r\n\r\n";
+                ssize_t bytes_sent = send(sockfd, request.c_str(), request.length(), 0);
+                if (bytes_sent == -1)
+                {
+                    perror("send");
+                    keep_going = false;
+                    break;
+                }
+                requests_sent++;
+                ev.events = EPOLLIN | EPOLLET;
+                ev.data.fd = sockfd;
+                if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1)
+                {
+                    perror("epoll_ctl: EPOLLIN");
+                    keep_going = false;
+                    break;
+                }
+            }
+            else if (events[n].events & EPOLLIN)
+            {
+                char buffer[4096];
+                std::string response;
+                ssize_t bytes_read;
+                while ((bytes_read = read(sockfd, buffer, sizeof(buffer))) > 0)
+                {
+                    response.append(buffer, bytes_read);
+                }
+
+                if (bytes_read == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
+                {
+                    perror("read");
+                    keep_going = false;
+                }
+                else if (bytes_read == 0)
+                {
+                    keep_going = false;
+                }
+                else
+                {
+                    if (requests_sent < NUM_REQUESTS)
+                    {
+                        ev.events = EPOLLOUT | EPOLLET;
+                        ev.data.fd = sockfd;
+                        if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1)
+                        {
+                            perror("epoll_ctl: EPOLLOUT");
+                            keep_going = false;
+                        }
+                    }
+                    else
+                    {
+                        keep_going = false;
+                    }
+                }
+
+                if (!response.empty())
+                {
+                    std::string http_response = response;
+
+                    std::string::size_type json_start = http_response.find('[');
+
+                    if (json_start != std::string::npos)
+                    {
+                        std::string json_str = http_response.substr(json_start);
+
+                        nlohmann::json j = nlohmann::json::parse(json_str);
+
+                        if (!j[0]["lat"].is_null())
+                        {
+                            std::string lat = "" + std::string(j[0]["lat"]);
+                            std::string lon = "" + std::string(j[0]["lon"]);
+                            std::string name = "" + std::string(j[0]["display_name"]);
+
+                            all3[thread_id][lp].adresujedn = name;
+                            all3[thread_id][lp].flaga2 = 2;
+
+                            if (all3[thread_id][lp].flaga1 == 2)
+                            {
+                                addOccurrence(all3[thread_id][lp].miasto,
+                                              all3[thread_id][lp].kodPocztowy, 2,
+                                              flaga2.size());
+                                flaga2.push_back(all3[thread_id][lp]);
+
+                                all3[thread_id].erase(all3[thread_id].begin() + lp);
+
+                                lp--;
+                                id--;
+                            }
+                            else if (all3[thread_id][lp].flaga1 == 6)
+                            {
+                                addOccurrence(all3[thread_id][lp].miasto,
+                                              all3[thread_id][lp].kodPocztowy, 6,
+                                              flaga6.size());
+
+                                flaga6.push_back(all3[thread_id][lp]);
+                                all3[thread_id].erase(all3[thread_id].begin() + lp);
+
+                                lp--;
+                                id--;
+                            }
+                            else
+                            {
+                                all3[thread_id][lp].lat = lat;
+                                all3[thread_id][lp].lot = lon;
+                                dataToCSV[std::stoi(all3[thread_id][lp].lp)] =
+                                    std::move(all3[thread_id][lp]);
+                            }
+                        }
+                        else
+                        {
+                            all3[thread_id][lp].sklejone =
+                                removeUpToFirstSemicolon(all3[thread_id][lp].sklejone);
+
+                            all4[thread_id].push_back(all3[thread_id][lp]);
+
+                            all3[thread_id].erase(all3[thread_id].begin() + lp);
+
+                            lp--;
+                            id--;
+                        }
+                        lp++;
+                    }
+                }
+            }
+        }
+    }
+
+    close(sockfd);
+    close(epoll_fd);
+
+    if (all4[thread_id].size() > 0)
+        perform_requests4(thread_id, data);
+}
+
+void perform_requests2(int thread_id,
+                       std::shared_ptr<std::vector<std::string>> &data)
+{
+    (*data)[thread_id] +=
+        "Dane z wątku2222 " + std::to_string(thread_id) + "\n\n";
+
+    int NUM_REQUESTS = all2[thread_id].size();
+
+    int epoll_fd = epoll_create1(0);
+    if (epoll_fd == -1)
+    {
+        perror("epoll_create1");
+        exit(1);
+    }
+    int valuer = ++counterz;
+
+    int sockfd;
+
+    sockfd = create_nonblocking_socket(HOST, PORT);
+
+    if (sockfd == -1)
+    {
+        exit(1);
+    }
+
+    epoll_event ev, events[NUM_REQUESTS];
+
+    ev.events = EPOLLOUT | EPOLLET;
+    ev.data.fd = sockfd;
+    if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sockfd, &ev) == -1)
+    {
+        perror("epoll_ctl: EPOLLOUT");
+        close(sockfd);
+        exit(1);
+    }
+
+    int requests_sent = 0;
+    bool keep_going = true;
+    int id = 0;
+    int lp = 0;
+
+    while (keep_going)
+    {
+        int nfds = epoll_wait(epoll_fd, events, NUM_REQUESTS, -1);
+        if (nfds == -1)
+        {
+            perror("epoll_wait");
+            exit(1);
+        }
+
+        for (int n = 0; n < nfds; ++n)
+        {
+            if (events[n].events & EPOLLOUT && requests_sent < NUM_REQUESTS)
+            {
+                std::string address = url_encode(all2[thread_id][id++].sklejone);
+
+                std::string request =
+                    "GET /search.php?q=" + address + "&format=json&limit=1" +
+                    " HTTP/1.1\r\nHost: 127.0.0.1:8080\r\nConnection: "
+                    "keep-alive\r\n\r\n";
+                ssize_t bytes_sent = send(sockfd, request.c_str(), request.length(), 0);
+                if (bytes_sent == -1)
+                {
+                    perror("send");
+                    keep_going = false;
+                    break;
+                }
+                requests_sent++;
+                ev.events = EPOLLIN | EPOLLET;
+                ev.data.fd = sockfd;
+                if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1)
+                {
+                    perror("epoll_ctl: EPOLLIN");
+                    keep_going = false;
+                    break;
+                }
+            }
+            else if (events[n].events & EPOLLIN)
+            {
+                char buffer[4096];
+                std::string response;
+                ssize_t bytes_read;
+                while ((bytes_read = read(sockfd, buffer, sizeof(buffer))) > 0)
+                {
+                    response.append(buffer, bytes_read);
+                }
+
+                if (bytes_read == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
+                {
+                    perror("read");
+                    keep_going = false;
+                }
+                else if (bytes_read == 0)
+                {
+                    keep_going = false;
+                }
+                else
+                {
+                    if (requests_sent < NUM_REQUESTS)
+                    {
+                        ev.events = EPOLLOUT | EPOLLET;
+                        ev.data.fd = sockfd;
+                        if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1)
+                        {
+                            perror("epoll_ctl: EPOLLOUT");
+                            keep_going = false;
+                        }
+                    }
+                    else
+                    {
+                        keep_going = false;
+                    }
+                }
+
+                if (!response.empty())
+                {
+                    std::string http_response = response;
+
+                    std::string::size_type json_start = http_response.find('[');
+
+                    if (json_start != std::string::npos)
+                    {
+                        std::string json_str = http_response.substr(json_start);
+
+                        nlohmann::json j = nlohmann::json::parse(json_str);
+
+                        if (!j[0]["lat"].is_null())
+                        {
+                            std::string lat = "" + std::string(j[0]["lat"]);
+                            std::string lon = "" + std::string(j[0]["lon"]);
+                            std::string name = "" + std::string(j[0]["display_name"]);
+
+                            all2[thread_id][lp].adresujedn = name;
+                            all2[thread_id][lp].flaga2 = 1;
+
+                            if (all2[thread_id][lp].flaga1 == 2)
+                            {
+                                addOccurrence(all2[thread_id][lp].miasto,
+                                              all2[thread_id][lp].kodPocztowy, 2,
+                                              flaga2.size());
+
+                                flaga2.push_back(all2[thread_id][lp]);
+
+                                all2[thread_id].erase(all2[thread_id].begin() + lp);
+
+                                lp--;
+                                id--;
+                            }
+                            else if (all2[thread_id][lp].flaga1 == 3)
+                            {
+                                addOccurrence(all2[thread_id][lp].miasto,
+                                              all2[thread_id][lp].kodPocztowy, 3,
+                                              flaga3.size());
+
+                                flaga3.push_back(all2[thread_id][lp]);
+
+                                all2[thread_id].erase(all2[thread_id].begin() + lp);
+
+                                lp--;
+                                id--;
+                            }
+                            else if (all2[thread_id][lp].flaga1 == 6)
+                            {
+                                addOccurrence(all2[thread_id][lp].miasto,
+                                              all2[thread_id][lp].kodPocztowy, 6,
+                                              flaga6.size());
+
+                                flaga6.push_back(all2[thread_id][lp]);
+                                all2[thread_id].erase(all2[thread_id].begin() + lp);
+
+                                lp--;
+                                id--;
+                            }
+                            else
+                            {
+                                all2[thread_id][lp].lat = lat;
+                                all2[thread_id][lp].lot = lon;
+
+                                dataToCSV[std::stoi(all2[thread_id][lp].lp)] =
+                                    std::move(all2[thread_id][lp]);
+                            }
+                        }
+                        else
+                        {
+                            all2[thread_id][lp].sklejone =
+                                removeUpToFirstSemicolon(all2[thread_id][lp].sklejone);
+
+                            all3[thread_id].push_back(all2[thread_id][lp]);
+
+                            all2[thread_id].erase(all2[thread_id].begin() + lp);
+
+                            lp--;
+                            id--;
+                        }
+                        lp++;
+                    }
+                }
+            }
+        }
+    }
+
+    close(sockfd);
+    close(epoll_fd);
+
+    if (all3[thread_id].size() > 0)
+        perform_requests3(thread_id, data);
+}
+
+void perform_requests2X(int thread_id,
+                        std::vector<Address> &nextProcess)
+{
+
+    int NUM_REQUESTS = nextProcess.size();
+
+    int from = 0;
+
+    int epoll_fd = epoll_create1(0);
+    if (epoll_fd == -1)
+    {
+        perror("epoll_create1");
+        exit(1);
+    }
+
+    int sockfd;
+
+    sockfd = create_nonblocking_socket(HOST, PORT);
+
+    if (sockfd == -1)
+    {
+        exit(1);
+    }
+
+    epoll_event ev, events[NUM_REQUESTS];
+
+    ev.events = EPOLLOUT | EPOLLET;
+    ev.data.fd = sockfd;
+    if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sockfd, &ev) == -1)
+    {
+        perror("epoll_ctl: EPOLLOUT");
+        close(sockfd);
+        exit(1);
+    }
+
+    int requests_sent = 0;
+    bool keep_going = true;
+    int id = 0;
+
+    while (keep_going)
+    {
+        int nfds = epoll_wait(epoll_fd, events, NUM_REQUESTS, -1);
+        if (nfds == -1)
+        {
+            perror("epoll_wait");
+            exit(1);
+        }
+
+        for (int n = 0; n < nfds; ++n)
+        {
+            if (events[n].events & EPOLLOUT && requests_sent < NUM_REQUESTS)
+            {
+                std::string address = url_encode(toProcess[from].sklejone);
+
+                std::string request =
+                    "GET /search.php?q=" + address + "&json_callback=XDEAD" + std::to_string(from) + "BEEFX" + "&format=json&limit=1" +
+                    " HTTP/1.1\r\nHost: 127.0.0.1:8080\r\nConnection: "
+                    "keep-alive\r\n\r\n";
+
+#ifdef DEBUG
+                std::cout << request << std::endl;
+#endif
+                // if(toProcess[from].dbProcess == true)
+                //     addOccurrence(toProcess[from].miasto, toProcess[from].kodPocztowy, toProcess[from].flaga1, from);
+
+                from++;
+                ssize_t bytes_sent = send(sockfd, request.c_str(), request.length(), 0);
+                if (bytes_sent == -1)
+                {
+                    perror("send");
+                    keep_going = false;
+                    break;
+                }
+                requests_sent++;
+                ev.events = EPOLLIN | EPOLLET;
+                ev.data.fd = sockfd;
+                if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1)
+                {
+                    perror("epoll_ctl: EPOLLIN");
+                    keep_going = false;
+                    break;
+                }
+            }
+            else if (events[n].events & EPOLLIN)
+            {
+                char buffer[4096];
+                std::string response;
+                ssize_t bytes_read;
+                while ((bytes_read = read(sockfd, buffer, sizeof(buffer))) > 0)
+                {
+                    response.append(buffer, bytes_read);
+                }
+
+                if (bytes_read == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
+                {
+                    perror("read");
+                    keep_going = false;
+                }
+                else if (bytes_read == 0)
+                {
+                    keep_going = false;
+                }
+                else
+                {
+                    if (requests_sent < NUM_REQUESTS)
+                    {
+                        ev.events = EPOLLOUT | EPOLLET;
+                        ev.data.fd = sockfd;
+                        if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1)
+                        {
+                            perror("epoll_ctl: EPOLLOUT");
+                            keep_going = false;
+                        }
+                    }
+                    else
+                    {
+                        keep_going = false;
+                    }
+                }
+
+                if (!response.empty())
+                {
+                    std::string http_response = response;
+                    http_response.erase(http_response.length() - 1, 1);
+#ifdef DEBUG
+                    std::cout << http_response << std::endl;
+#endif
+
+                    std::string::size_type json_start = http_response.find('[');
+
+                    if (json_start != std::string::npos)
+                    {
+                        std::string json_str = http_response.substr(json_start);
+
+#ifdef DEBUG
+                        std::cout << json_str << std::endl;
+#endif
+                        size_t posStart = http_response.find("XDEAD");
+                        size_t posEnd = http_response.find("BEEFX");
+
+                        // Sprawdź, czy znaleziono oba podciągi i 'BEEFX' jest po 'XDEAD'
+                        // Wyciągnij liczbę między 'XDEAD' i 'BEEFX'
+                        int number = std::stoi(http_response.substr(posStart + 5, posEnd - posStart - 5));
+                        // std::cout << "Liczba: " << number << std::endl;
+
+                        // // Usuń podciąg od 'XDEAD' do 'BEEFX('
+                        // json_str.erase(posStart, posEnd - posStart + 6);
+
+                        // // Usuń końcowe ')'
+                        // size_t posCloseParen = json_str.rfind(')');
+                        //     json_str.erase(posCloseParen, 1);
+#ifdef DEBUG
+                        std::cout << json_str << std::endl;
+#endif
+
+                        nlohmann::json j = nlohmann::json::parse(json_str);
+
+                        if (!j[0]["lat"].is_null())
+                        {
+                            std::string lat = "" + std::string(j[0]["lat"]);
+                            std::string lon = "" + std::string(j[0]["lon"]);
+                            std::string name = "" + std::string(j[0]["display_name"]);
+
+                            toProcess[number].lat = lat;
+                            toProcess[number].lot = lon;
+                            toProcess[number].flaga2 = 0;
+                            toProcess[number].adresujedn = name;
+
+                            // all[thread_id][lp].adresujedn = name;
+                            // all[thread_id][lp].flaga2 = 0;
+
+                            // if (all[thread_id][lp].flaga1 == 0)
+                            // {
+                            //     addOccurrence(all[thread_id][lp].miasto,
+                            //                   all[thread_id][lp].kodPocztowy, 0, flaga0.size());
+                            //     flaga0.push_back(all[thread_id][lp]);
+                            //     all[thread_id].erase(all[thread_id].begin() + lp);
+
+                            //     lp--;
+                            //     id--;
+                            // }
+                            // else if (all[thread_id][lp].flaga1 == 5)
+                            // {
+                            //     addOccurrence(all[thread_id][lp].miasto,
+                            //                   all[thread_id][lp].kodPocztowy, 5, flaga5.size());
+                            //     flaga5.push_back(all[thread_id][lp]);
+                            //     all[thread_id].erase(all[thread_id].begin() + lp);
+
+                            //     lp--;
+                            //     id--;
+                            // else
+                            // {
+
+                            //     all[thread_id][lp].lat = lat;
+                            //     all[thread_id][lp].lot = lon;
+                            //     dataToCSV[std::stoi(all[thread_id][lp].lp)] =
+                            //         std::move(all[thread_id][lp]);
+                            // // }
+                        }
+                        else
+                        {
+                            // std::cout << " KCKZCZ" << std::endl;
+                            // all[thread_id][lp].sklejone =
+                            toProcess[number].sklejone = removeUpToFirstSemicolon(toProcess[number].sklejone);
+                            toProcess[number].flaga2 += 1;
+                            nextProcess.push_back(toProcess[number]);
+
+                            // if(toProcess[number].flaga1 == 2) {
+                            //     addOccurrence(toProcess[number].miasto, toProcess[number].kodPocztowy, toProcess[number].flaga1, number);
+                            // } else {
+
+                            // //                   all[thread_id][lp].kodPocztowy, 5, flaga5.size());
+                            // // all2[thread_id].push_back(all[thread_id][lp]);
+                            // }
+                            // all[thread_id].erase(all[thread_id].begin() + lp);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    close(sockfd);
+    close(epoll_fd);
+
+    if (nextProcess.size() > 0)
+        perform_requests2X(thread_id, nextProcess);
+}
+
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+// ##############
+void perform_requests(int thread_id,
+                      std::shared_ptr<std::vector<std::string>> &data,
+                      std::pair<int, int> range)
+{
+
+    std::vector<Address> nextProcess;
+
+    int NUM_REQUESTS = range.second - range.first;
+
+    int from = range.first;
+    int to = range.second;
+
+    int epoll_fd = epoll_create1(0);
+    if (epoll_fd == -1)
+    {
+        perror("epoll_create1");
+        exit(1);
+    }
+
+    int sockfd;
+
+    sockfd = create_nonblocking_socket(HOST, PORT);
+
+    if (sockfd == -1)
+    {
+        exit(1);
+    }
+
+    epoll_event ev, events[NUM_REQUESTS];
+
+    ev.events = EPOLLOUT | EPOLLET;
+    ev.data.fd = sockfd;
+    if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sockfd, &ev) == -1)
+    {
+        perror("epoll_ctl: EPOLLOUT");
+        close(sockfd);
+        exit(1);
+    }
+
+    int requests_sent = 0;
+    bool keep_going = true;
+    int id = 0;
+
+    while (keep_going)
+    {
+        int nfds = epoll_wait(epoll_fd, events, NUM_REQUESTS, -1);
+        if (nfds == -1)
+        {
+            perror("epoll_wait");
+            exit(1);
+        }
+
+        for (int n = 0; n < nfds; ++n)
+        {
+            if (events[n].events & EPOLLOUT && requests_sent < NUM_REQUESTS)
+            {
+                std::string address = url_encode(toProcess[from].sklejone);
+
+                std::string request =
+                    "GET /search.php?q=" + address + "&json_callback=XDEAD" + std::to_string(from) + "BEEFX" + "&format=json&limit=1" +
+                    " HTTP/1.1\r\nHost: 127.0.0.1:8080\r\nConnection: "
+                    "keep-alive\r\n\r\n";
+#ifdef DEBUG
+                std::cout << request << std::endl;
+#endif
+                from++;
+                ssize_t bytes_sent = send(sockfd, request.c_str(), request.length(), 0);
+                if (bytes_sent == -1)
+                {
+                    perror("send");
+                    keep_going = false;
+                    break;
+                }
+                requests_sent++;
+                ev.events = EPOLLIN | EPOLLET;
+                ev.data.fd = sockfd;
+                if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1)
+                {
+                    perror("epoll_ctl: EPOLLIN");
+                    keep_going = false;
+                    break;
+                }
+            }
+            else if (events[n].events & EPOLLIN)
+            {
+                char buffer[4096];
+                std::string response;
+                ssize_t bytes_read;
+                while ((bytes_read = read(sockfd, buffer, sizeof(buffer))) > 0)
+                {
+                    response.append(buffer, bytes_read);
+                }
+
+                if (bytes_read == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
+                {
+                    perror("read");
+                    keep_going = false;
+                }
+                else if (bytes_read == 0)
+                {
+                    keep_going = false;
+                }
+                else
+                {
+                    if (requests_sent < NUM_REQUESTS)
+                    {
+                        ev.events = EPOLLOUT | EPOLLET;
+                        ev.data.fd = sockfd;
+                        if (epoll_ctl(epoll_fd, EPOLL_CTL_MOD, sockfd, &ev) == -1)
+                        {
+                            perror("epoll_ctl: EPOLLOUT");
+                            keep_going = false;
+                        }
+                    }
+                    else
+                    {
+                        keep_going = false;
+                    }
+                }
+
+                if (!response.empty())
+                {
+                    std::string http_response = response;
+                    http_response.erase(http_response.length() - 1, 1);
+#ifdef DEBUG
+                    std::cout << http_response << std::endl;
+#endif
+                    std::string::size_type json_start = http_response.find('[');
+
+                    if (json_start != std::string::npos)
+                    {
+                        std::string json_str = http_response.substr(json_start);
+#ifdef DEBUG
+                        std::cout << json_str << std::endl;
+#endif
+                        size_t posStart = http_response.find("XDEAD");
+                        size_t posEnd = http_response.find("BEEFX");
+
+                        // Sprawdź, czy znaleziono oba podciągi i 'BEEFX' jest po 'XDEAD'
+                        // Wyciągnij liczbę między 'XDEAD' i 'BEEFX'
+                        int number = std::stoi(http_response.substr(posStart + 5, posEnd - posStart - 5));
+// std::cout << "Liczba: " << number << std::endl;
+
+// // Usuń podciąg od 'XDEAD' do 'BEEFX('
+// json_str.erase(posStart, posEnd - posStart + 6);
+
+// // Usuń końcowe ')'
+// size_t posCloseParen = json_str.rfind(')');
+//     json_str.erase(posCloseParen, 1);
+#ifdef DEBUG
+                        std::cout << json_str << std::endl;
+#endif
+
+                        nlohmann::json j = nlohmann::json::parse(json_str);
+
+                        if (!j[0]["lat"].is_null())
+                        {
+                            std::string lat = "" + std::string(j[0]["lat"]);
+                            std::string lon = "" + std::string(j[0]["lon"]);
+                            std::string name = "" + std::string(j[0]["display_name"]);
+
+                            toProcess[number].lat = lat;
+                            toProcess[number].lot = lon;
+                            toProcess[number].flaga2 = 0;
+                            toProcess[number].adresujedn = name;
+
+                            // all[thread_id][lp].adresujedn = name;
+                            // all[thread_id][lp].flaga2 = 0;
+
+                            // if (all[thread_id][lp].flaga1 == 0)
+                            // {
+                            //     addOccurrence(all[thread_id][lp].miasto,
+                            //                   all[thread_id][lp].kodPocztowy, 0, flaga0.size());
+                            //     flaga0.push_back(all[thread_id][lp]);
+                            //     all[thread_id].erase(all[thread_id].begin() + lp);
+
+                            //     lp--;
+                            //     id--;
+                            // }
+                            // else if (all[thread_id][lp].flaga1 == 5)
+                            // {
+                            //     addOccurrence(all[thread_id][lp].miasto,
+                            //                   all[thread_id][lp].kodPocztowy, 5, flaga5.size());
+                            //     flaga5.push_back(all[thread_id][lp]);
+                            //     all[thread_id].erase(all[thread_id].begin() + lp);
+
+                            //     lp--;
+                            //     id--;
+                            // else
+                            // {
+
+                            //     all[thread_id][lp].lat = lat;
+                            //     all[thread_id][lp].lot = lon;
+                            //     dataToCSV[std::stoi(all[thread_id][lp].lp)] =
+                            //         std::move(all[thread_id][lp]);
+                            // // }
+                        }
+                        else
+                        {
+                            // std::cout << " KCKZCZ" << std::endl;
+                            // all[thread_id][lp].sklejone =
+                            toProcess[number].sklejone = removeUpToFirstSemicolon(toProcess[number].sklejone);
+                            toProcess[number].flaga2 += 1;
+
+                            if (toProcess[number].flaga1 == 2)
+                            {
+                                addOccurrence(toProcess[number].miasto, "", toProcess[number].flaga1, number);
+                            }
+                            else if (toProcess[number].flaga1 == 3)
+                            {
+                                addOccurrence("", toProcess[number].kodPocztowy, toProcess[number].flaga1, number);
+                            }
+                            else if (toProcess[number].flaga1 == 1)
+                            {
+                                addOccurrence(toProcess[number].miasto, toProcess[number].kodPocztowy, toProcess[number].flaga1, number);
+
+                                // nextProcess.push_back(toProcess[number]);
+                            }
+                            // if(toProcess[number].flaga1 == 2) {
+                            //     addOccurrence(toProcess[number].miasto, toProcess[number].kodPocztowy, toProcess[number].flaga1, number);
+                            // } else {
+
+                            // //                   all[thread_id][lp].kodPocztowy, 5, flaga5.size());
+                            // // all2[thread_id].push_back(all[thread_id][lp]);
+                            // }
+                            // all[thread_id].erase(all[thread_id].begin() + lp);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    close(sockfd);
+    close(epoll_fd);
+
+    // if (nextProcess.size() > 0)
+    //     perform_requests2X(thread_id, nextProcess);
+}
+
+std::string removeAfterSlash(std::string address)
+{
+    size_t pos;
+
+    pos = address.find('/');
+    if (pos != std::string::npos)
+    {
+        address = address.substr(0, pos);
+    }
+
+    return address;
+}
+
+std::string removeWord(const std::string &input,
+                       const std::string &wordToRemove)
+{
+    std::istringstream stream(input);
+    std::string word;
+    std::string result;
+
+    while (stream >> word)
+    {
+        if (word != wordToRemove)
+        {
+            result += word + " ";
+        }
+    }
+
+    if (!result.empty())
+    {
+        result.pop_back();
+    }
+
+    return result;
+}
+
+std::string removeWordsWithDot(const std::string &input)
+{
+    std::istringstream stream(input);
+    std::string word;
+    std::string result;
+
+    while (stream >> word)
+    {
+        if (word.find('.') == std::string::npos)
+        {
+            result += word + " ";
+        }
+    }
+
+    if (!result.empty())
+    {
+        result.pop_back();
+    }
+
+    return result;
+}
+
+bool containsWordIgnoreCase(const std::string &text, const std::string &word)
+{
+    std::string lowerText = text;
+    std::string lowerWord = word;
+
+    std::transform(lowerText.begin(), lowerText.end(), lowerText.begin(),
+                   ::tolower);
+    std::transform(lowerWord.begin(), lowerWord.end(), lowerWord.begin(),
+                   ::tolower);
+
+    return lowerText.find(lowerWord) != std::string::npos;
+}
+
+void addStringId(std::vector<std::vector<std::string>> &allStringsId,
+                 const std::string &str, int &currentIndex)
+{
+    allStringsId[currentIndex].push_back(str);
+    currentIndex = (currentIndex + 1) % allStringsId.size();
+}
+
+void addString(std::vector<std::vector<std::string>> &allStrings,
+               const std::string &str, int &currentIndex)
+{
+    allStrings[currentIndex].push_back(str);
+    currentIndex = (currentIndex + 1) % allStrings.size();
+}
+
+bool hasNumber(const std::string &str)
+{
+    return str.find_first_of("0123456789") != std::string::npos;
+}
+
+std::string removeSpecificTitles(const std::string &str)
+{
+    std::string result = str;
+    std::vector<std::string> titles = {"doktora"};
+
+    for (const auto &title : titles)
+    {
+        size_t pos = result.find(title);
+        while (pos != std::string::npos)
+        {
+            result.erase(pos, title.length());
+            pos = result.find(title);
+        }
+    }
+
+    return result;
+}
+
+void wypiszAdresy(const std::vector<Address> &addresses,
+                  const std::string &nazwaWektora)
+{
+    std::cout << "Wektor: " << nazwaWektora << std::endl;
+    for (const auto &address : addresses)
+    {
+        std::cout << "Kod pocztowy: " << address.kodPocztowy
+                  << ", Miasto: " << address.miasto
+                  << ", Flaga1: " << address.flaga1 << std::endl;
+    }
+    std::cout << std::endl;
+}
+
+void saveToCSV(const std::vector<Address> &dataToCSV,
+               const std::string &filename)
+{
+    std::ofstream file("/mnt/c/Output_geokodowanie/" + filename);
+
+    if (!file.is_open())
+    {
+        std::cerr << "Nie można otworzyć pliku do zapisu!" << std::endl;
+        return;
+    }
+
+    file << "Lp;DataPoczatku;DataKonca;SumaUbezpieczenia;Odnowienia;"
+            "Ulica;KodPocztowy;Miasto;Wojewodztwo;Kraj;ReasekuracjaO;"
+            "ReasekuracjaF;Szerokosc;Dlugosc;Flaga_1;Flaga_2;Nr_Wojewodztwa\n";
+
+    for (size_t i = 0; i < dataToCSV.size(); ++i)
+    {
+        const auto &address = dataToCSV[i];
+
+        auto [wojewodztwo, nr_woj] = getWojewodztwoMapa(address.kodPocztowy);
+
+        file << address.lp << ";"
+             << address.dataPoczatku << ";" << address.dataKonca << ";"
+             << address.sumaUbezpieczenia << ";" << address.odnowienia << ";"
+             << address.ulica << ";" << address.kodPocztowy << ";" << address.miasto
+             << ";" << wojewodztwo << ";" << address.kraj << ";"
+             << address.reasekuracjaO << ";" << address.reasekuracjaF << ";"
+             << address.lat << ";" << address.lot
+             << ";" << address.flaga1 << ";" << address.flaga2 << ";" << nr_woj << ";" << "\n";
+    }
+
+    file.close();
+}
+
+int pobierzLiczbe(const std::string &ciag, int indeks)
+{
+    std::istringstream iss(ciag);
+    std::string liczba;
+    int licznik = 0;
+
+    while (iss >> liczba)
+    {
+        if (licznik == indeks)
+        {
+            return std::stoi(liczba);
+        }
+        licznik++;
+    }
+
+    throw std::out_of_range("Nie znaleziono liczby o podanym indeksie. Ciag: \"" + ciag + "\", Indeks: " + std::to_string(indeks));
+
+    // throw std::out_of_range("Nie znaleziono liczby o podanym indeksie.");
+}
+
+// #include <iostream>
+// #include <deque>
+// #include <thread>
+// #include <mutex>
+// #include <string>
+
+bool isStringStreamEmpty(const std::stringstream &ss)
+{
+    return ss.str().empty();
+}
+
+class ThreadSafeDeque
+{
+public:
+    std::stringstream pop_front()
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        if (!data.empty())
+        {
+            std::stringstream value;
+            value << data.front();
+            data.pop_front();
+            return value;
+        }
+        return std::stringstream(); // Zwracamy pusty stringstream, gdy deque jest pusty
+    }
+
+    void push_back(const std::stringstream &value)
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        data.push_back(value.str());
+    }
+
+    size_t size() const
+    {
+        return data.size();
+    }
+
+private:
+    std::deque<std::string> data;
+    std::mutex mtx;
+};
+
+ThreadSafeDeque workers_data;
+
+// void consumer(ThreadSafeDeque& deq) {
+//     for (int i = 0; i < 10; ++i) {
+//         std::string value = deq.pop_front();
+//         if (!value.empty()) {
+//             std::cout << "Popped: " << value << std::endl;
+//         } else {
+//             std::cout << "Deque is empty." << std::endl;
+//         }
+//     }
+// }
+
+// int main() {
+//     ThreadSafeDeque deq;
+
+//     // Dodajemy dane do deque
+//     for (int i = 0; i < 10; ++i) {
+//         deq.push_back("String " + std::to_string(i));
+//     }
+
+//     std::thread t1(consumer, std::ref(deq));
+//     t1.join();
+
+//     return 0;
+// }
+
+std::mutex mtx_word;
+void test_perf()
+{
+    while (workers_data.size() > 0)
+    {
+        auto dd = workers_data.pop_front();
+        if (!dd.str().empty())
+        {
+            std::string query = dd.str();
+            pqxx::result r = txn.exec(query);
+
+            for (const auto &row : r)
+            {
+                std::string city, street, postcode, housenumber, place;
+
+                size_t pos = 0;
+
+                std::string input = row["address"].c_str();
+                // std::cout << input << std::endl;
+                while (pos != std::string::npos)
+                {
+                    size_t key_start = input.find('"', pos);
+                    if (key_start == std::string::npos)
+                        break;
+                    size_t key_end = input.find('"', key_start + 1);
+                    if (key_end == std::string::npos)
+                        break;
+
+                    std::string key = input.substr(key_start + 1, key_end - key_start - 1);
+
+                    size_t value_start = input.find('"', key_end + 1);
+                    if (value_start == std::string::npos)
+                        break;
+                    size_t value_end = input.find('"', value_start + 1);
+                    if (value_end == std::string::npos)
+                        break;
+
+                    std::string value =
+                        input.substr(value_start + 1, value_end - value_start - 1);
+
+                    if (key == "city")
+                    {
+                        city = value;
+                    }
+                    else if (key == "street")
+                    {
+                        street = value;
+                    }
+                    else if (key == "postcode")
+                    {
+                        postcode = value;
+                    }
+                    else if (key == "housenumber")
+                    {
+                        housenumber = value;
+                    }
+                    else if (key == "place")
+                    {
+                        place = value;
+                    }
+
+                    pos = value_end + 1;
+                }
+
+                if (city == "")
+                    city = place;
+
+                int flag = row["Flag"].as<int>();
+                std::string vecPositions = row["VecPos"].c_str();
+                double lat = row["lat"].as<double>();
+                double lon = row["lon"].as<double>();
+                int liczba = -1;
+                {
+                    std::lock_guard<std::mutex> lock(mtx_word);
+
+                    wordCnt[{vecPositions, city, postcode}] += 1;
+                    // std::cout << vecPositions << " : " <<  wordCnt[{vecPositions, city, postcode}] - 1 << std::endl;
+                    liczba = pobierzLiczbe(vecPositions,
+                                           wordCnt[{vecPositions, city, postcode}] - 1);
+                }
+#ifdef DEBUG
+                std::cout << "liczba, rozmiar vec " << liczba << ":" << toProcess.size() << std::endl;
+#endif
+
+                if (toProcess.size() > liczba)
+                {
+                    toProcess[liczba].miasto = city;
+                    toProcess[liczba].kodPocztowy = postcode;
+                    toProcess[liczba].ulica = street + " " + housenumber;
+                    toProcess[liczba].lat = std::to_string(lat);
+                    toProcess[liczba].lot = std::to_string(lon);
+                }
+            }
+        }
+    }
+}
+
+std::mutex occurrencesMutex2;
+void addOccurrenceTemp(std::map<std::tuple<std::string, std::string, int>, std::pair<int, std::string>> &occurrences2, const std::string &city, const std::string &postcode,
+                       int flag, int vecPos)
+{
+    if (!city.empty() || !postcode.empty())
+    {
+        // Blokada mutexa
+        std::lock_guard<std::mutex> lock(occurrencesMutex2);
+
+        auto &entry = occurrences2[{city, postcode, flag}];
+
+        entry.first++;
+        entry.second += std::to_string(vecPos) + " ";
+    }
+}
+
+void perform_random(int threadid)
+{
+
+    pqxx::connection c(
+        "dbname=nominatim user=nominatim password=nominatim host=localhost "
+        "port=5432");
+    pqxx::work txn(c);
+
     while (true)
     {
-        std::unique_lock<std::mutex> latch(queue_mutex);
-        cv_task.wait(latch, [this]()
-                     { return stop || !tasks.empty(); });
-        if (!tasks.empty())
+        auto dd = workers_data.pop_front();
+        if (!dd.str().empty())
         {
+            // std::cout << "THREAD ID: " << threadid << dd.str() << std::endl;
 
-            ++busy;
+            pqxx::result r = txn.exec(dd);
+            // std::cout << "rozmiar " << r.size() << std::endl;
+            if (r.size() == 0)
+            {
+                // std::cout << dd.str() << std::endl;
+                std::vector<int> vecPosNumbers;
 
-            auto fn = tasks.front();
-            tasks.pop_front();
+                size_t start = dd.str().find("'");
+                size_t end = dd.str().find("'", start + 1);
 
-            latch.unlock();
+                if (start != std::string::npos && end != std::string::npos)
+                {
+                    std::string numbers = dd.str().substr(start + 1, end - start - 1);
+                    std::stringstream ss(numbers);
+                    std::string number;
 
-            fn();
-            ++processed;
+                    while (ss >> number)
+                    {
+                        vecPosNumbers.push_back(std::stoi(number));
+                    }
+                }
 
-            latch.lock();
-            --busy;
-            cv_finished.notify_one();
+                std::map<std::tuple<std::string, std::string, int>, std::pair<int, std::string>> temp_occurrences;
+
+                for (const auto &num : vecPosNumbers)
+                {
+                    if (toProcess[num].flaga1 == 2)
+                    {
+
+                        if (probabilities.size() > 0)
+                        {
+                            std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+                            std::string pCode = codes[dist(gen)];
+
+                            toProcess[num].kodPocztowy = pCode;
+                            // toProcess[num].flaga2 += 1;
+                            addOccurrenceTemp(temp_occurrences, "", pCode, 2, num);
+                        }
+                    }
+                    else if (toProcess[num].flaga1 == 3)
+                    {
+
+                        if (probabilities.size() > 0)
+                        {
+                            std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+                            std::string pCode = codes[dist(gen)];
+
+                            toProcess[num].kodPocztowy = pCode;
+                            // toProcess[num].flaga2 += 1;
+                            addOccurrenceTemp(temp_occurrences, "", pCode, 3, num);
+                        }
+                    }
+                    else if (toProcess[num].flaga1 == 4 && toProcess[num].proby == 0)
+                    {
+
+                        toProcess[num].proby += 1;
+                        // toProcess[num].flaga2 += 1;
+                        addOccurrenceTemp(temp_occurrences, toProcess[num].miasto, "", 4, num);
+                    }
+                    else if (toProcess[num].flaga1 == 4 && toProcess[num].proby >= 1)
+                    {
+                        if (probabilities.size() > 0)
+                        {
+                            std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+                            std::string pCode = codes[dist(gen)];
+
+                            toProcess[num].kodPocztowy = pCode;
+                            toProcess[num].proby += 1;
+                            toProcess[num].flaga2 += 1;
+                            addOccurrenceTemp(temp_occurrences, "", toProcess[num].kodPocztowy, 4, num);
+                        }
+                    }
+                    else if (toProcess[num].flaga1 == 5 && toProcess[num].proby == 0)
+                    {
+
+                        // toProcess[num].flaga2 += 1;
+                        toProcess[num].proby += 1;
+
+                        addOccurrenceTemp(temp_occurrences, toProcess[num].miasto, "", 5, num);
+                    }
+                    else if (toProcess[num].flaga1 == 5 && toProcess[num].proby == 1)
+                    {
+                        toProcess[num].proby += 1;
+                        toProcess[num].flaga2 += 1;
+                        addOccurrenceTemp(temp_occurrences, "", toProcess[num].kodPocztowy, 5, num);
+                    }
+                    else if (toProcess[num].flaga1 == 5 && toProcess[num].proby >= 2)
+                    {
+
+                        if (probabilities.size() > 0)
+                        {
+                            std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+                            std::string pCode = codes[dist(gen)];
+                            toProcess[num].proby += 1;
+
+                            toProcess[num].kodPocztowy = pCode;
+                            toProcess[num].flaga2 += 1;
+                            addOccurrenceTemp(temp_occurrences, "", pCode, 5, num);
+                        }
+                    }
+                    else if (toProcess[num].flaga1 == 6)
+                    {
+
+                        if (probabilities.size() > 0)
+                        {
+                            std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+                            std::string pCode = codes[dist(gen)];
+
+                            toProcess[num].kodPocztowy = pCode;
+                            // toProcess[num].flaga2 += 1;
+                            addOccurrenceTemp(temp_occurrences, "", pCode, 6, num);
+                        }
+                    }
+                    else if (toProcess[num].flaga1 == 1 && toProcess[num].proby == 0)
+                    {
+                        // toProcess[num].flaga2 += 1;
+                        toProcess[num].proby += 1;
+                        addOccurrenceTemp(temp_occurrences, toProcess[num].miasto, toProcess[num].kodPocztowy, 1, num);
+                    }
+                    else if (toProcess[num].flaga1 == 1 && toProcess[num].proby == 1)
+                    {
+
+                        toProcess[num].proby += 1;
+                        toProcess[num].flaga2 += 1;
+                        addOccurrenceTemp(temp_occurrences, "", toProcess[num].kodPocztowy, 1, num);
+                    }
+                    else if (toProcess[num].flaga1 == 1 && toProcess[num].proby >= 2)
+                    {
+
+                        if (probabilities.size() > 0)
+                        {
+                            std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+                            std::string pCode = codes[dist(gen)];
+
+                            toProcess[num].proby += 1;
+                            toProcess[num].kodPocztowy = pCode;
+                            toProcess[num].flaga2 += 1;
+                            addOccurrenceTemp(temp_occurrences, "", pCode, 1, num);
+                        }
+                    }
+                    else if (toProcess[num].flaga1 == 0)
+                    {
+
+                        if (probabilities.size() > 0)
+                        {
+                            std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+                            std::string pCode = codes[dist(gen)];
+
+                            toProcess[num].proby += 1;
+                            toProcess[num].kodPocztowy = pCode;
+                            // toProcess[num].flaga2 += 1;
+                            addOccurrenceTemp(temp_occurrences, "", pCode, 0, num);
+                        }
+                    }
+                }
+                for (const auto &entry : temp_occurrences)
+                {
+                    std::stringstream query;
+                    const auto &key = entry.first;
+                    const auto &value = entry.second;
+
+                    const std::string &city = std::get<0>(key);
+                    const std::string &postcode = std::get<1>(key);
+                    int flag = std::get<2>(key);
+                    int count = value.first;
+                    std::string vecPos = value.second;
+
+                    if (count > 0 && (!city.empty() || !postcode.empty()))
+                    {
+                        query // << "(\n"
+                            << "    SELECT \n"
+                            << "        " << flag << " AS Flag,\n"
+                            << "        " << '\'' << vecPos << '\'' << " AS VecPos,\n"
+                            << "        address,\n"
+                            << "        ST_Y(ST_Centroid(centroid)) AS lat,\n"
+                            << "        ST_X(ST_Centroid(centroid)) AS lon\n"
+                            << "    FROM \n"
+                            << "        placex\n"
+                            << "    WHERE \n";
+
+                        bool hasCondition = false;
+                        if (!postcode.empty())
+                        {
+                            query << "        address -> 'postcode' ILIKE '" << postcode << "'\n";
+                            hasCondition = true;
+                        }
+                        if (!city.empty())
+                        {
+                            if (hasCondition)
+                            {
+                                query << "        AND ";
+                            }
+                            // query << "address -> 'city' ILIKE '" << city << "'\n";
+                            query << "(address -> 'city' ILIKE '" << city << "' OR address -> 'place' ILIKE '" << city << "')\n";
+                            hasCondition = true;
+                        }
+
+                        if (hasCondition)
+                        {
+                            query << "        AND ";
+                        }
+                        query << "address -> 'housenumber' IS NOT NULL AND address -> "
+                                 "'housenumber' != ''\n";
+                        query << "    ORDER BY RANDOM() " << "\n";
+                        query << "    LIMIT " << count << ";\n\n";
+                        workers_data.push_back(query);
+                    }
+                }
+
+                // std::cout << "Liczby dla VecPos: ";
+                // for (const auto& num : vecPosNumbers) {
+                //     std::cout << num << " ";
+                // }
+                // std::cout << std::endl;
+
+                continue;
+            }
+
+            int liczba = -1;
+            int nr_liczby = 0;
+
+            for (const auto &row : r)
+            {
+                std::string city, street, postcode, housenumber, place;
+
+                size_t pos = 0;
+
+                std::string input = row["address"].c_str();
+                // std::cout << input << std::endl;
+                while (pos != std::string::npos)
+                {
+                    size_t key_start = input.find('"', pos);
+                    if (key_start == std::string::npos)
+                        break;
+                    size_t key_end = input.find('"', key_start + 1);
+                    if (key_end == std::string::npos)
+                        break;
+
+                    std::string key = input.substr(key_start + 1, key_end - key_start - 1);
+
+                    size_t value_start = input.find('"', key_end + 1);
+                    if (value_start == std::string::npos)
+                        break;
+                    size_t value_end = input.find('"', value_start + 1);
+                    if (value_end == std::string::npos)
+                        break;
+
+                    std::string value =
+                        input.substr(value_start + 1, value_end - value_start - 1);
+
+                    if (key == "city")
+                    {
+                        city = value;
+                    }
+                    else if (key == "street")
+                    {
+                        street = value;
+                    }
+                    else if (key == "postcode")
+                    {
+                        postcode = value;
+                    }
+                    else if (key == "housenumber")
+                    {
+                        housenumber = value;
+                    }
+                    else if (key == "place")
+                    {
+                        place = value;
+                    }
+
+                    pos = value_end + 1;
+                }
+
+                if (city == "")
+                    city = place;
+
+                int flag = row["Flag"].as<int>();
+                std::string vecPositions = row["VecPos"].c_str();
+                // std::cout << vecPositions << " : ";
+                double lat = row["lat"].as<double>();
+                double lon = row["lon"].as<double>();
+
+                // {
+                //     std::lock_guard<std::mutex> lock(mtx_word);
+
+                // wordCnt[{vecPositions, city, postcode}] += 1;
+                liczba = pobierzLiczbe(vecPositions,
+                                       nr_liczby++);
+// std:: cout << vecPositions << ":" << liczba << " -  " << nr_liczby << std::endl;
+// }
+#ifdef DEBUG
+                std::cout << "liczba, rozmiar vec " << liczba << ":" << toProcess.size() << std::endl;
+#endif
+
+                // std::cout << liczba << " : " << street << " : " << housenumber << " : " << place << std::endl;
+                if (toProcess.size() > liczba)
+                {
+                    toProcess[liczba].miasto = city;
+                    toProcess[liczba].kodPocztowy = postcode;
+                    toProcess[liczba].ulica = street + " " + housenumber;
+                    toProcess[liczba].lat = std::to_string(lat);
+                    toProcess[liczba].lot = std::to_string(lon);
+                }
+            }
         }
-        else if (stop)
+        else
         {
             break;
         }
     }
 }
 
-template <class F>
-void ThreadPool::enqueue(F &&f)
-{
-    std::unique_lock<std::mutex> lock(queue_mutex);
-    tasks.emplace_back(std::forward<F>(f));
-    cv_task.notify_one();
-}
-
-void ThreadPool::waitFinished()
-{
-    std::unique_lock<std::mutex> lock(queue_mutex);
-    cv_finished.wait(lock, [this]()
-                     { return tasks.empty() && (busy == 0); });
-}
-
-ThreadPool pool(1);
-
-using namespace std;
-
-const unsigned int fixedSeed = 123456789;
-std::mt19937 gen(fixedSeed);
-
-const int numRegions = 17;
-const int numMonths = 12;
-
-std::vector<std::vector<std::vector<long double>>> exponsure_longitude(numRegions);
-std::vector<std::vector<std::vector<long double>>> exponsure_latitude(numRegions);
-std::vector<std::vector<long double>> list_list_wyb(numRegions);
-std::vector<std::vector<long double>> fire_spread_prob_vec(4);
-std::vector<long double> conditional_mean_trend_parameters(2);
-std::vector<long double> conditional_Cov(2);
-std::vector<std::vector<std::vector<int>>> exponsure_insurance(numRegions);
-std::vector<std::vector<std::vector<int>>> exponsure_reassurance(numRegions);
-std::vector<std::vector<std::vector<double>>> exponsure_sum_value(numRegions);
-std::vector<std::vector<double>> wielkosc_pozaru(2);
-std::vector<std::vector<double>> fakultatywna_input_num;
-std::vector<std::vector<std::vector<double>>> fakultatywna_input_val;
-std::vector<std::vector<double>> obligatoryjna_input_risk;
-std::vector<std::vector<double>> obligatoryjna_input_event;
-
-namespace sftrabbit
-{
-
-    template <typename RealType = double>
-    class beta_distribution
-    {
-    public:
-        typedef RealType result_type;
-
-        class param_type
-        {
-        public:
-            typedef beta_distribution distribution_type;
-
-            explicit param_type(RealType a = 2.0, RealType b = 2.0)
-                : a_param(a), b_param(b) {}
-
-            RealType a() const { return a_param; }
-            RealType b() const { return b_param; }
-
-            bool operator==(const param_type &other) const
-            {
-                return (a_param == other.a_param &&
-                        b_param == other.b_param);
-            }
-
-            bool operator!=(const param_type &other) const
-            {
-                return !(*this == other);
-            }
-
-        private:
-            RealType a_param, b_param;
-        };
-
-        explicit beta_distribution(RealType a = 2.0, RealType b = 2.0)
-            : a_gamma(a), b_gamma(b) {}
-        explicit beta_distribution(const param_type &param)
-            : a_gamma(param.a()), b_gamma(param.b()) {}
-
-        void reset() {}
-
-        param_type param() const
-        {
-            return param_type(a(), b());
-        }
-
-        void param(const param_type &param)
-        {
-            a_gamma = gamma_dist_type(param.a());
-            b_gamma = gamma_dist_type(param.b());
-        }
-
-        template <typename URNG>
-        result_type operator()(URNG &engine)
-        {
-            return generate(engine, a_gamma, b_gamma);
-        }
-
-        template <typename URNG>
-        result_type operator()(URNG &engine, const param_type &param)
-        {
-            gamma_dist_type a_param_gamma(param.a()),
-                b_param_gamma(param.b());
-            return generate(engine, a_param_gamma, b_param_gamma);
-        }
-
-        result_type min() const { return 0.0; }
-        result_type max() const { return 1.0; }
-
-        RealType a() const { return a_gamma.alpha(); }
-        RealType b() const { return b_gamma.alpha(); }
-
-        bool operator==(const beta_distribution<result_type> &other) const
-        {
-            return (param() == other.param() &&
-                    a_gamma == other.a_gamma &&
-                    b_gamma == other.b_gamma);
-        }
-
-        bool operator!=(const beta_distribution<result_type> &other) const
-        {
-            return !(*this == other);
-        }
-
-    private:
-        typedef std::gamma_distribution<result_type> gamma_dist_type;
-
-        gamma_dist_type a_gamma, b_gamma;
-
-        template <typename URNG>
-        result_type generate(URNG &engine,
-                             gamma_dist_type &x_gamma,
-                             gamma_dist_type &y_gamma)
-        {
-            result_type x = x_gamma(engine);
-            return x / (x + y_gamma(engine));
-        }
-    };
-
-    template <typename CharT, typename RealType>
-    std::basic_ostream<CharT> &operator<<(std::basic_ostream<CharT> &os,
-                                          const beta_distribution<RealType> &beta)
-    {
-        os << "~Beta(" << beta.a() << "," << beta.b() << ")";
-        return os;
-    }
-
-    template <typename CharT, typename RealType>
-    std::basic_istream<CharT> &operator>>(std::basic_istream<CharT> &is,
-                                          beta_distribution<RealType> &beta)
-    {
-        std::string str;
-        RealType a, b;
-        if (std::getline(is, str, '(') && str == "~Beta" &&
-            is >> a && is.get() == ',' && is >> b && is.get() == ')')
-        {
-            beta = beta_distribution<RealType>(a, b);
-        }
-        else
-        {
-            is.setstate(std::ios::failbit);
-        }
-        return is;
-    }
-
-}
-
-class VectorSim
-{
-public:
-    std::vector<std::vector<double>> data;
-    VectorSim() : data(30, std::vector<double>()) {}
-
-    void addDataVec(int insurane, double value)
-    {
-        data[insurane].push_back(value);
-    }
-
-    std::vector<std::vector<double>> returnVectorSim()
-    {
-        return (data);
-    }
-
-    void clearVector(int num_vec)
-    {
-        data[num_vec].clear();
-    }
-};
-
-VectorSim out_brutto_final;
-
-class VectorPozarPierwotny
-{
-public:
-    std::vector<std::vector<long double>> build_fire;
-    VectorPozarPierwotny() : build_fire(9, std::vector<long double>()) {}
-
-    void addPozarPierwotny(int insurancer, int nr_budynku, int woj, int mies, int index_table, double wielkosc_pozar_kwota,
-                           double reas_fire)
-    {
-        build_fire[0].push_back(insurancer);
-        build_fire[1].push_back(exponsure_longitude[woj - 1][mies - 1][nr_budynku]);
-        build_fire[2].push_back(exponsure_latitude[woj - 1][mies - 1][nr_budynku]);
-        build_fire[3].push_back(woj + 1);
-        build_fire[4].push_back(mies + 1);
-        build_fire[5].push_back(exponsure_sum_value[woj - 1][mies - 1][nr_budynku]);
-        build_fire[6].push_back(index_table);
-        build_fire[7].push_back(wielkosc_pozar_kwota);
-        build_fire[8].push_back(reas_fire);
-    }
-    std::vector<std::vector<long double>> returnPozarPierwotny()
-    {
-        return (build_fire);
-    }
-};
-class VectorPozarRozprzestrzeniony
-{
-public:
-    std::vector<std::vector<double>> build_fire_rozprzestrzeniony;
-    VectorPozarRozprzestrzeniony() : build_fire_rozprzestrzeniony(11, std::vector<double>()) {}
-
-    void addPozarRozprzestrzeniony(std::vector<std::vector<double>> spread_one_building)
-    {
-        for (int ttt = 0; ttt < 11; ttt++)
-        {
-            build_fire_rozprzestrzeniony[ttt].insert(
-                build_fire_rozprzestrzeniony[ttt].end(),
-                spread_one_building[ttt].begin(),
-                spread_one_building[ttt].end());
-        }
-    }
-    std::vector<std::vector<double>> returnPozarRozprzestrzeniony()
-    {
-        return (build_fire_rozprzestrzeniony);
-    }
-};
-struct Data
-{
-    double lat_sub;
-    double lon_sub;
-    double insu_sub;
-    double reas_sub;
-    double premium_sub;
-};
-
-std::uniform_real_distribution<double> distribution;
-
-std::random_device rd;
-
-double randZeroToOne(int a, int b)
-{
-
-    distribution.param(std::uniform_real_distribution<double>::param_type(a, b));
-    return distribution(gen);
-}
-
-std::vector<int> sample_vec(std::vector<int> &population, int sampleSize)
-{
-    std::vector<int> sampleData(sampleSize);
-    for (int i = 0; i < sampleSize; i++)
-    {
-        int randomIndex = randZeroToOne(0.0, population.size() - 1);
-        sampleData[i] = population[randomIndex];
-    }
-    return sampleData;
-}
-
-int randBin(int size_exp, double prob_size)
-{
-
-    std::binomial_distribution<> distrib(size_exp, prob_size);
-
-    return distrib(gen);
-}
-
-bool contains(std::vector<bool> vec, int elem)
-{
-    bool result = false;
-    if (find(vec.begin(), vec.end(), elem) != vec.end())
-    {
-        result = true;
-    }
-    return result;
-}
-
-int search_closest(const std::vector<double> &sorted_array, double x)
-{
-    auto iter_geq = std::lower_bound(
-        sorted_array.begin(),
-        sorted_array.end(),
-        x);
-
-    if (iter_geq == sorted_array.begin())
-    {
-
-        return 0;
-    }
-    else if (iter_geq == sorted_array.end())
-    {
-
-        return sorted_array.size() - 1;
-    }
-
-    double a = *(iter_geq - 1);
-    double b = *(iter_geq);
-
-    if (fabs(x - a) < fabs(x - b))
-    {
-        return iter_geq - sorted_array.begin() - 1;
-    }
-    return iter_geq - sorted_array.begin();
-}
-
-double percentage_of_loss(std::vector<std::vector<double>> wielkosc_pozaru)
-{
-    int ind_prob;
-    double exp_sen;
-    double val_dist;
-    val_dist = randZeroToOne(0, 1);
-    std::vector<double> probability;
-    probability = wielkosc_pozaru[0];
-    std::vector<double> exponsure_sensitiv;
-    exponsure_sensitiv = wielkosc_pozaru[1];
-    ind_prob = search_closest(probability, val_dist);
-    exp_sen = exponsure_sensitiv[ind_prob];
-    return (exp_sen);
-}
-
-double calc_reas_bligator(std::vector<double> vec_obligat_insur_risk, double sum_prem)
-{
-    double out_obl = 0.0;
-    if (sum_prem < vec_obligat_insur_risk[0])
-    {
-        out_obl = vec_obligat_insur_risk[2] * sum_prem;
-    }
-    else if (sum_prem > vec_obligat_insur_risk[0] && sum_prem < vec_obligat_insur_risk[1])
-    {
-        out_obl = vec_obligat_insur_risk[2] * vec_obligat_insur_risk[0];
-    }
-    else if (sum_prem > vec_obligat_insur_risk[1])
-    {
-        out_obl = sum_prem - (vec_obligat_insur_risk[1] - vec_obligat_insur_risk[0]);
-    }
-    return (out_obl);
-}
-
-double reasecuration_build_fire(double exp_fire_pre, int woj, int mies, int nr_budynku)
-{
-
-    double reas = exponsure_reassurance[woj][mies][nr_budynku];
-    std::vector<double> vec_fakul_insur_num = fakultatywna_input_num[exponsure_insurance[woj][mies][nr_budynku]];
-    std::vector<std::vector<double>> vec_fakul_insur_val = fakultatywna_input_val[exponsure_insurance[woj][mies][nr_budynku]];
-    std::vector<double> vec_obligat_insur_risk = obligatoryjna_input_risk[exponsure_insurance[woj][mies][nr_budynku]];
-    double reas_oblig;
-    double b_f;
-    double reas_fakultat;
-    reas_fakultat = exp_fire_pre;
-    reas_oblig = exp_fire_pre;
-    if ((reas < 9000))
-    {
-        b_f = vec_fakul_insur_val[reas][0];
-        if (std::find(vec_fakul_insur_num.begin(), vec_fakul_insur_num.end(), reas) != vec_fakul_insur_num.end())
-        {
-            reas_fakultat = exp_fire_pre * b_f + std::max(0.0, (1 - b_f) * exp_fire_pre - vec_fakul_insur_val[reas][1]);
-            reas_oblig = reas_fakultat;
-        }
-        else
-        {
-            reas_fakultat = std::min(exp_fire_pre, vec_fakul_insur_val[reas][0]) +
-                            std::max(0.0,
-                                     exp_fire_pre - vec_fakul_insur_val[reas][0] - vec_fakul_insur_val[reas][1]);
-            reas_oblig = reas_fakultat;
-        }
-    }
-    if (floor(vec_obligat_insur_risk[0]) >= 0)
-    {
-        reas_oblig = calc_reas_bligator(vec_obligat_insur_risk, reas_fakultat);
-    }
-    return (reas_oblig);
-}
-
-std::vector<std::vector<double>> index_spread_build(
-    long double lat_center,
-    long double lon_center,
-    const std::vector<std::vector<double>> &distance_res,
-    const std::vector<std::vector<long double>> &lat_ring,
-    const std::vector<std::vector<long double>> &lon_ring,
-    const std::vector<std::vector<int>> &insu_ring,
-    const std::vector<std::vector<int>> &reas_ring,
-    const std::vector<std::vector<double>> &exposure_sum_ring)
-{
-    int exposure_number;
-
-    std::vector<double> out_distance;
-    std::vector<int> ind_number_pom;
-    std::vector<double> distance_res_pom;
-    std::vector<long double> out_lat_pom;
-    std::vector<long double> out_lon_pom;
-    std::vector<int> out_insu_pom;
-    std::vector<int> out_reas_pom;
-    std::vector<double> out_exp_sum_pom;
-    std::vector<std::vector<double>> out_data(11);
-    std::vector<std::vector<std::vector<double>>> amount_of_loss_vec;
-    std::vector<int> number_of_fire_spreads(9);
-    std::vector<int> fire_spreads_indicator(9);
-    std::vector<double> conditional_mean(9);
-    std::vector<double> alpha(9);
-    std::vector<double> beta(9);
-    std::vector<double> simulated_probability(9);
-    std::vector<std::vector<int>> fire_spreads_rings_list(9);
-    for (int j = 0; j < 9; j++)
-    {
-        std::vector<int> output_sources_list;
-        exposure_number = lat_ring[j].size();
-        out_lat_pom = lat_ring[j];
-        out_lon_pom = lon_ring[j];
-        out_insu_pom = insu_ring[j];
-        out_reas_pom = reas_ring[j];
-        out_exp_sum_pom = exposure_sum_ring[j];
-        distance_res_pom = distance_res[j];
-        std::vector<int> ring_exposure_list(exposure_number);
-        std::iota(std::begin(ring_exposure_list), std::end(ring_exposure_list), 0);
-        if (exposure_number > 0)
-        {
-            if (j == 0)
-            {
-                fire_spreads_indicator[j] = randBin(1, fire_spread_prob_vec[0][j]);
-            }
-            else if (j == 1)
-            {
-                fire_spreads_indicator[j] = randBin(1, fire_spread_prob_vec[0 + fire_spreads_indicator[j - 1]][j]);
-            }
-            else
-            {
-                fire_spreads_indicator[j] = randBin(1, fire_spread_prob_vec[0 + 2 * fire_spreads_indicator[j - 1] + fire_spreads_indicator[j - 2]][j]);
-            }
-            if (fire_spreads_indicator[j] > 0)
-            {
-                if (exposure_number == 1)
-                {
-                    number_of_fire_spreads[j] = 1;
-                    fire_spreads_rings_list[j] = sample_vec(ring_exposure_list, number_of_fire_spreads[j]);
-                }
-                else if (exposure_number == 2)
-                {
-                    conditional_mean[j] = conditional_mean_trend_parameters[0] * std::pow(exposure_number - 1, conditional_mean_trend_parameters[1]);
-                    number_of_fire_spreads[j] = 1 + randBin(1, conditional_mean[j]);
-                    fire_spreads_rings_list[j] = sample_vec(ring_exposure_list, number_of_fire_spreads[j]);
-                }
-                else if (exposure_number == 3)
-                {
-                    conditional_mean[j] = conditional_mean_trend_parameters[0] * std::pow(exposure_number - 1, conditional_mean_trend_parameters[1]);
-                    alpha[j] = conditional_mean[j] * (exposure_number - 1 - conditional_mean[j] - conditional_Cov[0]) / (conditional_mean[j] + (exposure_number - 1) * (conditional_Cov[0] - 1));
-                    beta[j] = (exposure_number - 1 - conditional_mean[j]) * (exposure_number - 1 - conditional_mean[j] - conditional_Cov[0]) / (conditional_mean[j] + (exposure_number - 1) * (conditional_Cov[0] - 1));
-                    sftrabbit::beta_distribution<> dist(alpha[j], beta[j]);
-                    simulated_probability[j] = dist(gen);
-                    number_of_fire_spreads[j] = 1 + randBin(exposure_number - 1, simulated_probability[j]);
-                    fire_spreads_rings_list[j] = sample_vec(ring_exposure_list, number_of_fire_spreads[j]);
-                }
-                else
-                {
-                    conditional_mean[j] = conditional_mean_trend_parameters[0] * std::pow(exposure_number - 1, conditional_mean_trend_parameters[1]);
-                    alpha[j] = conditional_mean[j] * (exposure_number - 1 - conditional_mean[j] - conditional_Cov[1]) / (conditional_mean[j] + (exposure_number - 1) * (conditional_Cov[1] - 1));
-                    beta[j] = (exposure_number - 1 - conditional_mean[j]) * (exposure_number - 1 - conditional_mean[j] - conditional_Cov[1]) / (conditional_mean[j] + (exposure_number - 1) * (conditional_Cov[1] - 1));
-
-                    number_of_fire_spreads[j] = 1 + randBin(exposure_number - 1, simulated_probability[j]);
-                    fire_spreads_rings_list[j] = sample_vec(ring_exposure_list, number_of_fire_spreads[j]);
-                }
-            }
-            if (fire_spreads_rings_list[j].size() > 0)
-            {
-                for (auto it = std::begin(fire_spreads_rings_list[j]); it != std::end(fire_spreads_rings_list[j]); ++it)
-                {
-                    double wielkosc_pozar_procent;
-                    double wielkosc_pozar_kwota;
-                    wielkosc_pozar_procent = percentage_of_loss(wielkosc_pozaru);
-                    wielkosc_pozar_kwota = wielkosc_pozar_procent * out_exp_sum_pom[*it];
-                    if (wielkosc_pozar_kwota < 500.0)
-                    {
-                        wielkosc_pozar_kwota = 500.0;
-                    }
-                    out_data[0].push_back(distance_res_pom[*it]);
-                    out_data[1].push_back(out_lat_pom[*it]);
-                    out_data[2].push_back(out_lon_pom[*it]);
-                    out_data[3].push_back(out_insu_pom[*it]);
-                    out_data[4].push_back(out_reas_pom[*it]);
-                    out_data[5].push_back(out_exp_sum_pom[*it]);
-                    out_data[6].push_back(wielkosc_pozar_kwota);
-                }
-            }
-        }
-    }
-    return (out_data);
-}
-
-double haversine_cpp(double lat1, double long1,
-                     double lat2, double long2,
-                     double earth_radius = 6378137)
-{
-
-    double distance;
-
-    if (!((long1 > 360) || (long2 > 360) || (lat1 > 90) || (lat2 > 90)))
-    {
-        double deg_to_rad = 0.0174532925199432957;
-        double delta_phi = (lat2 - lat1) * deg_to_rad;
-        double delta_lambda = (long2 - long1) * deg_to_rad;
-        double phi1 = lat1 * deg_to_rad;
-        double phi2 = lat2 * deg_to_rad;
-        double term1 = pow(sin(delta_phi * .5), 2);
-        double term2 = cos(phi1) * cos(phi2) * pow(sin(delta_lambda * .5), 2);
-        double delta_sigma = 2 * atan2(sqrt(term1 + term2), sqrt(1 - term1 - term2));
-        distance = earth_radius * delta_sigma;
-    }
-    else
-    {
-        distance = NAN;
-    }
-    return distance;
-}
-
-std::vector<std::vector<double>> index_in_ring(
-    long double lat_center,
-    long double lon_center,
-    const std::vector<long double> &lat_sub,
-    const std::vector<long double> &lon_sub,
-    const std::vector<int> &insu_sub,
-    const std::vector<int> &reas_sub,
-    const std::vector<double> &exponsure_sum_value)
-{
-    std::vector<std::vector<double>> distance_res(9);
-    std::vector<std::vector<long double>> lat_ring(9);
-    std::vector<std::vector<long double>> lon_ring(9);
-    std::vector<std::vector<int>> insu_ring(9);
-    std::vector<std::vector<int>> reas_ring(9);
-    std::vector<std::vector<double>> exponsure_sum_ring(9);
-    std::vector<std::vector<double>> ind_after_prob(9);
-    int n1 = lon_sub.size();
-    if (n1 > 0)
-    {
-        for (int i = 0; i < n1; ++i)
-        {
-            double res = haversine_cpp(lat_center, lon_center, lat_sub[i], lon_sub[i]);
-            if (res < 0.005)
-            {
-                distance_res[0].push_back(res);
-                lat_ring[0].push_back(lat_sub[i]);
-                lon_ring[0].push_back(lon_sub[i]);
-                insu_ring[0].push_back(insu_sub[i]);
-                reas_ring[0].push_back(reas_sub[i]);
-                exponsure_sum_ring[0].push_back(exponsure_sum_value[i]);
-            }
-            if (res > 0.005 && res < 25)
-            {
-                distance_res[1].push_back(res);
-                lat_ring[1].push_back(lat_sub[i]);
-                lon_ring[1].push_back(lon_sub[i]);
-                insu_ring[1].push_back(insu_sub[i]);
-                reas_ring[1].push_back(reas_sub[i]);
-                exponsure_sum_ring[1].push_back(exponsure_sum_value[i]);
-            }
-            if (res > 25 && res < 50)
-            {
-                distance_res[2].push_back(res);
-                lat_ring[2].push_back(lat_sub[i]);
-                lon_ring[2].push_back(lon_sub[i]);
-                insu_ring[2].push_back(insu_sub[i]);
-                reas_ring[2].push_back(reas_sub[i]);
-                exponsure_sum_ring[2].push_back(exponsure_sum_value[i]);
-            }
-            if (res > 50 && res < 75)
-            {
-                distance_res[3].push_back(res);
-                lat_ring[3].push_back(lat_sub[i]);
-                lon_ring[3].push_back(lon_sub[i]);
-                insu_ring[3].push_back(insu_sub[i]);
-                reas_ring[3].push_back(reas_sub[i]);
-                exponsure_sum_ring[3].push_back(exponsure_sum_value[i]);
-            }
-            if (res > 75 && res < 100)
-            {
-                distance_res[4].push_back(res);
-                lat_ring[4].push_back(lat_sub[i]);
-                lon_ring[4].push_back(lon_sub[i]);
-                insu_ring[4].push_back(insu_sub[i]);
-                reas_ring[4].push_back(reas_sub[i]);
-                exponsure_sum_ring[4].push_back(exponsure_sum_value[i]);
-            }
-            if (res > 100 && res < 125)
-            {
-                distance_res[5].push_back(res);
-                lat_ring[5].push_back(lat_sub[i]);
-                lon_ring[5].push_back(lon_sub[i]);
-                insu_ring[5].push_back(insu_sub[i]);
-                reas_ring[5].push_back(reas_sub[i]);
-                exponsure_sum_ring[5].push_back(exponsure_sum_value[i]);
-            }
-            if (res > 125 && res < 150)
-            {
-                distance_res[6].push_back(res);
-                lat_ring[6].push_back(lat_sub[i]);
-                lon_ring[6].push_back(lon_sub[i]);
-                insu_ring[6].push_back(insu_sub[i]);
-                reas_ring[6].push_back(reas_sub[i]);
-                exponsure_sum_ring[6].push_back(exponsure_sum_value[i]);
-            }
-            if (res > 150 && res < 175)
-            {
-                distance_res[7].push_back(res);
-                lat_ring[7].push_back(lat_sub[i]);
-                lon_ring[7].push_back(lon_sub[i]);
-                insu_ring[7].push_back(insu_sub[i]);
-                reas_ring[7].push_back(reas_sub[i]);
-                exponsure_sum_ring[7].push_back(exponsure_sum_value[i]);
-            }
-            if (res > 175 && res < 200)
-            {
-                distance_res[8].push_back(res);
-                lat_ring[8].push_back(lat_sub[i]);
-                lon_ring[8].push_back(lon_sub[i]);
-                insu_ring[8].push_back(insu_sub[i]);
-                reas_ring[8].push_back(reas_sub[i]);
-                exponsure_sum_ring[8].push_back(exponsure_sum_value[i]);
-            }
-        }
-    }
-    ind_after_prob = index_spread_build(lat_center, lon_center, distance_res, lat_ring, lon_ring, insu_ring,
-                                        reas_ring, exponsure_sum_ring);
-    return (ind_after_prob);
-}
-
-std::vector<std::vector<double>> haversine_loop_cpp_vec(
-    double radius,
-    int n1, int woj, int mies)
-
-{
-    long double lat_center = exponsure_latitude[woj][mies][n1];
-    long double lon_center = exponsure_longitude[woj][mies][n1];
-    int circumference_earth_in_meters = 40075000;
-    double one_lat_in_meters = circumference_earth_in_meters * 0.002777778;
-    double one_lon_in_meters = circumference_earth_in_meters * cos(lat_center * 0.01745329) * 0.002777778;
-    double south_lat = lat_center - radius / one_lat_in_meters;
-    double north_lat = lat_center + radius / one_lat_in_meters;
-    double west_lon = lon_center - radius / one_lon_in_meters;
-    double east_lon = lon_center + radius / one_lon_in_meters;
-    int n = exponsure_longitude[woj][mies].size();
-
-    std::vector<long double> lat_sub;
-    std::vector<long double> lon_sub;
-    std::vector<int> insu_sub;
-    std::vector<int> reas_sub;
-    std::vector<double> premium_sub;
-    std::vector<int> ind_spread_build;
-    std::vector<std::vector<double>> ind_ring(11);
-    bool logical_value;
-
-    for (int i = 0; i < n; i++)
-    {
-        logical_value = !((exponsure_longitude[woj][mies][i] > east_lon) || (exponsure_longitude[woj][mies][i] < west_lon) || (exponsure_latitude[woj][mies][i] < south_lat) || (exponsure_latitude[woj][mies][i] > north_lat));
-        if (logical_value)
-        {
-            lat_sub.push_back(exponsure_latitude[woj][mies][i]);
-            lon_sub.push_back(exponsure_longitude[woj][mies][i]);
-            insu_sub.push_back(exponsure_insurance[woj][mies][i]);
-            reas_sub.push_back(exponsure_reassurance[woj][mies][i]);
-            premium_sub.push_back(exponsure_sum_value[woj][mies][i]);
-        }
-    }
-
-    if (lat_sub.size() > 0)
-    {
-        ind_ring = index_in_ring(lat_center, lon_center, lat_sub, lon_sub,
-
-                                 insu_sub, reas_sub, premium_sub);
-    }
-    return (ind_ring);
-}
-
-std::vector<std::vector<std::vector<double>>> calc_brutto_ring(std::vector<double> data_input,
-                                                               std::vector<double> insurance, double kat_val, int ilosc_ubezpieczycieli)
-{
-    std::vector<std::vector<std::vector<double>>> out_final(6);
-    std::vector<std::vector<double>> out_brutto(ilosc_ubezpieczycieli);
-    std::vector<std::vector<double>> out_kat_brutto(ilosc_ubezpieczycieli);
-    std::vector<std::vector<double>> ind_brutto(ilosc_ubezpieczycieli);
-    std::vector<std::vector<double>> ind_kat_brutto(ilosc_ubezpieczycieli);
-    std::vector<std::vector<double>> out_sum_brutto(ilosc_ubezpieczycieli);
-    std::vector<std::vector<double>> out_sum_kat_brutto(ilosc_ubezpieczycieli);
-    int ind_next = 0;
-    for (auto it = std::begin(insurance); it != std::end(insurance); ++it)
-    {
-        out_brutto[*it].push_back(data_input[ind_next]);
-        ind_brutto[*it].push_back(ind_next);
-        if (data_input[ind_next] > kat_val)
-        {
-            out_kat_brutto[*it].push_back(data_input[ind_next]);
-            ind_kat_brutto[*it].push_back(ind_next);
-        }
-        ind_next += 1;
-    }
-    for (int i = 0; i < ilosc_ubezpieczycieli; i++)
-    {
-        double sum_brutto = accumulate(out_brutto[i].begin(), out_brutto[i].end(), 0.0);
-        double sum_kat_brutto = accumulate(out_kat_brutto[i].begin(), out_kat_brutto[i].end(), 0.0);
-        out_sum_brutto[i].push_back(sum_brutto);
-        out_sum_kat_brutto[i].push_back(sum_kat_brutto);
-    }
-    out_final[0] = out_brutto;
-    out_final[1] = out_kat_brutto;
-    out_final[2] = out_sum_brutto;
-    out_final[3] = out_sum_kat_brutto;
-    out_final[4] = ind_brutto;
-    out_final[5] = ind_kat_brutto;
-    return (out_final);
-}
-
-double calc_res_bligator(std::vector<double> vec_obligat_insur_risk, double sum_prem)
-{
-    double out_obl = 0.0;
-    if (sum_prem < vec_obligat_insur_risk[0])
-    {
-        out_obl = vec_obligat_insur_risk[2] * sum_prem;
-    }
-    else if (sum_prem > vec_obligat_insur_risk[0] && sum_prem < vec_obligat_insur_risk[1])
-    {
-        out_obl = vec_obligat_insur_risk[2] * vec_obligat_insur_risk[0];
-    }
-    else if (sum_prem > vec_obligat_insur_risk[1])
-    {
-        out_obl = sum_prem - (vec_obligat_insur_risk[1] - vec_obligat_insur_risk[0]);
-    }
-    return (out_obl);
-}
-
-std::vector<std::vector<double>> reasurance_risk(std::vector<std::vector<double>> out_exp_sum_kwota_insurancers,
-                                                 std::vector<double> out_reas,
-                                                 int ilosc_ubezpieczycieli)
-{
-
-    double exp_fire_pre;
-    double reas_oblig;
-    double b_f;
-    double reas_fakultat;
-    std::vector<double> vec_fakul_insur_num;
-    std::vector<double> vec_obligat_insur_risk;
-    std::vector<std::vector<double>> vec_fakul_insur_val;
-    std::vector<std::vector<double>> sum_prem_out_res(ilosc_ubezpieczycieli);
-    std::vector<std::vector<double>> ind_prem_out_res(ilosc_ubezpieczycieli);
-    std::vector<double> vec_final_premium;
-    for (int kk = 0; kk < ilosc_ubezpieczycieli; kk++)
-    {
-        std::vector<double> input_one_insurance = out_exp_sum_kwota_insurancers[kk];
-        int len_insurance = input_one_insurance.size();
-        for (int i = 0; i < len_insurance; i++)
-        {
-            exp_fire_pre = input_one_insurance[i];
-            vec_obligat_insur_risk = obligatoryjna_input_risk[kk];
-            reas_fakultat = exp_fire_pre;
-            reas_oblig = exp_fire_pre;
-            if ((out_reas[i] < 9000))
-            {
-                vec_fakul_insur_num = fakultatywna_input_num[kk];
-                vec_fakul_insur_val = fakultatywna_input_val[kk];
-                b_f = vec_fakul_insur_val[out_reas[i]][0];
-                if (std::find(vec_fakul_insur_num.begin(), vec_fakul_insur_num.end(), out_reas[i]) != vec_fakul_insur_num.end())
-                {
-                    reas_fakultat = exp_fire_pre * b_f + std::max(0.0, (1 - b_f) * exp_fire_pre - vec_fakul_insur_val[out_reas[i]][1]);
-                    reas_oblig = reas_fakultat;
-                }
-                else
-                {
-                    reas_fakultat = std::min(exp_fire_pre, vec_fakul_insur_val[out_reas[i]][0]) + std::max(0.0, exp_fire_pre - vec_fakul_insur_val[out_reas[i]][1]);
-                    reas_oblig = reas_fakultat;
-                }
-            }
-            if (floor(vec_obligat_insur_risk[0]) >= 0)
-            {
-                reas_oblig = calc_res_bligator(vec_obligat_insur_risk, reas_fakultat);
-            }
-            sum_prem_out_res[kk].push_back(reas_oblig);
-            ind_prem_out_res[kk].push_back(i);
-        }
-    }
-    return (sum_prem_out_res);
-}
-
-std::vector<std::vector<double>> calc_reas_obliga_event(int ins_ind,
-                                                        double fire_prem,
-                                                        std::vector<std::vector<double>> num_reas_insurances,
-                                                        std::vector<std::vector<double>> val_reas_insurances,
-                                                        int size_vec, int ilosc_ubezpieczycieli)
-{
-    std::vector<std::vector<double>> vec_reas_final(3);
-    std::vector<double> reas_spread(size_vec);
-    std::vector<double> val_reas_insurance;
-    std::vector<double> num_reas_insurance;
-    std::vector<double> vec_obligat;
-    std::vector<double> val_sums_insur;
-
-    double reas_oblig;
-    double sum_of_elems;
-    double sum_of_elems_fire_el;
-    for (int i = 0; i < ilosc_ubezpieczycieli; i++)
-    {
-        double sum_value = 0;
-        val_reas_insurance = val_reas_insurances[i];
-        num_reas_insurance = num_reas_insurances[i];
-        vec_obligat = obligatoryjna_input_event[i];
-        sum_of_elems = std::accumulate(val_reas_insurance.begin(), val_reas_insurance.end(), 0);
-        int size_vec_reas;
-        size_vec_reas = num_reas_insurance.size();
-        if ((size_vec_reas == 0) && (ins_ind == i))
-        {
-            vec_reas_final[0].push_back(fire_prem);
-        }
-        else if ((size_vec_reas >= 1) && (ins_ind == i))
-        {
-            sum_of_elems_fire_el = sum_of_elems + fire_prem;
-            reas_oblig = calc_reas_bligator(vec_obligat, sum_of_elems_fire_el);
-            if (sum_of_elems_fire_el != reas_oblig)
-            {
-                for (auto it = std::begin(num_reas_insurance); it != std::end(num_reas_insurance); ++it)
-                {
-                    reas_spread[*it] = sum_of_elems_fire_el / (size_vec_reas + 1);
-                    sum_value += sum_of_elems_fire_el / (size_vec_reas + 1);
-                }
-                vec_reas_final[0].push_back(sum_of_elems_fire_el / (size_vec_reas + 1));
-            }
-            else
-            {
-                int kk = 0;
-                for (auto it = std::begin(num_reas_insurance); it != std::end(num_reas_insurance); ++it)
-                {
-                    reas_spread[*it] = val_reas_insurance[kk];
-                    sum_value += val_reas_insurance[kk];
-                    kk = kk + 1;
-                }
-                vec_reas_final[0].push_back(fire_prem);
-            }
-        }
-        else if ((size_vec_reas > 1) && (ins_ind != 1))
-        {
-            reas_oblig = calc_reas_bligator(vec_obligat, sum_of_elems);
-            if (sum_of_elems != reas_oblig)
-            {
-                int kk = 0;
-                for (auto it = std::begin(num_reas_insurance); it != std::end(num_reas_insurance); ++it)
-                {
-                    reas_spread[*it] = sum_of_elems / size_vec_reas;
-                    kk = kk + 1;
-                }
-                vec_reas_final[0].push_back(sum_of_elems / size_vec_reas);
-            }
-            else
-            {
-                int kk = 0;
-                for (auto it = std::begin(num_reas_insurance); it != std::end(num_reas_insurance); ++it)
-                {
-                    reas_spread[*it] = val_reas_insurance[kk];
-                    sum_value += val_reas_insurance[kk];
-                    kk = kk + 1;
-                }
-            }
-        }
-        else
-        {
-            int kk = 0;
-            for (auto it = std::begin(num_reas_insurance); it != std::end(num_reas_insurance); ++it)
-            {
-                reas_spread[*it] = val_reas_insurance[kk];
-                kk = kk + 1;
-            }
-        }
-        val_sums_insur.push_back(sum_value);
-    }
-    vec_reas_final[1] = reas_spread;
-    vec_reas_final[2] = val_sums_insur;
-
-    return (vec_reas_final);
-}
-
-std::mutex g_num_mutex;
-VectorSim out_brutto_kat_final;
-VectorSim out_netto_kat_final;
-VectorSim out_netto_final;
-
-void simulateExponsure(int sim, double kat_val, int ilosc_ubezpieczycieli)
-{
-    int exposure_number;
-    int binom_fire;
-    double wielkosc_pozar_procent;
-    double wielkosc_pozar_kwota;
-    double reas_fire;
-    int insurancer;
-    double reas_fire_kat;
-    int len_spread;
-    double sum_vec_out;
-    double sum_vec_kat_out;
-    double sum_netto_out;
-    double sum_netto_kat_out;
-
-    VectorSim sim_brutto_final;
-    VectorSim sim_brutto_kat_final;
-    VectorSim sim_netto_final;
-    VectorSim sim_netto_kat_final;
-    VectorPozarPierwotny buildPierwotny;
-
-    for (size_t woj = 0; woj < 17; woj++)
-    {
-        for (int mies = 0; mies < 12; mies++)
-        {
-            int index_table = 0;
-            exposure_number = exponsure_longitude[woj][mies].size();
-            if (exposure_number > 0)
-            {
-                binom_fire = randBin(exposure_number, list_list_wyb[woj][mies]);
-                if (binom_fire > 0)
-                {
-                    std::vector<int> fire_sources_list(binom_fire);
-
-                    std::vector<int> pom_index_fire(exposure_number);
-                    std::iota(std::begin(pom_index_fire), std::end(pom_index_fire), 0);
-
-                    fire_sources_list = sample_vec(pom_index_fire, binom_fire);
-
-                    for (size_t itx = 0; itx < fire_sources_list.size(); itx++)
-                    {
-                        auto nr_budynku = fire_sources_list[itx];
-
-                        std::vector<std::vector<double>> spread_one_building(11);
-
-                        spread_one_building = haversine_loop_cpp_vec(200,
-                                                                     nr_budynku,
-                                                                     woj, mies);
-
-                        wielkosc_pozar_procent = percentage_of_loss(wielkosc_pozaru);
-                        wielkosc_pozar_kwota = wielkosc_pozar_procent * exponsure_sum_value[woj][mies][nr_budynku];
-
-                        if (wielkosc_pozar_kwota < 500.0)
-                            wielkosc_pozar_kwota = 500.0;
-
-                        reas_fire = reasecuration_build_fire(wielkosc_pozar_kwota, woj, mies, nr_budynku);
-
-                        insurancer = exponsure_insurance[woj][mies][nr_budynku];
-                        buildPierwotny.addPozarPierwotny(insurancer, nr_budynku,
-                                                         woj + 1, mies + 1, index_table,
-                                                         wielkosc_pozar_kwota, reas_fire);
-                        sim_brutto_final.addDataVec(insurancer, wielkosc_pozar_kwota);
-                        sim_netto_final.addDataVec(insurancer, wielkosc_pozar_kwota);
-                        reas_fire_kat = 0.0;
-                        if (wielkosc_pozar_kwota > kat_val)
-                        {
-                            sim_brutto_kat_final.addDataVec(insurancer, wielkosc_pozar_kwota);
-                            reas_fire_kat = reas_fire;
-                        }
-
-                        len_spread = 0;
-                        len_spread = spread_one_building[4].size();
-                        if (len_spread > 0)
-                        {
-                            std::vector<std::vector<std::vector<double>>> out_vec_brutto(6);
-                            out_vec_brutto = calc_brutto_ring(spread_one_building[6], spread_one_building[3], kat_val,
-                                                              ilosc_ubezpieczycieli);
-                            std::vector<std::vector<double>> reas_risk = reasurance_risk(out_vec_brutto[0],
-                                                                                         spread_one_building[4],
-                                                                                         ilosc_ubezpieczycieli);
-                            std::vector<std::vector<double>> reas_event = calc_reas_obliga_event(insurancer, reas_fire,
-                                                                                                 out_vec_brutto[4],
-                                                                                                 reas_risk, len_spread,
-                                                                                                 ilosc_ubezpieczycieli);
-                            sim_netto_final.addDataVec(insurancer, reas_event[0][0]);
-                            std::vector<std::vector<double>> reas_risk_kat = reasurance_risk(out_vec_brutto[1],
-                                                                                             spread_one_building[4],
-                                                                                             ilosc_ubezpieczycieli);
-                            std::vector<std::vector<double>> reas_event_kat = calc_reas_obliga_event(insurancer,
-                                                                                                     reas_fire_kat,
-                                                                                                     out_vec_brutto[5],
-                                                                                                     reas_risk_kat,
-                                                                                                     len_spread,
-                                                                                                     ilosc_ubezpieczycieli);
-                            sim_netto_kat_final.addDataVec(insurancer, reas_event_kat[0][0]);
-                            for (int pp = 0; pp < ilosc_ubezpieczycieli; pp++)
-                            {
-
-                                sim_brutto_final.addDataVec(pp, out_vec_brutto[2][pp][0]);
-                                sim_brutto_kat_final.addDataVec(pp, out_vec_brutto[3][pp][0]);
-                                sim_netto_final.addDataVec(pp, reas_event[2][pp]);
-                                sim_netto_kat_final.addDataVec(pp, reas_event_kat[2][pp]);
-                            }
-
-                        }
-                        index_table += 1;
-                    }
-                }
-            }
-        }
-    }
-
-    std::vector<std::vector<double>> out_sum_vec_out = sim_brutto_final.returnVectorSim();
-    std::vector<std::vector<double>> sim_brutto_kat_final_out = sim_brutto_kat_final.returnVectorSim();
-    std::vector<std::vector<double>> sim_netto_final_out = sim_netto_final.returnVectorSim();
-    std::vector<std::vector<double>> sim_netto_kat_final_out = sim_netto_kat_final.returnVectorSim();
-
-    g_num_mutex.lock();
-    for (int kk = 0; kk < ilosc_ubezpieczycieli; kk++)
-    {
-        sum_vec_out = accumulate(out_sum_vec_out[kk].begin(), out_sum_vec_out[kk].end(), 0.0);
-        sim_brutto_final.clearVector(kk);
-
-        out_brutto_final.addDataVec(kk, sum_vec_out); 
-        sum_vec_kat_out = accumulate(sim_brutto_kat_final_out[kk].begin(),
-                                     sim_brutto_kat_final_out[kk].end(), 0.0);
-        sim_brutto_kat_final.clearVector(kk);
-
-        out_brutto_kat_final.addDataVec(kk, sum_vec_kat_out); 
-        sum_netto_out = accumulate(sim_netto_final_out[kk].begin(), sim_netto_final_out[kk].end(), 0.0);
-        sim_netto_final.clearVector(kk);
-        out_netto_final.addDataVec(kk, sum_netto_out);
-        sum_netto_kat_out = accumulate(sim_netto_kat_final_out[kk].begin(),
-                                       sim_netto_kat_final_out[kk].end(), 0.0);
-        sim_netto_kat_final.clearVector(kk);
-
-        out_netto_kat_final.addDataVec(kk, sum_netto_kat_out);
-    }
-
-    g_num_mutex.unlock();
-}
-
-std::vector<std::vector<std::vector<double>>> generateRandomData(int numRegions, int numMonths, std::mt19937 &gen, std::uniform_real_distribution<> &dist)
-{
-    std::vector<std::vector<std::vector<double>>> data(numRegions, std::vector<std::vector<double>>(numMonths));
-    for (int i = 0; i < numRegions; ++i)
-    {
-        for (int j = 0; j < numMonths; ++j)
-        {
-            int n_num = static_cast<int>(dist(gen) * 10000);
-            data[i][j].resize(n_num);
-            for (int k = 0; k < n_num; ++k)
-            {
-                data[i][j][k] = dist(gen);
-            }
-        }
-    }
-    return data;
-}
-
-std::vector<double> generateSingleVector(std::mt19937 &gen, std::uniform_real_distribution<> &dist, int size)
-{
-    std::vector<double> v(size);
-    for (auto &elem : v)
-    {
-        elem = dist(gen);
-    }
-    return v;
-}
-
-std::vector<double> generateRandomDoubles(int count, double min, double max)
-{
-    std::random_device rd;
-
-    std::uniform_real_distribution<> dist(min, max);
-    std::vector<double> values(count);
-    for (auto &val : values)
-    {
-        val = dist(gen);
-    }
-    return values;
-}
-
-std::vector<int> generateRandomInts(int count, int min, int max)
-{
-    std::random_device rd;
-
-    std::uniform_int_distribution<> dist(min, max);
-    std::vector<int> values(count);
-    for (auto &val : values)
-    {
-        val = dist(gen);
-    }
-    return values;
-}
-
-std::vector<long double> generateRandomLongDoubles(int count, long double min, long double max)
-{
-    std::random_device rd;
-
-    std::uniform_real_distribution<long double> dist(min, max);
-    std::vector<long double> values(count);
-    for (auto &val : values)
-    {
-        val = dist(gen);
-    }
-    return values;
-}
-
-const std::string FOLDER_REAS = "csv/Reasekuracja/";
-const std::string FOLDER_UBEZP = "csv/Ubezpieczyciele/";
-
-void processPrPozaru(const std::string &filename)
-{
-    csvstream csvin(filename);
-
-    std::map<std::string, std::string> row;
-
-    try
-    {
-        while (csvin >> row)
-        {
-            list_list_wyb[0].emplace_back(std::stod(row["1"]));
-            list_list_wyb[1].emplace_back(std::stod(row["2"]));
-            list_list_wyb[2].emplace_back(std::stod(row["3"]));
-            list_list_wyb[3].emplace_back(std::stod(row["4"]));
-            list_list_wyb[4].emplace_back(std::stod(row["5"]));
-            list_list_wyb[5].emplace_back(std::stod(row["6"]));
-            list_list_wyb[6].emplace_back(std::stod(row["7"]));
-            list_list_wyb[7].emplace_back(std::stod(row["8"]));
-            list_list_wyb[8].emplace_back(std::stod(row["9"]));
-            list_list_wyb[9].emplace_back(std::stod(row["10"]));
-            list_list_wyb[10].emplace_back(std::stod(row["11"]));
-            list_list_wyb[11].emplace_back(std::stod(row["12"]));
-            list_list_wyb[12].emplace_back(std::stod(row["13"]));
-            list_list_wyb[13].emplace_back(std::stod(row["14"]));
-            list_list_wyb[14].emplace_back(std::stod(row["15"]));
-            list_list_wyb[15].emplace_back(std::stod(row["16"]));
-            list_list_wyb[16].emplace_back(std::stod(row["17"]));
-        }
-
-    }
-    catch (const std::invalid_argument &e)
-    {
-        std::cerr << "Error: Invalid argument for stoi or stod conversion 2." << std::endl;
-    }
-}
-
-void processPrRozprzestrzenienia(const std::string &filename)
-{
-    csvstream csvin(filename);
-
-    std::map<std::string, std::string> row;
-
-    try
-    {
-        int cnt = 0;
-        while (csvin >> row)
-        {
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["0"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(0,25]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(25,50]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(50,75]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(75,100]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(100,125]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(125,150]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(150,175]"]));
-            fire_spread_prob_vec[cnt].emplace_back(std::stod(row["(175,200]"]));
-
-            if (cnt == 0)
-            {
-                conditional_mean_trend_parameters[0] = (std::stod(row["a1"]));
-                conditional_mean_trend_parameters[1] = (std::stod(row["b1"]));
-
-                conditional_Cov[0] = (std::stod(row["a2"]));
-                conditional_Cov[1] = (std::stod(row["b2"]));
-            }
-            cnt++;
-        }
-
-    }
-
-    catch (const std::invalid_argument &e)
-    {
-        std::cerr << "Error: Invalid argument for stoi or stod conversion 2." << std::endl;
-    }
-}
-
-void processPrWielkoscPozaru(const std::string &filename)
-{
-
-    csvstream csvin(filename);
-
-    std::map<std::string, std::string> row;
-
-    while (csvin >> row)
-    {
-        wielkosc_pozaru[0].emplace_back(std::stod(row["Rozmiar"]));
-        wielkosc_pozaru[1].emplace_back(std::stod(row["Prawdopodobienstwo"]));
-    }
-
-}
-
-void processOblig(const std::vector<std::string> &filename)
-{
-
-    for (int i = 0; i < filename.size(); i++)
-    {
-        obligatoryjna_input_risk.push_back(std::vector<double>());
-        obligatoryjna_input_event.push_back(std::vector<double>());
-
-        for (int j = 0; j < 4; j++)
-        {
-            obligatoryjna_input_risk[i].push_back(0);
-            obligatoryjna_input_event[i].push_back(0);
-        }
-    }
-
-    for (int i = 0; i < filename.size(); i++)
-    {
-        csvstream csvin(FOLDER_REAS + filename[i] + ".csv");
-
-        std::map<std::string, std::string> row;
-
-        int cnt = 0;
-        while (csvin >> row)
-        {
-            if (cnt == 0)
-            {
-                obligatoryjna_input_risk[i][3] = std::stod(row["Udzial (ryzyko)"]);
-                obligatoryjna_input_event[i][3] = std::stod(row["Udzial (zdarzenie)"]);
-            }
-            else
-            {
-                obligatoryjna_input_risk[i][2] = std::stod(row["Udzial (ryzyko)"]);
-                obligatoryjna_input_event[i][2] = std::stod(row["Udzial (zdarzenie)"]);
-            }
-            obligatoryjna_input_risk[i][0] = std::stod(row["Od (ryzyko)"]);
-            obligatoryjna_input_risk[i][1] = std::stod(row["Do (ryzyko)"]);
-
-            obligatoryjna_input_event[i][0] = std::stod(row["Od (zdarzenie)"]);
-            obligatoryjna_input_event[i][1] = std::stod(row["Do (zdarzenie)"]);
-            cnt++;
-            if (cnt == 2)
-                break;
-        }
-    }
-
-}
-
-int extractMonth(const std::string &date)
-{
-    std::istringstream dateStream(date);
-    std::string segment;
-    std::getline(dateStream, segment, '.');
-    std::getline(dateStream, segment, '.');
-    return std::stoi(segment);
-}
-
-void processRow(const std::string &startDate, const std::string &endDate, int region, double latitude, double longitude, int reassurance, double sumValue, int insurance)
-{
-    int startMonth = extractMonth(startDate) - 1;
-    int endMonth = extractMonth(endDate) - 1;
-
-    for (int month = startMonth; month <= endMonth; ++month)
-    {
-        exponsure_latitude[region][month].push_back(latitude);
-        exponsure_longitude[region][month].push_back(longitude);
-        exponsure_insurance[region][month].push_back(insurance);
-        exponsure_reassurance[region][month].push_back(reassurance);
-        exponsure_sum_value[region][month].push_back(sumValue);
-    }
-}
-
-bool is_date_in_year(const std::string &date_str, int year)
-{
-    int date_year = std::stoi(date_str.substr(6, 4));
-    return date_year == year;
-}
-
-void get_dates_within_year(std::string &date_str_a, std::string &date_str_b, int year)
-{
-    std::string start_of_year = "01.01." + std::to_string(year);
-    std::string end_of_year = "31.12." + std::to_string(year);
-
-    bool date_a_in_year = is_date_in_year(date_str_a, year);
-    bool date_b_in_year = is_date_in_year(date_str_b, year);
-
-    if (date_a_in_year && date_b_in_year)
-    {
-        return;
-    }
-    else if (date_a_in_year)
-    {
-        date_str_b = end_of_year;
-        return;
-    }
-    else if (date_b_in_year)
-    {
-        date_str_a = start_of_year;
-        return;
-    }
-    else
-    {
-        date_str_a = start_of_year;
-        date_str_b = end_of_year;
-        return;
-    }
-}
-
-void processBudynki(const std::vector<std::string> &filename, std::string year)
-{
-
-    for (int i = 0; i < filename.size(); i++)
-    {
-        csvstream csvin(FOLDER_UBEZP + filename[i] + ".csv");
-
-        std::map<std::string, std::string> row;
-
-        int id_ubezp = 0;
-        try
-        {
-            while (csvin >> row)
-            {
-
-                std::string dataPoczatku = row["DataPoczatku"];
-                std::string dataKonca = row["DataKonca"];
-                int reasekuracjaf = 9999;
-                try
-                {
-                    reasekuracjaf = std::stoi(row["ReasekuracjaF"]);
-                }
-                catch (const std::invalid_argument &e)
-                {
-                    reasekuracjaf = 9999;
-                }
-                get_dates_within_year(dataPoczatku, dataKonca, std::stoi(year));
-                processRow(
-                    dataPoczatku,
-                    dataKonca,
-                    std::stoi(row["WojUjednolicone"]),
-                    std::stod(row["Szerokosc"]),
-                    std::stod(row["Dlugosc"]),
-                    reasekuracjaf,
-                    std::stod(row["SumaUbezpieczenia"]),
-                    id_ubezp);
-            }
-        }
-        catch (const std::invalid_argument &e)
-        {
-            std::cerr << "Error: Invalid argument for stoi or stod conversion 1." << std::endl;
-        }
-    }
-}
-
-void print3DVector(const std::vector<std::vector<std::vector<double>>> &vec)
-{
-    for (const auto &matrix : vec)
-    {
-        for (const auto &row : matrix)
-        {
-            for (double element : row)
-            {
-                std::cout << element << " ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << "----" << std::endl;
-    }
-}
-
-void processReas(const std::vector<std::string> &filename)
-{
-
-    fakultatywna_input_num.resize(filename.size());
-    for (int i = 0; i < filename.size(); i++)
-    {
-        csvstream csvin(FOLDER_REAS + filename[i] + ".csv");
-
-        std::map<std::string, std::string> row;
-
-        std::vector<std::vector<double>> first_outer_vector;
-
-        while (csvin >> row)
-        {
-            if ((row["ZachowekKwota"]) == "")
-            {
-
-                fakultatywna_input_num[i].push_back(std::stoi(row["Lp"]));
-                first_outer_vector.push_back({std::stod(row["ZachowekProcent"]), std::stod(row["Pojemnosc"])});
-            }
-            else
-            {
-                first_outer_vector.push_back({std::stod(row["ZachowekKwota"]), std::stod(row["Pojemnosc"])});
-            }
-        }
-
-        fakultatywna_input_val.push_back(first_outer_vector);
-    }
-
-    print3DVector(fakultatywna_input_val);
-}
+namespace fs = std::filesystem;
 
 int main()
 {
+    std::string path = "/mnt/c/Input_geokodowanie";
 
-    std::random_device rd;
+    int fileCount = 0;
+    int currentFileCnt = 1;
+    // zliczanie plików
+    // for (const auto& entry : fs::directory_iterator(path)) {
+    //     if (fs::is_regular_file(entry)) {
+    //         ++fileCount;
+    //     }
+    // }
 
- std::setlocale(LC_ALL, "nb_NO.UTF-8");
+    std::cout << "Polaczony z " << c.dbname() << "\n\n";
 
-    for (int woj = 0; woj < 17; ++woj)
-    {
-        exponsure_longitude[woj].resize(12);
-        exponsure_latitude[woj].resize(12);
-        exponsure_insurance[woj].resize(12);
-        exponsure_reassurance[woj].resize(12);
-        exponsure_sum_value[woj].resize(12);
-    }
+    // for (const auto &entry : fs::directory_iterator(path))
+    // {
+        postalCodeCount.clear();
+        occurrences.clear();
+        rozklad.clear();
+        toProcess.clear();
 
-    std::string line;
-    std::vector<std::string> fileNames;
-    std::string year;
-    std::cout << "Podaj rok, ktory ma byc brany pod uwage: ";
-    std::getline(std::cin, year);
+        totalCodes = 0;
+        codes.clear();
+        probabilities.clear();
+        
 
-    std::cout << "Wprowadz nazwy plikow po spacji: ";
-    std::getline(std::cin, line);
+        // std::cout << "Plik " << currentFileCnt << "/" << fileCount << ", obecnie przetwarzany jest: " << entry.path().filename().string() << std::endl;
+        //  pqxx::connection c("dbname=nominatim user=nominatim password=nominatim host=localhost port=5432");
+        //     std::cout << "Connected to " << c.dbname() << '\n';
 
-    std::istringstream iss(line);
-    std::string fileName;
-    while (iss >> fileName)
-    {
-        fileNames.push_back(fileName);
-    }
+        //                 pqxx::work txn(c);
 
-    std::cout << "Indeksy przydzielone plikom:\n";
-    for (int i = 0; i < fileNames.size(); ++i)
-    {
-        std::cout << "Indeks " << i << ": " << fileNames[i] << std::endl;
-    }
+        //      std::string queryr = R"(
+        //     SELECT
+        //         3 AS Flag,
+        //         '12 83 ' AS VecPos,
+        //         address,
+        //         ST_Y(ST_Centroid(centroid)) AS lat,
+        //         ST_X(ST_Centroid(centroid)) AS lon
+        //     FROM
+        //         placex
+        //     WHERE
+        //         address -> 'postcode' ILIKE '05-825'
+        //         AND address -> 'housenumber' IS NOT NULL AND address -> 'housenumber' != ''
+        //     ORDER BY RANDOM()
+        //     LIMIT 2;
+        //         )";
 
-    processReas(fileNames);
-    processOblig(fileNames);
-    processBudynki(fileNames, year);
+        //         // Wykonanie zapytania
+        //         pqxx::result rd = txn.exec(queryr);
 
-    processPrPozaru("csv/Pr_pozaru.csv");
-    processPrRozprzestrzenienia("csv/pr_rozprzestrzenienia.csv");
-    processPrWielkoscPozaru("csv/pr_wielkosc_pozaru.csv");
+        //          for (const auto& row : rd) {
+        //             std::string address = row["address"].c_str();
+        //             double lat = row["lat"].as<double>();
+        //             double lon = row["lon"].as<double>();
 
-    auto start = std::chrono::high_resolution_clock::now();
+        //             std::cout << "Address: " << address << ", Lat: " << lat << ", Lon: " << lon << '\n';
+        //         }
+        //         for(;;) {}
 
-    int sim = 100;
-    double kat_val = 500000;
-    int ilosc_ubezpieczycieli = fileNames.size();
+        int currentIndex = 0;
+        int currentIndexId = 0;
 
-    for (int sim_num = 0; sim_num < sim; sim_num++)
-    {
-        pool.enqueue([sim, kat_val, ilosc_ubezpieczycieli]()
-                     { simulateExponsure(sim, kat_val, ilosc_ubezpieczycieli); });
-    }
+        // csvstream dorozkladu("proba2.csv");
 
-    pool.waitFinished();
+        std::vector<std::pair<std::string, std::string>> row;
 
-    std::vector<std::vector<double>> vec = out_brutto_final.returnVectorSim();
+        auto start = std::chrono::high_resolution_clock::now();
 
-    auto stop = std::chrono::high_resolution_clock::now();
+        int rows_cnt = 1;
 
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+        // while (dorozkladu >> row)
+        // {
+        //     std::string kodPocztowy = row[7].second;
 
-    std::cout << "Function took " << duration.count() << " milliseconds to execute." << std::endl;
+        //     if(kodPocztowy != "")
+        //        postalCodeCount[kodPocztowy] += 1;
 
-    std::cout << "Contents of the vector of vectors:" << std::endl;
-    for (const auto &subVec : vec)
-    {
-        for (double value : subVec)
+        //     rows_cnt++;
+        // }
+
+        // for (const auto &entry : postalCodeCount)
+        // {
+        //     totalCodes += entry.second;
+        // }
+
+        // for (const auto &entry : postalCodeCount)
+        // {
+        //     double probability = static_cast<double>(entry.second) / totalCodes;
+        //     codes.push_back(entry.first);
+        //     probabilities.push_back(probability);
+        // }
+
+        // dataToCSV.resize(rows_cnt);
+        // for (int i = 0; i < rows_cnt; ++i)
+        // {
+        //     dataToCSV[i] = {};
+        // }
+
+        // -----------
+        csvstream csvin("uciety.csv");
+
+        while (csvin >> row)
         {
-            std::cout << value << " ";
+            std::string sklejone = "";
+            std::string lp = row[0].second;
+            std::string numerUmowy = row[1].second;
+            std::string dataPoczatku = row[2].second;
+            std::string dataKonca = row[3].second;
+            std::string sumaUbezpieczenia = row[4].second;
+            std::string odnowienia = row[5].second;
+            std::string ulica = row[6].second;
+            std::string kodPocztowy = row[7].second;
+            std::string miasto = row[8].second;
+            std::string wojewodztwo = row[9].second;
+            std::string kraj = row[10].second;
+            std::string reasekuracjaO = row[11].second;
+            std::string reasekuracjaF = row[12].second;
+
+            if (kodPocztowy != "")
+                postalCodeCount[kodPocztowy] += 1;
+
+            int flaga1 = -1;
+            int flaga2 = 0;
+
+            ulica = removeWord(ulica, "nr");
+            ulica = removeAfterSlash(ulica);
+
+            // if (ulica != "" && kodPocztowy != "" && miasto != "" && wojewodztwo != "" &&
+            //     kraj != "" && ulica == miasto) {
+            //   flaga1 = 1;
+            //   sklejone = ulica + ";" + kodPocztowy + ";" + wojewodztwo + ";" + kraj;
+            // } else if (ulica != "" && kodPocztowy != "" && miasto != "" &&
+            //            wojewodztwo != "" && kraj != "" &&
+            //            ulica.find(miasto) != std::string::npos) {
+            //   flaga1 = 1;
+            //   sklejone = ulica + ";" + kodPocztowy + ";" + wojewodztwo + ";" + kraj;
+            // } else if (ulica != "" && kodPocztowy != "" && miasto == "" &&
+            //            wojewodztwo != "" && kraj != "") {
+            //   flaga1 = 6;
+            //   sklejone = ulica + ";" + kodPocztowy + ";" + wojewodztwo + ";" + kraj;
+            // } else if (ulica == "" && miasto == "" && wojewodztwo == "" && kraj == "" &&
+            //            kodPocztowy != "") {
+            //   flaga1 = 4;
+            //   sklejone = kodPocztowy;
+            // } else if (ulica == "" && miasto == "" && wojewodztwo == "" && kraj != "" &&
+            //            kodPocztowy == "") {
+            //   flaga1 = 5;
+            // std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+            // std::string drawnCode = codes[dist(gen)];
+
+            //   sklejone = drawnCode;
+            // } else if (ulica == "" && miasto != "" && wojewodztwo != "" && kraj != "" &&
+            //            kodPocztowy != "") {
+            //   sklejone = kodPocztowy + ";" + miasto + ";" + wojewodztwo + ";" + kraj;
+            //   flaga1 = 2;
+            // } else if (ulica == "" && miasto != "" && wojewodztwo != "" && kraj != "" &&
+            //            kodPocztowy == "") {
+            //   sklejone = miasto + ";" + wojewodztwo + ";" + kraj;
+            //   flaga1 = 3;
+            // } else {
+            //   sklejone = ulica + ";" + kodPocztowy + ";" + miasto + ";" + wojewodztwo +
+            //              ";" + kraj;
+            //   flaga1 = 0;
+            // }
+
+            if (ulica == "" && kodPocztowy == "" && miasto == "")
+            {
+                flaga1 = 0;
+                // tu będzie losowanie z rozkłądu kodu pocztowego i pozniej z tego kodu pocztowego losowanie budynku
+                // tu zawsze bedzie ok
+                flaga2 = 0;
+
+                // std::cout << " ddddddddddddddddddddd " << probabilities.size() << std::endl;
+
+                // if( probabilities.size( ) > 0 ) {
+                // std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+                // std::string pCode = codes[dist(gen)];
+
+                // sklejone = pCode;
+                // kodPocztowy = pCode;
+                // // std::cout << sklejone << std::endl;
+                // } else {
+                // }
+
+                // std::cout << " EST " << std::endl;
+            }
+            else if (ulica != "" && kodPocztowy == "" && miasto != "" && ulica != miasto)
+            {
+                sklejone = ulica + ";" + miasto;
+                flaga1 = 2;
+                // koduje
+
+                // jesli nie zageokoduje to ucinamy ulice i geokodujemy miasto i z tego miasta losujemy budynek
+                // dajemy flage2 = 1
+            }
+            else if (ulica != "" && kodPocztowy != "" && miasto != "" && ulica == miasto)
+            {
+                flaga1 = 4;
+                sklejone = kodPocztowy + ";" + miasto;
+            }
+            else if (ulica != "" && kodPocztowy != "" && miasto != "" && ulica.find(miasto) != std::string::npos)
+            {
+                sklejone = ulica + ";" + kodPocztowy;
+                flaga1 = 3;
+            }
+            else if (ulica == "" && kodPocztowy != "" && miasto != "")
+            {
+                sklejone = kodPocztowy + ";" + miasto;
+                flaga1 = 5;
+                // losujemy budynek z sklejone czyli kodPocztowy + ";" + miasto;
+
+                // OK
+            }
+            else if (ulica == "" && kodPocztowy != "" && miasto == "")
+            {
+                sklejone = kodPocztowy;
+                flaga1 = 6;
+                // losujemy budynek z sklejone, czyli sam kod pocztowy
+
+                // OK
+            }
+            else if (ulica == "" && kodPocztowy == "" && miasto == "")
+            {
+                flaga1 = 7;
+                // losujemy z rozkladu kod pocztwoy i z niego budynki
+                // tutaj nie wazne co jest w wojewodztwie i kraju zawsze bedzie losowanie
+
+                // OK
+            }
+            else
+            {
+                sklejone = ulica + ";" + miasto;
+                flaga1 = 1;
+
+                // // jesli nie zageokoduje to ucinamy ulice i geokodujemy
+
+                // sklejone = kodPocztowy + ";" + miasto;
+
+                // // dajemy flage2 = 1
+
+                // // Jesli sie nie uda zageokodowac to ucinamy miasto
+                // sklejone = kodPocztowy;
+
+                // // losujemy budynek z kodu Pocztowego
+                // // dajemy flaga2=2
+
+                // // Jesli sie nie uda zageokodowac to
+                // sklejone = miasto;
+
+                // losujemy budynek z kodu miasto
+                // dajemy flaga2=3
+            }
+
+#ifdef DEBUG
+            std::cout << flaga1 << " " << flaga2 << std::endl;
+#endif
+            // add(Address{lp, ulica, kodPocztowy, miasto, wojewodztwo, kraj,
+            //             "brak danych", "brak danych", flaga1, flaga2, sklejone,
+            //             numerUmowy, dataPoczatku, dataKonca, sumaUbezpieczenia,
+            //             odnowienia, reasekuracjaO, reasekuracjaF, ""},
+            //     currentIndex);
+
+            // if (flaga1 == 3)
+            // {
+            //     addOccurrence(ulica, kodPocztowy, flaga1, std::stoi(lp) - 1);
+            // }
+            if (flaga1 == 4)
+            {
+                addOccurrence(miasto, kodPocztowy, flaga1, std::stoi(lp) - 1);
+            }
+            else if (flaga1 == 5)
+            {
+                addOccurrence(miasto, kodPocztowy, flaga1, std::stoi(lp) - 1);
+            }
+            else if (flaga1 == 6)
+            {
+                addOccurrence("", kodPocztowy, flaga1, std::stoi(lp) - 1);
+            }
+            else if (flaga1 == 0 || flaga1 == 7)
+            {
+                rozklad.push_back(Address{lp, ulica, kodPocztowy, miasto, wojewodztwo, kraj,
+                                          "brak danych", "brak danych", flaga1, flaga2, sklejone,
+                                          numerUmowy, dataPoczatku, dataKonca, sumaUbezpieczenia,
+                                          odnowienia, reasekuracjaO, reasekuracjaF, ""});
+            }
+
+            add(Address{lp, ulica, kodPocztowy, miasto, wojewodztwo, kraj,
+                        "brak danych", "brak danych", flaga1, flaga2, sklejone,
+                        numerUmowy, dataPoczatku, dataKonca, sumaUbezpieczenia,
+                        odnowienia, reasekuracjaO, reasekuracjaF, ""});
+
+            rows_cnt++;
+
+            //  std::cout << "Flaga 1: " << flaga1 << " flaga2: " << flaga2 << std::endl;
         }
-    }
+
+        for (const auto &entry : postalCodeCount)
+        {
+            totalCodes += entry.second;
+        }
+
+        for (const auto &entry : postalCodeCount)
+        {
+            double probability = static_cast<double>(entry.second) / totalCodes;
+            codes.push_back(entry.first);
+            probabilities.push_back(probability);
+        }
+
+        // dataToCSV.resize(rows_cnt);
+        // for (int i = 0; i < rows_cnt; ++i)
+        // {
+        //     dataToCSV[i] = {};
+        // }
+
+        for (int i = 0; i < rozklad.size(); i++)
+        {
+            if (probabilities.size() > 0)
+            {
+                std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+                std::string pCode = codes[dist(gen)];
+
+                int number = std::stoi(rozklad[i].lp) - 1;
+                toProcess[number].kodPocztowy = pCode;
+                toProcess[number].sklejone = pCode;
+                // toProcess[number].dbProcess = true;
+
+                if (toProcess[number].flaga1 == 0 || toProcess[number].flaga1 == 7)
+                {
+                    addOccurrence("", toProcess[number].kodPocztowy, toProcess[number].flaga1, number);
+                }
+            }
+            // else
+            // {
+            //     toProcess[std::stoi(rozklad[i].lp) - 1].kodPocztowy = "00-000";
+            //     toProcess[std::stoi(rozklad[i].lp) - 1].sklejone = "00-000";
+            // }
+        }
+
+        // std::cout << "size " << toProcess.size() << std::endl;
+
+        //------------------------
+
+        std::vector<std::thread> threads;
+        auto data = std::make_shared<std::vector<std::string>>(NUM_THREADS);
+
+        int M = NUM_THREADS;      // liczba wątków
+        int N = toProcess.size(); // rozmiar wektora
+
+        std::vector<std::pair<int, int>> ranges;
+        int chunkSize = N / M;
+
+        for (int i = 0; i < M; ++i)
+        {
+            int start = i * chunkSize;
+            int end = (i == M - 1) ? N : start + chunkSize;
+            ranges.push_back({start, end});
+        }
+
+        for (int i = 0; i < NUM_THREADS; i++)
+        {
+            threads.emplace_back(perform_requests, i, std::ref(data), ranges[i]);
+        }
+
+        for (auto &t : threads)
+        {
+            t.join();
+        }
+
+        // std::vector<std::stringstream> queries;
+
+        // queries.reserve(occurrences.size());
+
+        bool first = true;
+        bool isFirst = false;
+        int liczbalosowan = 0;
+        for (const auto &entry : occurrences)
+        {
+            std::stringstream query;
+            const auto &key = entry.first;
+            const auto &value = entry.second;
+
+            const std::string &city = std::get<0>(key);
+            const std::string &postcode = std::get<1>(key);
+            int flag = std::get<2>(key);
+            int count = value.first;
+            std::string vecPos = value.second;
+
+            if (count > 0 && (!city.empty() || !postcode.empty()))
+            {
+                // if (!first)
+                // {
+                //     query << "UNION ALL\n";
+                // }
+#ifdef UPDATE
+                if (!isFirst)
+                {
+                    query
+                        << "CREATE INDEX idx_postcode ON placex ((address -> 'postcode'));\n"
+                        << "CREATE INDEX idx_housenumber ON placex ((address -> 'housenumber'));\n"
+                        << "CREATE INDEX idx_city ON placex ((address -> 'city'));\n";
+                    isFirst = true;
+                }
+#endif
+
+                query // << "(\n"
+                    << "    SELECT \n"
+                    << "        " << flag << " AS Flag,\n"
+                    << "        " << '\'' << vecPos << '\'' << " AS VecPos,\n"
+                    << "        address,\n"
+                    << "        ST_Y(ST_Centroid(centroid)) AS lat,\n"
+                    << "        ST_X(ST_Centroid(centroid)) AS lon\n"
+                    << "    FROM \n"
+                    << "        placex\n"
+                    << "    WHERE \n";
+
+                bool hasCondition = false;
+                if (!postcode.empty())
+                {
+                    query << "        address -> 'postcode' ILIKE '" << postcode << "'\n";
+                    hasCondition = true;
+                }
+                if (!city.empty())
+                {
+                    if (hasCondition)
+                    {
+                        query << "        AND ";
+                    }
+                    query << "(address -> 'city' ILIKE '" << city << "' OR address -> 'place' ILIKE '" << city << "')\n";
+                    hasCondition = true;
+                }
+
+                if (hasCondition)
+                {
+                    query << "        AND ";
+                }
+                query << "address -> 'housenumber' IS NOT NULL AND address -> "
+                         "'housenumber' != ''\n";
+                query << "    ORDER BY RANDOM() " << "\n";
+                query << "    LIMIT " << count << ";\n\n";
+                // liczbalosowan += count;
+                //   << ")\n";
+                // queries.push_back(query);
+                //  std::cout<<query.str()<<std::endl;
+                workers_data.push_back(query);
+                // queries.push_back(std::move(query)); // Przenosimy zamiast kopiować
+                // first = false;
+            }
+        }
+
+// std::cout << "LOPS " << workers_data.size() << " : " << liczbalosowan << std::endl;
+
+//   for (int i = 0; i < 2; ++i) {
+//     std::stringstream value = workers_data.pop_front();
+//     if (!value.str().empty()) {
+//         std::cout << "Popped: " << value.str() << std::endl;
+//     } else {
+//         std::cout << "Deque is empty." << std::endl;
+//     }
+// }
+//    std::ofstream outFile("plik.txt");
+
+// // Sprawdzanie, czy plik został poprawnie otwarty
+// if (outFile.is_open()) {
+//     // Zapis stringa do pliku
+//     outFile << query.str();
+
+//     // Zamknięcie pliku
+//     outFile.close();
+//     std::cout << "Zapisano tekst do pliku." << std::endl;
+// } else {
+//     std::cerr << "Nie można otworzyć pliku do zapisu." << std::endl;
+// }
+#ifdef DEBUG
+        std::cout << "=======================" << std::endl;
+#endif
+
+        // test_perf();
+
+        std::vector<std::thread> workers;
+
+        for (int i = 0; i < NUM_THREADS; i++)
+        {
+            workers.emplace_back(perform_random, i);
+        }
+
+        for (auto &t : workers)
+        {
+            t.join();
+        }
+
+        // pqxx::result r = txn.exec(queries[0]);
+        // std::cout << "rozmiar " << r.size() << std::endl;
+
+        // for (const auto &row : r)
+        // {
+        //     std::string city, street, postcode, housenumber, place;
+
+        //     size_t pos = 0;
+
+        //     std::string input = row["address"].c_str();
+        // #ifdef DEBUG
+        //     std::cout << input << std::endl;
+        // #endif
+        //     while (pos != std::string::npos)
+        //     {
+        //         size_t key_start = input.find('"', pos);
+        //         if (key_start == std::string::npos)
+        //             break;
+        //         size_t key_end = input.find('"', key_start + 1);
+        //         if (key_end == std::string::npos)
+        //             break;
+
+        //         std::string key = input.substr(key_start + 1, key_end - key_start - 1);
+
+        //         size_t value_start = input.find('"', key_end + 1);
+        //         if (value_start == std::string::npos)
+        //             break;
+        //         size_t value_end = input.find('"', value_start + 1);
+        //         if (value_end == std::string::npos)
+        //             break;
+
+        //         std::string value =
+        //             input.substr(value_start + 1, value_end - value_start - 1);
+
+        //         if (key == "city")
+        //         {
+        //             city = value;
+        //         }
+        //         else if (key == "street")
+        //         {
+        //             street = value;
+        //         }
+        //         else if (key == "postcode")
+        //         {
+        //             postcode = value;
+        //         }
+        //         else if (key == "housenumber")
+        //         {
+        //             housenumber = value;
+        //         }
+        //         else if (key == "place")
+        //         {
+        //             place = value;
+        //         }
+
+        //         pos = value_end + 1;
+        //     }
+
+        //     if (city == "")
+        //         city = place;
+
+        //     int flag = row["Flag"].as<int>();
+        //     std::string vecPositions = row["VecPos"].c_str();
+        //     double lat = row["lat"].as<double>();
+        //     double lon = row["lon"].as<double>();
+
+        //     wordCnt[{vecPositions, city, postcode}] += 1;
+        //     int liczba = pobierzLiczbe(vecPositions,
+        //                                wordCnt[{vecPositions, city, postcode}] - 1);
+        //     #ifdef DEBUG
+        //     std::cout << "liczba, rozmiar vec " << liczba << ":" << toProcess.size() << std::endl;
+        //     #endif
+
+        //     if (toProcess.size() > liczba)
+        //         {
+        //             toProcess[liczba].miasto = city;
+        //             toProcess[liczba].kodPocztowy = postcode;
+        //             toProcess[liczba].ulica = street + " " + housenumber;
+        //             toProcess[liczba].lat = std::to_string(lat);
+        //             toProcess[liczba].lot = std::to_string(lon);
+        //         }
+        // }
+
+        // std::cout << "Rozmiar flaga0: " << flaga0.size() << std::endl;
+        // std::cout << "Rozmiar flaga2: " << flaga2.size() << std::endl;
+        // std::cout << "Rozmiar flaga3: " << flaga3.size() << std::endl;
+        // std::cout << "Rozmiar flaga4: " << flaga4.size() << std::endl;
+        // std::cout << "Rozmiar flaga5: " << flaga5.size() << std::endl;
+        // std::cout << "Rozmiar flaga6: " << flaga6.size() << std::endl;
+
+        // for (auto &adres : flaga0)
+        // {
+        //     int index = std::stoi(adres.lp);
+        //     dataToCSV[index] = std::move(adres);
+        // }
+
+        // for (auto &adres : flaga2)
+        // {
+        //     int index = std::stoi(adres.lp);
+        //     dataToCSV[index] = std::move(adres);
+        // }
+
+        // for (auto &adres : flaga3)
+        // {
+        //     int index = std::stoi(adres.lp);
+        //     dataToCSV[index] = std::move(adres);
+        // }
+
+        // for (auto &adres : flaga4)
+        // {
+        //     int index = std::stoi(adres.lp);
+
+        //     dataToCSV[index] = std::move(adres);
+        // }
+
+        // for (auto &adres : flaga5)
+        // {
+        //     int index = std::stoi(adres.lp);
+
+        //     dataToCSV[index] = std::move(adres);
+        // }
+
+        // for (auto &adres : flaga6)
+        // {
+        //     int index = std::stoi(adres.lp);
+
+        //     dataToCSV[index] = std::move(adres);
+        // }
+
+        // saveToCSV(toProcess, entry.path().filename().string());
+        saveToCSV(toProcess,"uciety2_OUT.csv");
+
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> duration = end - start;
+        std::cout << "Czas : " << duration.count() << " sekund, zapisano " << rows_cnt-1 << " rekordow\n" << std::endl;
+
+        currentFileCnt++;
+        // std::cout << entry.path().filename().string() << std::endl;
+    // }
 
     return 0;
 }
