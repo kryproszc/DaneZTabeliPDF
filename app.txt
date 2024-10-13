@@ -7,21 +7,6 @@ Error: filesystem error: directory iterator cannot open directory: No such file 
 szczkr@DIU-01:~$ 
 
 # Przykładowa ramka danych
-df <- data.frame(address = c("Bolesława Chrobrego 1/19", "Jagiellońska 5", "Giebułtów 16/1", 
-                             "Złocista Dz. 184", "Polna Dz. 122", "Pisarzowice Dz. 1205/43",
-                             "#$Piekna 20", "Sliczna ^* 3"))
-
-# Funkcja filtrująca wiersze, które zawierają przynajmniej jeden znak specjalny
-filter_special_chars <- function(df, col_name) {
-  # Wyrażenie regularne szukające dowolnych znaków specjalnych (poza literami, cyframi, spacjami, "-", "/")
-  special_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\.\\?\\|\\\\\"\\']"  # Znajduje co najmniej jeden znak specjalny
-  
-  # Filtrujemy wiersze, które zawierają przynajmniej jeden znak specjalny
-  filtered_df <- df[grepl(special_chars_pattern, df[[col_name]]), ]
-  
-  # Zwracamy przefiltrowane wiersze
-  return(filtered_df)
-}
-
-# Użycie funkcji
-filter_special_chars(df, "address")
+special_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\']"  # Znajduje co najmniej jeden znak specjalny
+filtered_df <- df[grepl(special_chars_pattern, df[["Adres_Ulica_i_numer"]]), ]
+filtered_df <- df[grepl(special_chars_pattern, df[["Adres_Miasto"]]), ]
