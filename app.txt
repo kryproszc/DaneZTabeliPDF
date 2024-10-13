@@ -6,7 +6,11 @@ szczkr@DIU-01:~$ g++ -std=c++17 program.cpp && ./a.out
 Error: filesystem error: directory iterator cannot open directory: No such file or directory [/mnt/c/Input_geokodowanie]
 szczkr@DIU-01:~$ 
 
-> data_input<-read.csv2("PKO_input.csv",fileEncoding = "UTF-8")
-Warning message:
-In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
-  invalid input found on input connection 'PKO_input.csv'
+library(readr)
+
+# Wczytaj plik CSV z ignorowaniem błędów w kodowaniu
+data_input <- read_csv2("PKO_input.csv", locale = locale(encoding = "UTF-8"), 
+                        guess_max = 10000, na = c("�", ""))
+
+# Sprawdź wczytane dane
+print(data_input)
