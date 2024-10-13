@@ -7,6 +7,18 @@ Error: filesystem error: directory iterator cannot open directory: No such file 
 szczkr@DIU-01:~$ 
 
 # Przykładowa ramka danych
-special_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\']"  # Znajduje co najmniej jeden znak specjalny
-filtered_df <- df[grepl(special_chars_pattern, df[["Adres_Ulica_i_numer"]]), ]
-filtered_df <- df[grepl(special_chars_pattern, df[["Adres_Miasto"]]), ]
+# Wzorzec znaków specjalnych
+special_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\']"
+
+# Zastąpienie znaków specjalnych w kolumnie Adres_Ulica_i_numer
+df[["Adres_Ulica_i_numer"]] <- gsub(special_chars_pattern, "", df[["Adres_Ulica_i_numer"]])
+
+# Zastąpienie znaków specjalnych w kolumnie Adres_Miasto
+df[["Adres_Miasto"]] <- gsub(special_chars_pattern, "", df[["Adres_Miasto"]])
+
+pattern <- "\\d{2}=\\d{3}"
+
+# Zastąpienie wartości w kolumnie Adres_Ulica_i_numer
+df[["Adres_Ulica_i_numer"]] <- ifelse(grepl(pattern, df[["Adres_Ulica_i_numer"]]),
+                                      gsub(paste0(".*?(", pattern, ").*"), "\\1", df[["Adres_Ulica_i_numer"]]),
+                                      "")
