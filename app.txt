@@ -6,5 +6,11 @@ szczkr@DIU-01:~$ g++ -std=c++17 program.cpp && ./a.out
 Error: filesystem error: directory iterator cannot open directory: No such file or directory [/mnt/c/Input_geokodowanie]
 szczkr@DIU-01:~$ 
 
-adres_ulica_warunek <- grepl("[^A-Za-z0-9 /-]", df$Adres_Ulica_i_numer) | 
-                      grepl(".*/.*/", df$Adres_Ulica_i_numer)
+# Krok 1: Sprawdź, czy w adresie są jakiekolwiek znaki inne niż litery, cyfry, spacja, /, i -
+adres_ulica_warunek <- grepl("[^A-Za-z0-9 /-]", df$Adres_Ulica_i_numer)
+
+# Krok 2: Sprawdź, czy adres zawiera więcej niż jedno wystąpienie slasha
+wiecej_niz_jeden_slash <- grepl(".*/.*/", df$Adres_Ulica_i_numer)
+
+# Wyświetl wiersze, które spełniają jeden z powyższych warunków
+df[adres_ulica_warunek | wiecej_niz_jeden_slash, ]
