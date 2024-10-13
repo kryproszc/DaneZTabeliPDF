@@ -6,17 +6,9 @@ szczkr@DIU-01:~$ g++ -std=c++17 program.cpp && ./a.out
 Error: filesystem error: directory iterator cannot open directory: No such file or directory [/mnt/c/Input_geokodowanie]
 szczkr@DIU-01:~$ 
 
-# Otwórz plik jako surowy tekst
-file_content <- readLines("PKO_input.csv", encoding = "UTF-8", warn = FALSE)
-
-# Zamień wszystkie nieprawidłowe znaki (�) na pusty ciąg
-file_content_clean <- gsub("�", "", file_content)
-
-# Zapisz oczyszczoną wersję pliku do nowego pliku tymczasowego
-writeLines(file_content_clean, "PKO_input_clean.csv")
-
-# Teraz wczytaj oczyszczony plik
-data_input <- read.csv2("PKO_input_clean.csv", stringsAsFactors = FALSE)
-
-# Sprawdź dane
-print(data_input)
+> adres_ulica_warunek <- grepl("[^A-Za-z0-9\\\\\\- ]", df$Adres_Ulica_i_numer)
+Error in grepl("[^A-Za-z0-9\\\\\\- ]", df$Adres_Ulica_i_numer) : 
+  invalid regular expression '[^A-Za-z0-9\\\- ]', reason 'Invalid character range'
+In addition: Warning message:
+In grepl("[^A-Za-z0-9\\\\\\- ]", df$Adres_Ulica_i_numer) :
+  TRE pattern compilation error 'Invalid character range'
