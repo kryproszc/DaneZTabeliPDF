@@ -7,41 +7,17 @@ Error: filesystem error: directory iterator cannot open directory: No such file 
 szczkr@DIU-01:~$ 
 
 
-void saveToCSV(const std::vector<Address> &dataToCSV,
-               const std::string &filename)
-{
-    // std::ofstream file("/mnt/c/Output_geokodowanie/" + filename);
+# 1. W kolumnie "Adres_ulica_i_numer" - Znaki specjalne inne niż "\" i "-"
+adres_ulica_warunek <- grepl("[^A-Za-z0-9\\\\\\- ]", df$Adres_ulica_i_numer)
 
-    std::ofstream file(filename);
+# 2. W kolumnie "Adres_Kod_pocztowy" - Format XX-XXX, gdzie X to cyfra
+adres_kod_warunek <- grepl("^[0-9]{2}-[0-9]{3}$", df$Adres_Kod_pocztowy)
 
-    if (!file.is_open())
-    {
-        std::cerr << "Nie można otworzyć pliku do zapisu!" << std::endl;
-        return;
-    }
+# 3. W kolumnie "Adres_Miasto" - Znaki specjalne inne niż "\" i "-"
+adres_miasto_warunek <- grepl("[^A-Za-z0-9\\\\\\- ]", df$Adres_Miasto)
 
-    file << "Lp;DataPoczatku;DataKonca;SumaUbezpieczenia;Odnowienia;"
-            "Ulica;KodPocztowy;Miasto;Wojewodztwo;Kraj;ReasekuracjaO;"
-            "ReasekuracjaF;Szerokosc;Dlugosc;Flaga_1;Flaga_2;Nr_Wojewodztwa\n";
+# Filtruj wiersze spełniające wszystkie warunki
+wynik <- df[adres_ulica_warunek & adres_kod_warunek & adres_miasto_warunek, ]
 
-    for (size_t i = 0; i < dataToCSV.size(); ++i)
-    {
-        const auto &address = dataToCSV[i];
-
-
- if(address.lp == "895650")
-            std::cout << " JEQQQST lp " <<dataToCSV[i].lp  << " | " << i << " ," <<  dataToCSV[i].kodPocztowy << std::endl;
-        auto [wojewodztwo, nr_woj] = getWojewodztwoMapa(address.kodPocztowy);
-
-        file << address.lp << ";"
-             << address.dataPoczatku << ";" << address.dataKonca << ";"
-             << address.sumaUbezpieczenia << ";" << address.odnowienia << ";"
-             << address.ulica << ";" << address.kodPocztowy << ";" << address.miasto
-             << ";" << wojewodztwo << ";" << address.kraj << ";"
-             << address.reasekuracjaO << ";" << address.reasekuracjaF << ";"
-             << address.lat << ";" << address.lot
-             << ";" << address.flaga1 << ";" << address.flaga2 << ";" << nr_woj << ";" << "\n";
-    }
-
-    file.close();
-}
+# Wyświetl wynik
+print(wynik)
