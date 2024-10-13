@@ -22,3 +22,4 @@ pattern <- "\\d{2}=\\d{3}"
 df[["Adres_Ulica_i_numer"]] <- ifelse(grepl(pattern, df[["Adres_Ulica_i_numer"]]),
                                       gsub(paste0(".*?(", pattern, ").*"), "\\1", df[["Adres_Ulica_i_numer"]]),
                                       "")
+write.csv(df, "plik.csv", row.names = FALSE, fileEncoding = "UTF-8")
