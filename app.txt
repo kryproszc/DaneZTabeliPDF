@@ -6,8 +6,8 @@ szczkr@DIU-01:~$ g++ -std=c++17 program.cpp && ./a.out
 Error: filesystem error: directory iterator cannot open directory: No such file or directory [/mnt/c/Input_geokodowanie]
 szczkr@DIU-01:~$ 
 
-# Znajdź wiersze, które zawierają znaki inne niż litery, cyfry, jedno wystąpienie "/", oraz "-"
-adres_ulica_warunek <- grepl("[^A-Za-z0-9\\- /]|(.*/.*?/)", df$Adres_Ulica_i_numer)
-
-# Wyświetl wiersze, które zawierają inne znaki
-df[adres_ulica_warunek, ]
+Error in grepl("[^A-Za-z0-9\\- /]|(.*/.*?/)", df$Adres_Ulica_i_numer) : 
+  invalid regular expression '[^A-Za-z0-9\- /]|(.*/.*?/)', reason 'Invalid character range'
+In addition: Warning message:
+In grepl("[^A-Za-z0-9\\- /]|(.*/.*?/)", df$Adres_Ulica_i_numer) :
+  TRE pattern compilation error 'Invalid character range'
