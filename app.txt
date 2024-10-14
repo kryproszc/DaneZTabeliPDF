@@ -10,18 +10,21 @@ szczkr@DIU-01:~$
 data_input[] <- lapply(data_input, function(x) gsub("\x00", "", x))
 
 
-find_problematic_rows <- function(df, pattern) {
+combined_pattern <- paste(problematic_patterns, collapse = "|")
+
+# Funkcja do zamiany problematycznych znaków na puste miejsca tylko w kolumnach tekstowych
+replace_problematic_chars <- function(df, pattern) {
   # Sprawdzanie tylko kolumn tekstowych (charakterowych)
   is_char_col <- sapply(df, is.character)
   
-  # Przeszukiwanie tylko tekstowych kolumn
-  rows_with_issues <- df[apply(df[, is_char_col], 1, function(row) any(grepl(pattern, row))), ]
+  # Zamiana problematycznych znaków w kolumnach tekstowych
+  df[, is_char_col] <- lapply(df[, is_char_col], function(col) gsub(pattern, "", col))
   
-  return(rows_with_issues)
+  return(df)
 }
 
-# Znalezienie wierszy z problematycznymi znakami
-problematic_rows <- find_problematic_rows(data_input, combined_pattern)
+# Zamiana problematycznych znaków na puste miejsca w kolumnach tekstowych
+data_input <- replace_problematic_chars(data_input, combined_pattern)
 
-# Wyświetlenie wierszy z problematycznymi znakami
-print(problematic_rows)
+# Sprawdzenie danych po zamianie
+head(data_input)
