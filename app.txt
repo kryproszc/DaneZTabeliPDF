@@ -7,12 +7,14 @@ Error: filesystem error: directory iterator cannot open directory: No such file 
 szczkr@DIU-01:~$ 
 
 
-data_input <- read.csv2("sciezka/do/pliku.csv", 
-                        sep = ";",           # Użycie średnika jako separatora kolumn
-                        dec = ",",           # Przecinek jako separator dziesiętny
-                        header = TRUE,       # Pierwszy wiersz jako nagłówki
-                        stringsAsFactors = FALSE,  # Zapobieganie konwersji tekstu na faktory
-                        check.names = FALSE) # Pozostawienie oryginalnych nazw kolumn
+data_input <- read.table("sciezka/do/pliku.csv", 
+                         sep = ";",           # Użycie średnika jako separatora kolumn
+                         dec = ",",           # Przecinek jako separator dziesiętny
+                         header = TRUE,       # Pierwszy wiersz jako nagłówki
+                         stringsAsFactors = FALSE,  # Unikamy konwersji tekstu na faktory
+                         check.names = FALSE,       # Zachowujemy oryginalne nazwy kolumn
+                         fill = TRUE,              # Wypełnia puste pola wierszy
+                         blank.lines.skip = TRUE)   # Pomija puste linie w pliku
 
 # Sprawdzenie pierwszych kilku wierszy
 head(data_input)
