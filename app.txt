@@ -10,8 +10,13 @@ szczkr@DIU-01:~$
 data_input[] <- lapply(data_input, function(x) gsub("\x00", "", x))
 
 
-# Połączenie wzorców w jedno wyrażenie regularne
-combined_pattern <- paste(problematic_patterns, collapse = "|")
+find_problematic_rows <- function(df, pattern) {
+  rows_with_issues <- df[apply(df, 1, function(row) any(grepl(pattern, row))), ]
+  return(rows_with_issues)
+}
 
-# Usuwanie problematycznych znaków z każdej kolumny
-data_input[] <- lapply(data_input, function(x) gsub(combined_pattern, "", x))
+# Znalezienie wierszy z problematycznymi znakami
+problematic_rows <- find_problematic_rows(data_input, combined_pattern)
+
+# Wyświetlenie wierszy z problematycznymi znakami
+print(problematic_rows)
