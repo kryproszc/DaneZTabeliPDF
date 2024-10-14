@@ -10,14 +10,8 @@ szczkr@DIU-01:~$
 data_input[] <- lapply(data_input, function(x) gsub("\x00", "", x))
 
 
-# Rozszerzona lista problematycznych znaków do wyszukiwania
-problematic_patterns <- c("�", "™", "®", "©", "¥", "£", "€", "§", "°", "±", "µ", "÷", "×", "√", "[\x01-\x1F]", "[^\x00-\x7F]", "漢", "字", "あ", "ガ", "\uFEFF")
-
 # Połączenie wzorców w jedno wyrażenie regularne
 combined_pattern <- paste(problematic_patterns, collapse = "|")
 
-# Znalezienie wierszy zawierających problematyczne znaki
-problematic_rows <- data_input[grepl(combined_pattern, data_input$kolumna), ]
-
-# Wyświetlenie problematycznych wierszy
-print(problematic_rows)
+# Usuwanie problematycznych znaków z każdej kolumny
+data_input[] <- lapply(data_input, function(x) gsub(combined_pattern, "", x))
