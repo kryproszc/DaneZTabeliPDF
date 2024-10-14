@@ -6,7 +6,14 @@ szczkr@DIU-01:~$ g++ -std=c++17 program.cpp && ./a.out
 Error: filesystem error: directory iterator cannot open directory: No such file or directory [/mnt/c/Input_geokodowanie]
 szczkr@DIU-01:~$ 
 
-data_input[] <- lapply(data_input, function(x) iconv(x, from = "UTF-16", to = "UTF-8", sub = "byte"))
+# Rozszerzona lista problematycznych znaków do wyszukiwania
+problematic_patterns <- c("�", "™", "®", "©", "¥", "£", "€", "§", "°", "±", "µ", "÷", "×", "√", "[\x01-\x1F]", "[^\x00-\x7F]", "漢", "字", "あ", "ガ", "\uFEFF")
 
-# Sprawdzenie danych
-head(data_input)
+# Połączenie wzorców w jedno wyrażenie regularne
+combined_pattern <- paste(problematic_patterns, collapse = "|")
+
+# Znalezienie wierszy zawierających problematyczne znaki
+problematic_rows <- data_input[grepl(combined_pattern, data_input$kolumna), ]
+
+# Wyświetlenie problematycznych wierszy
+print(problematic_rows)
