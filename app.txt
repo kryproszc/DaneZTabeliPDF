@@ -2,4 +2,11 @@
 
 g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
-=SUMA(JEŻELI(LICZ.JEŻELI(A1:A100;A1:A100)=1;1/LICZ.JEŻELI(A1:A100;A1:A100)))
+# Grupowanie po Szerokosc i Dlugosc i liczenie wystąpień każdej pary
+powtorzenia <- aggregate(cbind(Szerokosc, Dlugosc) ~ Szerokosc + Dlugosc, data = df, length)
+
+# Wypisywanie par, które się powtarzają (liczba wystąpień > 1)
+powtarzajace_sie <- powtorzenia[powtorzenia$Szerokosc > 1, ]
+
+# Wyświetlanie powtarzających się par
+print(powtarzajace_sie)
