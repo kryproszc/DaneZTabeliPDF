@@ -7,7 +7,12 @@ Error: filesystem error: directory iterator cannot open directory: No such file 
 szczkr@DIU-01:~$ 
 
 
-data_input[] <- lapply(data_input, function(x) gsub("\x00", "", x))
+data_input <- read.csv2("sciezka/do/pliku.csv", 
+                        sep = ";",           # Użycie średnika jako separatora kolumn
+                        dec = ",",           # Przecinek jako separator dziesiętny
+                        header = TRUE,       # Pierwszy wiersz jako nagłówki
+                        stringsAsFactors = FALSE,  # Zapobieganie konwersji tekstu na faktory
+                        check.names = FALSE) # Pozostawienie oryginalnych nazw kolumn
 
-Lp;DataPoczatku;DataKonca;SumaUbezpieczenia;Odnowienia;Ulica;KodPocztowy;Miasto;Wojewodztwo;Kraj;ReasekuracjaO;ReasekuracjaF;Szerokosc;Dlugosc;Flaga_1;Flaga_2;Nr_Wojewodztwa
-1;2023-02-01;2024-01-31;33876442,79;NIE;Radziejowska 1;88-210;Dobre;Kujawsko-Pomorskie;POSKA;1,2,3;-;52.681163;18.576721;1;1;2;
+# Sprawdzenie pierwszych kilku wierszy
+head(data_input)
