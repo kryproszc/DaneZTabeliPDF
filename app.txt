@@ -9,25 +9,5 @@ szczkr@DIU-01:~$
 
 data_input[] <- lapply(data_input, function(x) gsub("\x00", "", x))
 
-
-# Funkcja do znajdowania komórek zawierających problematyczne znaki w nazwach
-find_problematic_cells_in_names <- function(df, column_name, pattern) {
-  # Znajdź wiersze, które zawierają problematyczne znaki
-  problematic_rows <- which(grepl(pattern, df[[column_name]]))
-  
-  # Zwróć wiersze i komórki, które mają problematyczne znaki
-  if (length(problematic_rows) > 0) {
-    result <- data.frame(Row = problematic_rows, 
-                         Value = df[[column_name]][problematic_rows],
-                         stringsAsFactors = FALSE)
-    return(result)
-  } else {
-    return("Brak problematycznych znaków w tej kolumnie.")
-  }
-}
-
-# Przykład: Znalezienie problematycznych komórek w kolumnie "flaga1" (zakładam, że tam są nazwy)
-problematic_cells <- find_problematic_cells_in_names(data_input, "flaga1", combined_pattern)
-
-# Wyświetlenie problematycznych komórek
-print(problematic_cells)
+Lp;DataPoczatku;DataKonca;SumaUbezpieczenia;Odnowienia;Ulica;KodPocztowy;Miasto;Wojewodztwo;Kraj;ReasekuracjaO;ReasekuracjaF;Szerokosc;Dlugosc;Flaga_1;Flaga_2;Nr_Wojewodztwa
+1;2023-02-01;2024-01-31;33876442,79;NIE;Radziejowska 1;88-210;Dobre;Kujawsko-Pomorskie;POSKA;1,2,3;-;52.681163;18.576721;1;1;2;
