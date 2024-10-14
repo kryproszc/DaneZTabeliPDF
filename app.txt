@@ -2,22 +2,4 @@
 
 g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
-data_input <- read.csv("sciezka/do/pliku.csv", 
-                       sep = ";",        # Średnik jako separator kolumn
-                       dec = ",",        # Przecinek jako separator dziesiętny
-                       fileEncoding = "UTF-8-BOM",  # Kodowanie pliku
-                       header = FALSE,   # Brak nagłówków (wczytaj jako dane)
-                       stringsAsFactors = FALSE,  # Unikaj zamiany tekstu na faktory
-                       check.names = FALSE)  # Pozostaw oryginalne nazwy kolumn bez modyfikacji
-
-# Ustawienie pierwszego wiersza jako nazwy kolumn
-colnames(data_input) <- as.character(unlist(data_input[1, ]))
-
-# Usunięcie pierwszego wiersza (ponieważ to teraz nagłówki)
-data_input <- data_input[-1, ]
-
-# Usunięcie pustych kolumn (jeśli jakieś istnieją, np. V18)
-data_input <- data_input[, colSums(!is.na(data_input)) > 0]
-
-# Sprawdzenie pierwszych kilku wierszy danych
-head(data_input)
+LOKM/10/002372;POLM/10/032997;WA4M/00408192/7;KMI\0626521
