@@ -11,7 +11,12 @@ data_input[] <- lapply(data_input, function(x) gsub("\x00", "", x))
 
 
 find_problematic_rows <- function(df, pattern) {
-  rows_with_issues <- df[apply(df, 1, function(row) any(grepl(pattern, row))), ]
+  # Sprawdzanie tylko kolumn tekstowych (charakterowych)
+  is_char_col <- sapply(df, is.character)
+  
+  # Przeszukiwanie tylko tekstowych kolumn
+  rows_with_issues <- df[apply(df[, is_char_col], 1, function(row) any(grepl(pattern, row))), ]
+  
   return(rows_with_issues)
 }
 
