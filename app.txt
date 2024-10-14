@@ -2,21 +2,8 @@
 
 g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
-df <- data.frame(
-  Szerokosc = c(51.1, 44.33, 51.1, 33.4, 32.3, 51.1, 44.33, 51.1, 32.3),
-  Dlugosc = c(21.2, 44.33, 21.2, 33.4, 32.3, 21.2, 44.33, 21.2, 32.3),
-  flaga1 = c(0, 1, 0, 0, 1, 0, 0, 0, 0),
-  flaga2 = c(0, 0, 0, 0, 0, 0, 0, 1, 0)
-)
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+Aborted (core dumped)
 
-# Krok 1: Filtrowanie danych na podstawie warunku flaga1 == 0 i flaga2 == 0
-wybrane_wiersze <- df[df$flaga1 == 0 & df$flaga2 == 0, ]
-
-# Krok 2: Grupowanie danych po kolumnach Szerokosc i Dlugosc, a następnie liczenie wystąpień
-powtorzenia <- aggregate(cbind(Szerokosc, Dlugosc) ~ Szerokosc + Dlugosc, data = wybrane_wiersze, length)
-
-# Krok 3: Filtrowanie tych par, które powtarzają się (liczba wystąpień > 1)
-powtarzajace_sie <- powtorzenia[powtorzenia$Szerokosc > 1, ]
-
-# Wyświetlenie wyników
-print(powtarzajace_sie)
+write.csv2(df, "C:/Users/szczkr/Downloads/PZU.csv",na= '', row.names = FALSE, fileEncoding = "UTF-8",quote = FALSE)
