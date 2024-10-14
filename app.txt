@@ -6,20 +6,10 @@ szczkr@DIU-01:~$ g++ -std=c++17 program.cpp && ./a.out
 Error: filesystem error: directory iterator cannot open directory: No such file or directory [/mnt/c/Input_geokodowanie]
 szczkr@DIU-01:~$ 
 
-# Przykładowa ramka danych
-# Wzorzec znaków specjalnych
-special_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\']"
-
-# Zastąpienie znaków specjalnych w kolumnie Adres_Ulica_i_numer
-df[["Adres_Ulica_i_numer"]] <- gsub(special_chars_pattern, "", df[["Adres_Ulica_i_numer"]])
-
-# Zastąpienie znaków specjalnych w kolumnie Adres_Miasto
-df[["Adres_Miasto"]] <- gsub(special_chars_pattern, "", df[["Adres_Miasto"]])
-
-pattern <- "\\d{2}=\\d{3}"
-
-# Zastąpienie wartości w kolumnie Adres_Ulica_i_numer
-df[["Adres_Ulica_i_numer"]] <- ifelse(grepl(pattern, df[["Adres_Ulica_i_numer"]]),
-                                      gsub(paste0(".*?(", pattern, ").*"), "\\1", df[["Adres_Ulica_i_numer"]]),
-                                      "")
-write.csv(df, "plik.csv", row.names = FALSE, fileEncoding = "UTF-8")
+> data_input<-read.csv2("I:/WOM/Sprawy_bieżące/Model ryzyka pożaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/1_przed_geokodowaniem/23 SALTUS TUW/SALTUS TUW/SALTUS TUW.csv",
++                      fileEncoding = "UTF-16")
+Error in read.table(file = file, header = header, sep = sep, quote = quote,  : 
+  no lines available in input
+In addition: Warning message:
+In read.table(file = file, header = header, sep = sep, quote = quote,  :
+  invalid input found on input connection 'I:/WOM/Sprawy_bieĹĽÄ…ce/Model ryzyka poĹĽaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/1_przed_geokodowaniem/23 SALTUS TUW/SALTUS TUW/SALTUS TUW.csv'
