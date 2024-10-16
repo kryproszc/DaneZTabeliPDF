@@ -5,5 +5,21 @@ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
 
 
-Error in table(df_wspolrzedne$Szerokosc, df_wspolrzedne$Dlugosc) : 
-  próba utworzenia tabeli z >= 2^31 elementami
+library(dplyr)
+
+# Zakładam, że df_wspolrzedne jest ramką danych z kolumnami Szerokosc i Dlugosc
+
+# Zliczanie liczby powtórzeń dla każdej kombinacji Szerokości i Długości
+wystapienia <- df_wspolrzedne %>%
+  group_by(Szerokosc, Dlugosc) %>%
+  summarise(Freq = n()) %>%
+  filter(Freq > 1)  # Filtrujemy tylko te kombinacje, które się powtarzają
+
+# Łączenie z oryginalnym dataframe, aby wyświetlić powtarzające się wiersze
+duplikaty <- inner_join(df_wspolrzedne, wystapienia, by = c("Szerokosc", "Dlugosc"))
+
+# Wyświetlenie unikalnych powtarzających się wierszy z liczbą wystąpień
+duplikaty_unikalne <- unique(duplikaty[, c("Szerokosc", "Dlugosc", "Freq")])
+
+# Wyświetlenie wyników
+print(duplikaty_unikalne)
