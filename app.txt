@@ -2,8 +2,7 @@
 
 g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
-flaga_1_vec<-c(0,4,5,6)
-flaga_2_vec<-c(0)
-df<-data_out[data_out$Flaga_1 %in% flaga_1_vec | data_out$Flaga_1 %in% c(1,2,3) &  data_out$Flaga_2 >0,]
-#df<-df[df$Flaga_2 %in% flaga_2_vec,]
-unikalne_rozw<-unique(df[,c(13,14)])
+unikalne_kombinacje <- as.data.frame(table(df))
+rozklad_wystapien <- as.data.frame(table(unikalne_kombinacje$Freq))
+rozklad_wystapien <- rozklad_wystapien[rozklad_wystapien$Var1 != 0, ]
+print(rozklad_wystapien)
