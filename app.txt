@@ -5,33 +5,9 @@ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
 
 
-      > file<-"I:/WOM/Sprawy_bieżące/Model ryzyka pożaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/"
-> data_out<-read.csv2(paste0(file,file_name,".csv"),header=TRUE,sep=";",dec=",", fileEncoding = "UTF-8")
-Warning message:
-In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
-  invalid input found on input connection 'I:/WOM/Sprawy_bieĹĽÄ…ce/Model ryzyka poĹĽaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/21 TU EUROPA SA/TU EUROPA SA/TU EUROPA SA.csv'
-> file<-"I:/WOM/Sprawy_bieżące/Model ryzyka pożaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/"
-> data_out<-read.csv2(paste0("I:/WOM/Sprawy_bieżące/Model ryzyka pożaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/",file_name,".csv"),header=TRUE,sep=";",dec=",", fileEncoding = "UTF-8")
-Warning message:
-In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
-  invalid input found on input connection 'I:/WOM/Sprawy_bieĹĽÄ…ce/Model ryzyka poĹĽaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/21 TU EUROPA SA/TU EUROPA SA/TU EUROPA SA.csv'
-> data_out <- read.csv(paste0(file,file_name,".csv"), 
-+                      sep = ";",        # Średnik jako separator kolumn
-+                      dec = ",",        # Przecinek jako separator dziesiętny
-+                      fileEncoding = "UTF-8-BOM",  # Kodowanie pliku
-+                      header = FALSE,   # Brak nagłówków (wczytaj jako dane)
-+                      stringsAsFactors = FALSE,  # Unikaj zamiany tekstu na faktory
-+                      check.names = FALSE)  # Pozostaw oryginalne nazwy kolumn bez modyfikacji
-Warning message:
-In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
-  invalid input found on input connection 'I:/WOM/Sprawy_bieĹĽÄ…ce/Model ryzyka poĹĽaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/21 TU EUROPA SA/TU EUROPA SA/TU EUROPA SA.csv'
-> data_out <- read.csv(paste0(file,file_name,".csv"), 
-+                      sep = ";",        # Średnik jako separator kolumn
-+                      dec = ",",        # Przecinek jako separator dziesiętny
-+                      fileEncoding = "UTF-8",  # Kodowanie pliku
-+                      header = FALSE,   # Brak nagłówków (wczytaj jako dane)
-+                      stringsAsFactors = FALSE,  # Unikaj zamiany tekstu na faktory
-+                      check.names = FALSE)  # Pozostaw oryginalne nazwy kolumn bez modyfikacji
-Warning message:
-In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
-  invalid input found on input connection 'I:/WOM/Sprawy_bieĹĽÄ…ce/Model ryzyka poĹĽaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/21 TU EUROPA SA/TU EUROPA SA/TU EUROPA SA.csv'
+    flaga_1_vec<-c(0,4,5,6)
+flaga_2_vec<-c(0)
+df<-data_out[data_out$Flaga_1 %in% flaga_1_vec | data_out$Flaga_1 %in% c(1,2,3) &  data_out$Flaga_2 >0,]
+#df<-df[df$Flaga_2 %in% flaga_2_vec,]
+unikalne_rozw<-unique(df[,c(13,14)])
+dim(df)[1]-nrow(unikalne_rozw)
