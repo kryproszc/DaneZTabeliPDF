@@ -5,9 +5,13 @@ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
 
 
-  flaga_1_vec<-c(0,4,5,6)
-flaga_2_vec<-c(0)
-df<-data_out[data_out$Flaga_1 %in% flaga_1_vec | data_out$Flaga_1 %in% c(1,2,3) &  data_out$Flaga_2 >0,]
-#df<-df[df$Flaga_2 %in% flaga_2_vec,]
-unikalne_rozw<-unique(df[,c(13,14)])
-dim(df)[1]-nrow(unikalne_rozw)
+  wystapienia <- table(df[, c(13, 14)])
+
+# Znalezienie powtarzających się kombinacji
+powtarzajace_sie <- wystapienia[wystapienia > 1]
+
+# Wybranie tylko wierszy, które mają powtarzające się wartości
+duplikaty <- df[df[, c(13, 14)] %in% names(powtarzajace_sie), ]
+
+# Wyświetlenie powtarzających się wierszy
+print(duplikaty)
