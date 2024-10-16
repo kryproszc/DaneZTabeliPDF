@@ -1,5 +1,7 @@
 
 
 g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
-special_chars_pattern <-"[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\'\\�\\™\\®\\©\\¥\\£\\€\\§\\°\\±\\µ\\÷]"
 
+
+
+write.csv2(df_input, paste0(file_input,file_name,"_czysty.csv"), row.names = FALSE,col.names=TRUE,sep=";",na="",dec=".",fileEncoding="UTF-8")
