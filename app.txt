@@ -5,13 +5,9 @@ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
 
 
-  wystapienia <- table(df[, c(13, 14)])
+  wystapienia <- as.data.frame(table(df$Kolumna13, df$Kolumna14))
+powtarzajace_sie <- wystapienia[wystapienia$Freq > 1, ]
+duplikaty <- merge(df, powtarzajace_sie, by.x = c("Kolumna13", "Kolumna14"), by.y = c("Var1", "Var2"))
+duplikaty_unikalne <- unique(duplikaty[, c("Kolumna13", "Kolumna14","Freq")])
 
-# Znalezienie powtarzających się kombinacji
-powtarzajace_sie <- wystapienia[wystapienia > 1]
 
-# Wybranie tylko wierszy, które mają powtarzające się wartości
-duplikaty <- df[df[, c(13, 14)] %in% names(powtarzajace_sie), ]
-
-# Wyświetlenie powtarzających się wierszy
-print(duplikaty)
