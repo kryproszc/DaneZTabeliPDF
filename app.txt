@@ -4,4 +4,197 @@ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
 
 
-write.csv2(df_input, paste0(file_input,file_name,"_czysty.csv"), row.names = FALSE,col.names=TRUE,sep=";",na="",dec=".",fileEncoding="UTF-8")
+
+        while (csvin >> row)
+        {
+            std::string sklejone = "";
+            std::string lp = row[0].second;
+            std::string numerUmowy = row[1].second;
+            std::string dataPoczatku = row[2].second;
+            std::string dataKonca = row[3].second;
+            std::string sumaUbezpieczenia = row[4].second;
+            std::string odnowienia = row[5].second;
+            std::string ulica = row[6].second;
+            std::string kodPocztowy = row[7].second;
+            std::string miasto = row[8].second;
+            std::string wojewodztwo = row[9].second;
+            std::string kraj = row[10].second;
+            std::string reasekuracjaO = row[11].second;
+            std::string reasekuracjaF = row[12].second;
+
+            if (kodPocztowy != "")
+                postalCodeCount[kodPocztowy] += 1;
+            int flaga1 = -1;
+            int flaga2 = 0;
+
+            ulica = removeWord(ulica, "nr");
+            ulica = removeAfterSlash(ulica);
+
+            // if (ulica != "" && kodPocztowy != "" && miasto != "" && wojewodztwo != "" &&
+            //     kraj != "" && ulica == miasto) {
+            //   flaga1 = 1;
+            //   sklejone = ulica + ";" + kodPocztowy + ";" + wojewodztwo + ";" + kraj;
+            // } else if (ulica != "" && kodPocztowy != "" && miasto != "" &&
+            //            wojewodztwo != "" && kraj != "" &&
+            //            ulica.find(miasto) != std::string::npos) {
+            //   flaga1 = 1;
+            //   sklejone = ulica + ";" + kodPocztowy + ";" + wojewodztwo + ";" + kraj;
+            // } else if (ulica != "" && kodPocztowy != "" && miasto == "" &&
+            //            wojewodztwo != "" && kraj != "") {
+            //   flaga1 = 6;
+            //   sklejone = ulica + ";" + kodPocztowy + ";" + wojewodztwo + ";" + kraj;
+            // } else if (ulica == "" && miasto == "" && wojewodztwo == "" && kraj == "" &&
+            //            kodPocztowy != "") {
+            //   flaga1 = 4;
+            //   sklejone = kodPocztowy;
+            // } else if (ulica == "" && miasto == "" && wojewodztwo == "" && kraj != "" &&
+            //            kodPocztowy == "") {
+            //   flaga1 = 5;
+            // std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+            // std::string drawnCode = codes[dist(gen)];
+
+            //   sklejone = drawnCode;
+            // } else if (ulica == "" && miasto != "" && wojewodztwo != "" && kraj != "" &&
+            //            kodPocztowy != "") {
+            //   sklejone = kodPocztowy + ";" + miasto + ";" + wojewodztwo + ";" + kraj;
+            //   flaga1 = 2;
+            // } else if (ulica == "" && miasto != "" && wojewodztwo != "" && kraj != "" &&
+            //            kodPocztowy == "") {
+            //   sklejone = miasto + ";" + wojewodztwo + ";" + kraj;
+            //   flaga1 = 3;
+            // } else {
+            //   sklejone = ulica + ";" + kodPocztowy + ";" + miasto + ";" + wojewodztwo +
+            //              ";" + kraj;
+            //   flaga1 = 0;
+            // }
+
+            if (ulica == "" && kodPocztowy == "" && miasto == "")
+            {
+                flaga1 = 0;
+                // tu będzie losowanie z rozkłądu kodu pocztowego i pozniej z tego kodu pocztowego losowanie budynku
+                // tu zawsze bedzie ok
+                flaga2 = 0;
+
+                // std::cout << " ddddddddddddddddddddd " << probabilities.size() << std::endl;
+
+                // if( probabilities.size( ) > 0 ) {
+                // std::discrete_distribution<> dist(probabilities.begin(), probabilities.end());
+                // std::string pCode = codes[dist(gen)];
+
+                // sklejone = pCode;
+                // kodPocztowy = pCode;
+                // // std::cout << sklejone << std::endl;
+                // } else {
+                // }
+
+                // std::cout << " EST " << std::endl;
+            }
+            else if (ulica != "" && kodPocztowy == "" && miasto != "" && ulica != miasto)
+            {
+                sklejone = ulica + ";" + miasto;
+                flaga1 = 2;
+                // koduje
+
+                // jesli nie zageokoduje to ucinamy ulice i geokodujemy miasto i z tego miasta losujemy budynek
+                // dajemy flage2 = 1
+            }
+            else if (ulica != "" && kodPocztowy != "" && miasto != "" && ulica == miasto)
+            {
+                flaga1 = 4;
+                sklejone = kodPocztowy + ";" + miasto;
+            }
+            else if (ulica != "" && kodPocztowy != "" && miasto != "" && ulica.find(miasto) != std::string::npos)
+            {
+                sklejone = ulica + ";" + kodPocztowy;
+                flaga1 = 3;
+            }
+            else if (ulica == "" && kodPocztowy != "" && miasto != "")
+            {
+                sklejone = kodPocztowy + ";" + miasto;
+                flaga1 = 5;
+                // losujemy budynek z sklejone czyli kodPocztowy + ";" + miasto;
+
+                // OK
+            }
+            else if (ulica == "" && kodPocztowy != "" && miasto == "")
+            {
+                sklejone = kodPocztowy;
+                flaga1 = 6;
+                // losujemy budynek z sklejone, czyli sam kod pocztowy
+
+                // OK
+            }
+            else if (ulica == "" && kodPocztowy == "" && miasto == "")
+            {
+                flaga1 = 7;
+                // losujemy z rozkladu kod pocztwoy i z niego budynki
+                // tutaj nie wazne co jest w wojewodztwie i kraju zawsze bedzie losowanie
+
+                // OK
+            }
+            else
+            {
+                sklejone = ulica + ";" + miasto;
+                flaga1 = 1;
+
+                // // jesli nie zageokoduje to ucinamy ulice i geokodujemy
+
+                // sklejone = kodPocztowy + ";" + miasto;
+
+                // // dajemy flage2 = 1
+
+                // // Jesli sie nie uda zageokodowac to ucinamy miasto
+                // sklejone = kodPocztowy;
+
+                // // losujemy budynek z kodu Pocztowego
+                // // dajemy flaga2=2
+
+                // // Jesli sie nie uda zageokodowac to
+                // sklejone = miasto;
+
+                // losujemy budynek z kodu miasto
+                // dajemy flaga2=3
+            }
+
+#ifdef DEBUG
+            std::cout << flaga1 << " " << flaga2 << std::endl;
+#endif
+            // add(Address{lp, ulica, kodPocztowy, miasto, wojewodztwo, kraj,
+            //             "brak danych", "brak danych", flaga1, flaga2, sklejone,
+            //             numerUmowy, dataPoczatku, dataKonca, sumaUbezpieczenia,
+            //             odnowienia, reasekuracjaO, reasekuracjaF, ""},
+            //     currentIndex);
+
+            // if (flaga1 == 3)
+            // {
+            //     addOccurrence(ulica, kodPocztowy, flaga1, std::stoi(lp) - 1);
+            // }
+            if (flaga1 == 4)
+            {
+                addOccurrence(miasto, kodPocztowy, flaga1, std::stoi(lp) - 1);
+            }
+            else if (flaga1 == 5)
+            {
+                addOccurrence(miasto, kodPocztowy, flaga1, std::stoi(lp) - 1);
+            }
+            else if (flaga1 == 6)
+            {
+                addOccurrence("", kodPocztowy, flaga1, std::stoi(lp) - 1);
+            }
+            else if (flaga1 == 0 || flaga1 == 7)
+            {
+                rozklad.push_back(Address{lp, ulica, kodPocztowy, miasto, wojewodztwo, kraj,
+                                          "brak danych", "brak danych", flaga1, flaga2, sklejone,
+                                          numerUmowy, dataPoczatku, dataKonca, sumaUbezpieczenia,
+                                          odnowienia, reasekuracjaO, reasekuracjaF, ""});
+            }
+
+            add(Address{lp, ulica, kodPocztowy, miasto, wojewodztwo, kraj,
+                        "brak danych", "brak danych", flaga1, flaga2, sklejone,
+                        numerUmowy, dataPoczatku, dataKonca, sumaUbezpieczenia,
+                        odnowienia, reasekuracjaO, reasekuracjaF, ""});
+
+            rows_cnt++;
+
+            //  std::cout << "Flaga 1: " << flaga1 << " flaga2: " << flaga2 << std::endl;
+        }
