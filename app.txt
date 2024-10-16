@@ -5,9 +5,33 @@ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
 
 
-       > data_out<-read.csv2(paste0(file,file_name,".csv"),header=TRUE,sep=";",dec=",", fileEncoding = "UTF-8-BOM")
+      > file<-"I:/WOM/Sprawy_bieżące/Model ryzyka pożaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/"
+> data_out<-read.csv2(paste0(file,file_name,".csv"),header=TRUE,sep=";",dec=",", fileEncoding = "UTF-8")
 Warning message:
 In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
   invalid input found on input connection 'I:/WOM/Sprawy_bieĹĽÄ…ce/Model ryzyka poĹĽaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/21 TU EUROPA SA/TU EUROPA SA/TU EUROPA SA.csv'
-> paste0(file,file_name,".csv")
-[1] "I:/WOM/Sprawy_bieżące/Model ryzyka pożaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/21 TU EUROPA SA/TU EUROPA SA/TU EUROPA SA.csv"
+> file<-"I:/WOM/Sprawy_bieżące/Model ryzyka pożaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/"
+> data_out<-read.csv2(paste0("I:/WOM/Sprawy_bieżące/Model ryzyka pożaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/",file_name,".csv"),header=TRUE,sep=";",dec=",", fileEncoding = "UTF-8")
+Warning message:
+In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
+  invalid input found on input connection 'I:/WOM/Sprawy_bieĹĽÄ…ce/Model ryzyka poĹĽaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/21 TU EUROPA SA/TU EUROPA SA/TU EUROPA SA.csv'
+> data_out <- read.csv(paste0(file,file_name,".csv"), 
++                      sep = ";",        # Średnik jako separator kolumn
++                      dec = ",",        # Przecinek jako separator dziesiętny
++                      fileEncoding = "UTF-8-BOM",  # Kodowanie pliku
++                      header = FALSE,   # Brak nagłówków (wczytaj jako dane)
++                      stringsAsFactors = FALSE,  # Unikaj zamiany tekstu na faktory
++                      check.names = FALSE)  # Pozostaw oryginalne nazwy kolumn bez modyfikacji
+Warning message:
+In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
+  invalid input found on input connection 'I:/WOM/Sprawy_bieĹĽÄ…ce/Model ryzyka poĹĽaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/21 TU EUROPA SA/TU EUROPA SA/TU EUROPA SA.csv'
+> data_out <- read.csv(paste0(file,file_name,".csv"), 
++                      sep = ";",        # Średnik jako separator kolumn
++                      dec = ",",        # Przecinek jako separator dziesiętny
++                      fileEncoding = "UTF-8",  # Kodowanie pliku
++                      header = FALSE,   # Brak nagłówków (wczytaj jako dane)
++                      stringsAsFactors = FALSE,  # Unikaj zamiany tekstu na faktory
++                      check.names = FALSE)  # Pozostaw oryginalne nazwy kolumn bez modyfikacji
+Warning message:
+In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
+  invalid input found on input connection 'I:/WOM/Sprawy_bieĹĽÄ…ce/Model ryzyka poĹĽaru/Model YE2023/2_dane od ZU/5_czynne na 2023.12.31/2_po_geokodowaniu/21 TU EUROPA SA/TU EUROPA SA/TU EUROPA SA.csv'
