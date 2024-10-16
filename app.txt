@@ -2,14 +2,17 @@
 
 g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
-problematic_patterns <- c("�", "™", "®", "©", "¥", "£", "€", "§", "°", "±", "µ", "÷")
+pecial_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\Dz.\\dz.\\DZ\\\\'\\nr\\Nr\\NR�™®©¥£€§°±µ÷]"
 
-
-special_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\Dz.\\dz.\\DZ\\\\'\\nr\\Nr\\NR]"
+# Zastosowanie wzorca do odpowiednich kolumn
 df_input[["Adres_Ulica_i_numer"]] <- gsub(special_chars_pattern, "", df_input[["Adres_Ulica_i_numer"]])
 df_input[["Adres_Miasto"]] <- gsub(special_chars_pattern, "", df_input[["Adres_Miasto"]])
-special_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\'\\/\\;]"
-df_input$Nr_umowy <- gsub(special_chars_pattern, "", df_input$Nr_umowy)
+
+# Zaktualizowany wzorzec do usuwania problematycznych znaków w numerze umowy
+special_chars_pattern_umowy <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\'\\/\\;�™®©¥£€§°±µ÷]"
+df_input$Nr_umowy <- gsub(special_chars_pattern_umowy, "", df_input$Nr_umowy)
+
+# Utrzymywanie poprawnego formatu kodu pocztowego (jeśli nie pasuje, pozostaje puste)
 pattern <- "\\d{2}-\\d{3}"
 df_input[["Adres_Kod_pocztowy"]] <- ifelse(grepl(pattern, df_input[["Adres_Kod_pocztowy"]]),
                                            gsub(paste0(".*?(", pattern, ").*"), "\\1", df_input[["Adres_Kod_pocztowy"]]),
