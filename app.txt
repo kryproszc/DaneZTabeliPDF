@@ -4,9 +4,4 @@ g++ programtest23.cpp -O3 -lpqxx -lpq  && ./a.out
 
 pecial_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\Dz.\\dz.\\DZ\\\\'\\nr\\Nr\\NR�™®©¥£€§°±µ÷]"
 
-LUBRZA NRDZIAŁKI:445/4
-
-special_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\Dz.\\dz.\\DZ.\\\\'\\�™®©¥£€§°±µ÷\\NRDZIAŁKI:]"
-df_input[["Adres_Ulica_i_numer"]] <- gsub(special_chars_pattern, "", df_input[["Adres_Ulica_i_numer"]])
-
-UB 445/4 
+special_chars_pattern <- "[#\\!\\@\\$\\%\\^\\&\\*\\+\\=\\:\\,\\?\\|\\\\\"\\'\\�™®©¥£€§°±µ÷]"
