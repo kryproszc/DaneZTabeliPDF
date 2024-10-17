@@ -1,11 +1,13 @@
-# Funkcja wybierająca elementy z liczbami
-filter_with_numbers <- function(text_vector) {
-  # Zwraca tylko te elementy, które zawierają liczby
-  grep("\\d", text_vector, value = TRUE)
+# Funkcja, która zmienia podane elementy w wektorze
+remove_extra_digits <- function(text_vector) {
+  sapply(text_vector, function(x) gsub("([a-zA-Z]+\\s*\\d+).*", "\\1", x),USE.NAMES = FALSE)
 }
 
 # Przykładowy wektor
-text_examples <- c("piekna 345", "piekna 34f", "piekna22", "piekna osoba 343", "piekna osoba 234n")
+text_examples <- c("piekna 20/22 23", "piekna 23d 0", "piekna 11 d3", "piekna 12 3d")
 
 # Zastosowanie funkcji
-vector_with_numbers <- filter_with_numbers(text_examples)
+modified_vector <- remove_extra_digits(text_examples)
+
+# Zwrócenie zmienionego wektora
+modified_vector
