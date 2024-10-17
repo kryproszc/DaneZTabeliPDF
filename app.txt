@@ -1,4 +1,11 @@
-remove_after_letters <- function(text_vector) {
-  # Dla każdego elementu wektora zastosuj sub, aby usunąć cyfry i litery mieszane z cyframi
-  sapply(text_vector, function(text) sub("\\s*\\d.*", "", text))
+# Funkcja wybierająca elementy z liczbami
+filter_with_numbers <- function(text_vector) {
+  # Zwraca tylko te elementy, które zawierają liczby
+  grep("\\d", text_vector, value = TRUE)
 }
+
+# Przykładowy wektor
+text_examples <- c("piekna 345", "piekna 34f", "piekna22", "piekna osoba 343", "piekna osoba 234n")
+
+# Zastosowanie funkcji
+vector_with_numbers <- filter_with_numbers(text_examples)
