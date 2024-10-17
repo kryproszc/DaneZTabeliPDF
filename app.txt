@@ -1,2 +1,3 @@
-	rezerwa IBNR – część rezerwy na niewypłacone odszkodowania i świadczenia dla celów rachunkowości (niepowiększona o koszty likwidacji szkód) dotyczącą szkód, które zaistniały, lecz nie zostały zgłoszone Zakładowiu do dnia, na który jest tworzona rezerwa,
-	rezerwa RBNP – część rezerwy na niewypłacone odszkodowania i świadczenia dla celów rachunkowości (niepowiększona o koszty likwidacji szkód) dotyczącą szkód, które zostały zgłoszone Zakładowiu do dnia, na który jest tworzona rezerwa,
+Rezerwa IBNR ALAE – część rezerwy na bezpośrednie koszty likwidacji szkód (ALAE) dla celów rachunkowości, dotyczącą kosztów związanych ze szkodami, które zaistniały, lecz nie zostały zgłoszone Zakładowi do dnia, na który jest tworzona rezerwa.
+
+Rezerwa RBNP ALAE – część rezerwy na bezpośrednie koszty likwidacji szkód (ALAE) dla celów rachunkowości, dotyczącą kosztów związanych ze szkodami, które zostały zgłoszone Zakładowi do dnia, na który jest tworzona rezerwa.
