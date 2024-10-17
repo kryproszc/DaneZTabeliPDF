@@ -1,3 +1,1 @@
-Rezerwa IBNR ALAE – część rezerwy na bezpośrednie koszty likwidacji szkód (ALAE) dla celów rachunkowości, dotyczącą kosztów związanych ze szkodami, które zaistniały, lecz nie zostały zgłoszone Zakładowi do dnia, na który jest tworzona rezerwa.
-
-Rezerwa RBNP ALAE – część rezerwy na bezpośrednie koszty likwidacji szkód (ALAE) dla celów rachunkowości, dotyczącą kosztów związanych ze szkodami, które zostały zgłoszone Zakładowi do dnia, na który jest tworzona rezerwa.
+Zgodnie z art. 33 rozporządzenia delegowanego, najlepsze oszacowanie powinno być obliczane oddzielnie dla przepływów pieniężnych w różnych walutach. Przepisy tego artykułu nie przewidują wyjątków pozwalających na stosowanie alternatywnego podejścia do obliczeń najlepszego oszacowania, nawet jeśli Zakład posiada ograniczoną ilość danych dotyczących wypłat w walutach obcych.
