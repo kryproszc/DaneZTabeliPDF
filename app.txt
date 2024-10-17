@@ -1,1 +1,8 @@
-Zgodnie z art. 33 rozporządzenia delegowanego, najlepsze oszacowanie powinno być obliczane oddzielnie dla przepływów pieniężnych w różnych walutach. Przepisy tego artykułu nie przewidują wyjątków pozwalających na stosowanie alternatywnego podejścia do obliczeń najlepszego oszacowania, nawet jeśli Zakład posiada ograniczoną ilość danych dotyczących wypłat w walutach obcych.
+Zakład Inspekcyjny, na podstawie załącznika X, ustalił, iż Zakład rozpoznaje przepływy z tytułu odszkodowań i świadczeń dotyczących wskazanych grup HRG.
+
+Zespół Inspekcyjny stoi na stanowisku, że jeśli Zakład przewiduje wypłatę odszkodowań i świadczeń, naturalnym i nieodłącznym elementem tego procesu jest również ponoszenie bezpośrednich kosztów likwidacji szkód (ALAE - Allocated Loss Adjustment Expenses). W związku z powyższym Zakład powinien rozpoznawać oraz odpowiednio tworzyć rezerwy zarówno na wypłatę odszkodowań, jak i na bezpośrednie koszty likwidacji związane z rozpatrywaniem roszczeń.
+
+
+
+
+Zgodnie z art. 31 rozporządzenia delegowanego Solvency II, prognoza przepływów pieniężnych wykorzystywana do obliczania najlepszego oszacowania musi uwzględniać wszystkie wydatki związane z zobowiązaniami ubezpieczeniowymi, w tym koszty likwidacji szkód (ALAE). Zespół inspekcyjny zauważa, że zakład nie uwzględnił w pełni tych kosztów w swoich obliczeniach. Brak pełnego uwzględnienia wydatków na likwidację szkód stanowi naruszenie wymogów art. 31, co może prowadzić do niedoszacowania rezerw techniczno-ubezpieczeniowych.
