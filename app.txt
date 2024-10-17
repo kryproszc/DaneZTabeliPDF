@@ -1,8 +1,4 @@
-remove_after_letters <- function(text) {
-  sub("\\s*\\d.*", "", text)
+remove_after_letters <- function(text_vector) {
+  # Dla każdego elementu wektora zastosuj sub, aby usunąć cyfry i litery mieszane z cyframi
+  sapply(text_vector, function(text) sub("\\s*\\d.*", "", text))
 }
-
-# Przykłady użycia
-text_examples <- c("piekna 345", "piekna 34f", "piekna22", "piekna osoba 343", "piekna osoba 234n")
-result <- sapply(text_examples, remove_after_letters)
-print(result)
