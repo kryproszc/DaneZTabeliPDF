@@ -1,13 +1,2 @@
-# Funkcja, która zmienia podane elementy w wektorze
-remove_extra_digits <- function(text_vector) {
-  sapply(text_vector, function(x) gsub("([a-zA-Z]+\\s*\\d+).*", "\\1", x),USE.NAMES = FALSE)
-}
-
-# Przykładowy wektor
-text_examples <- c("piekna 20/22 23", "piekna 23d 0", "piekna 11 d3", "piekna 12 3d")
-
-# Zastosowanie funkcji
-modified_vector <- remove_extra_digits(text_examples)
-
-# Zwrócenie zmienionego wektora
-modified_vector
+	rezerwa IBNR – część rezerwy na niewypłacone odszkodowania i świadczenia dla celów rachunkowości (niepowiększona o koszty likwidacji szkód) dotyczącą szkód, które zaistniały, lecz nie zostały zgłoszone Zakładowiu do dnia, na który jest tworzona rezerwa,
+	rezerwa RBNP – część rezerwy na niewypłacone odszkodowania i świadczenia dla celów rachunkowości (niepowiększona o koszty likwidacji szkód) dotyczącą szkód, które zostały zgłoszone Zakładowiu do dnia, na który jest tworzona rezerwa,
